@@ -60,3 +60,6 @@ body {
     height: 80px;
 
 }
+.mdc-button--raised.danger {
+    background: rgb(244,67,54) !important;
+}
