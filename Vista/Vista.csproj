@@ -67,10 +67,154 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Empleados\Administrar.aspx" />
+    <Content Include="Empleados\CambiarClave.aspx" />
+    <Content Include="Empleados\CrearCuenta.aspx" />
+    <Content Include="Empleados\IniciarSesion.aspx" />
+    <Content Include="Empleados\Perfil.aspx" />
+    <Content Include="MediosDePago\Administrar.aspx" />
+    <Content Include="MediosDePago\Crear.aspx" />
+    <Content Include="Productos\Administrar.aspx" />
+    <Content Include="Productos\Agregar.aspx" />
+    <Content Include="Proveedores\Administrar.aspx" />
+    <Content Include="Proveedores\Agregar.aspx" />
+    <Content Include="Razas\Administrar.aspx" />
+    <Content Include="Razas\Crear.aspx" />
+    <Content Include="Tipos\Administrar.aspx" />
+    <Content Include="Tipos\Crear.aspx" />
+    <Content Include="Ventas\Administrar.aspx" />
+    <Content Include="Ventas\Crear.aspx" />
+    <Content Include="Ventas\VerFactura.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Empleados\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\CambiarClave.aspx.cs">
+      <DependentUpon>CambiarClave.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\CambiarClave.aspx.designer.cs">
+      <DependentUpon>CambiarClave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\CrearCuenta.aspx.cs">
+      <DependentUpon>CrearCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\CrearCuenta.aspx.designer.cs">
+      <DependentUpon>CrearCuenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\IniciarSesion.aspx.cs">
+      <DependentUpon>IniciarSesion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\IniciarSesion.aspx.designer.cs">
+      <DependentUpon>IniciarSesion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\Perfil.aspx.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\Perfil.aspx.designer.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MediosDePago\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MediosDePago\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MediosDePago\Crear.aspx.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MediosDePago\Crear.aspx.designer.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proveedores\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Proveedores\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Proveedores\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Proveedores\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Razas\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Razas\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Razas\Crear.aspx.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Razas\Crear.aspx.designer.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\Crear.aspx.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\Crear.aspx.designer.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\Crear.aspx.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas\Crear.aspx.designer.cs">
+      <DependentUpon>Crear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\VerFactura.aspx.cs">
+      <DependentUpon>VerFactura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas\VerFactura.aspx.designer.cs">
+      <DependentUpon>VerFactura.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +225,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
