@@ -72,16 +72,10 @@
     <Content Include="Empleados\CrearCuenta.aspx" />
     <Content Include="Empleados\IniciarSesion.aspx" />
     <Content Include="Empleados\Perfil.aspx" />
-    <Content Include="MediosDePago\Administrar.aspx" />
-    <Content Include="MediosDePago\Crear.aspx" />
     <Content Include="Productos\Administrar.aspx" />
     <Content Include="Productos\Agregar.aspx" />
     <Content Include="Proveedores\Administrar.aspx" />
     <Content Include="Proveedores\Agregar.aspx" />
-    <Content Include="Razas\Administrar.aspx" />
-    <Content Include="Razas\Crear.aspx" />
-    <Content Include="Tipos\Administrar.aspx" />
-    <Content Include="Tipos\Crear.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
     <Content Include="Ventas\Crear.aspx" />
     <Content Include="Ventas\VerFactura.aspx" />
@@ -123,20 +117,6 @@
     <Compile Include="Empleados\Perfil.aspx.designer.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MediosDePago\Administrar.aspx.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MediosDePago\Administrar.aspx.designer.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MediosDePago\Crear.aspx.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MediosDePago\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Productos\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -165,34 +145,6 @@
     </Compile>
     <Compile Include="Proveedores\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Razas\Administrar.aspx.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Razas\Administrar.aspx.designer.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Razas\Crear.aspx.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Razas\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Tipos\Administrar.aspx.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tipos\Administrar.aspx.designer.cs">
-      <DependentUpon>Administrar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Tipos\Crear.aspx.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Tipos\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>

@@ -36,15 +36,15 @@
                     <th scope="row">98 444 500</th>
                     <td>BURGER KING</td>
                     <td>
-<button type="button" class="btn btn-link">Llamar</button>
-<button type="button" class="btn btn-link">Correo</button></td>
+                        <button type="button" class="btn btn-link">Llamar</button>
+                        <button type="button" class="btn btn-link">Correo</button></td>
                     <td>Av. Siempreviva 736</td>
                     <td>Springfield</td>
                     <td>I400</td>
                     <td>Illinois</td>
                     <td>Estados Unidos</td>
                 </tr>
-                
+
                 <tr>
                     <td>
                         <button class="btn btn-primary">Editar</button>
@@ -53,15 +53,15 @@
                     <th scope="row">98 444 501</th>
                     <td>MAROLIO</td>
                     <td>
-<button type="button" class="btn btn-link">Llamar</button>
-<button type="button" class="btn btn-link">Correo</button></td>
+                        <button type="button" class="btn btn-link">Llamar</button>
+                        <button type="button" class="btn btn-link">Correo</button></td>
                     <td>Av. Larralde 1001</td>
                     <td>Tigre</td>
                     <td>B1648</td>
                     <td>Buenos Aires Provincia</td>
                     <td>Argentina</td>
                 </tr>
-                
+
                 <tr>
                     <td>
                         <button class="btn btn-primary">Editar</button>
@@ -70,8 +70,8 @@
                     <th scope="row">98 444 520</th>
                     <td>DOGUI</td>
                     <td>
-<button type="button" class="btn btn-link">Llamar</button>
-<button type="button" class="btn btn-link">Correo</button></td>
+                        <button type="button" class="btn btn-link">Llamar</button>
+                        <button type="button" class="btn btn-link">Correo</button></td>
                     <td>Av. Farfalla 856</td>
                     <td>Santa Rosa</td>
                     <td>P4233</td>
