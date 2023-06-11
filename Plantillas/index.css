@@ -37,3 +37,26 @@ body {
 #sexo_select {
     width: 130px !important;
 }
+.main-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.main-grid .col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+.col.perfil {
+    width: 500px;
+}
+.col.col.perfil img {
+    border-radius: 4px;
+    width: auto;
+    height: 80px;
+
+}
