@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="./index.css" />
 </head>
 <body>
-    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <form id="form1" runat="server">
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button>
@@ -63,5 +64,6 @@
            <span class="mdc-button__label">Crear cuenta</span>
         </button>
       </main>
+    </form>
 </body>
 </html>
