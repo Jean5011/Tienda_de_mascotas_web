@@ -63,3 +63,12 @@ body {
 .mdc-button--raised.danger {
     background: rgb(244,67,54) !important;
 }
+
+.mdc-list-item__secondary-text {
+    display: flex;
+    align-items: center;
+}
+.mdc-list-item {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
