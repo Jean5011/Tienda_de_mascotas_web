@@ -12,7 +12,8 @@ class Header {
 				["Foro", ""],
 			],
 		};
-		this.header = document.createElement("header");
+		this.header = document.createElement("div");
+		this.header.classList.add("header");
 		const title = document.createElement("span");
 		title.classList.add("title");
 		title.innerText = `${obj.title} · ${obj.group}`;
@@ -49,22 +50,18 @@ window.MostrarMensaje = (mensaje) => {
 };
 window.onload = () => {
 	let header = new Header({
-		title: "Trabajo Práctico N.º 4",
-		group: "Grupo N.º 5",
-		links: [
-			["Primer ejercicio", "./Ejercicio1.aspx"],
-			["Segundo ejercicio", "./Ejercicio2.aspx"],
-			["Tercer ejercicio", "./Ejercicio3.aspx"],
-		],
+		title: "Trabajo Práctico Integrador",
+		group: "Pantallas",
+		links: [],
 		otherLinks: [
-			["Repositorio", "https://github.com/maximocanedo/PROGIII-TP4"],
+			["Repositorio", "https://github.com/maximocanedo/PROGIII-TPI"],
 			[
 				"Foro",
 				"https://frgp.cvg.utn.edu.ar/mod/forum/view.php?id=255204",
 			],
 		],
 	});
-	//header.putOnPage();
+	header.putOnPage();
 	// Instantiate all Textfields
 	document.querySelectorAll(".mdc-text-field").forEach((element) => {
 		mdc.textField.MDCTextField.attachTo(element);
