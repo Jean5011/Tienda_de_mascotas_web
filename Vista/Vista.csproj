@@ -72,10 +72,14 @@
     <Content Include="Empleados\CrearCuenta.aspx" />
     <Content Include="Empleados\IniciarSesion.aspx" />
     <Content Include="Empleados\Perfil.aspx" />
+    <Content Include="index.css" />
+    <Content Include="index.js" />
     <Content Include="Productos\Administrar.aspx" />
     <Content Include="Productos\Agregar.aspx" />
     <Content Include="Proveedores\Administrar.aspx" />
     <Content Include="Proveedores\Agregar.aspx" />
+    <Content Include="Tipos\Administrar.aspx" />
+    <Content Include="Tipos\Agregar.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
     <Content Include="Ventas\Crear.aspx" />
     <Content Include="Ventas\VerFactura.aspx" />
@@ -144,6 +148,20 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Proveedores\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Administrar.aspx.cs">

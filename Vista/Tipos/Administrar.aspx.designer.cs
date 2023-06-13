@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Proveedores {
+namespace Vista.Tipos {
 
 
     public partial class Administrar {

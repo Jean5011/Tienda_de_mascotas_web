@@ -13,8 +13,8 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="./index.css" />
-  <script src="./index.js"></script>
+  <link rel="stylesheet" href="/index.css" />
+  <script src="/index.js"></script>
 </head>
 
 <body>
@@ -39,127 +39,120 @@
       </div>
     </header>
     <main class="mdc-top-app-bar--fixed-adjust obj--main">
-      <div class="page">
+    <div class="page">
         <h2>Añadir producto</h2>
-      <br>
+        <br />
 
-      <div class="group">
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Nombre</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">ID</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-      </div>
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Nombre</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtNombre"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">ID</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtID"></asp:TextBox>
+            </label>
+        </div>
 
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Tipo de producto</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtTipoProducto"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">CUIT del Proveedor</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtCUITProveedor"></asp:TextBox>
+            </label>
+        </div>
 
-      <div class="group">
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Tipo de producto</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">CUIT del Proveedor</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-      </div>
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Descripción</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtDescripcion"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Marca</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtMarca"></asp:TextBox>
+            </label>
+        </div>
 
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Stock</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtStock"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">URL Imagen</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtURLImagen"></asp:TextBox>
+            </label>
+        </div>
 
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="my-label-id">Precio Unitario</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:DropDownList runat="server" CssClass="mdc-text-field__input" ID="ddlPrecioUnitario"></asp:DropDownList>
+            </label>
+        </div>
 
+        <br />
+        <asp:Button runat="server" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="Guardar_Click" />
+    </div>
+</main>
 
-
-      <div class="group">
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Descripción</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Marca</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-      </div>
-
-
-      <div class="group">
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Stock</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">URL Imagen</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label>
-      </div>
-
-      <div class="group">
-        <label class="mdc-text-field mdc-text-field--outlined">
-          <span class="mdc-notched-outline">
-            <span class="mdc-notched-outline__leading"></span>
-            <span class="mdc-notched-outline__notch">
-              <span class="mdc-floating-label" id="my-label-id">Precio Unitario</span>
-            </span>
-            <span class="mdc-notched-outline__trailing"></span>
-          </span>
-          <select name="" class="mdc-text-field__input" id="sexo_select"></select>
-        </label>
-      </div>
-
-      <br>
-      <button class="mdc-button mdc-button--raised">
-        <span class="mdc-button__label">Guardar</span>
-      </button>
-      </div>
-    </main>
   </div>
 </body>
 

@@ -14,11 +14,13 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="/index.css" />
   <script src="./index.js"></script>
 </head>
 
 <body>
+    <form id="form1" runat="server" class="contents">
+
   <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -182,6 +184,7 @@
     </div>
     
   </main>
+    </form>
 </body>
 
 </html>

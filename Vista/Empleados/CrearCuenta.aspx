@@ -14,12 +14,12 @@
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="./index.css" />
-  <script src="./index.js"></script>
+  <link rel="stylesheet" href="/index.css" />
+  <script src="/index.js"></script>
 </head>
 
 <body>
-  <div class="contents">
+  <form  id="form1" runat="server" class="contents">
   <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -39,107 +39,115 @@
       </section>
     </div>
   </header>
-  <main class="mdc-top-app-bar--fixed-adjust obj--main">
+<main class="mdc-top-app-bar--fixed-adjust obj--main">
     <div class="page">
-      <h2>Crear cuenta de empleado</h2>
-    <br>
-    <br>
+        <h2>Crear cuenta de empleado</h2>
+        <br>
+        <br>
 
-    <div class="group">
-      <label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Nombre</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label>
-      <label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Apellido</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label>
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="nombre-label">Nombre</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtNombre" runat="server" CssClass="mdc-text-field__input" aria-labelledby="nombre-label"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="apellido-label">Apellido</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtApellido" runat="server" CssClass="mdc-text-field__input" aria-labelledby="apellido-label"></asp:TextBox>
+            </label>
+        </div>
 
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="dni-label">DNI</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtDNI" runat="server" CssClass="mdc-text-field__input" aria-labelledby="dni-label"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="sexo-label">Sexo</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:DropDownList ID="ddlSexo" runat="server" CssClass="mdc-text-field__input" aria-labelledby="sexo-label">
+                    <asp:ListItem Text="Masculino" Value="M"></asp:ListItem>
+                    <asp:ListItem Text="Femenino" Value="F"></asp:ListItem>
+                </asp:DropDownList>
+            </label>
+        </div>
+
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="fecha-nacimiento-label">Fecha de nacimiento</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtFechaNacimiento" runat="server" CssClass="mdc-text-field__input" aria-labelledby="fecha-nacimiento-label" type="date"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="fecha-inicio-label">Fecha de inicio de actividades</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtFechaInicio" runat="server" CssClass="mdc-text-field__input" aria-labelledby="fecha-inicio-label" type="date"></asp:TextBox>
+            </label>
+        </div>
+
+        <div class="group">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="clave-label">Clave</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtClave" runat="server" CssClass="mdc-text-field__input" aria-labelledby="clave-label" TextMode="Password"></asp:TextBox>
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="repetir-clave-label">Repetí la clave</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox ID="txtRepetirClave" runat="server" CssClass="mdc-text-field__input" aria-labelledby="repetir-clave-label" TextMode="Password"></asp:TextBox>
+            </label>
+        </div>
+
+        <br>
+        <asp:LinkButton ID="btnCrearCuenta" runat="server" CssClass="mdc-button mdc-button--raised">
+            <span class="mdc-button__label">Crear cuenta</span>
+        </asp:LinkButton>
     </div>
+</main>
 
-    <div class="group">
-
-      <label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">DNI</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label>
-      <label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Sexo</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <select name="" class="mdc-text-field__input" id="sexo_select"></select>
-      </label>
-    </div>
-
-    <div class="group"><label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Fecha de nacimiento</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="date" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label> <label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Fecha de inicio de actividades</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="date" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label></div>
-
-    <div class="group"><label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Clave</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label><label class="mdc-text-field mdc-text-field--outlined">
-        <span class="mdc-notched-outline">
-          <span class="mdc-notched-outline__leading"></span>
-          <span class="mdc-notched-outline__notch">
-            <span class="mdc-floating-label" id="my-label-id">Repetí la clave</span>
-          </span>
-          <span class="mdc-notched-outline__trailing"></span>
-        </span>
-        <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-      </label></div>
-    <br>
-    <button class="mdc-button mdc-button--raised">
-      <span class="mdc-button__label">Crear cuenta</span>
-    </button>
-    </div>
-    
-  </div>
-  </main>
+  </form>
 </body>
 
 </html>

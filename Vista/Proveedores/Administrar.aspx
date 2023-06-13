@@ -1,85 +1,165 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administrar.aspx.cs" Inherits="Vista.Proveedores.Administrar" %>
+<html lang="en">
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <title></title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plantilla</title>
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/index.css" />
+  <script src="/index.js"></script>
 </head>
+
 <body>
-    <form class="container-fluid flex-column align-items-center" id="form1" runat="server">
-        <h1>Administrar Proveedores</h1>
-        <br />
-        <br />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th scope="col">CUIT</th>
-                    <th scope="col">Razón Social</th>
-                    <th scope="col">Contacto</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Localidad</th>
-                    <th scope="col">Código Postal</th>
-                    <th scope="col">Provincia / Estado</th>
-                    <th scope="col">País</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Eliminar</button>
-                    </td>
-                    <th scope="row">98 444 500</th>
-                    <td>BURGER KING</td>
-                    <td>
-                        <button type="button" class="btn btn-link">Llamar</button>
-                        <button type="button" class="btn btn-link">Correo</button></td>
-                    <td>Av. Siempreviva 736</td>
-                    <td>Springfield</td>
-                    <td>I400</td>
-                    <td>Illinois</td>
-                    <td>Estados Unidos</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Eliminar</button>
-                    </td>
-                    <th scope="row">98 444 501</th>
-                    <td>MAROLIO</td>
-                    <td>
-                        <button type="button" class="btn btn-link">Llamar</button>
-                        <button type="button" class="btn btn-link">Correo</button></td>
-                    <td>Av. Larralde 1001</td>
-                    <td>Tigre</td>
-                    <td>B1648</td>
-                    <td>Buenos Aires Provincia</td>
-                    <td>Argentina</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Eliminar</button>
-                    </td>
-                    <th scope="row">98 444 520</th>
-                    <td>DOGUI</td>
-                    <td>
-                        <button type="button" class="btn btn-link">Llamar</button>
-                        <button type="button" class="btn btn-link">Correo</button></td>
-                    <td>Av. Farfalla 856</td>
-                    <td>Santa Rosa</td>
-                    <td>P4233</td>
-                    <td>La Pampa</td>
-                    <td>Argentina</td>
-                </tr>
-            </tbody>
+ <div class="contents">
+  <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+          aria-label="Open navigation menu">menu</button>
+        <span class="mdc-top-app-bar__title">Pet Shop</span>
+      </section>
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+       
+        <button class="mdc-button mdc-top-app-bar__action-item">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">ADMIN</span>
+        </button>
+        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
+        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+          aria-label="Options">more_vert</button>
+      </section>
+    </div>
+  </header>
+  <main class="mdc-top-app-bar--fixed-adjust obj--main">
+    <h2>Proveedores</h2>
+    <div class="searchbox">
+      <span class="text">Buscar</span>
+      <span class="material-icons">search</span>
+    </div>
+    <div class="mdc-data-table">
+      <div class="mdc-data-table__table-container">
+        <table class="mdc-data-table__table" aria-label="Dessert calories">
+          <thead>
+            <tr class="mdc-data-table__header-row">
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Acciones</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">CUIT</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Razón social</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Nombre de contacto</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Contacto</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Dirección</th>
+            </tr>
+          </thead>
+          <tbody class="mdc-data-table__content">
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">34 116 458</td>
+              <td class="mdc-data-table__cell">Avon Dogs</td>
+              <td class="mdc-data-table__cell">Palermo Domínguez</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. de los Lagos 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">45 306 272</td>
+              <td class="mdc-data-table__cell">Delta Dogs</td>
+              <td class="mdc-data-table__cell">Santiago Aguirre</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Río Sarmiento 450, Tigre Delta, Buenos Aires, Argentina (B1649)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">38 177 385</td>
+              <td class="mdc-data-table__cell">Whiskas</td>
+              <td class="mdc-data-table__cell">Marcelo Cervantes</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. Cazón 3190, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">56 657 765</td>
+              <td class="mdc-data-table__cell">Dogui ARG</td>
+              <td class="mdc-data-table__cell">Gonzalo Venti</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. Dardo Rocha 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">34 116 458</td>
+              <td class="mdc-data-table__cell">Avon Dogs</td>
+              <td class="mdc-data-table__cell">Palermo Domínguez</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. de los Lagos 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">45 306 272</td>
+              <td class="mdc-data-table__cell">Delta Dogs</td>
+              <td class="mdc-data-table__cell">Santiago Aguirre</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Río Sarmiento 450, Tigre Delta, Buenos Aires, Argentina (B1649)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">38 177 385</td>
+              <td class="mdc-data-table__cell">Whiskas</td>
+              <td class="mdc-data-table__cell">Marcelo Cervantes</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. Cazón 3190, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+            <tr class="mdc-data-table__row">
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-edit">edit</button><button
+                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
+              <td class="mdc-data-table__cell">56 657 765</td>
+              <td class="mdc-data-table__cell">Dogui ARG</td>
+              <td class="mdc-data-table__cell">Gonzalo Venti</td>
+              <td class="mdc-data-table__cell"><button
+                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
+                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
+              <td class="mdc-data-table__cell">Av. Dardo Rocha 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
+            </tr>
+          </tbody>
         </table>
-    </form>
+      </div>
+    </div>
+  </main>
+ </div>
 </body>
+
 </html>
