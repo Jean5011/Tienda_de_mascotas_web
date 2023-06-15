@@ -4,10 +4,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.33423.256
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vista", "Vista.csproj", "{91006D38-8423-420A-A1F9-9446A78CEFB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F1BD708-EA64-4046-82D4-77FCC8EC29E4} = {7F1BD708-EA64-4046-82D4-77FCC8EC29E4}
+		{18FB97B0-8B3E-4CA2-8A59-2947821AC331} = {18FB97B0-8B3E-4CA2-8A59-2947821AC331}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datos", "..\Datos\Datos.csproj", "{3D67CA63-662C-4FAD-B60B-5CC088178B2A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18FB97B0-8B3E-4CA2-8A59-2947821AC331} = {18FB97B0-8B3E-4CA2-8A59-2947821AC331}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "..\Negocio\Negocio.csproj", "{7F1BD708-EA64-4046-82D4-77FCC8EC29E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3D67CA63-662C-4FAD-B60B-5CC088178B2A} = {3D67CA63-662C-4FAD-B60B-5CC088178B2A}
+		{18FB97B0-8B3E-4CA2-8A59-2947821AC331} = {18FB97B0-8B3E-4CA2-8A59-2947821AC331}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "..\Entidades\Entidades.csproj", "{18FB97B0-8B3E-4CA2-8A59-2947821AC331}"
 EndProject

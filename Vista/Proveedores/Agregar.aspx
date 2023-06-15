@@ -9,7 +9,7 @@
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
@@ -19,6 +19,7 @@
 </head>
 
 <body>
+    <form id="form1" runat="server">
   <div class="contents">
     <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
       <div class="mdc-top-app-bar__row">
@@ -36,9 +37,16 @@
           <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
           <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
             aria-label="Options">more_vert</button>
+            <asp:GridView ID="GridView1" runat="server">
+            </asp:GridView>
+            
+            <br />
         </section>
       </div>
     </header>
+      <br />  <br />  <br />  <br />  <br />  <br />
+      <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+     <!-- 
     <main class="mdc-top-app-bar--fixed-adjust obj--main">
       <div class="page">
         <h2>Añadir proveedor</h2>
@@ -161,6 +169,8 @@
       </div>
     </main>
   </div>
+     -->
+    </form>
 </body>
 
 </html>

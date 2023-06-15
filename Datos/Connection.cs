@@ -9,12 +9,10 @@ using System.Data;
 namespace Datos {
     public class Connection {
         public static class Database {
-            public static string Neptuno { get { return "Neptuno"; } }
-            public static string BDSucursales { get { return "BDSucursales"; } }
-            public static string Libreria { get { return "Libreria"; } }
-            public static string Viajes { get { return "Viajes"; } }
+            public static string Pets { get { return "Pets"; } }
         }
-        public string ServerName { get { return "localhost\\SQLEXPRESS"; } }
+        public string ServerName { get { return "arroz-con-leche.database.windows.net"; } }
+        private string Password { get { return "Boiled.potato"; } }
         public bool IntegratedSecurity { get { return true; } }
         public string DatabaseName { get; set; }
         public Response Response = new Response() { };
@@ -27,10 +25,11 @@ namespace Datos {
         /// <param name="DatabaseName">Nombre de la base de datos a la que querés conectar. Para Neptuno, hay una variable: Database.Neptuno.</param>
         /// <returns></returns>
         public SqlConnection OpenConnection(string DatabaseName) {
-            SqlConnection con;
+            SqlConnection connection;
+         
             try {
-                string r = $"Data Source={ServerName};Initial Catalog={DatabaseName};Integrated Security={IntegratedSecurity}";
-                con = new SqlConnection(r);
+                string connectionString = $"Data Source={this.ServerName};Initial Catalog={DatabaseName};User ID=maximo;Password={this.Password}";
+                connection = new SqlConnection(connectionString);
 
             }
             catch (SqlException err) {
@@ -40,7 +39,7 @@ namespace Datos {
                 this.Response.Exception = err;
                 return null;
             }
-            return con;
+            return connection;
         }
         /// <summary>
         /// Realiza una consulta en la base de datos y recolecta datos obtenidos. 
