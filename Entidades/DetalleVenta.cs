@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades {
     class DetalleVenta {
-        public Venta Cabecera { get; set; } // ¿Dejamos Venta (Cabecera) o implementamos un Id?
+        public Venta Cabecera { get; set; } 
         public Producto Producto { get; set; }
         public Proveedor Proveedor { get; set; } // ¿Producto no trae ya el CUIT del Proveedor?
         public string Fecha { get; set; }
@@ -16,3 +16,4 @@ namespace Entidades {
 
     }
 }
+

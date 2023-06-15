@@ -20,3 +20,4 @@ namespace Entidades {
         public bool Estado { get; set; }
     }
 }
+
