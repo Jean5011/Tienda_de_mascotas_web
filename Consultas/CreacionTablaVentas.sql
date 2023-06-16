@@ -1,9 +1,10 @@
 use Pets
 go
 
+
 Create Table Ventas
 (
-CodVenta_Vt varchar(10) not null,
+CodVenta_Vt int identity(1,1),
 DNIEmpleado_Vt char(12) not null,
 TipoPago_Vt varchar(50) not null,
 Fecha_Vt Date not null,
