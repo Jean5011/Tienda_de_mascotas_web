@@ -112,5 +112,37 @@ namespace Datos {
             }
         }
 
+        public Response ExecuteStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
+            try {
+                using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, con)) {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        if (parameters != null) {
+                            foreach (KeyValuePair<string, object> parameter in parameters) {
+                                command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                            }
+                        }
+
+                        con.Open();
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        return new Response() {
+                            AffectedRows = rowsAffected
+                        };
+                    }
+                }
+            }
+            catch (Exception ex) {
+                return new Response() {
+                    ErrorFound = true,
+                    Message = "Error al ejecutar el procedimiento almacenado.",
+                    Details = ex.ToString(),
+                    Exception = ex,
+                    AffectedRows = 0
+                };
+            }
+        }
+
     }
 }
