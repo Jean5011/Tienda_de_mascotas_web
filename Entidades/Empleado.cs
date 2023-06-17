@@ -36,6 +36,8 @@ namespace Entidades {
         public string Localidad { get; set; }
         public string Nacionalidad { get; set; }
         public bool Estado { get; set; }
+        public string Hash { get; set; }
+        public string Salt { get; set; }
     }
 }
 
