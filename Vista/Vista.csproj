@@ -195,9 +195,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Datos\Datos.csproj">
-      <Project>{3d67ca63-662c-4fad-b60b-5cc088178b2a}</Project>
-      <Name>Datos</Name>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{18fb97b0-8b3e-4ca2-8a59-2947821ac331}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{7f1bd708-ea64-4046-82d4-77fcc8ec29e4}</Project>
+      <Name>Negocio</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
