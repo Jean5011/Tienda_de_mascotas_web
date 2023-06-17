@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Datos {
+namespace Entidades {
     public class Response {
         public bool ErrorFound { get; set; }
         public string Message { get; set; }
