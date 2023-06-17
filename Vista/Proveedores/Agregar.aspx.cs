@@ -5,11 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Datos;
+//using Datos;
 namespace Vista.Proveedores {
     public partial class Agregar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            Connection connection = new Connection("Pets");
+            /*Connection connection = new Connection("Pets");
             Response response = connection.FetchData("SELECT * FROM Proveedores");
 
             if (!response.ErrorFound)
@@ -28,7 +28,7 @@ namespace Vista.Proveedores {
                 // Maneja el error en caso de que ocurra
                 Console.WriteLine("Error al obtener datos de la base de datos: " + response.Message);
             }
-
+            */
         }
     }
 }
