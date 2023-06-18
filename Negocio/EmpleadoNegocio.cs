@@ -8,14 +8,16 @@ using Entidades;
 using Datos;
 using System.Data;
 using System.Diagnostics;
-//using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-//using Microsoft.IdentityModel.Tokens;
 
 namespace Negocio {
     public class EmpleadoNegocio {
         public EmpleadoNegocio() { }
+
+        /// <summary>
+        /// Generar salt (Texto aleatorio para fortalecer una contraseña)
+        /// </summary>
+        /// <returns>El Salt generado.</returns>
         byte[] GenerarSalt() {
             byte[] salt = new byte[16]; // 16 bytes = 128 bits
             using (var rng = new RNGCryptoServiceProvider()) {
@@ -23,6 +25,13 @@ namespace Negocio {
             }
             return salt;
         }
+
+        /// <summary>
+        /// Genera un hash a partir de una contraseña.
+        /// </summary>
+        /// <param name="password">Contraseña ingresada.</param>
+        /// <param name="salt">Salt generada.</param>
+        /// <returns></returns>
         byte[] GenerarHash(string password, byte[] salt) {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] combinedBytes = new byte[passwordBytes.Length + salt.Length];
@@ -34,6 +43,14 @@ namespace Negocio {
                 return sha256.ComputeHash(combinedBytes);
             }
         }
+
+        /// <summary>
+        /// Verifica una clave [DEPRECATED]
+        /// </summary>
+        /// <param name="password">Contraseña ingresada.</param>
+        /// <param name="savedHash">Hash rescatado de la base de datos.</param>
+        /// <param name="savedSalt">Salt rescatado de la base de datos.</param>
+        /// <returns>True si las claves concuerdan. False en otro caso.</returns>
         bool VerificarClave(string password, byte[] savedHash, byte[] savedSalt) {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] combinedBytes = new byte[passwordBytes.Length + savedSalt.Length];
@@ -46,18 +63,27 @@ namespace Negocio {
                 return savedHash.SequenceEqual(inputHash);
             }
         }
+
+        /// <summary>
+        /// Verifica una clave usando un Hash en formato string.
+        /// </summary>
+        /// <param name="password">La contraseña ingresada.</param>
+        /// <param name="savedHash">El hash rescatado de la base de datos, string.</param>
+        /// <param name="savedSalt">El salt rescatado de la base de datos.</param>
+        /// <returns>True si las claves concuerdan, False en otro caso.</returns>
         bool VerificarClaveString(string password, string savedHash, byte[] savedSalt) {
-            string estado = "NADA_TODAVIA";
             byte[] newHash = GenerarHash(password, savedSalt);
             string newHashString = Convert.ToBase64String(newHash);
-            bool er = newHashString == savedHash;
-            if (er) {
-                estado = "SON_IGUALES";
-            }
-            else estado = "NO_COINCIDEN";
-            return er;
+            bool coinciden = newHashString == savedHash;
+            return coinciden;
 
         }
+
+        /// <summary>
+        /// Extrae los datos de un DataSet y los convierte en un objeto tipo Empleado.
+        /// </summary>
+        /// <param name="resultDataSet">El DataSet en cuestión.</param>
+        /// <returns>Response con el resultado de la operación.</returns>
         public Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
@@ -91,6 +117,13 @@ namespace Negocio {
             }
 
         }
+
+        /// <summary>
+        /// Comprueba la veracidad de una clave ingresada al descargar la clave de la base de datos y compararlas.
+        /// </summary>
+        /// <param name="clave">La clave ingresada por el usuario.</param>
+        /// <param name="DNI">El DNI ingresado por el usuario.</param>
+        /// <returns></returns>
         public Response ComprobarClaveIngresada(string clave, string DNI) {
             Response resultadoBusquedaEmpleado = EmpleadoDatos.BuscarEmpleadoPorDNI(DNI);
             if(resultadoBusquedaEmpleado.ErrorFound) {
@@ -102,7 +135,6 @@ namespace Negocio {
                     return extracted_data;
                 } else {
                     Empleado obj = extracted_data.ObjectReturned as Empleado;
-                    byte[] _hash = Convert.FromBase64String(obj.Hash);
                     byte[] _salt = Convert.FromBase64String(obj.Salt);
                     bool resultado = VerificarClaveString(clave, obj.Hash, _salt);
 
@@ -113,14 +145,20 @@ namespace Negocio {
                 }
             }
         }
+
+        /// <summary>
+        /// Inicia sesión a un usuario en específico y le genera un token, a partir de las credenciales ingresadas.
+        /// </summary>
+        /// <param name="DNI">El DNI ingresado.</param>
+        /// <param name="clave">La clave ingresada.</param>
+        /// <returns>Response con el resultado de la operación.</returns>
         public Response IniciarSesion(string DNI, string clave) {
             Response resultadoClaves = ComprobarClaveIngresada(clave, DNI);
             bool clavesCorrectas = !(resultadoClaves.ErrorFound);
             if(clavesCorrectas) {
                 var tk = new SesionNegocio();
-                string token = tk.GenerarToken(DNI);
-                Trace.WriteLine("TOKEN GENERADO: " + token);
-                tk.SetCookie("_au", token, 1);
+                Response res = tk.AbrirSesion(DNI);
+                return res;
             }
             return resultadoClaves;
             
