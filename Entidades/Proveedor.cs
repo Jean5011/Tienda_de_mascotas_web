@@ -5,7 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Entidades {
-    class Proveedor {
+   
+    public class Proveedor {
+        public static class Columns
+        {
+            public const string CUIT = "CUIT_Prov";
+            public const string RazonSocial = "RazonSocial_Prov";
+            public const string NombreContacto = "NombreDeContacto_Prov";
+            public const string CorreoElectronico = "CorreoElectronico_Prov";
+            public const string Telefono = "Telefono_Prov";
+            public const string Direccion = "Direccion_Prov";
+            public const string Provincia = "Provincia_Prov";
+            public const string Localidad = "Localidad_Prov";
+            public const string Pais = "Pais_Prov";
+            public const string CodigoPostal = "CodigoPostal_Prov";
+        }
+        public const string Table = "Proveedores";
         public string CUIT { get; set; }
         public string RazonSocial { get; set; }
         public string NombreContacto { get; set; }
@@ -16,6 +31,7 @@ namespace Entidades {
         public string Provincia { get; set; }
         public string Pais { get; set; }
         public string CodigoPostal { get; set; }
+        
     }
 }
 
