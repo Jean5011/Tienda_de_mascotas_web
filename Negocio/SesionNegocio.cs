@@ -71,6 +71,10 @@ namespace Negocio {
             }
         }
 
+        /// <summary>
+        /// Elimina una cookie.
+        /// </summary>
+        /// <param name="key">La propiedad.</param>
         public void EliminarCookie(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
                 var cookie = new HttpCookie(key);
@@ -141,6 +145,11 @@ namespace Negocio {
             }
         }
 
+        /// <summary>
+        /// Toma un DataSet y establece un objeto Sesion a partir del primer registro encontrado.
+        /// </summary>
+        /// <param name="resultDataSet">El DataSet en cuestión.</param>
+        /// <returns>Un Response con el resultado de la operación.</returns>
         public Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
@@ -230,6 +239,21 @@ namespace Negocio {
                 ErrorFound = true,
                 Message = ErrorCode.NO_SESSION_FOUND
             };
+        }
+
+        /// <summary>
+        /// Autentica. Verifica que el token sea válido, útil para antes de realizar una acción.
+        /// </summary>
+        /// <returns>True si el token es válido, false en caso contrario.</returns>
+        public bool Autenticar() {
+            string token = GetCookieValue(AUTH_COOKIE);
+            if(token != null) {
+                string dni;
+                DecodificarToken(token, out dni);
+                return VerificarAutorizacionToken(token, dni);
+            }
+            return false;
+
         }
 
         /// <summary>
