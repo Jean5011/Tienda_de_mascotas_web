@@ -8,13 +8,14 @@ using Entidades;
 using Datos;
 using System.Data;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
+//using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
+//using Microsoft.IdentityModel.Tokens;
 
 namespace Negocio {
     public class EmpleadoNegocio {
+        public EmpleadoNegocio() { }
         byte[] GenerarSalt() {
             byte[] salt = new byte[16]; // 16 bytes = 128 bits
             using (var rng = new RNGCryptoServiceProvider()) {
@@ -44,6 +45,18 @@ namespace Negocio {
                 byte[] inputHash = sha256.ComputeHash(combinedBytes);
                 return savedHash.SequenceEqual(inputHash);
             }
+        }
+        bool VerificarClaveString(string password, string savedHash, byte[] savedSalt) {
+            string estado = "NADA_TODAVIA";
+            byte[] newHash = GenerarHash(password, savedSalt);
+            string newHashString = Convert.ToBase64String(newHash);
+            bool er = newHashString == savedHash;
+            if (er) {
+                estado = "SON_IGUALES";
+            }
+            else estado = "NO_COINCIDEN";
+            return er;
+
         }
         public Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
@@ -91,10 +104,10 @@ namespace Negocio {
                     Empleado obj = extracted_data.ObjectReturned as Empleado;
                     byte[] _hash = Convert.FromBase64String(obj.Hash);
                     byte[] _salt = Convert.FromBase64String(obj.Salt);
-                    bool resultado = VerificarClave(clave, _hash, _salt);
+                    bool resultado = VerificarClaveString(clave, obj.Hash, _salt);
 
                     return new Response() {
-                        ErrorFound = resultado,
+                        ErrorFound = !resultado,
                         Message = resultado ? "SUCCESS" : "INCORRECT_DATA"
                     };
                 }
@@ -103,6 +116,12 @@ namespace Negocio {
         public Response IniciarSesion(string DNI, string clave) {
             Response resultadoClaves = ComprobarClaveIngresada(clave, DNI);
             bool clavesCorrectas = !(resultadoClaves.ErrorFound);
+            if(clavesCorrectas) {
+                var tk = new SesionNegocio();
+                string token = tk.GenerarToken(DNI);
+                Trace.WriteLine("TOKEN GENERADO: " + token);
+                tk.SetCookie("_au", token, 1);
+            }
             return resultadoClaves;
             
         }

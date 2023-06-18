@@ -104,7 +104,7 @@
         <br>
     </div>
     <div class="col principal">
-        <h1>Ventas que realizó</h1>
+        <h1>ESTADO: <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h1>
         <br>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
     <Columns>
