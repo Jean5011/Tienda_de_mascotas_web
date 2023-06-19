@@ -9,8 +9,9 @@ using System.Text.RegularExpressions;
 
 namespace Negocio
 {
-    public class ProveedorNegocio
+    class ProveedorNegociocs
     {
+        Proveedor Proveedor;
         public static Response ObtenerListaDeProveedores()
         {
             return ProveedorDatos.ObtenerListaDeProveedores();
@@ -35,8 +36,8 @@ namespace Negocio
             }
             
         }
-      
-         /*
+        /* public static Response ObtenerListaDeProveedores()
+         
          public static Response ObtenerProveedorByCUIT(string CUIT)
          {
              string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit";
@@ -85,6 +86,6 @@ namespace Negocio
                              { "@cuit", CUIT }
                          }
                      );
-         }*/
-     }
-}
+         }
+     }*/
+    }

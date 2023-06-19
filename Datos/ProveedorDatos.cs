@@ -20,7 +20,7 @@ namespace Datos
             $"[{Proveedor.Columns.Provincia}]," +
             $"[{Proveedor.Columns.Localidad}]," +
             $"[{Proveedor.Columns.Pais}]," +
-            $"[{Proveedor.Columns.CodigoPostal}]";
+            $"[{Proveedor.Columns.CodigoPostal}],";
 
      public static Response ObtenerListaDeProveedores()
         {

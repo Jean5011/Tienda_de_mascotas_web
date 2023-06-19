@@ -18,8 +18,6 @@
 </head>
 
 <body>
-    <form ></form>
-    <!--
   <div class="contents">
     <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
       <div class="mdc-top-app-bar__row">
@@ -156,7 +154,6 @@
 </main>
 
   </div>
-    -->
 </body>
 
 </html>
