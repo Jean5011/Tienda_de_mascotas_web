@@ -18,7 +18,7 @@ SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Precio,@Estado
 END
 GO
 
-CREATE PROCEDURE SP_Productos_DarDeBaja
+CREATE PROCEDURE SP_Productos_ActualizarEstado
 @Codigo varchar(10),
 @Estado bit
 AS
@@ -60,3 +60,4 @@ BEGIN
     PRINT('No está permitido eliminar registros de la tabla "Productos" mediante el uso de "Delete".');
     ROLLBACK;
 END;
+
