@@ -66,6 +66,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Animales\AgregarAnimal.aspx" />
+    <Content Include="Animales\VerAnimales.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
     <Content Include="Empleados\CrearCuenta.aspx" />
@@ -85,6 +87,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animales\AgregarAnimal.aspx.cs">
+      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animales\AgregarAnimal.aspx.designer.cs">
+      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Animales\VerAnimales.aspx.cs">
+      <DependentUpon>VerAnimales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animales\VerAnimales.aspx.designer.cs">
+      <DependentUpon>VerAnimales.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Empleados\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
