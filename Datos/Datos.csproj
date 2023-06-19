@@ -90,6 +90,7 @@
     <Compile Include="Connection.cs" />
     <Compile Include="EmpleadoDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProveedorDatos.cs" />
     <Compile Include="SesionDatos.cs" />
   </ItemGroup>
   <ItemGroup>
