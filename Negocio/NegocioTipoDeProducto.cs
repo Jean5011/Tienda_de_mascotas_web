@@ -12,10 +12,10 @@ using System.Security.Claims;
 
 namespace Negocio
 {
-    class NegocioTipoDeProducto
+    public class NegocioTipoDeProducto
     {
         
-        public Response GetAnimales()
+        public Response GetTipoDeProducto()
         {
             return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
         }
@@ -25,17 +25,17 @@ namespace Negocio
             return DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
         }
 
-        public Response IgresarAnimal(TipoProducto A)
+        public Response IgresarTipoDeProducto(TipoProducto A)
         {
             return DaoTiposDeProductos.IgresarTipoProducto(A);
         }
 
-        public Response ActualizarAnimal(TipoProducto A)
+        public Response ActualizarTipoDeProducto(TipoProducto A)
         {
             return DaoTiposDeProductos.ActualizarTipoProducto(A);
         }
 
-        public Response EliminarAnimal(TipoProducto A)
+        public Response EliminarTipoDeProducto(TipoProducto A)
         {
             return DaoTiposDeProductos.EliminarTipoProducto(A);
         }

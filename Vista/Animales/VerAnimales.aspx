@@ -48,7 +48,7 @@
                         <asp:Button ID="BT_Filtrar" runat="server" Text="Filtrar" />
                     </td>
                     <td>
-                        <asp:Button ID="BT_Todos" runat="server" Text="Todos" />
+                        <asp:Button ID="BT_Todos" runat="server" Text="Todos" OnClick="BT_Todos_Click" />
                     </td>
                 </tr>
                 <tr>
@@ -62,7 +62,7 @@
         <table class="auto-style1">
             <tr>
                 <td>
-                    <asp:GridView ID="GV_Datos" runat="server">
+                    <asp:GridView ID="GV_Datos" runat="server" OnSelectedIndexChanged="GV_Datos_SelectedIndexChanged">
                     </asp:GridView>
                 </td>
             </tr>
