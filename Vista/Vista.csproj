@@ -81,6 +81,7 @@
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
+    <Content Include="Tipos\IgresarTipoDePrductos.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
     <Content Include="Ventas\Crear.aspx" />
     <Content Include="Ventas\VerFactura.aspx" />
@@ -178,6 +179,13 @@
     </Compile>
     <Compile Include="Tipos\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\IgresarTipoDePrductos.aspx.cs">
+      <DependentUpon>IgresarTipoDePrductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\IgresarTipoDePrductos.aspx.designer.cs">
+      <DependentUpon>IgresarTipoDePrductos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
