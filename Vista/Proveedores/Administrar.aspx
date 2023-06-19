@@ -18,13 +18,15 @@
 </head>
 
 <body>
- <div class="contents">
+ <form id="form1" runat="server">
+      <div class="contents">
   <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
           aria-label="Open navigation menu">menu</button>
         <span class="mdc-top-app-bar__title">Pet Shop</span>
+          
       </section>
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
        
@@ -35,131 +37,33 @@
         <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
         <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
           aria-label="Options">more_vert</button>
+ 
       </section>
     </div>
   </header>
   <main class="mdc-top-app-bar--fixed-adjust obj--main">
     <h2>Proveedores</h2>
+
     <div class="searchbox">
-      <span class="text">Buscar</span>
-      <span class="material-icons">search</span>
+     <asp:TextBox ID="TextBox1" runat="server"  ValidationGroup="GrupoBuscar"></asp:TextBox>
+     <asp:Button ID="Button1" runat="server" Text="Buscar" OnClick="Button1_Click"  ValidationGroup="GrupoBuscar" />
+        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" 
+            runat="server" ErrorMessage="no es un cuit"
+            ValidationExpression="^\d{10}$" 
+            ValidationGroup="GrupoBuscar" ControlToValidate="TextBox1">Cuit incorrecto</asp:RegularExpressionValidator>
     </div>
     <div class="mdc-data-table">
       <div class="mdc-data-table__table-container">
-        <table class="mdc-data-table__table" aria-label="Dessert calories">
-          <thead>
-            <tr class="mdc-data-table__header-row">
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Acciones</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">CUIT</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Razón social</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Nombre de contacto</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Contacto</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Dirección</th>
-            </tr>
-          </thead>
-          <tbody class="mdc-data-table__content">
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">34 116 458</td>
-              <td class="mdc-data-table__cell">Avon Dogs</td>
-              <td class="mdc-data-table__cell">Palermo Domínguez</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. de los Lagos 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">45 306 272</td>
-              <td class="mdc-data-table__cell">Delta Dogs</td>
-              <td class="mdc-data-table__cell">Santiago Aguirre</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Río Sarmiento 450, Tigre Delta, Buenos Aires, Argentina (B1649)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">38 177 385</td>
-              <td class="mdc-data-table__cell">Whiskas</td>
-              <td class="mdc-data-table__cell">Marcelo Cervantes</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. Cazón 3190, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">56 657 765</td>
-              <td class="mdc-data-table__cell">Dogui ARG</td>
-              <td class="mdc-data-table__cell">Gonzalo Venti</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. Dardo Rocha 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">34 116 458</td>
-              <td class="mdc-data-table__cell">Avon Dogs</td>
-              <td class="mdc-data-table__cell">Palermo Domínguez</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. de los Lagos 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">45 306 272</td>
-              <td class="mdc-data-table__cell">Delta Dogs</td>
-              <td class="mdc-data-table__cell">Santiago Aguirre</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Río Sarmiento 450, Tigre Delta, Buenos Aires, Argentina (B1649)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">38 177 385</td>
-              <td class="mdc-data-table__cell">Whiskas</td>
-              <td class="mdc-data-table__cell">Marcelo Cervantes</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. Cazón 3190, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">56 657 765</td>
-              <td class="mdc-data-table__cell">Dogui ARG</td>
-              <td class="mdc-data-table__cell">Gonzalo Venti</td>
-              <td class="mdc-data-table__cell"><button
-                  class="material-icons mdc-icon-button btn-act btn-call">call</button><button
-                  class="material-icons mdc-icon-button btn-act btn-mail">mail</button></td>
-              <td class="mdc-data-table__cell">Av. Dardo Rocha 3500, Tigre, Buenos Aires, Argentina (B1648)</td>
-            </tr>
-          </tbody>
-        </table>
+         
+        <asp:GridView ID="GridView1" runat="server">
+          </asp:GridView>
       </div>
     </div>
   </main>
  </div>
+       
+        </form>
+
 </body>
 
 </html>
