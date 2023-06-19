@@ -16,7 +16,7 @@ namespace Datos
         private static readonly string ALL_COLUMNS = $"[{TipoProducto.Columns.Codigo}], " +
                                     $"[{TipoProducto.Columns.CodAnimal}], " +
                                    $"[{TipoProducto.Columns.TipoDeProducto}], " +
-                                   $"[{TipoProducto.Columns.Descripcion}], ";
+                                   $"[{TipoProducto.Columns.Descripcion}] ";
 
         public static class Procedures
         {
