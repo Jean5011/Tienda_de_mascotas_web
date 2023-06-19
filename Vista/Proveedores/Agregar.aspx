@@ -19,8 +19,10 @@
 </head>
 
 <body>
+   
     <form id="form1" runat="server">
-  <div class="contents">
+         <!--
+ <div class="contents">
     <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
       <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -44,9 +46,6 @@
         </section>
       </div>
     </header>
-      <br />  <br />  <br />  <br />  <br />  <br />
-      <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-     <!-- 
     <main class="mdc-top-app-bar--fixed-adjust obj--main">
       <div class="page">
         <h2>Añadir proveedor</h2>
@@ -169,7 +168,7 @@
       </div>
     </main>
   </div>
-     -->
+   -->
     </form>
 </body>
 
