@@ -15,7 +15,7 @@ namespace Datos
         public DaoAnimales() { }
         private static readonly string ALL_COLUMNS = $"[{Animal.Columns.Codigo}], " +
                                     $"[{Animal.Columns.Nombre}], " +
-                                    $"[{Animal.Columns.Raza}], ";
+                                    $"[{Animal.Columns.Raza}]";
 
         public static class Procedures
         {
