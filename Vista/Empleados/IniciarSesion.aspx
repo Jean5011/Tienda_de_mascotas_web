@@ -16,6 +16,7 @@
 </head>
 <body>
     <form id="form1" runat="server" class="contents">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -76,6 +77,11 @@
             </div>
 
         </main>
+        <aside class="mdc-snackbar">
+            <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+                <div class="mdc-snackbar__label" aria-atomic="false"></div>
+            </div>
+        </aside>
 
     </form>
 </body>

@@ -42,7 +42,7 @@
       </header>
       <main class="mdc-top-app-bar--fixed-adjust obj--main main-grid">
     <div class="col perfil">
-        <h2>Alejandro Gutiérrez</h2>
+        <h2 id="NombreEmpleadoTitulo" runat="server"></h2>
         <ul class="mdc-card mdc-card--outlined mdc-list mdc-list--two-line">
             <li class="mdc-list-item">
                 <span class="mdc-list-item__ripple"></span>

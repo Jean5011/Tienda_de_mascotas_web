@@ -12,19 +12,19 @@ namespace Datos {
     public class EmpleadoDatos {
         public EmpleadoDatos() { }
         private static readonly string ALL_COLUMNS = $"[{Empleado.Columns.DNI}], " +
-                                    $"[{Empleado.Columns.Nombre}], " +
-                                    $"[{Empleado.Columns.Apellido}], " +
-                                    $"[{Empleado.Columns.Sexo}], " +
-                                    $"[{Empleado.Columns.FechaNacimiento}], " +
-                                    $"[{Empleado.Columns.FechaInicio}], " +
-                                    $"[{Empleado.Columns.Sueldo}], " +
-                                    $"[{Empleado.Columns.Direccion}], " +
-                                    $"[{Empleado.Columns.Provincia}], " +
-                                    $"[{Empleado.Columns.Localidad}], " +
-                                    $"[{Empleado.Columns.Nacionalidad}], " +
-                                    $"[{Empleado.Columns.Estado}], " +
-                                    $"[{Empleado.Columns.Hash}], " +
-                                    $"[{Empleado.Columns.Salt}]";
+                                                    $"[{Empleado.Columns.Nombre}], " +
+                                                    $"[{Empleado.Columns.Apellido}], " +
+                                                    $"[{Empleado.Columns.Sexo}], " +
+                                                    $"[{Empleado.Columns.FechaNacimiento}], " +
+                                                    $"[{Empleado.Columns.FechaInicio}], " +
+                                                    $"[{Empleado.Columns.Sueldo}], " +
+                                                    $"[{Empleado.Columns.Direccion}], " +
+                                                    $"[{Empleado.Columns.Provincia}], " +
+                                                    $"[{Empleado.Columns.Localidad}], " +
+                                                    $"[{Empleado.Columns.Nacionalidad}], " +
+                                                    $"[{Empleado.Columns.Estado}], " +
+                                                    $"[{Empleado.Columns.Hash}], " +
+                                                    $"[{Empleado.Columns.Salt}]";
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
         }

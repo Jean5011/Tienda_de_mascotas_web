@@ -66,6 +66,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Animales\AgregarAnimal.aspx" />
+    <Content Include="Animales\VerAnimales.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
     <Content Include="Empleados\CrearCuenta.aspx" />
@@ -79,12 +81,27 @@
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
+    <Content Include="Tipos\IgresarTipoDePrductos.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
     <Content Include="Ventas\Crear.aspx" />
     <Content Include="Ventas\VerFactura.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animales\AgregarAnimal.aspx.cs">
+      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animales\AgregarAnimal.aspx.designer.cs">
+      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Animales\VerAnimales.aspx.cs">
+      <DependentUpon>VerAnimales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animales\VerAnimales.aspx.designer.cs">
+      <DependentUpon>VerAnimales.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Empleados\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -162,6 +179,14 @@
     </Compile>
     <Compile Include="Tipos\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="Tipos\IgresarTipoDePrductos.aspx.cs">
+      <DependentUpon>IgresarTipoDePrductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\IgresarTipoDePrductos.aspx.designer.cs">
+      <DependentUpon>IgresarTipoDePrductos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>

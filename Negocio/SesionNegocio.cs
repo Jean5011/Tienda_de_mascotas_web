@@ -11,8 +11,70 @@ using Datos;
 using System.Data;
 
 namespace Negocio {
-    public class SesionNegocio {
+    public class Token {
         private readonly string secretKey = "H3LJ4HL231K4H23L4KJHL12KJ37H534IU5OB3I4U5O3I42U5BOIUBO3U4B4HE5";
+        public string DNI { get; set; }
+        public DateTime FechaEmision { get; set; }
+
+        public Token() {
+
+        }
+
+        public string Generar() {
+            byte[] secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
+            var signingKey = new SymmetricSecurityKey(secretKeyBytes);
+
+            // Crear las claims, que son como los datos a guardar dentro del token.
+            var claims = new[] {
+                new Claim("dni", this.DNI),
+                new Claim("fe", this.FechaEmision.ToString())
+            };
+
+            // Crear el token en sí (Token JWT)
+            var token = new JwtSecurityToken(
+                issuer: "TPI",
+                audience: "PROG",
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(8),
+                signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            // Firmar el token generado
+            var tokenHandler = new JwtSecurityTokenHandler();
+            string tokenString = tokenHandler.WriteToken(token);
+
+            return tokenString;
+
+        }
+
+        public void Decodificar(string token) {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            // Configurar opciones de validación del token
+            var validationParameters = new TokenValidationParameters {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                ValidateIssuer = true,
+                ValidIssuer = "TPI",
+                ValidateAudience = true,
+                ValidAudience = "PROG",
+                ClockSkew = TimeSpan.Zero // No permitir margen de tiempo para la expiración
+            };
+
+            // Deserializar y validar el token JWT
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+
+            // Acceder a los claims
+            var claims = principal.Claims;
+            foreach (var claim in claims) {
+                if (claim.Type == "dni") this.DNI = claim.Value;
+                if (claim.Type == "fe") this.FechaEmision = DateTime.Parse(claim.Value);
+            }
+        }
+
+    }
+    public class SesionNegocio {
+        
         public static string Base64UrlEncode(string input) {
             byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
             string base64 = Convert.ToBase64String(inputBytes);
@@ -45,7 +107,7 @@ namespace Negocio {
         /// <param name="key">Propiedad</param>
         /// <param name="value">Valor</param>
         /// <param name="expirationDays">Días de vigencia</param>
-        public void SetCookie(string key, string value, int expirationDays = 0) {
+        public static void SetCookie(string key, string value, int expirationDays = 0) {
             var cookie = new HttpCookie(key, value);
 
             if (expirationDays > 0)
@@ -62,7 +124,7 @@ namespace Negocio {
         /// </summary>
         /// <param name="key">Propiedad</param>
         /// <returns>El contenido de la cookie, si existe. Caso contrario devuelve null.</returns>
-        public string GetCookieValue(string key) {
+        public static string GetCookieValue(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
                 return HttpContext.Current.Request.Cookies[key].Value;
             }
@@ -75,7 +137,7 @@ namespace Negocio {
         /// Elimina una cookie.
         /// </summary>
         /// <param name="key">La propiedad.</param>
-        public void EliminarCookie(string key) {
+        public static void EliminarCookie(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
                 var cookie = new HttpCookie(key);
                 cookie.Expires = DateTime.Now.AddDays(-1); // Establece la fecha de expiración en el pasado para eliminar la cookie
@@ -84,73 +146,11 @@ namespace Negocio {
         }
 
         /// <summary>
-        /// Genera un Token de autenticación.
-        /// </summary>
-        /// <param name="user">DNI del usuario logueado.</param>
-        /// <returns>El token generado.</returns>
-        public string GenerarToken(string user) {
-            byte[] secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-            var signingKey = new SymmetricSecurityKey(secretKeyBytes);
-
-            // Crear las claims, que son como los datos a guardar dentro del token.
-            var claims = new[] {
-                new Claim("dni", user)
-            };
-
-            // Crear el token en sí (Token JWT)
-            var token = new JwtSecurityToken(
-                issuer: "TPI",
-                audience: "PROG",
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(8),
-                signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-            );
-
-            // Firmar el token generado
-            var tokenHandler = new JwtSecurityTokenHandler();
-            string tokenString = tokenHandler.WriteToken(token);
-
-            return tokenString;
-
-        }
-
-        /// <summary>
-        /// Decodifica un token de autenticación.
-        /// </summary>
-        /// <param name="token">El token a decodificar.</param>
-        /// <param name="dni">El DNI encontrado, de hallarse.</param>
-        public void DecodificarToken(string token, out string dni) {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            // Configurar opciones de validación del token
-            var validationParameters = new TokenValidationParameters {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                ValidateIssuer = true,
-                ValidIssuer = "TPI",
-                ValidateAudience = true,
-                ValidAudience = "PROG",
-                ClockSkew = TimeSpan.Zero // No permitir margen de tiempo para la expiración
-            };
-
-            // Deserializar y validar el token JWT
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
-
-            // Acceder a los claims
-            var claims = principal.Claims;
-            dni = "";
-            foreach (var claim in claims) {
-                Trace.WriteLine($"Claim: {claim.Type} - Valor: {claim.Value}");
-                if (claim.Type == "dni") dni = claim.Value;
-            }
-        }
-
-        /// <summary>
         /// Toma un DataSet y establece un objeto Sesion a partir del primer registro encontrado.
         /// </summary>
         /// <param name="resultDataSet">El DataSet en cuestión.</param>
         /// <returns>Un Response con el resultado de la operación.</returns>
-        public Response ExtractDataFromDataSet(DataSet resultDataSet) {
+        public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Sesion obj = new Sesion() {
@@ -181,7 +181,7 @@ namespace Negocio {
         /// <param name="token">El token a buscar.</param>
         /// <param name="dni">El DNI del usuario en cuestión.</param>
         /// <returns></returns>
-        public bool VerificarAutorizacionToken(string token, string dni) {
+        public static bool VerificarAutorizacionToken(string token, string dni) {
             Response datos = SesionDatos.ObtenerSesion(token, dni);
             if (datos.ErrorFound) return false;
             else {
@@ -204,8 +204,12 @@ namespace Negocio {
         /// </summary>
         /// <param name="dni">DNI del usuario.</param>
         /// <returns>Response con el resultado de la transacción.</returns>
-        public Response AbrirSesion(string dni) {
-            string token = GenerarToken(dni);
+        public static Response AbrirSesion(string dni) {
+            Token i = new Token() {
+                DNI = dni,
+                FechaEmision = DateTime.Now
+            };
+            string token = i.Generar();
             Sesion obj = new Sesion() {
                 Empleado = new Empleado() {
                     DNI = dni
@@ -220,11 +224,12 @@ namespace Negocio {
         /// Cierra la sesión actual y borra la cookie de AUTH.
         /// </summary>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response CerrarSesion() {
+        public static Response CerrarSesion() {
             if (GetCookieValue(AUTH_COOKIE) != null) {
                 string token = GetCookieValue(AUTH_COOKIE);
-                string dni;
-                DecodificarToken(token, out dni);
+                Token k = new Token();
+                k.Decodificar(token);
+                string dni = k.DNI;
                 Sesion obj = new Sesion() {
                     Empleado = new Empleado() { DNI = dni },
                     Token = token
@@ -245,12 +250,12 @@ namespace Negocio {
         /// Autentica. Verifica que el token sea válido, útil para antes de realizar una acción.
         /// </summary>
         /// <returns>True si el token es válido, false en caso contrario.</returns>
-        public bool Autenticar() {
+        public static bool Autenticar() {
             string token = GetCookieValue(AUTH_COOKIE);
             if(token != null) {
-                string dni;
-                DecodificarToken(token, out dni);
-                return VerificarAutorizacionToken(token, dni);
+                Token tk = new Token();
+                tk.Decodificar(token);
+                return VerificarAutorizacionToken(token, tk.DNI);
             }
             return false;
 
@@ -260,16 +265,15 @@ namespace Negocio {
         /// Devuelve los datos del empleado que inició sesión.
         /// </summary>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response ObtenerDatosEmpleadoActual() {
+        public static Response ObtenerDatosEmpleadoActual() {
             string token = GetCookieValue(AUTH_COOKIE);
             if (token != null) {
-                string dni;
-                DecodificarToken(token, out dni);
-                Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(dni);
+                Token tk = new Token();
+                tk.Decodificar(token);
+                Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(tk.DNI);
                 if (!empleado_data.ErrorFound) {
                     DataSet dt = empleado_data.ObjectReturned as DataSet;
-                    EmpleadoNegocio en = new EmpleadoNegocio();
-                    Response emp = en.ExtractDataFromDataSet(dt);
+                    Response emp = EmpleadoNegocio.ExtractDataFromDataSet(dt);
                     return emp;
                 }
                 return empleado_data;
