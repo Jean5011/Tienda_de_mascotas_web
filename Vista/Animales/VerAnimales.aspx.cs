@@ -26,8 +26,17 @@ namespace Vista.Animales
 
         protected void BT_Todos_Click(object sender, EventArgs e)
         {
-            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            Response resultado = nt.GetTipoDeProducto();
+            NegocioAnimales nt = new NegocioAnimales();
+            Response resultado = nt.GetAnimales();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            GV_Datos.DataSource = dt;
+            GV_Datos.DataBind();
+        }
+
+        protected void BT_Filtrar_Click(object sender, EventArgs e)
+        {
+            NegocioAnimales nt = new NegocioAnimales();
+            Response resultado = nt.ObtenerPorCod(TB_Filtrar.Text);
             DataSet dt = resultado.ObjectReturned as DataSet;
             GV_Datos.DataSource = dt;
             GV_Datos.DataBind();

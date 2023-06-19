@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AgregarAnimal.aspx.cs" Inherits="Vista.Animales.AgregarAnimal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="IgresarTipoDePrductos.aspx.cs" Inherits="Vista.Tipos.VerTipoDePrductos" %>
 
 <!DOCTYPE html>
 
@@ -11,10 +11,10 @@
             width: 100%;
         }
         .auto-style2 {
-            width: 152px;
+            width: 206px;
         }
         .auto-style3 {
-            width: 180px;
+            width: 238px;
         }
     </style>
 </head>
@@ -24,7 +24,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td><h1>Agregar Animal</h1></td>
+            <td>Ingresar tipos de productos</td>
         </tr>
     </table>
     <form id="form1" runat="server">
@@ -34,44 +34,41 @@
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">&nbsp;</td>
                     <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">Igrese codigo:</td>
+                    <td class="auto-style3">
+                        <asp:TextBox ID="TB_cod" runat="server"></asp:TextBox>
+                    </td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">Igresar codigo:</td>
+                    <td class="auto-style2">Eliga tipo de animal:</td>
                     <td class="auto-style3">
-                        <asp:TextBox ID="TB_Cod" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="DD_Animal" runat="server">
+                        </asp:DropDownList>
                     </td>
-                    <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">Ingresar nombre:</td>
+                    <td class="auto-style2">Ingrese tipo de producto:</td>
                     <td class="auto-style3">
-                        <asp:TextBox ID="TB_Nombre" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TB_Tpd" runat="server"></asp:TextBox>
                     </td>
-                    <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">Ingresar raza:</td>
+                    <td class="auto-style2">Ingrese descripcion:</td>
                     <td class="auto-style3">
-                        <asp:TextBox ID="TB_Raza" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TB_Descripcion" runat="server" Height="45px"></asp:TextBox>
                     </td>
-                    <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Button ID="BT_Datos" runat="server" Text="Guardar" OnClick="BT_Datos_Click" />
+                        <asp:Button ID="BT_Guardar" runat="server" OnClick="BT_Guardar_Click" Text="Guardar" />
                     </td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="auto-style2">&nbsp;</td>
-                    <td class="auto-style3">&nbsp;</td>
-                    <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
             </table>

@@ -10,14 +10,14 @@
         .auto-style1 {
             width: 100%;
         }
-        .auto-style2 {
-            width: 151px;
-        }
         .auto-style3 {
             width: 177px;
         }
         .auto-style4 {
             width: 294px;
+        }
+        .auto-style5 {
+            width: 171px;
         }
     </style>
 </head>
@@ -34,25 +34,25 @@
         <div>
             <table class="auto-style1">
                 <tr>
-                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style5">&nbsp;</td>
                     <td class="auto-style3">&nbsp;</td>
                     <td class="auto-style4">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">Filtrar por codigo:</td>
+                    <td class="auto-style5">Filtrar por codigo:</td>
                     <td class="auto-style3">
                         <asp:TextBox ID="TB_Filtrar" runat="server"></asp:TextBox>
                     </td>
                     <td class="auto-style4">
-                        <asp:Button ID="BT_Filtrar" runat="server" Text="Filtrar" />
+                        <asp:Button ID="BT_Filtrar" runat="server" Text="Filtrar" OnClick="BT_Filtrar_Click" />
                     </td>
                     <td>
                         <asp:Button ID="BT_Todos" runat="server" Text="Todos" OnClick="BT_Todos_Click" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style5">&nbsp;</td>
                     <td class="auto-style3">&nbsp;</td>
                     <td class="auto-style4">&nbsp;</td>
                     <td>&nbsp;</td>
@@ -62,7 +62,18 @@
         <table class="auto-style1">
             <tr>
                 <td>
-                    <asp:GridView ID="GV_Datos" runat="server" OnSelectedIndexChanged="GV_Datos_SelectedIndexChanged">
+                    <asp:GridView ID="GV_Datos" runat="server" OnSelectedIndexChanged="GV_Datos_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None">
+                        <AlternatingRowStyle BackColor="White" />
+                        <EditRowStyle BackColor="#2461BF" />
+                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#EFF3FB" />
+                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                 </td>
             </tr>
