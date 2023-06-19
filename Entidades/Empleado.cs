@@ -22,8 +22,13 @@ namespace Entidades {
             public const string Estado = "Estado_Em";
             public const string Hash = "Hash_Em";
             public const string Salt = "Salt_Em";
+            public const string Rol = "Rol_Em";
         }
         public const string Table = "Empleados";
+        public static class Roles {
+            public const string ADMIN = "ADMIN";     // Puede ver perfiles de otros empleados, cambiar sueldo, eliminar cosas.
+            public const string NORMAL = "NORMAL";   // Puede ver su propio perfil, sin editar, registrar ventas y modificar sus propias ventas. 
+        }
         public string DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -38,6 +43,7 @@ namespace Entidades {
         public bool Estado { get; set; }
         public string Hash { get; set; }
         public string Salt { get; set; }
+        public string Rol { get; set; }
     }
 }
 

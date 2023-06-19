@@ -24,7 +24,8 @@ namespace Datos {
                                                     $"[{Empleado.Columns.Nacionalidad}], " +
                                                     $"[{Empleado.Columns.Estado}], " +
                                                     $"[{Empleado.Columns.Hash}], " +
-                                                    $"[{Empleado.Columns.Salt}]";
+                                                    $"[{Empleado.Columns.Salt}], " +
+                                                    $"[{Empleado.Columns.Rol}]";
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
         }

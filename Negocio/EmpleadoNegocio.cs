@@ -101,7 +101,8 @@ namespace Negocio {
                     Nacionalidad = primerRegistro[Empleado.Columns.Nacionalidad].ToString(),
                     Estado = Convert.ToBoolean(primerRegistro[Empleado.Columns.Estado].ToString()),
                     Hash = primerRegistro[Empleado.Columns.Hash].ToString(),
-                    Salt = primerRegistro[Empleado.Columns.Salt].ToString()
+                    Salt = primerRegistro[Empleado.Columns.Salt].ToString(),
+                    Rol = primerRegistro[Empleado.Columns.Rol].ToString()
                 };
                 return new Response() {
                     ErrorFound = false,

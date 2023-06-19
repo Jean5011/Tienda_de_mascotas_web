@@ -61,19 +61,6 @@
                 <asp:LinkButton ID="btnIniciarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnIniciarSesion_Click">
         <span class="mdc-button__label">Iniciar sesión</span>
                 </asp:LinkButton>
-                <br>
-                <br />
-                <asp:LinkButton ID="btnOlvidasteClave" runat="server" CssClass="mdc-button">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">¿Olvidaste la clave?</span>
-                </asp:LinkButton>
-                <br />
-                <asp:Label ID="Label1" runat="server">Resultado aparecer aquí</asp:Label>
-                <br />
-                <asp:LinkButton ID="btnCrearCuenta" runat="server" CssClass="mdc-button">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">Crear cuenta</span>
-                </asp:LinkButton>
             </div>
 
         </main>

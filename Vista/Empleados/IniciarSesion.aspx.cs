@@ -21,10 +21,11 @@ namespace Vista.Empleados {
                 var buscar_empleado = SesionNegocio.ObtenerDatosEmpleadoActual();
                 if(!buscar_empleado.ErrorFound) {
                     var emp = buscar_empleado.ObjectReturned as Empleado;
-                    Utils.MostrarMensaje($"¡Bienvenido, {emp.Nombre}!", this.Page, GetType());
+                    string wm = $"¡Bienvenido, {emp.Nombre}!";
+                    Utils.MostrarMensaje(wm, this.Page, GetType());
                     string goNext = Request.QueryString["next"];
                     if(!string.IsNullOrEmpty(goNext)) {
-                        Response.Redirect(goNext);
+                        Response.Redirect(HttpUtility.UrlDecode(goNext));
                     }
                 }
             }

@@ -22,6 +22,15 @@ namespace Vista.Empleados {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
         /// NombreEmpleadoTitulo control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace Vista.Empleados {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NombreEmpleadoTitulo;
+
+        /// <summary>
+        /// DetallesList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView DetallesList;
 
         /// <summary>
         /// Label1 control.
