@@ -107,7 +107,7 @@ namespace Negocio {
         /// <param name="key">Propiedad</param>
         /// <param name="value">Valor</param>
         /// <param name="expirationDays">Días de vigencia</param>
-        public void SetCookie(string key, string value, int expirationDays = 0) {
+        public static void SetCookie(string key, string value, int expirationDays = 0) {
             var cookie = new HttpCookie(key, value);
 
             if (expirationDays > 0)
@@ -124,7 +124,7 @@ namespace Negocio {
         /// </summary>
         /// <param name="key">Propiedad</param>
         /// <returns>El contenido de la cookie, si existe. Caso contrario devuelve null.</returns>
-        public string GetCookieValue(string key) {
+        public static string GetCookieValue(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
                 return HttpContext.Current.Request.Cookies[key].Value;
             }
@@ -137,7 +137,7 @@ namespace Negocio {
         /// Elimina una cookie.
         /// </summary>
         /// <param name="key">La propiedad.</param>
-        public void EliminarCookie(string key) {
+        public static void EliminarCookie(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
                 var cookie = new HttpCookie(key);
                 cookie.Expires = DateTime.Now.AddDays(-1); // Establece la fecha de expiración en el pasado para eliminar la cookie
@@ -150,7 +150,7 @@ namespace Negocio {
         /// </summary>
         /// <param name="resultDataSet">El DataSet en cuestión.</param>
         /// <returns>Un Response con el resultado de la operación.</returns>
-        public Response ExtractDataFromDataSet(DataSet resultDataSet) {
+        public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Sesion obj = new Sesion() {
@@ -181,7 +181,7 @@ namespace Negocio {
         /// <param name="token">El token a buscar.</param>
         /// <param name="dni">El DNI del usuario en cuestión.</param>
         /// <returns></returns>
-        public bool VerificarAutorizacionToken(string token, string dni) {
+        public static bool VerificarAutorizacionToken(string token, string dni) {
             Response datos = SesionDatos.ObtenerSesion(token, dni);
             if (datos.ErrorFound) return false;
             else {
@@ -204,7 +204,7 @@ namespace Negocio {
         /// </summary>
         /// <param name="dni">DNI del usuario.</param>
         /// <returns>Response con el resultado de la transacción.</returns>
-        public Response AbrirSesion(string dni) {
+        public static Response AbrirSesion(string dni) {
             Token i = new Token() {
                 DNI = dni,
                 FechaEmision = DateTime.Now
@@ -224,7 +224,7 @@ namespace Negocio {
         /// Cierra la sesión actual y borra la cookie de AUTH.
         /// </summary>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response CerrarSesion() {
+        public static Response CerrarSesion() {
             if (GetCookieValue(AUTH_COOKIE) != null) {
                 string token = GetCookieValue(AUTH_COOKIE);
                 Token k = new Token();
@@ -250,13 +250,12 @@ namespace Negocio {
         /// Autentica. Verifica que el token sea válido, útil para antes de realizar una acción.
         /// </summary>
         /// <returns>True si el token es válido, false en caso contrario.</returns>
-        public bool Autenticar() {
+        public static bool Autenticar() {
             string token = GetCookieValue(AUTH_COOKIE);
             if(token != null) {
                 Token tk = new Token();
                 tk.Decodificar(token);
-                string dni = tk.DNI;
-                return VerificarAutorizacionToken(token, dni);
+                return VerificarAutorizacionToken(token, tk.DNI);
             }
             return false;
 
@@ -266,17 +265,15 @@ namespace Negocio {
         /// Devuelve los datos del empleado que inició sesión.
         /// </summary>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response ObtenerDatosEmpleadoActual() {
+        public static Response ObtenerDatosEmpleadoActual() {
             string token = GetCookieValue(AUTH_COOKIE);
             if (token != null) {
                 Token tk = new Token();
                 tk.Decodificar(token);
-                string dni = tk.DNI;
-                Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(dni);
+                Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(tk.DNI);
                 if (!empleado_data.ErrorFound) {
                     DataSet dt = empleado_data.ObjectReturned as DataSet;
-                    EmpleadoNegocio en = new EmpleadoNegocio();
-                    Response emp = en.ExtractDataFromDataSet(dt);
+                    Response emp = EmpleadoNegocio.ExtractDataFromDataSet(dt);
                     return emp;
                 }
                 return empleado_data;

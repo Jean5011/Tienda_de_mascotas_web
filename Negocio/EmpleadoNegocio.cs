@@ -18,7 +18,7 @@ namespace Negocio {
         /// Generar salt (Texto aleatorio para fortalecer una contraseña)
         /// </summary>
         /// <returns>El Salt generado.</returns>
-        byte[] GenerarSalt() {
+        public static byte[] GenerarSalt() {
             byte[] salt = new byte[16]; // 16 bytes = 128 bits
             using (var rng = new RNGCryptoServiceProvider()) {
                 rng.GetBytes(salt);
@@ -32,7 +32,7 @@ namespace Negocio {
         /// <param name="password">Contraseña ingresada.</param>
         /// <param name="salt">Salt generada.</param>
         /// <returns></returns>
-        byte[] GenerarHash(string password, byte[] salt) {
+        public static byte[] GenerarHash(string password, byte[] salt) {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] combinedBytes = new byte[passwordBytes.Length + salt.Length];
 
@@ -51,7 +51,7 @@ namespace Negocio {
         /// <param name="savedHash">Hash rescatado de la base de datos.</param>
         /// <param name="savedSalt">Salt rescatado de la base de datos.</param>
         /// <returns>True si las claves concuerdan. False en otro caso.</returns>
-        bool VerificarClave(string password, byte[] savedHash, byte[] savedSalt) {
+        public static bool VerificarClave(string password, byte[] savedHash, byte[] savedSalt) {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] combinedBytes = new byte[passwordBytes.Length + savedSalt.Length];
 
@@ -71,7 +71,7 @@ namespace Negocio {
         /// <param name="savedHash">El hash rescatado de la base de datos, string.</param>
         /// <param name="savedSalt">El salt rescatado de la base de datos.</param>
         /// <returns>True si las claves concuerdan, False en otro caso.</returns>
-        bool VerificarClaveString(string password, string savedHash, byte[] savedSalt) {
+        public static bool VerificarClaveString(string password, string savedHash, byte[] savedSalt) {
             byte[] newHash = GenerarHash(password, savedSalt);
             string newHashString = Convert.ToBase64String(newHash);
             bool coinciden = newHashString == savedHash;
@@ -84,7 +84,7 @@ namespace Negocio {
         /// </summary>
         /// <param name="resultDataSet">El DataSet en cuestión.</param>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response ExtractDataFromDataSet(DataSet resultDataSet) {
+        public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Empleado obj = new Empleado() {
@@ -124,7 +124,7 @@ namespace Negocio {
         /// <param name="clave">La clave ingresada por el usuario.</param>
         /// <param name="DNI">El DNI ingresado por el usuario.</param>
         /// <returns></returns>
-        public Response ComprobarClaveIngresada(string clave, string DNI) {
+        public static Response ComprobarClaveIngresada(string clave, string DNI) {
             Response resultadoBusquedaEmpleado = EmpleadoDatos.BuscarEmpleadoPorDNI(DNI);
             if(resultadoBusquedaEmpleado.ErrorFound) {
                 return resultadoBusquedaEmpleado;
@@ -152,16 +152,31 @@ namespace Negocio {
         /// <param name="DNI">El DNI ingresado.</param>
         /// <param name="clave">La clave ingresada.</param>
         /// <returns>Response con el resultado de la operación.</returns>
-        public Response IniciarSesion(string DNI, string clave) {
+        public static Response IniciarSesion(string DNI, string clave) {
             Response resultadoClaves = ComprobarClaveIngresada(clave, DNI);
             bool clavesCorrectas = !(resultadoClaves.ErrorFound);
             if(clavesCorrectas) {
-                var tk = new SesionNegocio();
-                Response res = tk.AbrirSesion(DNI);
+                Response res = SesionNegocio.AbrirSesion(DNI);
                 return res;
             }
             return resultadoClaves;
             
         }
+
+        /// <summary>
+        /// Devuelve los datos del empleado a partir de su DNI.
+        /// </summary>
+        /// <returns>Response con el resultado de la operación.</returns>
+        public static Response BuscarEmpleadoPorDNI(string dni) {
+                Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(dni);
+                if (!empleado_data.ErrorFound) {
+                    DataSet dt = empleado_data.ObjectReturned as DataSet;
+                    Response emp = ExtractDataFromDataSet(dt);
+                    return emp;
+                }
+                return empleado_data;
+        }
     }
+
+
 }

@@ -16,9 +16,18 @@ namespace Vista.Empleados {
         protected void btnIniciarSesion_Click(object sender, EventArgs e) {
             string dni = txtDNI.Text;
             string clave = txtClave.Text;
-            EmpleadoNegocio obj = new EmpleadoNegocio();
-            Response res = obj.IniciarSesion(dni, clave);
-            Label1.Text = res.Message;
+            Response res = EmpleadoNegocio.IniciarSesion(dni, clave);
+            if(!res.ErrorFound) {
+                var buscar_empleado = SesionNegocio.ObtenerDatosEmpleadoActual();
+                if(!buscar_empleado.ErrorFound) {
+                    var emp = buscar_empleado.ObjectReturned as Empleado;
+                    Utils.MostrarMensaje($"¡Bienvenido, {emp.Nombre}!", this.Page, GetType());
+                    string goNext = Request.QueryString["next"];
+                    if(!string.IsNullOrEmpty(goNext)) {
+                        Response.Redirect(goNext);
+                    }
+                }
+            }
 
         }
     }
