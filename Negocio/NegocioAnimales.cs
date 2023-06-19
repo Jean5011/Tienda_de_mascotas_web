@@ -16,27 +16,27 @@ namespace Negocio
     {
         public Response GetAnimales()
         {
-            return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
+            return DaoAnimales.ObtenerListaDeAnimales();
         }
 
         public Response ObtenerPorCod(String cod)
         {
-            return DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
+            return DaoAnimales.BuscarAnimalPorCod(cod);
         }
 
-        public Response IgresarAnimal(TipoProducto A)
+        public Response IgresarAnimal(Animal A)
         {
-            return DaoTiposDeProductos.IgresarTipoProducto(A);
+            return DaoAnimales.IgresarAnimal(A);
         }
 
-        public Response ActualizarAnimal(TipoProducto A)
+        public Response ActualizarAnimal(Animal A)
         {
-            return DaoTiposDeProductos.ActualizarTipoProducto(A);
+            return DaoAnimales.ActualizarAnimal(A);
         }
 
-        public Response EliminarAnimal(TipoProducto A)
+        public Response EliminarAnimal(Animal A)
         {
-            return DaoTiposDeProductos.EliminarTipoProducto(A);
+            return DaoAnimales.EliminarAnimal(A);
         }
     }
 }

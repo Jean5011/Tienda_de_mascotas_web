@@ -14,29 +14,30 @@ namespace Negocio
 {
     class NegocioTipoDeProducto
     {
+        
         public Response GetAnimales()
         {
-            return DaoAnimales.ObtenerListaDeAnimales();
+            return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
         }
 
         public Response ObtenerPorCod(String cod)
         {
-            return DaoAnimales.BuscarAnimalPorCod(cod);
+            return DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
         }
 
-        public Response IgresarAnimal(Animal A)
+        public Response IgresarAnimal(TipoProducto A)
         {
-            return DaoAnimales.IgresarAnimal(A);
+            return DaoTiposDeProductos.IgresarTipoProducto(A);
         }
 
-        public Response ActualizarAnimal(Animal A)
+        public Response ActualizarAnimal(TipoProducto A)
         {
-            return DaoAnimales.ActualizarAnimal(A);
+            return DaoTiposDeProductos.ActualizarTipoProducto(A);
         }
 
-        public Response EliminarAnimal(Animal A)
+        public Response EliminarAnimal(TipoProducto A)
         {
-            return DaoAnimales.EliminarAnimal(A);
+            return DaoTiposDeProductos.EliminarTipoProducto(A);
         }
     }
 }
