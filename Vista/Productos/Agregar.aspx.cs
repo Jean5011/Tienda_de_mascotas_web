@@ -35,6 +35,16 @@ namespace Vista.Productos {
                 if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
                     // El usuario logueado es un ADMINISTRADOR con derecho a crear y borrar productos.
                     // Si llegó acá está todo bien.
+
+                    /// IMPORTANTE
+                    /// ANTES DE LLAMAR UNA FUNCIÓN QUE REALIZA UN CAMBIO (CUANDO SE PRESIONA EL BOTON "AGREGAR", POR EJEMPLO)
+                    /// TENÉS QUE AUTENTICAR
+                    /// AL USUARIO. PARA VERIFICAR QUE SIGA ACTIVO
+                    /// 
+                    bool auth = SesionNegocio.Autenticar(); // Si devuelve true, podés hacer acciones delicadas.
+                    // Si devuelve no, lo mandás de nuevo a la página de inicio para que vuelva a iniciar sesión.
+
+
                 }
                 else {
                     // El usuario logueado es un CAJERO / EMPLEADO COMÚN , no tiene derecho a crear y borrar productos.
