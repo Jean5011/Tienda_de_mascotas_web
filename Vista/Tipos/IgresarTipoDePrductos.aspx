@@ -24,7 +24,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Ingresar tipos de productos</td>
+            <td><h1>Ingresar tipos de productos</h1></td>
         </tr>
     </table>
     <form id="form1" runat="server">
@@ -53,7 +53,13 @@
                 <tr>
                     <td class="auto-style2">Ingrese tipo de producto:</td>
                     <td class="auto-style3">
-                        <asp:TextBox ID="TB_Tpd" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="DD_Tpd" runat="server">
+                            <asp:ListItem>Comida</asp:ListItem>
+                            <asp:ListItem>Accesorios</asp:ListItem>
+                            <asp:ListItem>Ropa</asp:ListItem>
+                            <asp:ListItem>Higiene</asp:ListItem>
+                            <asp:ListItem>Salud</asp:ListItem>
+                        </asp:DropDownList>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
