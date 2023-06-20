@@ -85,6 +85,7 @@ namespace Vista.Empleados {
         protected void btnGuardarCambios_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
             string oldDNI = UsuarioActual.DNI;
+
             Empleado obj = new Empleado() {
                 DNI = txtDNI.Text,
                 Nombre = txtNombre.Text,
@@ -100,15 +101,34 @@ namespace Vista.Empleados {
                 Estado = chkEstado.Checked,
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
-            Response resultado = EmpleadoNegocio.ModificarEmpleado(obj, oldDNI);
-            if(resultado.ErrorFound) {
-                if (resultado.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND) {
-                    Utils.MostrarMensaje("El token no es válido. ", this.Page, GetType());
+
+            SesionNegocio.Autenticar(data => {
+                // Función que se ejecuta si autenticó
+                Response operacion = EmpleadoNegocio.ModificarEmpleado(obj, oldDNI);
+                if(operacion.ErrorFound) {
+                    string mensajeError = "";
+                    switch(operacion.Message) {
+                        case SesionNegocio.ErrorCode.NO_SESSION_FOUND:
+                            mensajeError = "No hay sesion iniciada o el token caducó. ";
+                            break;
+                        case SesionNegocio.ErrorCode.UNAUTHORIZED:
+                            mensajeError = "No tenés permiso para realizar esta acción. ";
+                            break;
+                        default:
+                            mensajeError = $"Ocurrió un error. Detalles: [{operacion.Message}] {operacion.Details}.";
+                            break;
+                    }
+                    Utils.MostrarMensaje(mensajeError, this.Page, GetType());
+                } else {
+                    Utils.MostrarMensaje("Se han guardado los cambios. ", this.Page, GetType());
                 }
-                else Utils.MostrarMensaje("Error desconocido. Detalles: " + resultado.Details + ". ", this.Page, GetType());
-            } else {
-                Utils.MostrarMensaje("Se han guardado todos los cambios. ", this.Page, GetType());
-            }
+
+            }, error => {
+                // Función que se ejecuta si NO autenticó
+                bool huboError = error.ErrorFound;
+                string mensajeError = error.Message;
+
+            });
 
         }
 
