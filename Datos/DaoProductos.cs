@@ -8,11 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades;
 
-namespace Datos
-{
-    public class DaoProductos
-    {
-        public DaoProductos (){ }
+namespace Datos {
+    public class DaoProductos {
+        public DaoProductos() { }
         private static readonly string ALL_COLUMNS = $"[{Producto.Columns.Codigo_Prod}], " +
                                     $"[{Producto.Columns.CUITProv}], " +
                                    $"[{Producto.Columns.CodTipoProducto}], " +
@@ -25,8 +23,7 @@ namespace Datos
                                    $"[{Producto.Columns.Estado}] ";
 
 
-        public static class Procedures
-        {
+        public static class Procedures {
             public static string Crear = "SP_Productos_Crear";
             public static string ActualizarEstado = "SP_Productos_ActualizarEstado";
             public static string ActualizarPrecio = "SP_Productos_ActualizarPrecio";
@@ -34,8 +31,7 @@ namespace Datos
         }
 
 
-        public static Response ObtenerListaDeProductos()
-        {
+        public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
@@ -45,8 +41,7 @@ namespace Datos
         }
 
 
-        public static Response BuscarProductoPorCod(string ID)
-        {
+        public static Response BuscarProductoPorCod(string ID) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
@@ -59,8 +54,7 @@ namespace Datos
                     );
         }
 
-        public static Response IgresarProducto(Producto Pr)
-        {
+        public static Response IgresarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -81,8 +75,7 @@ namespace Datos
                     );
         }
 
-        public static Response ActualizarEstadoProducto(Producto Pr)
-        {
+        public static Response ActualizarEstadoProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -95,8 +88,7 @@ namespace Datos
                     );
         }
 
-        public static Response ActualizarPrecio(Producto Pr)
-        {
+        public static Response ActualizarPrecio(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -105,13 +97,12 @@ namespace Datos
                         parameters: new Dictionary<string, object> {
                             { "@CodProducto_Prod", Pr.Codigo },
                             { "@PrecioUnitario_Prod", Pr.Precio }
-                           
+
                         }
                     );
         }
 
-        public static Response ActualizarStock(Producto Pr)
-        {
+        public static Response ActualizarStock(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -126,5 +117,4 @@ namespace Datos
         }
     }
 
-}
 }
