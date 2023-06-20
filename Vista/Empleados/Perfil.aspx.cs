@@ -15,15 +15,16 @@ namespace Vista.Empleados {
         protected bool CargarSesion() {
             Response res_b = SesionNegocio.ObtenerDatosEmpleadoActual();
             if (res_b.ErrorFound) {
-                if (res_b.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND) {
+                if (res_b.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND || res_b.Message == SesionNegocio.ErrorCode.EXPIRED_TOKEN) {
                     // De no haber iniciado sesión, se envía a la página de Inicio de Sesión con argumento "next" para que luego pueda volver.
                     string login_url = "/Empleados/IniciarSesion.aspx";
                     string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
                     Response.Redirect($"{login_url}?next={next_url}");
                 }
-                Utils.MostrarMensaje($"Error verificando tu sesión. Detalles: {res_b.Details}.", this.Page, GetType());
+                Utils.MostrarMensaje($"Error verificando tu sesión. Detalles: {res_b.Message}.", this.Page, GetType());
                 return false;
-            } else {
+            }
+            else {
                 Utils.MostrarMensaje($"Empleado asignado. Nombre: {(res_b.ObjectReturned as Empleado).Nombre}", this.Page, GetType());
             }
             Session[actualUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
@@ -32,8 +33,8 @@ namespace Vista.Empleados {
         protected bool CargarPerfil() {
             UsuarioActual = Session[actualUser] as Empleado;
             string dni_empleado = Request.QueryString["DNI"];
-            if(string.IsNullOrEmpty(dni_empleado)) {
-                if (!string.IsNullOrEmpty(UsuarioActual.DNI)) {
+            if (string.IsNullOrEmpty(dni_empleado)) {
+                if (UsuarioActual != null && !string.IsNullOrEmpty(UsuarioActual.DNI)) {
                     dni_empleado = UsuarioActual.DNI;
                 }
                 else return false;
@@ -44,6 +45,7 @@ namespace Vista.Empleados {
             }
             UsuarioPerfil = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
             return true;
+
         }
         class DetalleEmpleado {
             public string Valor { get; set; }
@@ -70,11 +72,12 @@ namespace Vista.Empleados {
             if (!IsPostBack) {
                 bool inicioSesion = CargarSesion();
                 bool cargoPerfil = CargarPerfil();
-                if(inicioSesion && cargoPerfil) {
+                if (inicioSesion && cargoPerfil) {
                     UsuarioActual = Session[actualUser] as Empleado;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         RellenarDatos();
-                    } else {
+                    }
+                    else {
                         Utils.MostrarMensaje($"No tenés permiso para ver esta página. ", this.Page, GetType());
                         // *** Redirigir a página principal *** ///
 
@@ -102,12 +105,14 @@ namespace Vista.Empleados {
         protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                if(SesionNegocio.Autenticar()) {
+                if (SesionNegocio.Autenticar()) {
                     Utils.MostrarMensaje("Autorizado.", this.Page, GetType());
-                } else {
+                }
+                else {
                     Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
                 }
-            } else {
+            }
+            else {
                 Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
             }
         }

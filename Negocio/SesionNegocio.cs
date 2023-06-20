@@ -47,7 +47,7 @@ namespace Negocio {
 
         }
 
-        public void Decodificar(string token) {
+        public bool Decodificar(string token) {
             var tokenHandler = new JwtSecurityTokenHandler();
 
             // Configurar opciones de validación del token
@@ -61,15 +61,21 @@ namespace Negocio {
                 ClockSkew = TimeSpan.Zero // No permitir margen de tiempo para la expiración
             };
 
-            // Deserializar y validar el token JWT
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+            try {
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
 
-            // Acceder a los claims
-            var claims = principal.Claims;
-            foreach (var claim in claims) {
-                if (claim.Type == "dni") this.DNI = claim.Value;
-                if (claim.Type == "fe") this.FechaEmision = DateTime.Parse(claim.Value);
+                // Acceder a los claims
+                var claims = principal.Claims;
+                foreach (var claim in claims) {
+                    if (claim.Type == "dni") this.DNI = claim.Value;
+                    if (claim.Type == "fe") this.FechaEmision = DateTime.Parse(claim.Value);
+                }
+                return true;
+            } catch(SecurityTokenExpiredException) {
+
+                return false;
             }
+            
         }
 
     }
@@ -96,6 +102,7 @@ namespace Negocio {
         public static class ErrorCode {
             public static readonly string NO_ROWS = "NO_ROWS";
             public static readonly string NO_SESSION_FOUND = "NO_SESSION_FOUND";
+            public static readonly string EXPIRED_TOKEN = "EXPIRED_TOKEN";
         }
         public static readonly string AUTH_COOKIE = "_au";
 
@@ -269,7 +276,11 @@ namespace Negocio {
             string token = GetCookieValue(AUTH_COOKIE);
             if (token != null) {
                 Token tk = new Token();
-                tk.Decodificar(token);
+                bool rtk = tk.Decodificar(token);
+                if (!rtk) return new Response() {
+                    ErrorFound = true,
+                    Message = ErrorCode.EXPIRED_TOKEN
+                };
                 Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(tk.DNI);
                 if (!empleado_data.ErrorFound) {
                     DataSet dt = empleado_data.ObjectReturned as DataSet;
