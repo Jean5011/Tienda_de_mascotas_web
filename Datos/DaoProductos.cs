@@ -62,7 +62,7 @@ namespace Datos {
                         {
                             { "@Codigo", Pr.Codigo },
                             { "@CUIT", Pr.Proveedor.CUIT },
-                            { "@Tipo", Pr.Categoria},
+                            { "@Tipo", Pr.Categoria.tipoDeProducto},
                             { "@Nombre", Pr.Nombre },
                             { "@Marca", Pr.Marca },
                             { "@Desc", Pr.Descripcion },

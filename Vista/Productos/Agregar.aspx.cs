@@ -47,12 +47,7 @@ namespace Vista.Productos {
 
                 }
                 else {
-                    // El usuario logueado es un CAJERO / EMPLEADO COMÚN , no tiene derecho a crear y borrar productos.
-                    Utils.MostrarMensaje($"No tenés permiso para ver esta página. ", this.Page, GetType());
-
-                    // Despedilo, bajale el sueldo, bardealo, hacé lo que quieras.
-                    // Yo lo mandaría de nuevo a la página principal.
-
+                    Utils.MostrarMensaje("UNAUTHORIZED", this.Page, GetType());
                 }
             } 
         }
@@ -61,6 +56,7 @@ namespace Vista.Productos {
         {
             //Utils.MostrarMensaje($"EVENTO CLIIIIICKKKKKKK. ", this.Page, GetType());
             //aca casteo el precio para que se pueda cargar
+            // Autenticar acá más adelante
             string numero = txtPrecioUnitario.Text;
             double Pre;
             if (double.TryParse(numero, out Pre))
