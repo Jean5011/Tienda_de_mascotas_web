@@ -55,5 +55,11 @@ namespace Vista.Productos {
                 }
             } 
         }
+
+        public void Guardar_Click(Producto a)
+        {
+
+        }
+        
     }
 }
