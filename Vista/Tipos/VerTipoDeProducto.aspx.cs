@@ -36,5 +36,18 @@ namespace Vista.Tipos
             GV_Datos.DataSource = dt;
             GV_Datos.DataBind();
         }
+
+        protected void GV_Datos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
+        {
+            TipoProducto t = new TipoProducto();
+            string cod = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
+            t.Codigo = cod;
+            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+            nt.EliminarTipoDeProducto(t);
+            Response resultado = nt.GetTipoDeProducto();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            GV_Datos.DataSource = dt;
+            GV_Datos.DataBind();
+        }
     }
 }
