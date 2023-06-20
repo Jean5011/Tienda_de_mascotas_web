@@ -40,7 +40,7 @@ namespace Datos {
             return con.Response.ErrorFound
                 ? con.Response
                 : con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} WHERE [{Sesion.Columns.Token}] = @token AND [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.FechaAlta}] DESC",
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Sesion.Table}] WHERE [{Sesion.Columns.Token}] = @token AND [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.FechaAlta}] DESC",
                         parameters: new Dictionary<string, object> {
                             { "@token", token },
                             { "@dni", dni }

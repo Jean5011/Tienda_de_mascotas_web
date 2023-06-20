@@ -9,7 +9,8 @@ using Entidades;
 
 namespace Vista.Empleados {
     public partial class Perfil : System.Web.UI.Page {
-        private Empleado UsuarioActual;
+        private readonly string actualUser = "Usuario_Actual";
+        public Empleado UsuarioActual;
         private Empleado UsuarioPerfil;
         protected bool CargarSesion() {
             Response res_b = SesionNegocio.ObtenerDatosEmpleadoActual();
@@ -22,11 +23,14 @@ namespace Vista.Empleados {
                 }
                 Utils.MostrarMensaje($"Error verificando tu sesión. Detalles: {res_b.Details}.", this.Page, GetType());
                 return false;
+            } else {
+                Utils.MostrarMensaje($"Empleado asignado. Nombre: {(res_b.ObjectReturned as Empleado).Nombre}", this.Page, GetType());
             }
-            UsuarioActual = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
+            Session[actualUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
             return true;
         }
         protected bool CargarPerfil() {
+            UsuarioActual = Session[actualUser] as Empleado;
             string dni_empleado = Request.QueryString["DNI"];
             if(string.IsNullOrEmpty(dni_empleado)) {
                 if (!string.IsNullOrEmpty(UsuarioActual.DNI)) {
@@ -67,7 +71,8 @@ namespace Vista.Empleados {
                 bool inicioSesion = CargarSesion();
                 bool cargoPerfil = CargarPerfil();
                 if(inicioSesion && cargoPerfil) {
-                    if(UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
+                    UsuarioActual = Session[actualUser] as Empleado;
+                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         RellenarDatos();
                     } else {
                         Utils.MostrarMensaje($"No tenés permiso para ver esta página. ", this.Page, GetType());
@@ -76,6 +81,34 @@ namespace Vista.Empleados {
                     }
                 }
 
+            }
+        }
+
+        protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
+            UsuarioActual = Session[actualUser] as Empleado;
+            if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                if (SesionNegocio.Autenticar()) {
+                    Utils.MostrarMensaje("Autorizado.", this.Page, GetType());
+                }
+                else {
+                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                }
+            }
+            else {
+                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+            }
+        }
+
+        protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
+            UsuarioActual = Session[actualUser] as Empleado;
+            if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                if(SesionNegocio.Autenticar()) {
+                    Utils.MostrarMensaje("Autorizado.", this.Page, GetType());
+                } else {
+                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                }
+            } else {
+                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
             }
         }
     }

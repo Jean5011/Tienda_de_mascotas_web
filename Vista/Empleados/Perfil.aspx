@@ -49,28 +49,34 @@
                         <ItemTemplate>
                             <div class="mdc-list-item">
                                 <span class="mdc-list-item__ripple"></span>
-                                <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">edit</span>
                                 <span class="mdc-list-item__text">
                                     <span class="mdc-list-item__primary-text"><%# Eval("Valor") %></span>
-                                    <span class="mdc-list-item__secondary-text"><%# Eval("Propiedad") %><asp:LinkButton runat="server" CommandName="Edit" ID="it_lvdetalles_propiedad_btneditar" >Editar</asp:LinkButton></span>
+                                    <span class="mdc-list-item__secondary-text"><%# Eval("Propiedad") %></span>
                                 </span>
                             </div>
                         </ItemTemplate>
-                        <EditItemTemplate>
-                            <div class="mdc-list-item">
-                                <label class="mdc-text-field mdc-text-field--outlined">
-                                    <span class="mdc-notched-outline">
-                                        <span class="mdc-notched-outline__leading"></span>
-                                        <span class="mdc-notched-outline__notch">
-                                            <span class="mdc-floating-label" id="et-label"><%# Eval("Propiedad") %></span>
-                                        </span>
-                                        <span class="mdc-notched-outline__trailing"></span>
-                                    </span>
-                                    <asp:TextBox ID="DetallesListViewEdit" runat="server"  CssClass="mdc-text-field__input" aria-labelledby="et-label"></asp:TextBox>
-                                </label>
-                            </div>
-                        </EditItemTemplate>
                     </asp:ListView>
+                    <li role="separator" class="mdc-list-divider"></li>
+                    <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">
+                            edit
+                        </span>
+                        <span class="mdc-list-item__text">
+                            <span class="mdc-list-item__primary-text">Editar información</span>
+                            <span class="mdc-list-item__secondary-text">Cambiar sueldo, dirección.</span>
+                        </span>
+                    </asp:LinkButton>
+                    <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">
+                            delete
+                        </span>
+                        <span class="mdc-list-item__text">
+                            <span class="mdc-list-item__primary-text">Deshabilitar empleado</span>
+                            <span class="mdc-list-item__secondary-text">En caso de despido, renuncia.</span>
+                        </span>
+                    </asp:LinkButton>
                 </ul>
                 <br>
             </div>
