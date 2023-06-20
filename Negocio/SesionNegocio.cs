@@ -100,10 +100,10 @@ namespace Negocio {
         }
 
         public static class ErrorCode {
-            public static readonly string NO_ROWS = "NO_ROWS";
-            public static readonly string NO_SESSION_FOUND = "NO_SESSION_FOUND";
-            public static readonly string EXPIRED_TOKEN = "EXPIRED_TOKEN";
-            public static readonly string UNAUTHORIZED = "UNAUTHORIZED";
+            public const string NO_ROWS = "NO_ROWS";
+            public const string NO_SESSION_FOUND = "NO_SESSION_FOUND";
+            public const string EXPIRED_TOKEN = "EXPIRED_TOKEN";
+            public const string UNAUTHORIZED = "UNAUTHORIZED";
         }
         public static readonly string AUTH_COOKIE = "_au";
 
