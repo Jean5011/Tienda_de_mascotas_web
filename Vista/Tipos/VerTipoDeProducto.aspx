@@ -29,7 +29,7 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>Ver tipos de productos</td>
+                    <td><h1>Ver tipos de productos</h1></td>
                 </tr>
             </table>
         </div>
@@ -46,7 +46,7 @@
                     <asp:TextBox ID="TB_Filtrar" runat="server"></asp:TextBox>
                 </td>
                 <td class="auto-style4">
-                    <asp:Button ID="BT_Filtrar" runat="server" OnClick="BT_Filtrar_Click" Text="Button" />
+                    <asp:Button ID="BT_Filtrar" runat="server" OnClick="BT_Filtrar_Click" Text="Filtrar" />
                 </td>
                 <td>
                     <asp:Button ID="BT_Todo" runat="server" Text="Todos" OnClick="BT_Todo_Click" />
@@ -62,7 +62,18 @@
         <table class="auto-style1">
             <tr>
                 <td>
-                    <asp:GridView ID="GV_Datos" runat="server">
+                    <asp:GridView ID="GV_Datos" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
+                        <AlternatingRowStyle BackColor="White" />
+                        <EditRowStyle BackColor="#2461BF" />
+                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#EFF3FB" />
+                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                 </td>
             </tr>

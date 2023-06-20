@@ -24,7 +24,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Ingresar tipos de productos</td>
+            <td><h1>Ingresar tipos de productos</h1></td>
         </tr>
     </table>
     <form id="form1" runat="server">
