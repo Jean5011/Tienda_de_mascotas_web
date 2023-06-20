@@ -164,6 +164,16 @@ namespace Negocio {
             
         }
 
+        public static Response ModificarEmpleado(Empleado obj, string oldDNI) {
+            if (SesionNegocio.Autenticar()) {
+                return EmpleadoDatos.Modificar(obj, oldDNI);
+            }
+            else return new Response() {
+                ErrorFound = true,
+                Message = SesionNegocio.ErrorCode.NO_SESSION_FOUND
+            };
+        }
+
         /// <summary>
         /// Devuelve los datos del empleado a partir de su DNI.
         /// </summary>

@@ -54,12 +54,14 @@ namespace Datos {
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
                     using (SqlCommand command = new SqlCommand(query, con)) {
+                        string q = query;
                         if (parameters != null) {
                             foreach (KeyValuePair<string, object> parameter in parameters) {
                                 command.Parameters.AddWithValue(parameter.Key, parameter.Value);
                             }
                         }
                         using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command)) {
+
                             dataAdapter.Fill(dataSet, "root");
                         }
                     }

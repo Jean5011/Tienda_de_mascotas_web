@@ -74,6 +74,43 @@ namespace Datos {
                     );
         }
 
+        public static Response Modificar(Empleado obj, string oldDNI) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.RunTransaction(
+                        query: $"UPDATE [{Empleado.Table}] SET " +
+                        $"[{Empleado.Columns.DNI}] = @DNI, " +
+                        $"[{Empleado.Columns.Nombre}] = @NOMBRE, " +
+                        $"[{Empleado.Columns.Apellido}] = @APELLIDO, " +
+                        $"[{Empleado.Columns.Sexo}] = @SEXO, " +
+                        $"[{Empleado.Columns.FechaNacimiento}] = @FECHANACIMIENTO, " +
+                        $"[{Empleado.Columns.FechaInicio}] = @FECHAINICIO, " +
+                        $"[{Empleado.Columns.Sueldo}] = @SUELDO, " +
+                        $"[{Empleado.Columns.Direccion}] = @DIRECCION, " +
+                        $"[{Empleado.Columns.Provincia}] = @PROVINCIA, " +
+                        $"[{Empleado.Columns.Localidad}] = @LOCALIDAD, " +
+                        $"[{Empleado.Columns.Estado}] = @ESTADO, " +
+                        $"[{Empleado.Columns.Rol}] = @ROL " +
+                        $"WHERE [{Empleado.Columns.DNI}] = @OLDDNI",
+                        parameters: new Dictionary<string, object>() {
+                            { "@DNI", obj.DNI },
+                            { "@NOMBRE", obj.Nombre },
+                            { "@APELLIDO", obj.Apellido },
+                            { "@SEXO", obj.Sexo },
+                            { "@FECHANACIMIENTO", obj.FechaNacimiento },
+                            { "@FECHAINICIO", obj.FechaContrato },
+                            { "@SUELDO", obj.Sueldo },
+                            { "@DIRECCION", obj.Direccion },
+                            { "@PROVINCIA", obj.Provincia },
+                            { "@LOCALIDAD", obj.Localidad },
+                            { "@ESTADO", obj.Estado },
+                            { "@ROL", obj.Rol },
+                            { "@OLDDNI", oldDNI }
+                        }
+                    );
+        }
+
         public static Response CambiarClave(string hash, string salt, string DNI) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
