@@ -34,6 +34,16 @@ namespace Datos
                         query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table}"
                     );
         }
+
+        public static Response ObtenerLista()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: $"SELECT {Animal.Columns.Codigo},({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Animal_A' FROM {Animal.Table}"
+                    );
+        }
         public static Response BuscarAnimalPorCod(string ID)
         {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Animal.Table} WHERE [{Animal.Columns.Codigo}] = @ID ";

@@ -38,5 +38,12 @@ namespace Negocio
         {
             return DaoAnimales.EliminarAnimal(A);
         }
+
+        public Response GettAnimales()
+        {
+            return DaoAnimales.ObtenerLista();
+        }
+
+        
     }
 }

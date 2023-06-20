@@ -11,7 +11,7 @@ namespace Vista.Tipos
 {
 
 
-    public partial class VerTipoDePrductos
+    public partial class VerTipoDeProducto
     {
 
         /// <summary>
@@ -24,48 +24,39 @@ namespace Vista.Tipos
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Control TB_cod.
+        /// Control TB_Filtrar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_cod;
+        protected global::System.Web.UI.WebControls.TextBox TB_Filtrar;
 
         /// <summary>
-        /// Control DD_Animal.
+        /// Control BT_Filtrar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DD_Animal;
+        protected global::System.Web.UI.WebControls.Button BT_Filtrar;
 
         /// <summary>
-        /// Control DD_Tpd.
+        /// Control BT_Todo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DD_Tpd;
+        protected global::System.Web.UI.WebControls.Button BT_Todo;
 
         /// <summary>
-        /// Control TB_Descripcion.
+        /// Control GV_Datos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Descripcion;
-
-        /// <summary>
-        /// Control BT_Guardar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BT_Guardar;
+        protected global::System.Web.UI.WebControls.GridView GV_Datos;
     }
 }

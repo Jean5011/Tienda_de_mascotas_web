@@ -28,7 +28,7 @@ namespace Vista.Animales
             }
             else
             {
-                a.Raza = "null";
+                a.Raza = "---";
             }
             NegocioAnimales na = new NegocioAnimales();
             na.IgresarAnimal(a);
