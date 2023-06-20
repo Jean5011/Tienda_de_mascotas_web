@@ -25,7 +25,8 @@ namespace Vista.Empleados {
                 return false;
             }
             else {
-                Utils.MostrarMensaje($"Empleado asignado. Nombre: {(res_b.ObjectReturned as Empleado).Nombre}", this.Page, GetType());
+                // Si llega acá es porque cargó todo bien.
+               // Utils.MostrarMensaje($"Empleado asignado. Nombre: {(res_b.ObjectReturned as Empleado).Nombre}", this.Page, GetType());
             }
             Session[actualUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
             return true;

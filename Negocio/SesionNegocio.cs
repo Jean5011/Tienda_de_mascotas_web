@@ -103,6 +103,7 @@ namespace Negocio {
             public static readonly string NO_ROWS = "NO_ROWS";
             public static readonly string NO_SESSION_FOUND = "NO_SESSION_FOUND";
             public static readonly string EXPIRED_TOKEN = "EXPIRED_TOKEN";
+            public static readonly string UNAUTHORIZED = "UNAUTHORIZED";
         }
         public static readonly string AUTH_COOKIE = "_au";
 
@@ -266,6 +267,34 @@ namespace Negocio {
             }
             return false;
 
+        }
+
+        public static bool Autenticar(Action<Response> onSuccess, Action<Response> onError) {
+            string token = GetCookieValue(AUTH_COOKIE);
+            if (token == null) {
+                onError(new Response() {
+                    ErrorFound = true,
+                    Message = ErrorCode.NO_SESSION_FOUND
+                });
+                return false;
+            } 
+            else {
+                Token tk = new Token();
+                bool dec = tk.Decodificar(token);
+                if (!dec) {
+                    onError(new Response() {
+                        ErrorFound = true,
+                        Message = ErrorCode.EXPIRED_TOKEN
+                    });
+                    return false;
+                }
+                bool verificacionFinal = VerificarAutorizacionToken(token, tk.DNI);
+                onSuccess(new Response() {
+                    ErrorFound = !verificacionFinal,
+                    Message = verificacionFinal ? "OK" : ErrorCode.UNAUTHORIZED
+                });
+                return verificacionFinal;
+            }
         }
 
         /// <summary>
