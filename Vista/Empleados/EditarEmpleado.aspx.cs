@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,6 +12,7 @@ using Negocio;
 namespace Vista.Empleados {
     public partial class EditarEmpleado : System.Web.UI.Page {
         private readonly string actualUser = "Usuario_Actual";
+        private readonly string editingUser = "Usuario_Perfil";
         public Empleado UsuarioActual;
         private Empleado UsuarioPerfil;
         protected bool CargarSesion() {
@@ -44,16 +46,18 @@ namespace Vista.Empleados {
             if (res_b.ErrorFound) {
                 return false;
             }
-            UsuarioPerfil = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
+            Session[editingUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
             return true;
         }
         protected void CargarValores(Empleado obj) {
+            DateTime fn = DateTime.Parse(obj.FechaNacimiento);
+            DateTime fi = DateTime.Parse(obj.FechaContrato);
             txtDNI.Text = obj.DNI;
             txtNombre.Text = obj.Nombre;
             txtApellido.Text = obj.Apellido;
             ddlGenero.SelectedValue = obj.Sexo;
-            txtFechaNacimiento.Text = obj.FechaNacimiento;
-            txtFechaContrato.Text = obj.FechaContrato;
+            txtFechaNacimiento.Text = fn.ToString("yyyy-MM-dd");
+            txtFechaContrato.Text = fi.ToString("yyyy-MM-dd");
             txtSueldo.Text = obj.Sueldo.ToString();
             txtDireccion.Text = obj.Direccion;
             txtProvincia.Text = obj.Provincia;
@@ -68,8 +72,9 @@ namespace Vista.Empleados {
                 bool cargoPerfil = CargarPerfil();
                 if (inicioSesion && cargoPerfil) {
                     UsuarioActual = Session[actualUser] as Empleado;
+                    UsuarioPerfil = Session[editingUser] as Empleado;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                        CargarValores(UsuarioActual);
+                        CargarValores(UsuarioPerfil);
                     }
                     else {
                         Utils.MostrarMensaje($"No tenés permiso para editar registros. ", this.Page, GetType());
@@ -84,15 +89,18 @@ namespace Vista.Empleados {
 
         protected void btnGuardarCambios_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
-            string oldDNI = UsuarioActual.DNI;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            string oldDNI = UsuarioPerfil.DNI;
+            DateTime fn = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime fi = DateTime.ParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             Empleado obj = new Empleado() {
                 DNI = txtDNI.Text,
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Sexo = ddlGenero.SelectedValue,
-                FechaNacimiento = txtFechaNacimiento.Text,
-                FechaContrato = txtFechaContrato.Text,
+                FechaNacimiento = fn.ToString("yyyy-MM-dd"),
+                FechaContrato = fi.ToString("yyyy-MM-dd"),
                 Sueldo = Convert.ToDouble(txtSueldo.Text),
                 Direccion = txtDireccion.Text,
                 Provincia = txtProvincia.Text,
@@ -127,13 +135,14 @@ namespace Vista.Empleados {
                 // Función que se ejecuta si NO autenticó
                 bool huboError = error.ErrorFound;
                 string mensajeError = error.Message;
+                Utils.MostrarMensaje("Error de autenticación. " + mensajeError, this.Page, GetType());
 
             });
 
         }
 
         protected void customValidator_ServerValidate(object source, ServerValidateEventArgs args) {
-            string dni = txtDNI.Text;
+            /*string dni = txtDNI.Text;
 
             Response rs = EmpleadoNegocio.BuscarEmpleadoPorDNI(dni);
             if(!rs.ErrorFound) {
@@ -144,7 +153,8 @@ namespace Vista.Empleados {
                 } else {
                     args.IsValid = false;
                 }
-            }
+            }*/
+            args.IsValid = true;
 
         }
     }

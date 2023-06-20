@@ -46,9 +46,6 @@
                 </label>
                 <div class="mdc-text-field-helper-line">
                     <span class="mdc-text-field-helper-text"></span>
-                    <asp:RequiredFieldValidator ID="rfvDNI" aria-hidden="true" ControlToValidate="txtDNI" runat="server" ErrorMessage="" ValidationGroup="A" SetFocusOnError="True" Text="Tenés que ingresar un DNI válido."></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="regexValidator" runat="server" ControlToValidate="txtDNI" ValidationExpression="^\d+$"
-                        ErrorMessage="Ingresá únicamente números" CssClass="error-message"></asp:RegularExpressionValidator>
                     <asp:CustomValidator ID="customValidator" runat="server" ControlToValidate="txtDNI"
                         OnServerValidate="customValidator_ServerValidate" ErrorMessage="El DNI ingresado ya está en uso. Intente con otro."
                         ></asp:CustomValidator>
@@ -100,7 +97,7 @@
                         </span>
                         <span class="mdc-notched-outline__trailing"></span>
                     </span>
-                    <asp:TextBox ID="txtFechaNacimiento" runat="server" CssClass="mdc-text-field__input" aria-labelledby="nlabel"></asp:TextBox>
+                    <asp:TextBox ID="txtFechaNacimiento" type="date" runat="server" CssClass="mdc-text-field__input" aria-labelledby="nlabel"></asp:TextBox>
                 </label>
                 <label class="mdc-text-field mdc-text-field--outlined">
                     <span class="mdc-notched-outline">
@@ -110,7 +107,7 @@
                         </span>
                         <span class="mdc-notched-outline__trailing"></span>
                     </span>
-                    <asp:TextBox ID="txtFechaContrato" runat="server" CssClass="mdc-text-field__input" aria-labelledby="nlabel"></asp:TextBox>
+                    <asp:TextBox ID="txtFechaContrato" type="date" runat="server" CssClass="mdc-text-field__input" aria-labelledby="nlabel"></asp:TextBox>
                 </label>
                 <br>
                 <br>

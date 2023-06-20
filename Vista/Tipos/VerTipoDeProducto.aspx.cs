@@ -9,6 +9,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Security.Claims;
 using Negocio;
+using System.Web.UI.WebControls;
 
 namespace Vista.Tipos
 {
