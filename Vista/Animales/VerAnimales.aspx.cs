@@ -9,6 +9,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Security.Claims;
 using Negocio;
+using System.Web.UI.WebControls;
 
 namespace Vista.Animales
 {
@@ -45,13 +46,13 @@ namespace Vista.Animales
         protected void GV_Datos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
         {
             Animal a = new Animal();
-            a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_Cod_Animal").Text;
+            a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_Cod_Animal")).Text;
             NegocioAnimales nt = new NegocioAnimales();
             nt.EliminarAnimal(a);
             Response resultado = nt.GetAnimales();
             DataSet dt = resultado.ObjectReturned as DataSet;
             GV_Datos.DataSource = dt;
-            GV_Datos.DataBind()
+            GV_Datos.DataBind();
         }
     }
 }
