@@ -24,9 +24,9 @@ namespace Negocio
             return DaoProductos.BuscarProductoPorCod(cod);
         }
 
-        public Response IgresarProducto(Producto P)
+        public static Response IngresarProducto(Producto P)
         {
-            return DaoProductos.IgresarProducto(P);
+            return DaoProductos.IngresarProducto(P);
         }
         public Response ActualizarEstado(Producto P)
         {

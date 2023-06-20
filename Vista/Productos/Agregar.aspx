@@ -148,12 +148,12 @@
                             </span>
                             <span class="mdc-notched-outline__trailing"></span>
                         </span>
-                        <asp:DropDownList runat="server" CssClass="mdc-text-field__input" ID="ddlPrecioUnitario"></asp:DropDownList>
+                        <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtPrecioUnitario"></asp:TextBox>
                     </label>
                 </div>
 
                 <br />
-                <asp:Button runat="server" CssClass="mdc-button mdc-button--raised" Text="Guardar" />
+                <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" />
             </div>
         </main>
         <aside class="mdc-snackbar">

@@ -54,25 +54,25 @@ namespace Datos {
                     );
         }
 
-        public static Response IgresarProducto(Producto Pr) {
+        public static Response IngresarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            Response response = con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Crear,
-                        parameters: new Dictionary<string, object> {
-                            { "@CodProducto_Prod", Pr.Codigo },
-                            { "@CUITProveedor_Prod", Pr.Proveedor },
-                            { "@CodTipoProducto_Prod", Pr.Categoria },
-                            { "@Nombre_Prod", Pr.Nombre },
-                            { "@Marca_Prod", Pr.Marca },
-                            { "@Descripcion_Prod", Pr.Descripcion },
-                            { "@Stock_Prod", Pr.Stock },
-                            { "@Imagen_Prod", Pr.Imagen },
-                            { "@PrecioUnitario_Prod", Pr.Precio },
-                            { "@Estado_Prod", Pr.Estado }
+                        parameters: new Dictionary<string, object> 
+                        {
+                            { "@Codigo", Pr.Codigo },
+                            { "@CUIT", Pr.Proveedor.CUIT },
+                            { "@Tipo", Pr.Categoria},
+                            { "@Nombre", Pr.Nombre },
+                            { "@Marca", Pr.Marca },
+                            { "@Desc", Pr.Descripcion },
+                            { "@Stock", Pr.Stock },
+                            { "@Imagen", Pr.Imagen },
+                            { "@Precio", Pr.Precio },
+                            { "@Estado", Pr.Estado }
                         }
                     );
+            return response.ErrorFound ? response : con.Response;
         }
 
         public static Response ActualizarEstadoProducto(Producto Pr) {
@@ -82,7 +82,7 @@ namespace Datos {
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarEstado,
                         parameters: new Dictionary<string, object> {
-                            { "@CodProducto_Prod", Pr.Codigo },
+                            { "@Codigo", Pr.Codigo },
                             { "@Estado",Pr.Estado }
                         }
                     );
@@ -95,8 +95,8 @@ namespace Datos {
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarPrecio,
                         parameters: new Dictionary<string, object> {
-                            { "@CodProducto_Prod", Pr.Codigo },
-                            { "@PrecioUnitario_Prod", Pr.Precio }
+                            { "@Codigo", Pr.Codigo },
+                            { "@Precio", Pr.Precio }
 
                         }
                     );
@@ -109,8 +109,8 @@ namespace Datos {
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarPrecio,
                         parameters: new Dictionary<string, object> {
-                            { "@CodProducto_Prod", Pr.Codigo },
-                            { "@Stock_Prod", Pr.Stock }
+                            { "@Codigo", Pr.Codigo },
+                            { "@Stock", Pr.Stock }
 
                         }
                     );

@@ -49,6 +49,7 @@ namespace Vista.Productos {
                 else {
                     // El usuario logueado es un CAJERO / EMPLEADO COMÚN , no tiene derecho a crear y borrar productos.
                     Utils.MostrarMensaje($"No tenés permiso para ver esta página. ", this.Page, GetType());
+
                     // Despedilo, bajale el sueldo, bardealo, hacé lo que quieras.
                     // Yo lo mandaría de nuevo a la página principal.
 
@@ -56,9 +57,53 @@ namespace Vista.Productos {
             } 
         }
 
-        public void Guardar_Click(Producto a)
+        protected void BtnGuardar_Click(object sender, EventArgs e)
         {
-
+            //Utils.MostrarMensaje($"EVENTO CLIIIIICKKKKKKK. ", this.Page, GetType());
+            //aca casteo el precio para que se pueda cargar
+            string numero = txtPrecioUnitario.Text;
+            double Pre;
+            if (double.TryParse(numero, out Pre))
+            {
+                string stock = txtStock.Text;
+                int st;
+                if(int.TryParse(stock, out st))
+              {
+                Producto Prod = new Producto()
+                {
+                    Codigo = txtID.Text,
+                    Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                    Categoria = new TipoProducto() { tipoDeProducto = txtTipoProducto.Text },
+                    Nombre = txtNombre.Text,
+                    Marca = txtMarca.Text,
+                    Descripcion = txtDescripcion.Text,
+                    Stock = st,
+                    Imagen = txtURLImagen.Text,
+                    Precio = Pre,
+                    Estado = true,
+                };
+                Response response = ProductoNegocio.IngresarProducto(Prod);
+                if (!response.ErrorFound)
+                {
+                    Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
+                }
+                else
+                {
+                    //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
+                    string error = response.Message;
+                    Utils.MostrarMensaje(error, this.Page, GetType());
+                }
+              }
+                else
+                {
+                    Utils.MostrarMensaje($"El stock ingresado no es valido. ", this.Page, GetType());
+                }
+            }
+            else
+            {
+                Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
+            }
+            
         }
         
     }

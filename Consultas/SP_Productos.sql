@@ -9,12 +9,13 @@ CREATE PROCEDURE SP_Productos_Crear
 @Marca varchar(50),
 @Desc varchar(50),
 @Stock int,
+@Imagen varchar(100),
 @Precio money,
 @Estado bit
 AS
 BEGIN
-INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,PrecioUnitario_Prod,Estado_Prod)
-SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Precio,@Estado
+INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,Imagen_Prod,PrecioUnitario_Prod,Estado_Prod)
+SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Imagen,@Precio,@Estado
 END
 GO
 
