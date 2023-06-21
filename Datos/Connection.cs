@@ -114,6 +114,40 @@ namespace Datos {
             }
         }
 
+        public Response FetchStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
+            try {
+                DataSet dataSet = new DataSet();
+                using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    using (SqlCommand command = new SqlCommand(storedProcedureName, con)) {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        if (parameters != null) {
+                            foreach (KeyValuePair<string, object> parameter in parameters) {
+                                command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                            }
+                        }
+
+                        using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command)) {
+                            dataAdapter.Fill(dataSet);
+                        }
+
+                        return new Response() {
+                            ObjectReturned = dataSet,
+                            ErrorFound = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex) {
+                return new Response() {
+                    ErrorFound = true,
+                    Message = "Error al ejecutar el procedimiento almacenado.",
+                    Details = ex.ToString(),
+                    Exception = ex,
+                    AffectedRows = 0
+                };
+            }
+        }
         public Response ExecuteStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
