@@ -28,6 +28,7 @@ namespace Datos {
                                                     $"[{Empleado.Columns.Rol}]";
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
+            public static string CrearEmpleado = "CrearEmpleado";
         }
 
         public static Response ObtenerListaDeEmpleados() {
@@ -74,6 +75,31 @@ namespace Datos {
                     );
         }
 
+        public static Response CrearEmpleado(Empleado obj) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.CrearEmpleado,
+                        parameters: new Dictionary<string, object>() {
+                            { "@DNI", obj.DNI },
+                            { "@NOMBRE", obj.Nombre },
+                            { "@APELLIDO", obj.Apellido },
+                            { "@SEXO", obj.Sexo },
+                            { "@FECHANACIMIENTO", obj.FechaNacimiento },
+                            { "@FECHAINICIO", obj.FechaContrato },
+                            { "@SUELDO", obj.Sueldo },
+                            { "@DIRECCION", obj.Direccion },
+                            { "@PROVINCIA", obj.Provincia },
+                            { "@LOCALIDAD", obj.Localidad },
+                            { "@NACIONALIDAD", obj.Nacionalidad },
+                            { "@HASH", obj.Hash },
+                            { "@SALT", obj.Salt },
+                            { "@ROL", obj.Rol }
+                        }
+                    );
+        }
+
         public static Response Modificar(Empleado obj, string oldDNI) {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
@@ -111,16 +137,16 @@ namespace Datos {
                     );
         }
 
-        public static Response CambiarClave(string hash, string salt, string DNI) {
+        public static Response CambiarClave(Empleado obj) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.CambiarClave,
                         parameters: new Dictionary<string, object> {
-                            { "@DNI", DNI },
-                            { "@HASH", hash },
-                            { "@SALT", salt }
+                            { "@DNI", obj.DNI },
+                            { "@HASH", obj.Hash },
+                            { "@SALT", obj.Salt }
                         }
                     );
         }

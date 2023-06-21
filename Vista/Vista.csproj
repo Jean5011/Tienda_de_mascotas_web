@@ -72,6 +72,7 @@
     <Content Include="Empleados\CambiarClave.aspx" />
     <Content Include="Empleados\CerrarSesion.aspx" />
     <Content Include="Empleados\CrearCuenta.aspx" />
+    <Content Include="Empleados\Deshabilitar.aspx" />
     <Content Include="Empleados\EditarEmpleado.aspx" />
     <Content Include="Empleados\IniciarSesion.aspx" />
     <Content Include="Empleados\Perfil.aspx" />
@@ -133,6 +134,13 @@
     </Compile>
     <Compile Include="Empleados\CrearCuenta.aspx.designer.cs">
       <DependentUpon>CrearCuenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\Deshabilitar.aspx.cs">
+      <DependentUpon>Deshabilitar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\Deshabilitar.aspx.designer.cs">
+      <DependentUpon>Deshabilitar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Empleados\EditarEmpleado.aspx.cs">
       <DependentUpon>EditarEmpleado.aspx</DependentUpon>

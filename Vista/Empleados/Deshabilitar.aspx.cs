@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
-using System.Web;
-using System.Globalization;
 
 namespace Vista.Empleados {
-    public partial class CambiarClave : System.Web.UI.Page {
+    public partial class Deshabilitar : System.Web.UI.Page {
         private readonly string actualUser = "Usuario_Actual";
         private readonly string editingUser = "Usuario_Perfil";
         public Empleado UsuarioActual;
@@ -55,13 +55,18 @@ namespace Vista.Empleados {
                 if (inicioSesion && cargoPerfil) {
                     UsuarioActual = Session[actualUser] as Empleado;
                     UsuarioPerfil = Session[editingUser] as Empleado;
-                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
-                        // El usuario actual es ELLA/ÉL MISMO ó un ADMINISTRADOR.
-                        
+                    H2Titulo.InnerText = UsuarioPerfil.Apellido + ", " + UsuarioPerfil.Nombre;
+                    LabelDescripcion.Text = "¿Estás seguro de deshabilitar a este usuario?";
+                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                        // El usuario actual es ADMINISTRADOR. Puede proceder a eliminar
+                        if(UsuarioActual.DNI == UsuarioPerfil.DNI) {
+                            Utils.MostrarMensaje("No te podés eliminar a vos mismo. Otro administrador debe realizar esa acción. ", this.Page, GetType());
+                            btnDeshabilitar.Enabled = false;
+                        }
                     }
                     else {
-                        Utils.MostrarMensaje($"No tenés permiso para cambiar la clave de alguien más. ", this.Page, GetType());
-                        btnGuardarCambios.Enabled = false;
+                        Utils.MostrarMensaje($"No tenés permiso para borrar registros. ", this.Page, GetType());
+                        btnDeshabilitar.Enabled = false;
                         // *** Redirigir a página principal *** ///
 
                     }
@@ -70,21 +75,31 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void btnGuardarCambios_Click(object sender, EventArgs e) {
+        protected void btnDeshabilitar_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
             UsuarioPerfil = Session[editingUser] as Empleado;
-            string claveNueva = txtClave.Text;
-            SesionNegocio.Autenticar((res) => {
-                Response op = EmpleadoNegocio.CrearClaves(UsuarioPerfil.DNI, claveNueva);
-                if (!op.ErrorFound) {
-                    Utils.MostrarMensaje("Se cambió la clave correctamente. ", this.Page, GetType());
-                }
-                else {
-                    Utils.MostrarMensaje("Error. " + op.Message + " " + op.Details, this.Page, GetType());
-                }
-            }, (err) => {
-                Utils.MostrarMensaje("Caducó el token. Tenés que volver a iniciar sesión. ", this.Page, GetType());
-            });
+            if(UsuarioActual.DNI != UsuarioPerfil.DNI) {
+                // Nos volvemos a asegurar que el usuario no se quiera eliminar a sí mismo.
+                SesionNegocio.Autenticar((res) => { 
+                    DateTime fn = DateTime.ParseExact(UsuarioPerfil.FechaNacimiento, "dd/MM/yyyy H:mm:ss", CultureInfo.InvariantCulture);
+                    DateTime fi = DateTime.ParseExact(UsuarioPerfil.FechaContrato, "dd/MM/yyyy H:mm:ss", CultureInfo.InvariantCulture);
+                    UsuarioPerfil.FechaNacimiento = fn.ToString("yyyy-MM-dd");
+                    UsuarioPerfil.FechaContrato = fn.ToString("yyyy-MM-dd");
+                    UsuarioPerfil.Estado = false;
+                    Response operacion = EmpleadoNegocio.ModificarEmpleado(UsuarioPerfil, UsuarioPerfil.DNI);
+                    if (!operacion.ErrorFound) {
+                        Utils.MostrarMensaje($"El/La empleado/a {UsuarioPerfil.Apellido} fue deshabilitado y no podrá volver a iniciar sesión con sus credenciales. ", this.Page, GetType());
+                    }
+                    else {
+                        Utils.MostrarMensaje($"Error. {operacion.Message} : {operacion.Details}", this.Page, GetType());
+                    }
+                }, (err) => {
+                    Utils.MostrarMensaje($"El token caducó y no se pudo completar la operación. Volvé a iniciar sesión. ", this.Page, GetType());
+                });
+            } else {
+                Utils.MostrarMensaje("No te podés eliminar a vos mismo. Otro administrador debe realizar esa acción. ", this.Page, GetType());
+                btnDeshabilitar.Enabled = false;
+            }
 
         }
     }

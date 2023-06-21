@@ -14,6 +14,10 @@ namespace Negocio {
     public class EmpleadoNegocio {
         public EmpleadoNegocio() { }
 
+        public static class ErrorCode {
+            public const string ALREADY_EXISTS = "ALREADY_EXISTS";
+        }
+
         /// <summary>
         /// Generar salt (Texto aleatorio para fortalecer una contraseña)
         /// </summary>
@@ -43,6 +47,24 @@ namespace Negocio {
                 return sha256.ComputeHash(combinedBytes);
             }
         }
+
+        public static Response CrearEmpleado(Empleado obj, string clave) {
+            // Generamos el hash y el salt.
+            byte[] newSalt = GenerarSalt();
+            byte[] newHash = GenerarHash(clave, newSalt);
+            obj.Hash = Convert.ToBase64String(newHash);
+            obj.Salt = Convert.ToBase64String(newSalt);
+            var existeEmpleado = BuscarEmpleadoPorDNI(obj.DNI);
+            if(!existeEmpleado.ErrorFound && existeEmpleado.Message != SesionNegocio.ErrorCode.NO_ROWS) {
+                return new Response() {
+                    ErrorFound = true,
+                    Message = EmpleadoNegocio.ErrorCode.ALREADY_EXISTS
+                };
+            }
+            return EmpleadoDatos.CrearEmpleado(obj);
+        }
+
+
 
         /// <summary>
         /// Verifica una clave [DEPRECATED]
@@ -79,6 +101,18 @@ namespace Negocio {
 
         }
 
+        public static Response CrearClaves(string DNI, string password) {
+            byte[] salt = GenerarSalt();
+            byte[] hash = GenerarHash(password, salt);
+            string nhash = Convert.ToBase64String(hash);
+            string nsalt = Convert.ToBase64String(salt);
+            return EmpleadoDatos.CambiarClave(new Empleado() {
+                DNI = DNI,
+                Hash = nhash,
+                Salt = nsalt
+            });
+        }
+
         /// <summary>
         /// Extrae los datos de un DataSet y los convierte en un objeto tipo Empleado.
         /// </summary>
@@ -112,7 +146,7 @@ namespace Negocio {
             else {
                 return new Response() {
                     ErrorFound = true,
-                    Message = "NO_ROWS",
+                    Message = SesionNegocio.ErrorCode.NO_ROWS,
                     ObjectReturned = null
                 };
             }
