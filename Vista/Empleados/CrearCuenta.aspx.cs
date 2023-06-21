@@ -87,8 +87,8 @@ namespace Vista.Empleados {
             SesionNegocio.Autenticar((res) => { // Si todo está en orden (El token existe, y está habilitado), mandamos a crear el empleado.
                 Response operacion = EmpleadoNegocio.CrearEmpleado(obj, claveIngresada);
                 if (operacion.ErrorFound) {
-                    Utils.MostrarMensaje($"Error. {operacion.Details}.", this.Page, GetType());
-                    Trace.Write(operacion.Exception.ToString());
+                    Utils.MostrarMensaje($"Error. {operacion.Message + " / " + operacion.Details}.", this.Page, GetType());
+                    //Trace.Write(operacion.Exception.ToString());
                 }
                 else {
                     Utils.MostrarMensaje("El empleado fue registrado exitosamente. ", this.Page, GetType());

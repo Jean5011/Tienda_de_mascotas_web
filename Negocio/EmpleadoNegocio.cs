@@ -14,6 +14,10 @@ namespace Negocio {
     public class EmpleadoNegocio {
         public EmpleadoNegocio() { }
 
+        public static class ErrorCode {
+            public const string ALREADY_EXISTS = "ALREADY_EXISTS";
+        }
+
         /// <summary>
         /// Generar salt (Texto aleatorio para fortalecer una contraseña)
         /// </summary>
@@ -50,6 +54,13 @@ namespace Negocio {
             byte[] newHash = GenerarHash(clave, newSalt);
             obj.Hash = Convert.ToBase64String(newHash);
             obj.Salt = Convert.ToBase64String(newSalt);
+            var existeEmpleado = BuscarEmpleadoPorDNI(obj.DNI);
+            if(!existeEmpleado.ErrorFound && existeEmpleado.Message != SesionNegocio.ErrorCode.NO_ROWS) {
+                return new Response() {
+                    ErrorFound = true,
+                    Message = EmpleadoNegocio.ErrorCode.ALREADY_EXISTS
+                };
+            }
             return EmpleadoDatos.CrearEmpleado(obj);
         }
 
@@ -121,7 +132,7 @@ namespace Negocio {
             else {
                 return new Response() {
                     ErrorFound = true,
-                    Message = "NO_ROWS",
+                    Message = SesionNegocio.ErrorCode.NO_ROWS,
                     ObjectReturned = null
                 };
             }
