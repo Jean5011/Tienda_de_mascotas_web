@@ -74,7 +74,7 @@ namespace Datos
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Eliminar,
                         parameters: new Dictionary<string, object> {
-                            { "@PK_CodAnimales_An", An.Codigo }
+                            { "@PK_CodTipoProducto_TP", An.Codigo }
                         }
                     );
         }
@@ -87,7 +87,7 @@ namespace Datos
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Actualizar,
                         parameters: new Dictionary<string, object> {
-                            { "@PK_CodAnimales_An", An.Codigo },
+                            { "@PK_CodTipoProducto_TP", An.Codigo },
                             { "@CodAnimales_Tp", An.CodAnimal },
                             { "@TipoDeProducto_Tp", An.tipoDeProducto },
                             { "@Descripcion_TP", An.Descripcion }

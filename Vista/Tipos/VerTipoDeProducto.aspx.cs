@@ -50,5 +50,41 @@ namespace Vista.Tipos
             GV_Datos.DataSource = dt;
             GV_Datos.DataBind();
         }
+
+        protected void GV_Datos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GV_Datos.EditIndex = e.NewEditIndex;
+            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+            nt.GetTipoDeProducto(); 
+            Response resultado = nt.GetTipoDeProducto();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            GV_Datos.DataSource = dt;
+            GV_Datos.DataBind();
+        }
+
+        protected void GV_Datos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GV_Datos.EditIndex = -1; 
+            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+            nt.GetTipoDeProducto();
+            Response resultado = nt.GetTipoDeProducto();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            GV_Datos.DataSource = dt;
+            GV_Datos.DataBind();
+        }
+
+        protected void GV_Datos_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            TipoProducto Tp = new TipoProducto();
+            Tp.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
+            Tp.CodAnimal = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
+            Tp.tipoDeProducto = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
+            Tp.Descripcion = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
+            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+            Response resultado = nt.ActualizarTipoDeProducto(Tp);
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            GV_Datos.DataSource = dt;
+            GV_Datos.DataBind();
+        }
     }
 }
