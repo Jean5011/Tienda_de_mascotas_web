@@ -10,6 +10,7 @@ using Entidades;
 namespace Vista.Empleados {
     public partial class Perfil : System.Web.UI.Page {
         private readonly string actualUser = "Usuario_Actual";
+        private readonly string editingUser = "Usuario_Perfil";
         public Empleado UsuarioActual;
         private Empleado UsuarioPerfil;
         protected bool CargarSesion() {
@@ -44,7 +45,7 @@ namespace Vista.Empleados {
             if (res_b.ErrorFound) {
                 return false;
             }
-            UsuarioPerfil = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
+            Session[editingUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
             return true;
 
         }
@@ -75,6 +76,7 @@ namespace Vista.Empleados {
                 bool cargoPerfil = CargarPerfil();
                 if (inicioSesion && cargoPerfil) {
                     UsuarioActual = Session[actualUser] as Empleado;
+                    UsuarioPerfil = Session[editingUser] as Empleado;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         RellenarDatos();
                     }
@@ -90,13 +92,13 @@ namespace Vista.Empleados {
 
         protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
+            UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                if (SesionNegocio.Autenticar()) {
-                    Utils.MostrarMensaje("Autorizado.", this.Page, GetType());
-                }
-                else {
+                SesionNegocio.Autenticar((res) => {
+                    Response.Redirect("/Empleados/Deshabilitar.aspx?DNI=" + UsuarioPerfil.DNI);
+                }, (err) => {
                     Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
-                }
+                });
             }
             else {
                 Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
@@ -105,13 +107,13 @@ namespace Vista.Empleados {
 
         protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
             UsuarioActual = Session[actualUser] as Empleado;
+            UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                if (SesionNegocio.Autenticar()) {
-                    Utils.MostrarMensaje("Autorizado.", this.Page, GetType());
-                }
-                else {
+                SesionNegocio.Autenticar((res) => {
+                    Response.Redirect("/Empleados/EditarEmpleado.aspx?DNI=" + UsuarioPerfil.DNI);
+                }, (err) => {
                     Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
-                }
+                });
             }
             else {
                 Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
