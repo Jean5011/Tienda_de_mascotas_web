@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Entidades {
     public class Venta {
+        public class Preliminar {
+            public int Id { get; set; }
+            public int AffectedRows { get; set; }
+        }
         public int Id { get; set; }
         public Empleado EmpleadoGestor { get; set; }
-        public int TipoPago { get; set; }
+        public string TipoPago { get; set; }
         public string Fecha { get; set; }
         public double Total { get; set; }
 

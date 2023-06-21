@@ -14,20 +14,20 @@ namespace Negocio
 {
     public class DetalleVentaNegocio
     {
-        /*
-        public Response ObtenerDV()
+       
+        public Response ObtenerDetalleVenta(int Cod)
         {
-            return DaoDetalleVentas.ObtenerDV();
+            return DaoDetalleVentas.ObtenerDetalleVenta(Cod);
         }
 
-        public Response CrearDv(Venta v)
+        public Response AgregarDetalleVenta(DetalleVenta v)
         {
-            return DaoDetalleVentas.CrearDv(Venta v);
+            return DaoDetalleVentas.AgregarRegistro(v);
         }
 
-        public static Response EliminarDv(Venta v)
+        public static Response DarDeBaja (int Cod)
         {
-            return DaoDetalleVentas.EliminarDv(v);
-        }*/
+            return DaoDetalleVentas.DarDeBajaRegistro(Cod);
+        }
     }
 }

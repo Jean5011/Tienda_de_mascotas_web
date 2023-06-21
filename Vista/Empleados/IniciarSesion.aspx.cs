@@ -9,8 +9,23 @@ using Entidades;
 
 namespace Vista.Empleados {
     public partial class IniciarSesion : System.Web.UI.Page {
+        public void VerPerfilActual(object sender, EventArgs e) {
+            Response.Redirect("/Empleados/Perfil.aspx");
+        }
         protected void Page_Load(object sender, EventArgs e) {
-
+            if(!IsPostBack) {
+                string msg = Request.QueryString["msg"];
+                if(!string.IsNullOrEmpty(msg)) {
+                    Utils.MostrarMensaje(msg, this.Page, GetType());
+                }
+                bool haySesion = Utils.CargarSesion(this, false);
+                
+                if(haySesion) {
+                    Empleado actual = Session[Utils.actualUser] as Empleado;
+                    lblResultado.Text = ($"Si cambiás de cuenta, se cerrará tu sesión actual.");
+                }
+                lbIniciarSesion.Visible = false;
+            }
         }
 
         protected void btnIniciarSesion_Click(object sender, EventArgs e) {

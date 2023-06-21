@@ -26,38 +26,30 @@
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-                        aria-label="Open navigation menu">
-                        menu</button>
-                    <span class="mdc-top-app-bar__title">Pet Shop</span>
+                    <span class="mdc-top-app-bar__title" runat="server" id="spanPageTitle">PetShop</span>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    <button class="mdc-button mdc-top-app-bar__action-item">
+                    <ASP:LinkButton ID="lbIniciarSesion" runat="server" OnClick="IniciarSesion" CssClass="mdc-button mdc-button--raised _header-important-btn mdc-top-app-bar__action-item">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Proveedores</span>
-                    </button>
-                    <button class="mdc-button mdc-top-app-bar__action-item">
+                        <span class="mdc-button__label">Iniciar sesión</span>
+                    </ASP:LinkButton>
+                    <ASP:LinkButton ID="lbActualUser" OnClick="VerPerfilActual" runat="server" CssClass="mdc-button mdc-top-app-bar__action-item _header-profile-btn">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Clientes</span>
-                    </button>
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                        aria-label="Options">
-                        more_vert</button>
+                        <span class="mdc-button__label"><b runat="server" id="lbAUNombre"></b><br>
+                            <span runat="server" id="lbAURol"></span></span>
+                    </ASP:LinkButton>
                 </section>
             </div>
         </header>
         <main class="mdc-top-app-bar--fixed-adjust obj--main">
             <h2>Empleados</h2>
             <div class="searchbox">
-                <span class="text">Buscar</span>
-                <span class="material-icons">search</span>
+                <asp:TextBox ID="txtBuscar" placeholder="Buscar por nombre, apellido" runat="server"></asp:TextBox>
+                <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button" OnClick="btnBuscar_Click" runat="server" Text="search" />
             </div>
-            <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>
             <asp:CheckBox ID="chkEstado" Text="Mostrar empleados inactivos" Checked="false" runat="server" />
-            <asp:Button ID="btnBuscar" OnClick="btnBuscar_Click" runat="server" Text="Button" />
-            
-            <asp:GridView ID="GridView2" runat="server" CssClass="mdc-data-table" AutoGenerateColumns="False" aria-label="Dessert calories">
+            <br />
+            <asp:GridView ID="gvAdmin" runat="server" CssClass="mdc-data-table" AutoGenerateColumns="False" aria-label="Dessert calories">
                 <Columns>
                     <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
@@ -94,7 +86,7 @@
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Sueldo">
+                    <asp:TemplateField HeaderText="Dirección">
                         <ItemTemplate>
                             <div class="mdc-data-table__cell">
                                 <span><%# Eval(Empleado.Columns.Direccion) %>, <%# Eval(Empleado.Columns.Localidad) %>, <%# Eval(Empleado.Columns.Provincia) %>, <%# Eval(Empleado.Columns.Nacionalidad) %></span>
@@ -104,6 +96,31 @@
                 </Columns>
             </asp:GridView>
 
+            <asp:GridView ID="gvEmpleado" runat="server" CssClass="mdc-data-table" AutoGenerateColumns="False" aria-label="Dessert calories">
+                <Columns>
+                    <asp:TemplateField HeaderText="Nombre">
+                        <ItemTemplate>
+                            <div class="mdc-data-table__cell">
+                                <span><%# Eval(Empleado.Columns.Nombre) %> <%# Eval(Empleado.Columns.Apellido) %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Sexo">
+                        <ItemTemplate>
+                            <div class="mdc-data-table__cell">
+                                <span><%# Eval(Empleado.Columns.Sexo) %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Región">
+                        <ItemTemplate>
+                            <div class="mdc-data-table__cell">
+                                <span><%# Eval(Empleado.Columns.Provincia) %>, <%# Eval(Empleado.Columns.Nacionalidad) %></span>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
         </main>
         <aside class="mdc-snackbar">
             <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">

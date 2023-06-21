@@ -20,15 +20,21 @@
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button>
-                    <span class="mdc-top-app-bar__title">Iniciar sesión</span>
+                    <span class="mdc-top-app-bar__title" runat="server" id="spanPageTitle">PetShop</span>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Options">more_vert</button>
+                    <ASP:LinkButton ID="lbIniciarSesion" runat="server" CssClass="mdc-button mdc-button--raised _header-important-btn mdc-top-app-bar__action-item">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Iniciar sesión</span>
+                    </ASP:LinkButton>
+                    <ASP:LinkButton ID="lbActualUser" OnClick="VerPerfilActual" runat="server" CssClass="mdc-button mdc-top-app-bar__action-item _header-profile-btn">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label"><b runat="server" id="lbAUNombre"></b><br>
+                            <span runat="server" id="lbAURol"></span></span>
+                    </ASP:LinkButton>
                 </section>
             </div>
-        </header>
+        </header> 
         <main class="mdc-top-app-bar--fixed-adjust obj--main">
             <div class="page">
                 <h2>Iniciá sesión para continuar</h2>
@@ -61,6 +67,10 @@
                 <asp:LinkButton ID="btnIniciarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnIniciarSesion_Click">
         <span class="mdc-button__label">Iniciar sesión</span>
                 </asp:LinkButton>
+
+                <br />
+                <br />
+                <asp:Label ID="lblResultado" runat="server" Text=""></asp:Label>
             </div>
 
         </main>

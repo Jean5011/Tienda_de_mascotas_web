@@ -144,3 +144,18 @@ body {
     border-radius: 7px;
     padding: 15px 30px 30px;
  }
+
+
+
+
+
+
+ /* NEW STYLES */
+
+ ._header-profile-btn {
+    text-transform: none;
+    text-align: right;
+ }
+ ._header-important-btn {
+    background: rgba(3,169,244,1) !important;
+ }

@@ -25,10 +25,52 @@ namespace Datos
 
         public static class Procedures
         {
-            // public static string Crear = "";
-            //public static string Eliminar = "";
+             public static string Agregar = "SP_DetalleDeVenta_Agregar";
+            public static string Bajar = "SP_DetalleDeVenta_DarDeBaja";
+            
         }
 
+        public static Response ObtenerDetalleVenta(int Cod)
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM {DetalleVenta.Table} WHERE [{DetalleVenta.Columns.CodVenta_Dv}] = @Codigo AND [{DetalleVenta.Columns.Estado_Dv}] = 1",
+                        new Dictionary<string, object>
+                        { {"@Codigo",Cod}
+                        }
+                    ) ;
+        }
+
+        public static Response AgregarRegistro(DetalleVenta Dv)
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            Response response = con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.Agregar,
+                        parameters: new Dictionary<string, object>
+                        {
+                            { "@CodigoVenta", Dv.Id },
+                            { "@CodigoProducto", Dv.Producto.Codigo },
+                            { "@CUITProveedor", Dv.Proveedor.CUIT},
+                            { "@Cantidad", Dv.Cantidad }                                 
+                        }
+                    );
+            return response.ErrorFound ? response : con.Response;
+        }
+
+        public static Response DarDeBajaRegistro(int Cod)//SOLO DA LA BAJA LOGICA
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.Bajar,
+                        parameters: new Dictionary<string, object> {
+                            { "@Codigo", Cod },
+                        }
+                    );
+        }
 
     }
 }

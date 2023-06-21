@@ -1,7 +1,7 @@
 USE Pets
 GO
 
-CREATE PROCEDURE SP_agregarRegistro_DetalleDeVenta
+CREATE PROCEDURE SP_DetalleDeVenta_Agregar
 @CodigoVenta int,
 @CodigoProducto varchar(10),
 @CUITProveedor varchar(15),
@@ -21,6 +21,8 @@ AS
 	END
 GO 
 
+
+
 CREATE TRIGGER TR_actualizarStockProductos
 ON DetalleDeVenta AFTER INSERT AS
 	BEGIN 
@@ -30,4 +32,14 @@ ON DetalleDeVenta AFTER INSERT AS
 		WHERE CodProducto_Prod = (SELECT CodProducto_Dv FROM INSERTED) AND
 		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED)
 	END
+GO
+
+CREATE PROCEDURE SP_DetalleDeVentas_DarDeBaja
+@CodigoVenta int
+AS
+BEGIN
+UPDATE DetalleDeVenta 
+SET Estado_Dv = 0
+WHERE CodVenta_Dv = @CodigoVenta
+END
 GO

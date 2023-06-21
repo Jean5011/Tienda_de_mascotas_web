@@ -26,7 +26,7 @@ namespace Datos {
                                                     $"[{Empleado.Columns.Hash}], " +
                                                     $"[{Empleado.Columns.Salt}], " +
                                                     $"[{Empleado.Columns.Rol}]";
-        private static readonly string ALL_COLUMNS_BUT_FORMATTED = $"FORMAT(CAST([{Empleado.Columns.DNI}] AS INT), '## ### ###') AS [{Empleado.Columns.DNI}], " +
+        private static readonly string ALL_COLUMNS_BUT_FORMATTED = $"[{Empleado.Columns.DNI}], " +
                                                     $"[{Empleado.Columns.Nombre}], " +
                                                     $"[{Empleado.Columns.Apellido}], " +
                                                     $"[{Empleado.Columns.Sexo}], " +
