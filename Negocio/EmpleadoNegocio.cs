@@ -64,6 +64,8 @@ namespace Negocio {
             return EmpleadoDatos.CrearEmpleado(obj);
         }
 
+
+
         /// <summary>
         /// Verifica una clave [DEPRECATED]
         /// </summary>
@@ -97,6 +99,18 @@ namespace Negocio {
             bool coinciden = newHashString == savedHash;
             return coinciden;
 
+        }
+
+        public static Response CrearClaves(string DNI, string password) {
+            byte[] salt = GenerarSalt();
+            byte[] hash = GenerarHash(password, salt);
+            string nhash = Convert.ToBase64String(hash);
+            string nsalt = Convert.ToBase64String(salt);
+            return EmpleadoDatos.CambiarClave(new Empleado() {
+                DNI = DNI,
+                Hash = nhash,
+                Salt = nsalt
+            });
         }
 
         /// <summary>

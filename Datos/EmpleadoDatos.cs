@@ -137,16 +137,16 @@ namespace Datos {
                     );
         }
 
-        public static Response CambiarClave(string hash, string salt, string DNI) {
+        public static Response CambiarClave(Empleado obj) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
                 : con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.CambiarClave,
                         parameters: new Dictionary<string, object> {
-                            { "@DNI", DNI },
-                            { "@HASH", hash },
-                            { "@SALT", salt }
+                            { "@DNI", obj.DNI },
+                            { "@HASH", obj.Hash },
+                            { "@SALT", obj.Salt }
                         }
                     );
         }

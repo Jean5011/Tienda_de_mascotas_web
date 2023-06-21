@@ -10,7 +10,7 @@
 namespace Vista.Empleados {
 
 
-    public partial class CambiarClave {
+    public partial class Deshabilitar {
 
         /// <summary>
         /// form1 control.
@@ -31,48 +31,30 @@ namespace Vista.Empleados {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// txtClave control.
+        /// H2Titulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtClave;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl H2Titulo;
 
         /// <summary>
-        /// RequiredFieldValidator9 control.
+        /// LabelDescripcion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator9;
+        protected global::System.Web.UI.WebControls.Label LabelDescripcion;
 
         /// <summary>
-        /// txtConfirmar control.
+        /// btnDeshabilitar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtConfirmar;
-
-        /// <summary>
-        /// CompareValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
-
-        /// <summary>
-        /// btnGuardarCambios control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGuardarCambios;
+        protected global::System.Web.UI.WebControls.LinkButton btnDeshabilitar;
     }
 }
