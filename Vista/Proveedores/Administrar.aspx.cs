@@ -28,8 +28,7 @@ namespace Vista.Proveedores {
         protected void Button1_Click(object sender, EventArgs e)
         {
             string cuit = TextBox1.Text;
-            ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
-            Response res = proveedorNegocio.ObtenerProveedorByCUIT(cuit);
+            Response res = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
             if (!string.IsNullOrEmpty(TextBox1.Text) && !res.ErrorFound)
             {
                 CargarTabla(res);
