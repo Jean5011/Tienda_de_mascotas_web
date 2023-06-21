@@ -61,4 +61,33 @@ BEGIN
     PRINT('No está permitido eliminar registros de la tabla "Productos" mediante el uso de "Delete".');
     ROLLBACK;
 END;
+go
 
+
+CREATE PROCEDURE SP_Productos_Actualizar
+@Codigo varchar(10),
+@CUIT varchar(15),
+@Tipo varchar(10),
+@Nombre varchar(50),
+@Marca varchar(50),
+@Desc varchar(50),
+@Stock int,
+@Imagen varchar(100),
+@Precio money,
+@Estado bit
+AS
+BEGIN
+UPDATE Productos
+SET 
+CUITProveedor_Prod=@CUIT,
+CodTipoProducto_Prod=@Tipo,
+Nombre_Prod=@Nombre,
+Marca_Prod=@Marca,
+Descripcion_Prod=@Desc,
+Stock_Prod=@Stock,
+Imagen_Prod=@Imagen,
+PrecioUnitario_Prod=@Precio,
+Estado_Prod=@Estado
+WHERE CodProducto_Prod=@Codigo
+END
+GO
