@@ -25,9 +25,6 @@ namespace Datos {
 
         public static class Procedures {
             public static string Crear = "SP_Productos_Crear";
-            //public static string ActualizarEstado = "SP_Productos_ActualizarEstado";
-            //public static string ActualizarPrecio = "SP_Productos_ActualizarPrecio";
-            //public static string ActualizarStock = "SP_Productos_ActualizarStock";
             public static string ActualizarProducto = "SP_Productos_Actualizar";
             public static string EliminarProducto = "SP_Productos_Eliminar";
         }
