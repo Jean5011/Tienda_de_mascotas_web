@@ -44,6 +44,15 @@ namespace Negocio {
             }
         }
 
+        public static Response CrearEmpleado(Empleado obj, string clave) {
+            // Generamos el hash y el salt.
+            byte[] newSalt = GenerarSalt();
+            byte[] newHash = GenerarHash(clave, newSalt);
+            obj.Hash = Convert.ToBase64String(newHash);
+            obj.Salt = Convert.ToBase64String(newSalt);
+            return EmpleadoDatos.CrearEmpleado(obj);
+        }
+
         /// <summary>
         /// Verifica una clave [DEPRECATED]
         /// </summary>

@@ -28,6 +28,7 @@ namespace Datos {
                                                     $"[{Empleado.Columns.Rol}]";
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
+            public static string CrearEmpleado = "CrearEmpleado";
         }
 
         public static Response ObtenerListaDeEmpleados() {
@@ -70,6 +71,31 @@ namespace Datos {
                         query: $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.Apellido}] LIKE '%@surname%' AND [{Empleado.Columns.Estado}] = '1'",
                         parameters: new Dictionary<string, object> {
                             { "@surname", Apellido }
+                        }
+                    );
+        }
+
+        public static Response CrearEmpleado(Empleado obj) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.CrearEmpleado,
+                        parameters: new Dictionary<string, object>() {
+                            { "@DNI", obj.DNI },
+                            { "@NOMBRE", obj.Nombre },
+                            { "@APELLIDO", obj.Apellido },
+                            { "@SEXO", obj.Sexo },
+                            { "@FECHANACIMIENTO", obj.FechaNacimiento },
+                            { "@FECHAINICIO", obj.FechaContrato },
+                            { "@SUELDO", obj.Sueldo },
+                            { "@DIRECCION", obj.Direccion },
+                            { "@PROVINCIA", obj.Provincia },
+                            { "@LOCALIDAD", obj.Localidad },
+                            { "@NACIONALIDAD", obj.Nacionalidad },
+                            { "@HASH", obj.Hash },
+                            { "@SALT", obj.Salt },
+                            { "@ROL", obj.Rol }
                         }
                     );
         }
