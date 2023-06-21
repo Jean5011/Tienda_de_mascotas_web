@@ -10,8 +10,18 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class Administrar : System.Web.UI.Page {
+        private readonly string actualUser = Utils.actualUser;
+        public void IniciarSesion(object sender, EventArgs e) {
+            string login_url = "/Empleados/IniciarSesion.aspx";
+            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
+            Response.Redirect($"{login_url}?next={next_url}");
+        }
+        public void VerPerfilActual(object sender, EventArgs e) {
+            Response.Redirect("/Empleados/Perfil.aspx");
+        }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                bool inicioSesion = Utils.CargarSesion(this, false);
                 CargarDatos();
             }
         }
@@ -25,8 +35,19 @@ namespace Vista.Empleados {
                             : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
             if (!data.ErrorFound) {
                 var dt = data.ObjectReturned as DataSet;
-                GridView2.DataSource = dt;
-                GridView2.DataBind();
+                var UsuarioActual = Session[Utils.actualUser] as Empleado;
+                if(UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                    gvAdmin.DataSource = dt;
+                    gvAdmin.DataBind();
+                    gvEmpleado.Visible = false;
+                    gvEmpleado.Enabled = false;
+                } else {
+                    gvEmpleado.DataSource = dt;
+                    gvEmpleado.DataBind();
+                    gvAdmin.Visible = false;
+                    gvAdmin.Enabled = false;
+
+                }
             }
             else {
                 Utils.MostrarMensaje($"Error. {data.Details} . {data.Message} .", this.Page, GetType());
@@ -35,6 +56,14 @@ namespace Vista.Empleados {
 
         protected void btnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
+        }
+
+        protected void lbActualUser_Click(object sender, EventArgs e) {
+
+        }
+
+        protected void lbIniciarSesion_Click(object sender, EventArgs e) {
+
         }
     }
 }

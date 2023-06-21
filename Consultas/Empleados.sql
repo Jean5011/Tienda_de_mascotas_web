@@ -1,7 +1,7 @@
 USE Pets
 GO
 
--- Creamos la tabla Empleados, a partir de los datos del último DER.
+-- Creamos la tabla Empleados, a partir de los datos del ï¿½ltimo DER.
 CREATE TABLE Empleados (
 	DNI_Em CHAR(12) NOT NULL,
 	Nombre_Em VARCHAR(48) NOT NULL,
@@ -31,20 +31,13 @@ INSERT INTO Empleados (DNI_Em, Nombre_Em, Apellido_Em, Sexo_Em, FechaDeNacimient
 SELECT @DNI, @NOMBRE, @APELLIDO, @SEXO, @FECHANACIMIENTO, @FECHAINICIO, @SUELDO, @DIRECCION, @PROVINCIA, @LOCALIDAD, @NACIONALIDAD, @HASH, @SALT
 GO
 
-CREATE PROC CambiarClave @DNI CHAR(12), @HASH VARCHAR(256), @SALT VARCHAR(256), @RESULTADO INT OUTPUT
+CREATE PROC CambiarClave @DNI CHAR(12), @HASH VARCHAR(256), @SALT VARCHAR(256)
 AS
 BEGIN
 	SET NOCOUNT ON
 	UPDATE Empleados 
 	SET Hash_Em = @HASH, Salt_Em = @SALT 
 	WHERE DNI_Em = @DNI
-
-	IF @@ROWCOUNT > 0
-		SET @RESULTADO = 1
-	ELSE 
-		SET @RESULTADO = 0
-
-	RETURN
 END
 GO
 

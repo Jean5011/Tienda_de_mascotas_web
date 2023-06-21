@@ -10,25 +10,14 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class CrearCuenta : System.Web.UI.Page { 
-        private readonly string actualUser = "Usuario_Actual";
-        public Empleado UsuarioActual;
-        protected bool CargarSesion() {
-            Response res_b = SesionNegocio.ObtenerDatosEmpleadoActual();
-            if (res_b.ErrorFound) {
-                if (res_b.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND) {
-                    // De no haber iniciado sesión, se envía a la página de Inicio de Sesión con argumento "next" para que luego pueda volver.
-                    string login_url = "/Empleados/IniciarSesion.aspx";
-                    string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                    Response.Redirect($"{login_url}?next={next_url}");
-                }
-                Utils.MostrarMensaje($"Error verificando tu sesión. Detalles: {res_b.Details}.", this.Page, GetType());
-                return false;
-            }
-            else {
-                //Utils.MostrarMensaje($"Empleado asignado. Nombre: {(res_b.ObjectReturned as Empleado).Nombre}", this.Page, GetType());
-            }
-            Session[actualUser] = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
-            return true;
+        private readonly string actualUser = Utils.actualUser;
+        public void IniciarSesion(object sender, EventArgs e) {
+            string login_url = "/Empleados/IniciarSesion.aspx";
+            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
+            Response.Redirect($"{login_url}?next={next_url}");
+        }
+        public void VerPerfilActual(object sender, EventArgs e) {
+            Response.Redirect("/Empleados/Perfil.aspx");
         }
 
         protected void CargarDatosPrueba() {
@@ -50,12 +39,16 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = CargarSesion();
+                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para poder agregar empleados. ");
                 if (inicioSesion) {
-                    UsuarioActual = Session[actualUser] as Empleado;
+                    var UsuarioActual  = Session[actualUser] as Empleado;
                     if (UsuarioActual.Rol != Empleado.Roles.ADMIN) {
                         Utils.MostrarMensaje($"No tenés permiso para crear registros. ", this.Page, GetType());
+                        btnGuardarCambios.Visible = false;
                         btnGuardarCambios.Enabled = false;
+                        string login_url = "/Empleados/IniciarSesion.aspx";
+                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
+                        Response.Redirect($"{login_url}?next={next_url}&msg=Iniciá sesión con otra cuenta de administrador para continuar.");
                         // *** Redirigir a página principal *** ///
 
                     }
