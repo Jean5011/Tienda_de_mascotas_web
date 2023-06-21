@@ -58,7 +58,7 @@ namespace Vista.Productos
             String Stck = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Stock")).Text;
             String Img = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Imagen")).Text;
             String Precio = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Precio")).Text;
-            bool Estado = ((CheckBox)grdProductos.Rows[e.RowIndex].FindControl("chk_eit_estado")).Checked;
+            //bool Estado = ((CheckBox)grdProductos.Rows[e.RowIndex].FindControl("chk_eit_estado")).Checked;
 
             
             double PrecioDouble;//VARIABLE PARA CONVERTIR EL STRING A DOUBLE de precio
@@ -80,7 +80,7 @@ namespace Vista.Productos
                         Stock = Sto,
                         Imagen = Img,
                         Precio = PrecioDouble,
-                        Estado = Estado
+                        //Estado = Estado
                     };
                     //lbl_mensaje_error.Text = Cod + " - " + Prov + " - " + Tipo + " - " + Nombre + " - " + Marca + " - " + Desc + " - " + Sto + " - " + Img + " - " + PrecioDouble + " - " + Estado;
                     Response response = ProductoNegocio.ActualizarProducto(prod);
@@ -88,7 +88,7 @@ namespace Vista.Productos
                     {
                         grdProductos.EditIndex = -1;
                         cargarGridView();
-                        //lbl_mensaje_error.Text = "PRODUCTO ACTUALIZADO CORRECTAMENTE" ;
+                        lbl_mensaje_error.Text = "PRODUCTO ACTUALIZADO CORRECTAMENTE" ;
                         //Mostrar cartel de producto actualizado correctamente
                     }
                     else
@@ -113,6 +113,34 @@ namespace Vista.Productos
                 // No se pudo convertir a double. Mostrar mensaje de error
             }
          
+        }
+
+        protected void grdProductos_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            String Cod = ((Label)grdProductos.Rows[e.RowIndex].FindControl("lbl_it_codigo")).Text;
+
+            Producto prod = new Producto();
+                prod.Codigo = Cod;
+            //Response response3 = DetalleVentaNegocio.EliminarDV(aca mandas el otro codigo)
+            //Response response2 = VentaNegocio.EliminarVenta(aca mandas el codigo);
+            Response response = ProductoNegocio.EliminarProducto(prod);       
+            if (!response.ErrorFound)
+            {
+                lbl_mensaje_error.Text = "Producto eliminado correctamente";
+                //mensaje de producto eliminado exitosamente
+                cargarGridView();
+            }
+            else
+            {
+                lbl_mensaje_error.Text = response.Message;
+                //mensaje de error al eliminar producto
+            }
+        }
+
+        protected void grdProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            grdProductos.PageIndex = e.NewPageIndex;
+            cargarGridView();
         }
     }
 

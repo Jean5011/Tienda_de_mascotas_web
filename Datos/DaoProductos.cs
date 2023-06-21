@@ -25,10 +25,11 @@ namespace Datos {
 
         public static class Procedures {
             public static string Crear = "SP_Productos_Crear";
-            public static string ActualizarEstado = "SP_Productos_ActualizarEstado";
-            public static string ActualizarPrecio = "SP_Productos_ActualizarPrecio";
-            public static string ActualizarStock = "SP_Productos_ActualizarStock";
+            //public static string ActualizarEstado = "SP_Productos_ActualizarEstado";
+            //public static string ActualizarPrecio = "SP_Productos_ActualizarPrecio";
+            //public static string ActualizarStock = "SP_Productos_ActualizarStock";
             public static string ActualizarProducto = "SP_Productos_Actualizar";
+            public static string EliminarProducto = "SP_Productos_Eliminar";
         }
 
 
@@ -37,7 +38,7 @@ namespace Datos {
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table}"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = 1"
                     );
         }
 
@@ -93,12 +94,26 @@ namespace Datos {
                             { "@Desc", Pr.Descripcion },
                             { "@Stock", Pr.Stock },
                             { "@Imagen", Pr.Imagen },
-                            { "@Precio", Pr.Precio },
-                            { "@Estado", Pr.Estado }
+                            { "@Precio", Pr.Precio }
+                            
                         }
                     );         
         }
 
+
+        public static Response EliminarProducto(Producto Pr)//SOLO DA LA BAJA LOGICA
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.EliminarProducto,
+                        parameters: new Dictionary<string, object> {
+                            { "@Codigo", Pr.Codigo },
+                        }
+                    );
+        }
+        /*
         public static Response ActualizarEstadoProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
@@ -111,7 +126,7 @@ namespace Datos {
                         }
                     );
         }
-
+        
         public static Response ActualizarPrecio(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
@@ -139,6 +154,7 @@ namespace Datos {
                         }
                     );
         }
+        */
     }
 
 }

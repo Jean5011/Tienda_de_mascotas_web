@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Connection.cs" />
     <Compile Include="DaoAnimales.cs" />
+    <Compile Include="DaoDetalleVentas.cs" />
     <Compile Include="DaoProductos.cs" />
     <Compile Include="DaoTiposDeProductos.cs" />
     <Compile Include="EmpleadoDatos.cs" />

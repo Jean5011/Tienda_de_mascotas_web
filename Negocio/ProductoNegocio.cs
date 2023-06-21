@@ -28,16 +28,18 @@ namespace Negocio
         {
             return DaoProductos.IngresarProducto(P);
         }
-        public  Response ActualizarEstado(Producto P)
-        {
-            return DaoProductos.ActualizarEstadoProducto(P);
-        }
+       
 
         public static Response ActualizarProducto(Producto P)
         {
             return DaoProductos.ActualizarProducto(P);
         }
 
+        public static Response EliminarProducto(Producto P)
+        {
+            return DaoProductos.EliminarProducto(P);
+        }
+        /*
         public Response ActualizarPrecio(Producto P)
         {
             return DaoProductos.ActualizarPrecio(P);
@@ -47,5 +49,11 @@ namespace Negocio
         {
             return DaoProductos.ActualizarStock(P);
         }
+
+         public  Response ActualizarEstado(Producto P)
+        {
+            return DaoProductos.ActualizarEstadoProducto(P);
+        }
+        */
     }
 }

@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetalleVentaNegocio.cs" />
     <Compile Include="EmpleadoNegocio.cs" />
     <Compile Include="NegocioAnimales.cs" />
     <Compile Include="NegocioTipoDeProducto.cs" />

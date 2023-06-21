@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Entidades {
-    class Venta {
+    public class Venta {
         public int Id { get; set; }
         public Empleado EmpleadoGestor { get; set; }
         public int TipoPago { get; set; }
