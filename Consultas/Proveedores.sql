@@ -30,3 +30,6 @@ select '2223334445', 'Proveedor I', 'Roberto Sánchez', 'robertosanchez@outlook.c
 select '8887776667', 'Proveedor J', 'Marcela Fernández', 'marcelafernandez@hotmail.com', '888777666', 'Galería 789', 'San Juan', 'San Juan', 'Argentina', '8901'
 go
 */
+
+ALTER TABLE Proveedores
+ADD Estado_Prov bit NOT NULL DEFAULT 1;
