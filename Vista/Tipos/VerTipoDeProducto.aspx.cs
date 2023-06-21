@@ -81,7 +81,9 @@ namespace Vista.Tipos
             Tp.tipoDeProducto = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
             Tp.Descripcion = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            Response resultado = nt.ActualizarTipoDeProducto(Tp);
+            nt.ActualizarTipoDeProducto(Tp);
+            GV_Datos.EditIndex = -1;
+            Response resultado = nt.GetTipoDeProducto();
             DataSet dt = resultado.ObjectReturned as DataSet;
             GV_Datos.DataSource = dt;
             GV_Datos.DataBind();

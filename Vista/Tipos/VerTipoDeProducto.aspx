@@ -74,7 +74,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="codigo animal">
                                 <EditItemTemplate>
-                                    <asp:DropDownList ID="DD_EditAnimal" runat="server" DataSourceID="SqlDataSource1" DataTextField="PK_CodAnimales_An" DataValueField="PK_CodAnimales_An" SelectedIndex='<%# Bind("Animal_A") %>' SelectedValue='<%# Bind("PK_CodAnimales_An") %>'>
+                                    <asp:DropDownList ID="DD_EditAnimal" runat="server" DataSourceID="SqlDataSource1" DataTextField="Animal_A" DataValueField="PK_CodAnimales_An">
+                                        <asp:ListItem></asp:ListItem>
                                     </asp:DropDownList>
                                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PetsConnectionString %>" SelectCommand="select PK_CodAnimales_An, (nombre_An+' '+NombreDeRaza_An) as 'Animal_A' from Animales"></asp:SqlDataSource>
                                 </EditItemTemplate>
