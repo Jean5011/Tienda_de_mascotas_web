@@ -27,6 +27,7 @@
           <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
             aria-label="Open navigation menu">menu</button>
           <span class="mdc-top-app-bar__title">Pets Shop</span>
+            
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
        
@@ -44,9 +45,6 @@
         </section>
       </div>
     </header>
-      <br />  <br />  <br />  <br />  <br />  <br />
-      <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-     <!-- 
     <main class="mdc-top-app-bar--fixed-adjust obj--main">
       <div class="page">
         <h2>Añadir proveedor</h2>
@@ -63,7 +61,8 @@
             <span class="mdc-notched-outline__trailing"></span>
           </span>
           <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-        </label><label class="mdc-text-field mdc-text-field--outlined">
+        </label>
+          <label class="mdc-text-field mdc-text-field--outlined">
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__notch">
@@ -169,7 +168,7 @@
       </div>
     </main>
   </div>
-     -->
+    
     </form>
 </body>
 
