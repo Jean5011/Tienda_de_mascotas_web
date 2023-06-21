@@ -14,7 +14,7 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
-        public Response GetProducto()
+        public Response ObtenerProductos()
         {
             return DaoProductos.ObtenerListaDeProductos();
         }
@@ -28,9 +28,14 @@ namespace Negocio
         {
             return DaoProductos.IngresarProducto(P);
         }
-        public Response ActualizarEstado(Producto P)
+        public  Response ActualizarEstado(Producto P)
         {
             return DaoProductos.ActualizarEstadoProducto(P);
+        }
+
+        public static Response ActualizarProducto(Producto P)
+        {
+            return DaoProductos.ActualizarProducto(P);
         }
 
         public Response ActualizarPrecio(Producto P)

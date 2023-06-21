@@ -28,6 +28,7 @@ namespace Datos {
             public static string ActualizarEstado = "SP_Productos_ActualizarEstado";
             public static string ActualizarPrecio = "SP_Productos_ActualizarPrecio";
             public static string ActualizarStock = "SP_Productos_ActualizarStock";
+            public static string ActualizarProducto = "SP_Productos_Actualizar";
         }
 
 
@@ -73,6 +74,29 @@ namespace Datos {
                         }
                     );
             return response.ErrorFound ? response : con.Response;
+        }
+
+        public static Response ActualizarProducto(Producto Pr)
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.ActualizarProducto,
+                        parameters: new Dictionary<string, object>
+                        {
+                            { "@Codigo", Pr.Codigo },
+                            { "@CUIT", Pr.Proveedor.CUIT },
+                            { "@Tipo", Pr.Categoria.tipoDeProducto},
+                            { "@Nombre", Pr.Nombre },
+                            { "@Marca", Pr.Marca },
+                            { "@Desc", Pr.Descripcion },
+                            { "@Stock", Pr.Stock },
+                            { "@Imagen", Pr.Imagen },
+                            { "@Precio", Pr.Precio },
+                            { "@Estado", Pr.Estado }
+                        }
+                    );         
         }
 
         public static Response ActualizarEstadoProducto(Producto Pr) {
