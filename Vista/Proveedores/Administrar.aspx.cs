@@ -12,7 +12,7 @@ namespace Vista.Proveedores {
         protected void CargarTabla(Response res)
         {
             DataSet myDataSet = res.ObjectReturned as DataSet;
-            GridView1.DataSource = myDataSet.Tables["root"];
+            GridView1.DataSource = myDataSet.Tables[0];
             GridView1.DataBind();
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -40,6 +40,16 @@ namespace Vista.Proveedores {
                 Response ress = ProveedorNegocio.ObtenerListaDeProveedores();
                 CargarTabla(ress);
             }
+
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
 
         }
     }
