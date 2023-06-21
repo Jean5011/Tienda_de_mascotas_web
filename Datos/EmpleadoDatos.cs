@@ -26,17 +26,43 @@ namespace Datos {
                                                     $"[{Empleado.Columns.Hash}], " +
                                                     $"[{Empleado.Columns.Salt}], " +
                                                     $"[{Empleado.Columns.Rol}]";
+        private static readonly string ALL_COLUMNS_BUT_FORMATTED = $"FORMAT(CAST([{Empleado.Columns.DNI}] AS INT), '## ### ###') AS [{Empleado.Columns.DNI}], " +
+                                                    $"[{Empleado.Columns.Nombre}], " +
+                                                    $"[{Empleado.Columns.Apellido}], " +
+                                                    $"[{Empleado.Columns.Sexo}], " +
+                                                    $"[{Empleado.Columns.FechaNacimiento}], " +
+                                                    $"[{Empleado.Columns.FechaInicio}], " +
+                                                    $"FORMAT([{Empleado.Columns.Sueldo}], 'C', 'es-AR') AS [{Empleado.Columns.Sueldo}], " +
+                                                    $"[{Empleado.Columns.Direccion}], " +
+                                                    $"[{Empleado.Columns.Provincia}], " +
+                                                    $"[{Empleado.Columns.Localidad}], " +
+                                                    $"[{Empleado.Columns.Nacionalidad}], " +
+                                                    $"[{Empleado.Columns.Estado}], " +
+                                                    $"[{Empleado.Columns.Hash}], " +
+                                                    $"[{Empleado.Columns.Salt}], " +
+                                                    $"[{Empleado.Columns.Rol}]";
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
             public static string CrearEmpleado = "CrearEmpleado";
         }
 
-        public static Response ObtenerListaDeEmpleados() {
+        public static Response ObtenerListaDeEmpleados(bool soloActivos = true) {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.Estado}] = '1'"
+                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] { (soloActivos ? $"WHERE [{Empleado.Columns.Estado}] = '1' " : "" )}"
+                    );
+        }
+        public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool soloActivos = true) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @nombre + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") }",
+                        parameters: new Dictionary<string, object>() {
+                            { "@nombre", nombre }
+                        }
                     );
         }
         public static Response BuscarEmpleadoPorDNI(string DNI) {

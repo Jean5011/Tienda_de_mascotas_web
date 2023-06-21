@@ -30,6 +30,7 @@ namespace Negocio {
             return salt;
         }
 
+
         /// <summary>
         /// Genera un hash a partir de una contraseña.
         /// </summary>
@@ -221,6 +222,18 @@ namespace Negocio {
                 }
                 return empleado_data;
         }
+
+
+        public static Response ObtenerEmpleados(bool chkSoloActivosChecked) {
+            return EmpleadoDatos.ObtenerListaDeEmpleados(chkSoloActivosChecked);
+        }
+
+        public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool chkSoloActivosChecked) {
+            return EmpleadoDatos.FiltrarEmpleadosPorNombreCompleto(nombre, chkSoloActivosChecked);
+        }
+
+
+
     }
 
 
