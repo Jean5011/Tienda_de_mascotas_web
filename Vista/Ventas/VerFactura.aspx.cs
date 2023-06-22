@@ -23,7 +23,7 @@ namespace Vista.Ventas {
             lblEmpleadoGestor.Text = obj.EmpleadoGestor.DNI;
             lblFechaRegistro.Text = obj.Fecha;
             lblMedioPago.Text = obj.TipoPago;
-            lblTotalCalculado.Text = "Aún sin calcular";
+            lblTotalCalculado.Text = $"${obj.Total}";
         }
         public void CargarDetalles(Venta obj) {
             int id = obj.Id;
@@ -77,6 +77,7 @@ namespace Vista.Ventas {
                     if(!uploadres.ErrorFound) {
                         Utils.MostrarMensaje($"El producto #{dv.Id} se agregó correctamente. ", this.Page, GetType());
                         CargarDetalles(obj);
+                        CargarCabecera(obj);
                     } else {
                         Utils.MostrarMensaje($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
                     }
@@ -84,6 +85,21 @@ namespace Vista.Ventas {
                 } else {
                     Utils.MostrarMensaje("El producto no está disponible. ", this.Page, GetType());
                 }
+            }
+        }
+
+        protected void GVDETALLESBTNELIMINAR_Command(object sender, CommandEventArgs e) {
+            Venta obj = Session[VK] as Venta;
+            int idVenta = obj.Id;
+            if(e.CommandName == "ELIMINAR") {
+                string idProducto = e.CommandArgument.ToString();
+                var res = DetalleVentaNegocio.EliminarDetalle(idVenta, idProducto);
+                if (!res.ErrorFound) {
+                    Utils.MostrarMensaje("Se eliminó el producto en cuestión de la compra. ", this.Page, GetType());
+                    CargarDetalles(obj);
+                    CargarCabecera(obj);
+                }
+                else Utils.MostrarMensaje("No se borró. ", this.Page, GetType());
             }
         }
     }

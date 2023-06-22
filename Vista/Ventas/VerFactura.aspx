@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VerFactura.aspx.cs" Inherits="Vista.Ventas.VerFactura" %>
-
+<%@ Import Namespace="Entidades" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -78,7 +78,53 @@
                 <br />
                 <br />
                 <h2>Productos</h2>
-                <asp:GridView ID="gvDetalles" runat="server"></asp:GridView>
+                <asp:GridView ID="gvDetalles" AutoGenerateColumns="false" runat="server">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Button runat="server" ID="GVDETALLESBTNELIMINAR" OnCommand="GVDETALLESBTNELIMINAR_Command" CommandName="ELIMINAR" Text="Eliminar" CommandArgument="<%# Eval(DetalleVenta.Columns.CodProducto_Dv) %>" />
+                                    
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Producto">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbCODIGOPRODUCTO" runat="server" Text="<%# Eval(DetalleVenta.Columns.CodProducto_Dv) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Proveedor">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbCUITPROVEEDOR" runat="server" Text="<%# Eval(DetalleVenta.Columns.CUITProv) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Cantidad">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbCANTIDAD" runat="server" Text="<%# Eval(DetalleVenta.Columns.Cantidad_Dv) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Precio Unitario">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbPU" runat="server" Text="<%# Eval(DetalleVenta.Columns.PrecioUnitario_Dv) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Precio Total">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbPTOTAL" runat="server" Text="<%# Eval(DetalleVenta.Columns.PrecioTotal_Dv) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
             </div>
 
         </main>

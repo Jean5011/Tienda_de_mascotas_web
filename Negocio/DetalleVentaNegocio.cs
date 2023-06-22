@@ -25,6 +25,10 @@ namespace Negocio
             return DaoDetalleVentas.AgregarRegistro(v);
         }
 
+        public static Response EliminarDetalle(int cv, string cp) {
+            return DaoDetalleVentas.EliminarDetalle(cv, cp);
+        }
+
         public static Response DarDeBaja (int Cod)
         {
             return DaoDetalleVentas.DarDeBajaRegistro(Cod);
