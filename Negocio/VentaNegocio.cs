@@ -73,5 +73,9 @@ namespace Negocio {
             else return res;
         }
 
+        public static Response EliminarVenta(Venta obj)
+        {
+            return VentaDatos.EliminarVenta(obj);
+        }
     }
 }

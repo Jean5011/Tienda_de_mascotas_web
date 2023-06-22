@@ -10,6 +10,7 @@ namespace Datos {
 
         public static class Procedures {
             public const string IniciarVenta = "IniciarVenta";
+            public const string EliminarVenta = "EliminarVenta";
         }
 
         public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
@@ -39,6 +40,20 @@ namespace Datos {
                             { "@id", id }
                         }
                     );
+        }
+
+        public static Response EliminarVenta(Venta obj)
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                    query: $"DELETE FROM [{Venta.Table}] WHERE [{Venta.Columns.Id}] = @id",
+                    parameters: new Dictionary<string, object>
+                    {
+                        { "@id", obj.Id }
+                    }
+                  );
         }
     }
 }
