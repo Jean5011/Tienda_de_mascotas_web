@@ -30,6 +30,39 @@ namespace Negocio {
             }
 
         }
+        public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
+            if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
+                DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
+                Venta obj = new Venta() {
+                    Id = Convert.ToInt32(primerRegistro[Venta.Columns.Id].ToString()),
+                    EmpleadoGestor = new Empleado() { DNI = primerRegistro[Venta.Columns.DNI].ToString()},
+                    TipoPago = primerRegistro[Venta.Columns.TipoPago].ToString(),
+                    Fecha = primerRegistro[Venta.Columns.Fecha].ToString(),
+                    Total = Convert.ToDouble(primerRegistro[Venta.Columns.Total].ToString())
+                };
+                return new Response() {
+                    ErrorFound = false,
+                    ObjectReturned = obj
+                };
+            }
+            else {
+                return new Response() {
+                    ErrorFound = true,
+                    Message = SesionNegocio.ErrorCode.NO_ROWS,
+                    ObjectReturned = null
+                };
+            }
+
+        }
+
+        public static Response BuscarVentaPorID(int id) {
+            var res = VentaDatos.GetVentaByID(id);
+            if (!res.ErrorFound) {
+                var res2 = ExtractDataFromDataSet(res.ObjectReturned as DataSet);
+                return res2;
+            }
+            else return res;
+        }
 
         public static Response IniciarVenta(Venta obj) {
             var res = VentaDatos.IniciarVenta(obj);

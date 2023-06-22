@@ -15,12 +15,12 @@ namespace Negocio
     public class DetalleVentaNegocio
     {
        
-        public Response ObtenerDetalleVenta(int Cod)
+        public static Response ObtenerDetalleVenta(int Cod)
         {
             return DaoDetalleVentas.ObtenerDetalleVenta(Cod);
         }
 
-        public Response AgregarDetalleVenta(DetalleVenta v)
+        public static Response AgregarDetalleVenta(DetalleVenta v)
         {
             return DaoDetalleVentas.AgregarRegistro(v);
         }

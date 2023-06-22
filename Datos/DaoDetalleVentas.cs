@@ -20,7 +20,7 @@ namespace Datos
                                $"[{DetalleVenta.Columns.Cantidad_Dv}], " +
                                $"[{DetalleVenta.Columns.PrecioUnitario_Dv}], " +
                                $"[{DetalleVenta.Columns.PrecioTotal_Dv}], " +
-                               $"[{DetalleVenta.Columns.Estado_Dv}], ";
+                               $"[{DetalleVenta.Columns.Estado_Dv}] ";
 
 
         public static class Procedures
