@@ -40,5 +40,13 @@ namespace Datos {
                         }
                     );
         }
+        public static Response GetVentas() {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}]"
+                    );
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace Vista.Ventas {
             }
         }
         protected void Page_Load(object sender, EventArgs e) {
-            if(!IsPostBack) {
+            if (!IsPostBack) {
                 bool inicioSesion = Utils.CargarSesion(this, false);
                 string IDFactura = Request.QueryString["ID"];
                 if(string.IsNullOrEmpty(IDFactura)) {

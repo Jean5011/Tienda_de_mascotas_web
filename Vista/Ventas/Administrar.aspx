@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administrar.aspx.cs" Inherits="Vista.Ventas.Administrar" %>
-
+<%@ Import Namespace="Entidades" %>
 <html lang="en">
 
 <head>
@@ -14,88 +14,90 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="./index.css" />
-    <script src="./index.js"></script>
+    <link rel="stylesheet" href="/index.css" />
+    <script src="/index.js"></script>
 </head>
 
 <body>
     <form id="form1" runat="server" class="contents">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-                        aria-label="Open navigation menu">
-                        menu</button>
-                    <span class="mdc-top-app-bar__title">Pet Shop</span>
+                    <span class="mdc-top-app-bar__title" runat="server" id="spanPageTitle">PetShop</span>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-
-                    <button class="mdc-button mdc-top-app-bar__action-item">
+                    <asp:LinkButton ID="lbIniciarSesion" runat="server" OnClick="IniciarSesion" CssClass="mdc-button mdc-button--raised _header-important-btn mdc-top-app-bar__action-item">
                         <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">ADMIN</span>
-                    </button>
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-                    <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                        aria-label="Options">
-                        more_vert</button>
+                        <span class="mdc-button__label">Iniciar sesión</span>
+                    </asp:LinkButton>
+                    <asp:LinkButton ID="lbActualUser" OnClick="VerPerfilActual" runat="server" CssClass="mdc-button mdc-top-app-bar__action-item _header-profile-btn">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label"><b runat="server" id="lbAUNombre"></b>
+                            <br>
+                            <span runat="server" id="lbAURol"></span></span>
+                    </asp:LinkButton>
                 </section>
             </div>
         </header>
         <main class="mdc-top-app-bar--fixed-adjust obj--main">
             <h2>Ventas</h2>
             <div class="searchbox">
-                <span class="text">Buscar</span>
-                <span class="material-icons">search</span>
+                <asp:TextBox ID="txtBuscar" placeholder="Buscar por código de compra" runat="server"></asp:TextBox>
+                <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button" OnClick="btnBuscar_Click" runat="server" Text="search" />
             </div>
-            <div class="mdc-data-table">
-                <div class="mdc-data-table__table-container">
-                    <table class="mdc-data-table__table" aria-label="Dessert calories">
-                        <thead>
-                            <tr class="mdc-data-table__header-row">
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Acciones</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Código</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Empleado</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Medio de pago</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Fecha</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="mdc-data-table__content">
-                            <tr class="mdc-data-table__row">
-                                <td class="mdc-data-table__cell">
-                                    <button class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button>
-                                    <button class="material-icons mdc-icon-button btn-erase">delete</button></td>
-                                <td class="mdc-data-table__cell">000</td>
-                                <td class="mdc-data-table__cell"><a href='#'>Antonio León</a></td>
-                                <td class="mdc-data-table__cell">Tarjeta de Crédito</td>
-                                <td class="mdc-data-table__cell">15 de junio de 2023 12:15</td>
-                                <td class="mdc-data-table__cell">$ 258.60</td>
-                            </tr>
-                            <tr class="mdc-data-table__row">
-                                <td class="mdc-data-table__cell">
-                                    <button class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button>
-                                    <button class="material-icons mdc-icon-button btn-erase">delete</button></td>
-                                <td class="mdc-data-table__cell">001</td>
-                                <td class="mdc-data-table__cell"><a href='#'>Héctor Da Silva</a></td>
-                                <td class="mdc-data-table__cell">Efectivo</td>
-                                <td class="mdc-data-table__cell">21 de agosto de 2022 15:15</td>
-                                <td class="mdc-data-table__cell">$ 1,861.58</td>
-                            </tr>
-                            <tr class="mdc-data-table__row">
-                                <td class="mdc-data-table__cell">
-                                    <button class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button>
-                                    <button class="material-icons mdc-icon-button btn-erase">delete</button></td>
-                                <td class="mdc-data-table__cell">002</td>
-                                <td class="mdc-data-table__cell"><a href='#'>Ana María González</a></td>
-                                <td class="mdc-data-table__cell">Transferencia bancaria</td>
-                                <td class="mdc-data-table__cell">15 de septiembre de 2021 20:50</td>
-                                <td class="mdc-data-table__cell">$ 2,568.08</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <asp:GridView ID="gvVentas" CssClass="mdc-data-table" AutoGenerateColumns="False" runat="server">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <a href="/Ventas/VerFactura.aspx?ID=<%# Eval(Venta.Columns.Id) %>">Ver detalles</a>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="ID">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbID" runat="server" Text="<%# Eval(Venta.Columns.Id) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Empleado Gestor">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbEMPLEADOGESTOR" runat="server" Text="<%# Eval(Venta.Columns.DNI) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Medio de pago">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbTIPOPAGO" runat="server" Text="<%# Eval(Venta.Columns.TipoPago) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Fecha">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbFECHA" runat="server" Text="<%# Eval(Venta.Columns.Fecha) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Total">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbPTOTAL" runat="server" Text="<%# Eval(Venta.Columns.Total) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
         </main>
+        <aside class="mdc-snackbar">
+            <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+                <div class="mdc-snackbar__label" aria-atomic="false"></div>
+            </div>
+        </aside>
     </form>
 </body>
 

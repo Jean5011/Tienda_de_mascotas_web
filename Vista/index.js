@@ -57,7 +57,7 @@ window.onload = () => {
 			["Productos", "/Productos/Administrar.aspx"],
 			["Proveedores", "/Proveedores/Administrar.aspx"],
 			["Empleados", "/Empleados/Administrar.aspx"],
-			["Animales", "/Animales/Administrar.aspx"],
+			["Animales", "/Animales/VerAnimales.aspx"],
 			["Tipos de Producto", "/Tipos/Administrar.aspx"]
 		],
 		otherLinks: [

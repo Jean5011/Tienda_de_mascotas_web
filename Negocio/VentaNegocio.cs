@@ -64,6 +64,14 @@ namespace Negocio {
             else return res;
         }
 
+        public static Response GetVentas() {
+            var res = VentaDatos.GetVentas();
+            return res;
+        }
+        public static Response GetVentaPorID(int id) {
+            return VentaDatos.GetVentaByID(id);
+        }
+
         public static Response IniciarVenta(Venta obj) {
             var res = VentaDatos.IniciarVenta(obj);
             if (!res.ErrorFound) {
