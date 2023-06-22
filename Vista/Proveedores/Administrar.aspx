@@ -27,40 +27,39 @@
     </style>
     <form id="form1" runat="server">
         <div class="contents">
-            <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
-                <div class="mdc-top-app-bar__row">
-                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-                            aria-label="Open navigation menu">
-                            menu</button>
-                        <span class="mdc-top-app-bar__title">Pet Shop</span>
-
-                    </section>
-                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-
-                        <button class="mdc-button mdc-top-app-bar__action-item">
-                            <span class="mdc-button__ripple"></span>
-                            <span class="mdc-button__label">ADMIN</span>
-                        </button>
-                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                            aria-label="Options">
-                            more_vert</button>
-
-                    </section>
-                </div>
-            </header>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title" runat="server" id="spanPageTitle">PetShop</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <asp:LinkButton ID="lbIniciarSesion" runat="server" OnClick="IniciarSesion" CssClass="mdc-button mdc-button--raised _header-important-btn mdc-top-app-bar__action-item">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Iniciar sesión</span>
+                    </asp:LinkButton>
+                    <asp:LinkButton ID="lbActualUser" OnClick="VerPerfilActual" runat="server" CssClass="mdc-button mdc-top-app-bar__action-item _header-profile-btn">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label"><b runat="server" id="lbAUNombre"></b>
+                            <br>
+                            <span runat="server" id="lbAURol"></span></span>
+                    </asp:LinkButton>
+                </section>
+            </div>
+        </header>
             <main class="mdc-top-app-bar--fixed-adjust obj--main">
                 <h2>Proveedores</h2>
 
                 <div class="searchbox">
-                    <asp:TextBox ID="TextBox1" runat="server" ValidationGroup="GrupoBuscar"></asp:TextBox>
-                    <asp:Button ID="Button1" runat="server" Text="Buscar" OnClick="Button1_Click" ValidationGroup="GrupoBuscar" />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
+                    <asp:TextBox ID="txtBuscar" runat="server" ValidationGroup="GrupoBuscar"></asp:TextBox>
+                    <asp:Button ID="btnBuscar"  CssClass="material-icons mdc-icon-button"  runat="server" Text="search" OnClick="btnBuscar_Click" ValidationGroup="GrupoBuscar" />
+                     </div>
+                <br />
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
                         runat="server" ErrorMessage="no es un cuit"
                         ValidationExpression="^\d{10}$"
-                        ValidationGroup="GrupoBuscar" ControlToValidate="TextBox1">Cuit incorrecto</asp:RegularExpressionValidator>
-                </div>
+                        ValidationGroup="GrupoBuscar" ControlToValidate="txtBuscar">Cuit incorrecto</asp:RegularExpressionValidator>
+                <br />
                 <div class="mdc-data-table">
                     <div class="mdc-data-table__table-container">
 

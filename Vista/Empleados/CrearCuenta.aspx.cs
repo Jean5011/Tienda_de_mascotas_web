@@ -39,21 +39,11 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para poder agregar empleados. ");
+                bool inicioSesion = Utils.CargarAdmin(this, true, "Iniciá sesión como administrador para crear cuentas. ");
                 if (inicioSesion) {
                     var UsuarioActual  = Session[actualUser] as Empleado;
-                    if (UsuarioActual.Rol != Empleado.Roles.ADMIN) {
-                        Utils.MostrarMensaje($"No tenés permiso para crear registros. ", this.Page, GetType());
-                        btnGuardarCambios.Visible = false;
-                        btnGuardarCambios.Enabled = false;
-                        string login_url = "/Empleados/IniciarSesion.aspx";
-                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        Response.Redirect($"{login_url}?next={next_url}&msg=Iniciá sesión con otra cuenta de administrador para continuar.");
-                        // *** Redirigir a página principal *** ///
-
-                    }
                 }
-                CargarDatosPrueba();
+                //CargarDatosPrueba();
             }
         }
 

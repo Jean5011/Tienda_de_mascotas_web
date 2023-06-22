@@ -21,7 +21,7 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, false);
+                bool inicioSesion = Utils.CargarSesion(this, true, "Necesitás iniciar sesión para acceder a la lista de empleados.");
                 CargarDatos();
             }
         }
@@ -35,18 +35,21 @@ namespace Vista.Empleados {
                             : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
             if (!data.ErrorFound) {
                 var dt = data.ObjectReturned as DataSet;
-                var UsuarioActual = Session[Utils.actualUser] as Empleado;
-                if(UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                    gvAdmin.DataSource = dt;
-                    gvAdmin.DataBind();
-                    gvEmpleado.Visible = false;
-                    gvEmpleado.Enabled = false;
-                } else {
-                    gvEmpleado.DataSource = dt;
-                    gvEmpleado.DataBind();
-                    gvAdmin.Visible = false;
-                    gvAdmin.Enabled = false;
+                if(Session[Utils.actualUser] != null) {
+                    var UsuarioActual = Session[Utils.actualUser] as Empleado;
+                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                        gvAdmin.DataSource = dt;
+                        gvAdmin.DataBind();
+                        gvEmpleado.Visible = false;
+                        gvEmpleado.Enabled = false;
+                    }
+                    else {
+                        gvEmpleado.DataSource = dt;
+                        gvEmpleado.DataBind();
+                        gvAdmin.Visible = false;
+                        gvAdmin.Enabled = false;
 
+                    }
                 }
             }
             else {

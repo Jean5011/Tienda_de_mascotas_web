@@ -20,7 +20,7 @@ namespace Vista.Animales {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Ingresá con una cuenta de administrador para continuar. ");
+                bool inicioSesion = Utils.CargarAdmin(this, true, "Ingresá con una cuenta de administrador para continuar. ");
                 if(!inicioSesion) {
                     btnGuardarCambios.Visible = false;
                     btnGuardarCambios.Enabled = false;

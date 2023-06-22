@@ -14,6 +14,7 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
+                txtDNI.Focus();
                 string msg = Request.QueryString["msg"];
                 if(!string.IsNullOrEmpty(msg)) {
                     Utils.MostrarMensaje(msg, this.Page, GetType());
@@ -39,9 +40,10 @@ namespace Vista.Empleados {
                     string wm = $"¡Bienvenido, {emp.Nombre}!";
                     Utils.MostrarMensaje(wm, this.Page, GetType());
                     string goNext = Request.QueryString["next"];
-                    if(!string.IsNullOrEmpty(goNext)) {
+                    if (!string.IsNullOrEmpty(goNext)) {
                         Response.Redirect(HttpUtility.UrlDecode(goNext));
                     }
+                    else Response.Redirect("/Index.aspx");
                 }
             }
 

@@ -20,7 +20,7 @@ namespace Vista.Productos {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, false);
+                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para acceder al catálogo de productos.");
                 cargarGridView();
             }
         }

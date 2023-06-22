@@ -9,6 +9,14 @@ using Entidades;
 using Negocio;
 namespace Vista.Proveedores {
     public partial class Administrar : System.Web.UI.Page {
+        public void IniciarSesion(object sender, EventArgs e) {
+            string login_url = "/Empleados/IniciarSesion.aspx";
+            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
+            Response.Redirect($"{login_url}?next={next_url}");
+        }
+        public void VerPerfilActual(object sender, EventArgs e) {
+            Response.Redirect("/Empleados/Perfil.aspx");
+        }
         protected void CargarTabla(Response res)
         {
             DataSet myDataSet = res.ObjectReturned as DataSet;
@@ -17,6 +25,7 @@ namespace Vista.Proveedores {
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            Utils.CargarSesion(this, true, "Iniciá sesión para acceder a la lista de proveedores");
             Response res = ProveedorNegocio.ObtenerListaDeProveedores();
             if (!res.ErrorFound)
             {
@@ -25,12 +34,12 @@ namespace Vista.Proveedores {
            
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            string cuit = TextBox1.Text;
+            string cuit = txtBuscar.Text;
             ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
             Response res = proveedorNegocio.ObtenerProveedorByCUIT(cuit);
-            if (!string.IsNullOrEmpty(TextBox1.Text) && !res.ErrorFound)
+            if (!string.IsNullOrEmpty(txtBuscar.Text) && !res.ErrorFound)
             {
                 CargarTabla(res);
 
