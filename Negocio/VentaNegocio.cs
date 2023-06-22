@@ -81,9 +81,8 @@ namespace Negocio {
             else return res;
         }
 
-        public static Response EliminarVenta(Venta obj)
-        {
-            return VentaDatos.EliminarVenta(obj);
+        public static Response VentasPorEmp(string dni) {
+            return VentaDatos.GetVentaByDNI(dni);
         }
     }
 }

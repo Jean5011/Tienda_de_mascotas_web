@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="Vista.Empleados.Perfil" %>
-
+<%@ Import Namespace="Entidades" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -75,26 +75,51 @@
                 <br>
             </div>
             <div class="col principal">
-                <h1>ESTADO:
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h1>
-                <br>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+                <h2>Ventas que registró</h2>
+                 <asp:GridView ID="gvVentas" CssClass="mdc-data-table" AutoGenerateColumns="False" runat="server">
                     <Columns>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:Button ID="btnOpen" runat="server" CssClass="material-icons mdc-icon-button" Text="open_in_new" CommandName="Open" />
-                                <asp:Button ID="btnDelete" runat="server" CssClass="material-icons mdc-icon-button" Text="delete" CommandName="Delete" />
+                                <div class="mdc-data-table__cell">
+                                    <a href="/Ventas/VerFactura.aspx?ID=<%# Eval(Venta.Columns.Id) %>">Ver detalles</a>
+                                </div>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                        <asp:TemplateField HeaderText="Empleado">
+                        <asp:TemplateField HeaderText="ID">
                             <ItemTemplate>
-                                <a href="#"></a>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbID" runat="server" Text="<%# Eval(Venta.Columns.Id) %>"></asp:Label>
+                                </div>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="MedioPago" HeaderText="Medio de pago" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
-                        <asp:BoundField DataField="Total" HeaderText="Total" />
+                        <asp:TemplateField HeaderText="Empleado Gestor">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbEMPLEADOGESTOR" runat="server" Text="<%# Eval(Venta.Columns.DNI) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Medio de pago">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbTIPOPAGO" runat="server" Text="<%# Eval(Venta.Columns.TipoPago) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Fecha">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbFECHA" runat="server" Text="<%# Eval(Venta.Columns.Fecha) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Total">
+                            <ItemTemplate>
+                                <div class="mdc-data-table__cell">
+                                    <asp:Label ID="lbPTOTAL" runat="server" Text="<%# Eval(Venta.Columns.Total) %>"></asp:Label>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
 

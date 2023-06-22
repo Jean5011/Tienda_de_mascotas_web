@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
 using Entidades;
+using System.Data;
 
 namespace Vista.Empleados {
     public partial class Perfil : System.Web.UI.Page {
@@ -60,14 +61,28 @@ namespace Vista.Empleados {
             DetallesList.DataSource = items;
             DetallesList.DataBind();
         }
+
+        protected void CargarVentas() {
+            if(Session[editingUser] != null) {
+                UsuarioPerfil = Session[editingUser] as Empleado;
+                var res = VentaNegocio.VentasPorEmp(UsuarioPerfil.DNI);
+                if(!res.ErrorFound) {
+                    DataSet dt = res.ObjectReturned as DataSet;
+                    gvVentas.DataSource = dt;
+                    gvVentas.DataBind();
+                }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e) {
             
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this);
+                bool inicioSesion = Utils.CargarSesion(this, true);
                 bool cargoPerfil = CargarPerfil();
                 if (inicioSesion && cargoPerfil) {
+
                     UsuarioActual = Session[actualUser] as Empleado;
                     UsuarioPerfil = Session[editingUser] as Empleado;
+                    CargarVentas();
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         RellenarDatos();
                     }
