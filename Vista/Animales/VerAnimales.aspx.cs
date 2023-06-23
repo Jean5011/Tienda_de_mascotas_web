@@ -14,17 +14,18 @@ using System.Web;
 
 namespace Vista.Animales {
     public partial class VerAnimales : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
+
         protected void Page_Load(object sender, EventArgs e) {
-            if(!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para acceder a la lista de animales");
+            if (!IsPostBack) {
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para continuar"
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+
+
                 CargarDatos();
             }
         }
@@ -33,17 +34,18 @@ namespace Vista.Animales {
 
         }
 
-        public void CargarDatos() {
+        public void CargarDatos(bool restartEditIndex = true) {
             string tbuscar = txtBuscar.Text;
             bool cargarTodo = tbuscar == "";
             NegocioAnimales nt = new NegocioAnimales();
             Response resultado = cargarTodo ? nt.GetAnimales() : nt.ObtenerPorCod(tbuscar);
             if (!resultado.ErrorFound) {
                 DataSet dt = resultado.ObjectReturned as DataSet;
+                if(restartEditIndex) GV_Datos.EditIndex = -1;
                 GV_Datos.DataSource = dt;
                 GV_Datos.DataBind();
             } else {
-                Utils.MostrarMensaje("Error cargando los registros. ", this.Page, GetType());
+                Utils.ShowSnackbar("Error cargando los registros. ", this, GetType());
             }
         }
 
@@ -55,46 +57,50 @@ namespace Vista.Animales {
 
 
         protected void GV_Datos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
-            Animal a = new Animal();
-            a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_Cod_Animal")).Text;
-            NegocioAnimales nt = new NegocioAnimales();
-            nt.EliminarAnimal(a);
-            Response resultado = nt.GetAnimales();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(res => {
+                    Animal a = new Animal();
+                    a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_Cod_Animal")).Text;
+                    NegocioAnimales nt = new NegocioAnimales();
+                    nt.EliminarAnimal(a);
+                    CargarDatos();
+                }, err => {
+                    Utils.ShowSnackbar("El Token caducó. Iniciá sesión de nuevo.", this, GetType());
+                });
+
+            } else {
+                Utils.ShowSnackbar("No disponés de los permisos suficientes para realizar esta acción. ", this, GetType());
+            }
         }
 
         protected void GV_Datos_RowEditing(object sender, GridViewEditEventArgs e) {
             GV_Datos.EditIndex = e.NewEditIndex;
-            NegocioAnimales nt = new NegocioAnimales();
-            Response resultado = nt.GetAnimales();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            CargarDatos(false);
         }
 
         protected void GV_Datos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
-            GV_Datos.EditIndex = -1;
-            NegocioAnimales nt = new NegocioAnimales();
-            Response resultado = nt.GetAnimales();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            CargarDatos();
         }
 
         protected void GV_Datos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            Animal a = new Animal();
-            a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
-            a.Nombre = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditNombre")).Text;
-            a.Raza = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditRaza")).Text;
-            ////////////////////////////////////////////////////////////////////////////////
-            NegocioAnimales nt = new NegocioAnimales();
-            nt.ActualizarAnimal(a);
-            Response resultado = nt.GetAnimales();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(res => {
+                    Animal a = new Animal();
+                    a.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
+                    a.Nombre = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditNombre")).Text;
+                    a.Raza = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditRaza")).Text;
+                    ////////////////////////////////////////////////////////////////////////////////
+                    NegocioAnimales nt = new NegocioAnimales();
+                    nt.ActualizarAnimal(a);
+                    CargarDatos();
+                }, err => {
+                    Utils.ShowSnackbar("El token caducó. Deberás iniciar sesión de nuevo. ", this, GetType());
+                });
+            } else {
+                Utils.ShowSnackbar("No disponés de los permisos suficientes para realizar esta acción. ", this, GetType());
+            }
         }
     }
 }

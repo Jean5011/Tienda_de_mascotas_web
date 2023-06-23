@@ -10,18 +10,14 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class Administrar : System.Web.UI.Page {
-        private readonly string actualUser = Utils.actualUser;
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Necesitás iniciar sesión para acceder a la lista de empleados.");
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para continuar"
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
                 CargarDatos();
             }
         }
@@ -35,8 +31,9 @@ namespace Vista.Empleados {
                             : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
             if (!data.ErrorFound) {
                 var dt = data.ObjectReturned as DataSet;
-                if(Session[Utils.actualUser] != null) {
-                    var UsuarioActual = Session[Utils.actualUser] as Empleado;
+                var auth = (Session[Utils.AUTH] as Utils.SessionData);
+                if (auth.User != null) {
+                    var UsuarioActual = auth.User;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
                         gvAdmin.DataSource = dt;
                         gvAdmin.DataBind();

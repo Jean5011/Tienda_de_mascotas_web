@@ -11,14 +11,6 @@ using Negocio;
 namespace Vista.Empleados {
     public partial class CrearCuenta : System.Web.UI.Page { 
         private readonly string actualUser = Utils.actualUser;
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
 
         protected void CargarDatosPrueba() {
             txtDNI.Text = "45009001";
@@ -39,10 +31,15 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarAdmin(this, true, "Iniciá sesión como administrador para crear cuentas. ");
-                if (inicioSesion) {
-                    var UsuarioActual  = Session[actualUser] as Empleado;
-                }
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
+                    RejectNonMatches = true,
+                    Message = "Sólo los administradores pueden crear cuentas. "
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
                 //CargarDatosPrueba();
             }
         }

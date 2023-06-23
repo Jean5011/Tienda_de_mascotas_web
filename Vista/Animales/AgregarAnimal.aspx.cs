@@ -10,26 +10,21 @@ using Negocio;
 
 namespace Vista.Animales {
     public partial class AgregarAnimal : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
+
         protected void Page_Load(object sender, EventArgs e) {
-            if(!IsPostBack) {
-                bool inicioSesion = Utils.CargarAdmin(this, true, "Ingresá con una cuenta de administrador para continuar. ");
-                if(!inicioSesion) {
-                    btnGuardarCambios.Visible = false;
-                    btnGuardarCambios.Enabled = false;
-                }
+            if (!IsPostBack) {
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
+                    RejectNonMatches = true,
+                    Message = "Ingresá con una cuenta de administrador para continuar"
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
             }
         }
 
         protected void BT_Datos_Click(object sender, EventArgs e) {
-            SesionNegocio.Autenticar((success) => {
+            SesionNegocio.Autenticar((success) => { // Sólo autenticamos porque esta es una página Admin-only
                 Animal obj = new Animal() {
                     Codigo = TB_Cod.Text,
                     Nombre = TB_Nombre.Text
@@ -39,9 +34,10 @@ namespace Vista.Animales {
                 }
                 else obj.Raza = "---";
                 Response operacion = NegocioAnimales.IngresarAnimal(obj);
-                if(!operacion.ErrorFound) {
+                if (!operacion.ErrorFound) {
                     Utils.MostrarMensaje($"Error. {operacion.Message}. {operacion.Details}. ", this.Page, GetType());
-                } else {
+                }
+                else {
                     Utils.MostrarMensaje("Se agregó con éxito. ", this.Page, GetType());
                 }
             }, (error) => {
