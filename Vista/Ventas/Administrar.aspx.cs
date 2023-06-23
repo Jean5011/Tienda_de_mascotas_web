@@ -10,14 +10,6 @@ using Negocio;
 
 namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
 
         public void CargarDatos() {
             string tbuscar = txtBuscar.Text;
@@ -34,7 +26,17 @@ namespace Vista.Ventas {
 
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para acceder al historial de ventas.");
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para acceder al historial de ventas. "
+                };
+
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
                 CargarDatos();
             }
         }

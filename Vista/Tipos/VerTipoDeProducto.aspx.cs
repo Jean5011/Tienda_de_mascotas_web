@@ -14,17 +14,18 @@ using System.Web;
 
 namespace Vista.Tipos {
     public partial class VerTipoDeProducto : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para acceder a la lista de categorías");
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para continuar. "
+                };
+
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
                 CargarDatos();
             }
         }
@@ -32,6 +33,11 @@ namespace Vista.Tipos {
         protected void CargarDatos() {
             if (txtBuscar.Text == "") BT_Todo_Click();
             else BT_Filtrar_Click();
+        }
+        protected bool EsAdmin() {
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
+            return UsuarioActual.Rol == Empleado.Roles.ADMIN;
         }
         protected void btnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
@@ -53,54 +59,51 @@ namespace Vista.Tipos {
         }
 
         protected void GV_Datos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
-            SesionNegocio.Autenticar(res => {
-                TipoProducto t = new TipoProducto();
-                string cod = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
-                t.Codigo = cod;
-                NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                nt.EliminarTipoDeProducto(t);
-                Response resultado = nt.GetTipoDeProducto();
-                DataSet dt = resultado.ObjectReturned as DataSet;
-                GV_Datos.DataSource = dt;
-                GV_Datos.DataBind();
-            }, err => {
-                Utils.MostrarMensaje("Caducó tu token. Volvé a iniciar sesión. ", this.Page, GetType());
-            });
+            if(EsAdmin()) {
+                SesionNegocio.Autenticar(res => {
+                    TipoProducto t = new TipoProducto();
+                    string cod = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
+                    t.Codigo = cod;
+                    NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+                    nt.EliminarTipoDeProducto(t);
+                    CargarDatos();
+                }, err => {
+                    Utils.ShowSnackbar("Caducó tu token. Volvé a iniciar sesión. ", this.Page, GetType());
+                });
+            } else {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción", this.Page, GetType());
+            }
         }
 
         protected void GV_Datos_RowEditing(object sender, GridViewEditEventArgs e) {
             GV_Datos.EditIndex = e.NewEditIndex;
-            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            nt.GetTipoDeProducto();
-            Response resultado = nt.GetTipoDeProducto();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            CargarDatos();
         }
 
         protected void GV_Datos_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
             GV_Datos.EditIndex = -1;
-            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            nt.GetTipoDeProducto();
-            Response resultado = nt.GetTipoDeProducto();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            CargarDatos();
         }
 
         protected void GV_Datos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            TipoProducto Tp = new TipoProducto();
-            Tp.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
-            Tp.CodAnimal = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
-            Tp.tipoDeProducto = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
-            Tp.Descripcion = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
-            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            nt.ActualizarTipoDeProducto(Tp);
+            if(EsAdmin()) {
+                SesionNegocio.Autenticar(res => {
+                    TipoProducto Tp = new TipoProducto();
+                    Tp.Codigo = ((Label)GV_Datos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
+                    Tp.CodAnimal = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
+                    Tp.tipoDeProducto = ((DropDownList)GV_Datos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
+                    Tp.Descripcion = ((TextBox)GV_Datos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
+                    NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
+                    nt.ActualizarTipoDeProducto(Tp);
+                }, err => {
+                    Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión", this.Page, GetType());
+                });
+            } else {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción", this.Page, GetType());
+            }
+
             GV_Datos.EditIndex = -1;
-            Response resultado = nt.GetTipoDeProducto();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GV_Datos.DataSource = dt;
-            GV_Datos.DataBind();
+            CargarDatos();
         }
     }
 }

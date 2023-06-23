@@ -10,17 +10,20 @@ using System.Data;
 
 namespace Vista.Productos {
     public partial class Editar : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para acceder al catálogo de productos.");
+
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para acceder al catálogo de productos. "
+                };
+
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
                 cargarGridView();
             }
         }
@@ -49,7 +52,8 @@ namespace Vista.Productos {
             cargarGridView();
         }
         protected bool EsAdmin() {
-            var UsuarioActual = Session[Utils.actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
             return UsuarioActual.Rol == Empleado.Roles.ADMIN;
         }
 
@@ -87,7 +91,9 @@ namespace Vista.Productos {
                     //lbl_mensaje_error.Text = Cod + " - " + Prov + " - " + Tipo + " - " + Nombre + " - " + Marca + " - " + Desc + " - " + Sto + " - " + Img + " - " + PrecioDouble + " - " + Estado;
                     
                     if(!EsAdmin()) {
-                        Utils.MostrarMensaje("Iniciá sesión con una cuenta de administrador para realizar cambios. ", this.Page, GetType());
+                        (new Utils.Authorization() {
+                            Message = "Ingresá como administrador para realizar cambios. "
+                        }).GoLogin(this);
                         return;
                     }
                     SesionNegocio.Autenticar((res) => {
@@ -105,41 +111,43 @@ namespace Vista.Productos {
                     }, (err) => {
                         Utils.MostrarMensaje("Venció el token. Volvé a iniciar sesión para continuar. ", this.Page, GetType());
                     });
-                    
-                    
+
+                    cargarGridView();
                 }
                 else {
                     grdProductos.EditIndex = -1;
                     cargarGridView();
-                    lbl_mensaje_error.Text = "ERROR AL CONVERTIR STOCK";
+                    Utils.MostrarMensaje("Error al convertir Stock. ", this.Page, GetType());
                     //NO SE PUDO CONVERTIR EL STOCK A INT, MOSTRAR MENSAJE DE ERROR "STOCK INGRESADO NO VALIDO"
                 }
             }
             else {
                 grdProductos.EditIndex = -1;
                 cargarGridView();
-                lbl_mensaje_error.Text = "ERROR AL CONVERTIR PRECIO";
+                Utils.MostrarMensaje("Error al convertir Precio. ", this.Page, GetType());
                 // No se pudo convertir a double. Mostrar mensaje de error
             }
 
         }
 
         protected void grdProductos_RowDeleting(object sender, GridViewDeleteEventArgs e) {
+            if(!EsAdmin()) {
+                (new Utils.Authorization() {
+                    Message = "Ingresá como administrador para realizar cambios. "
+                }).GoLogin(this);
+                return;
+            }
             String Cod = ((Label)grdProductos.Rows[e.RowIndex].FindControl("lbl_it_codigo")).Text;
 
             Producto prod = new Producto();
             prod.Codigo = Cod;
-            //Response response3 = DetalleVentaNegocio.EliminarDV(aca mandas el otro codigo)
-            //Response response2 = VentaNegocio.EliminarVenta(aca mandas el codigo);
             Response response = ProductoNegocio.EliminarProducto(prod);
             if (!response.ErrorFound) {
-                lbl_mensaje_error.Text = "Producto eliminado correctamente";
-                //mensaje de producto eliminado exitosamente
+                Utils.MostrarMensaje("Producto eliminado correctamente. ", this.Page, GetType());
                 cargarGridView();
             }
             else {
-                lbl_mensaje_error.Text = response.Message;
-                //mensaje de error al eliminar producto
+                Utils.MostrarMensaje("Err. " + response.Message, this.Page, GetType());
             }
         }
 

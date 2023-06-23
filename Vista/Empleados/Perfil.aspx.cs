@@ -10,21 +10,11 @@ using System.Data;
 
 namespace Vista.Empleados {
     public partial class Perfil : System.Web.UI.Page {
-        private readonly string actualUser = Utils.actualUser;
         private readonly string editingUser = "Usuario_Perfil";
-        public Empleado UsuarioActual;
         private Empleado UsuarioPerfil;
-       
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected bool CargarPerfil() {
-            UsuarioActual = Session[actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
             string dni_empleado = Request.QueryString["DNI"];
             if (string.IsNullOrEmpty(dni_empleado)) {
                 if (UsuarioActual != null && !string.IsNullOrEmpty(UsuarioActual.DNI)) {
@@ -76,19 +66,27 @@ namespace Vista.Empleados {
         protected void Page_Load(object sender, EventArgs e) {
             
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true);
-                bool cargoPerfil = CargarPerfil();
-                if (inicioSesion && cargoPerfil) {
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para acceder a los perfiles. "
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
 
-                    UsuarioActual = Session[actualUser] as Empleado;
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
+                bool cargoPerfil = CargarPerfil();
+                if (auth.Granted && cargoPerfil) {
                     UsuarioPerfil = Session[editingUser] as Empleado;
                     CargarVentas();
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         RellenarDatos();
                     }
                     else {
-                        Utils.MostrarMensaje($"No tenés permiso para ver esta página. ", this.Page, GetType());
-                        // *** Redirigir a página principal *** ///
+                        new Utils.Authorization() {
+                            Message = "Ingresá como administrador para ver perfiles de otros empleados. "
+                        }.GoLogin(this);
 
                     }
                 }
@@ -97,7 +95,8 @@ namespace Vista.Empleados {
         }
 
         protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
-            UsuarioActual = Session[actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar((res) => {
@@ -112,7 +111,8 @@ namespace Vista.Empleados {
         }
 
         protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
-            UsuarioActual = Session[actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar((res) => {

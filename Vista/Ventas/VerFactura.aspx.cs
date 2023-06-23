@@ -11,14 +11,6 @@ using Negocio;
 namespace Vista.Ventas {
     public partial class VerFactura : System.Web.UI.Page {
         public const string VK = "VK";
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         public void CargarCabecera(Venta obj) {
             lblEmpleadoGestor.Text = obj.EmpleadoGestor.DNI;
             lblFechaRegistro.Text = obj.Fecha;
@@ -36,10 +28,20 @@ namespace Vista.Ventas {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, false);
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para registrar una venta. "
+                };
+
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
                 string IDFactura = Request.QueryString["ID"];
                 if(string.IsNullOrEmpty(IDFactura)) {
-                    Utils.MostrarMensaje("No hay código de factura", this.Page, GetType());
+                    Utils.ShowSnackbar("No hay código de factura", this.Page, GetType());
                 } else {
                     int idFactura = Convert.ToInt32(IDFactura);
                     var res = VentaNegocio.BuscarVentaPorID(idFactura);
@@ -49,57 +51,85 @@ namespace Vista.Ventas {
                         CargarCabecera(obj);
                         CargarDetalles(obj);
                     } else {
-                        Utils.MostrarMensaje("Error 32. " + res.Details + ". " + res.Message, this.Page, GetType());
+                        Utils.ShowSnackbar("Error 32. " + res.Details + ". " + res.Message, this.Page, GetType());
                     }
                 }
             }
         }
 
-        protected void btnAgregar_Click(object sender, EventArgs e) {
-            if(Session[VK] != null) {
-                Venta obj = Session[VK] as Venta;
-                string idProducto = txtIDProducto.Text;
-                int cantidad = Convert.ToInt32(txtCantidad.Text);
-                var res = ProductoNegocio.ObtenerPorCodigo(idProducto);
-                if(!res.ErrorFound) {
-                    // Producto exists
-                    Producto p = res.ObjectReturned as Producto;
-                    DetalleVenta dv = new DetalleVenta() {
-                        Id = obj,
-                        Producto = p,
-                        Proveedor = p.Proveedor,
-                        Cantidad = cantidad,
-                        PrecioUnitario = p.Precio,
-                        PrecioTotal = cantidad * p.Precio,
-                        Estado = true
-                    };
-                    var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
-                    if(!uploadres.ErrorFound) {
-                        Utils.MostrarMensaje($"El producto #{dv.Id} se agregó correctamente. ", this.Page, GetType());
-                        CargarDetalles(obj);
-                        CargarCabecera(obj);
-                    } else {
-                        Utils.MostrarMensaje($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
-                    }
+        protected bool TieneDerechosNecesarios() {
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            if (Session[VK] == null) return false;
+            return auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == (Session[VK] as Venta).EmpleadoGestor.DNI;
 
-                } else {
-                    Utils.MostrarMensaje("El producto no está disponible. ", this.Page, GetType());
+        }
+
+
+        protected void btnAgregar_Click(object sender, EventArgs e) {
+            if(TieneDerechosNecesarios()) {
+                if (Session[VK] != null) {
+                    SesionNegocio.Autenticar(op => {
+                        Venta obj = Session[VK] as Venta;
+                        string idProducto = txtIDProducto.Text;
+                        int cantidad = Convert.ToInt32(txtCantidad.Text);
+                        var res = ProductoNegocio.ObtenerPorCodigo(idProducto);
+                        if (!res.ErrorFound) {
+                            // Producto exists
+                            Producto p = res.ObjectReturned as Producto;
+                            DetalleVenta dv = new DetalleVenta() {
+                                Id = obj,
+                                Producto = p,
+                                Proveedor = p.Proveedor,
+                                Cantidad = cantidad,
+                                PrecioUnitario = p.Precio,
+                                PrecioTotal = cantidad * p.Precio,
+                                Estado = true
+                            };
+                            var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
+                            if (!uploadres.ErrorFound) {
+                                Utils.ShowSnackbar($"El producto #{dv.Producto.Codigo} se agregó correctamente. ", this.Page, GetType());
+                                CargarDetalles(obj);
+                                CargarCabecera(obj);
+                            }
+                            else {
+                                Utils.ShowSnackbar($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
+                            }
+
+                        }
+                        else {
+                            Utils.ShowSnackbar("El producto no está disponible. ", this.Page, GetType());
+                        }
+
+                    }, err => {
+                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
+                    });
                 }
+            }
+            else {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
             }
         }
 
         protected void GVDETALLESBTNELIMINAR_Command(object sender, CommandEventArgs e) {
-            Venta obj = Session[VK] as Venta;
-            int idVenta = obj.Id;
-            if(e.CommandName == "ELIMINAR") {
-                string idProducto = e.CommandArgument.ToString();
-                var res = DetalleVentaNegocio.EliminarDetalle(idVenta, idProducto);
-                if (!res.ErrorFound) {
-                    Utils.MostrarMensaje("Se eliminó el producto en cuestión de la compra. ", this.Page, GetType());
-                    CargarDetalles(obj);
-                    CargarCabecera(obj);
-                }
-                else Utils.MostrarMensaje("No se borró. ", this.Page, GetType());
+            if(TieneDerechosNecesarios()) {
+                SesionNegocio.Autenticar(rs => {
+                    Venta obj = Session[VK] as Venta;
+                    int idVenta = obj.Id;
+                    if (e.CommandName == "ELIMINAR") {
+                        string idProducto = e.CommandArgument.ToString();
+                        var res = DetalleVentaNegocio.EliminarDetalle(idVenta, idProducto);
+                        if (!res.ErrorFound) {
+                            Utils.ShowSnackbar("Se eliminó el producto en cuestión de la compra. ", this.Page, GetType());
+                            CargarDetalles(obj);
+                            CargarCabecera(obj);
+                        }
+                        else Utils.ShowSnackbar("No se borró. ", this.Page, GetType());
+                    }
+                }, err => {
+                    Utils.ShowSnackbar("Tu token caducó, volvé a iniciar sesión. ", this.Page, GetType());
+                });
+            } else {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
             }
         }
     }
