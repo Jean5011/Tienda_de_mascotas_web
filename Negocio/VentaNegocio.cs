@@ -130,6 +130,19 @@ namespace Negocio {
                 }
                 return res;
             }
+            public static Response CantidadDeProductosAgotados(out int cantidad) {
+                cantidad = 0;
+                var res = VentaDatos.Widgets.CantidadDeProductosAgotados();
+                if (!res.ErrorFound) {
+                    var dt = res.ObjectReturned as DataSet;
+                    cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+                    return new Response() {
+                        ErrorFound = false,
+                        ObjectReturned = dt
+                    };
+                }
+                return res;
+            }
 
         }
     }

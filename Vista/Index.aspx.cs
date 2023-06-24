@@ -55,6 +55,13 @@ namespace Vista {
                 lblProductosPorAgotarse.Text = cantidad.ToString();
             }
         }
+        public void Widget__CantidadDeProductosAgotados() {
+            Response res = VentaNegocio.Widgets.CantidadDeProductosAgotados(out int cantidad);
+            if (!res.ErrorFound) {
+                Producto p = res.ObjectReturned as Producto;
+                lblProductosAgotados.Text = cantidad.ToString();
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
@@ -67,6 +74,7 @@ namespace Vista {
                 Widget__TotalVentasUltimoDia();
                 Widget__ProductoMasVendidoUltimaSemana();
                 Widget__CantidadDeProductosPorAgotarse();
+                Widget__CantidadDeProductosAgotados();
 
             }
 

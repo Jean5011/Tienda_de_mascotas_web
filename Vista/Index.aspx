@@ -24,13 +24,13 @@
                                 <span class="mdc-typography--body2 __secondary-txt">Por agotarse</span>
                             </div>
                             <div class="_side">
-                                <span class="mdc-typography--subtitle1">*</span>
+                                <asp:Label CssClass="mdc-typography--subtitle1" id="lblProductosAgotados" runat="server" Text=""></asp:Label>
                                 <span class="mdc-typography--body2 __secondary-txt">Sin stock</span>
                             </div>
                         </div>
                     </div>
                     <div class="mdc-card__actions mdc-card__actions">
-                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Productos/Administrar.aspx">
                             <div class="mdc-button__ripple"></div>
                             <span class="mdc-button__label">Ver el catálogo</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -47,7 +47,7 @@
                                 <li class="mdc-list-item" tabindex="0">
                                   <span class="mdc-list-item__ripple"></span>
                                   <span class="mdc-list-item__text">
-                                      <span class="mdc-list-item__primary-text">Collar para perro</span>
+                                      <span class="mdc-list-item__primary-text">(No hay)</span>
                                     <span class="mdc-list-item__secondary-text">Más vendido esta semana</span>
                                   </span>
                                 </li>
@@ -68,9 +68,9 @@
                         <div class="row _ltr mdc-typography--body2 __secondary-txt">Esta semana</div>
                     </div>
                     <div class="mdc-card__actions mdc-card__actions">
-                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Ventas/Administrar.aspx">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label">Ver todas las ventas</span>
+                            <span class="mdc-button__label">Ver todo</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
                         </a>
                     </div>
