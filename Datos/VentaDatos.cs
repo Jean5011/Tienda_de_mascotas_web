@@ -12,6 +12,7 @@ namespace Datos {
             public const string IniciarVenta = "IniciarVenta";
             public const string TotalVentasUltimoDia = "Widget_TotalVentas_UltimoDia";
             public const string TotalVentasUltimaSemana = "Widget_TotalVentas_UltimaSemana";
+            public const string ProductoMasVendidoUltimaSemana = "Widget_ProductoMasVendido_UltimaSemana";
         }
 
         public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
@@ -65,8 +66,8 @@ namespace Datos {
         }
 
         public static class Widgets {
+            public static Connection con = new Connection(Connection.Database.Pets);
             public static Response TotalDeVentasUltimoDia() {
-                var con = new Connection(Connection.Database.Pets);
                 return con.Response.ErrorFound
                     ? con.Response
                     : con.FetchStoredProcedure(
@@ -74,11 +75,17 @@ namespace Datos {
                         );
             }
             public static Response TotalDeVentasUltimaSemana() {
-                var con = new Connection(Connection.Database.Pets);
                 return con.Response.ErrorFound
                     ? con.Response
                     : con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimaSemana
+                        );
+            }
+            public static Response ProductoMasVendidoUltimaSemana() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
                         );
             }
         }

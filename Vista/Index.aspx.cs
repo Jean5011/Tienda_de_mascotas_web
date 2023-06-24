@@ -41,6 +41,13 @@ namespace Vista {
                 }
             }
         }
+        public void Widget__ProductoMasVendidoUltimaSemana() {
+            Response res = VentaNegocio.Widgets.ProductoMasVendidoUltimaSemana(out int cantidad);
+            if (!res.ErrorFound) {
+                Producto p = res.ObjectReturned as Producto;
+                lblProductoMasVendidoUltimaSemana.Text = $"{p.Nombre}, con {cantidad} unidades vendidas. ";
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
@@ -51,6 +58,7 @@ namespace Vista {
                 var op_data = auth.ValidateSession(this);
                 Widget__TotalVentasUltimaSemana();
                 Widget__TotalVentasUltimoDia();
+                Widget__ProductoMasVendidoUltimaSemana();
 
             }
 

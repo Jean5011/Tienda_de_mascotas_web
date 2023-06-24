@@ -9,6 +9,10 @@
             <li>
                 Total vendido última semana: <asp:Label ID="lblTotalVendidoUltimaSemana" runat="server" Text="Label"></asp:Label>
             </li>
+            Productos:
+            <li>
+                Producto más vendido última semana: <asp:Label runat="server" ID="lblProductoMasVendidoUltimaSemana" Text="Label"></asp:Label>
+            </li>
         </ul>
         <ul>
             <b>Empleados</b>
