@@ -27,7 +27,9 @@ namespace Vista.Ventas {
                 Utils.CargarSesion(this, true, "Primero tenés que iniciar sesión. ");
                 DateTime fechaHora = DateTime.Now;
                 string fecha = fechaHora.ToString("yyyy-MM-dd");
+                string hora = fechaHora.ToString("HH:mm");
                 txtFecha.Text = fecha;
+                txtHora.Text = hora;
                 txtMedio.Focus();
                 var em = Session[Utils.actualUser] as Empleado;
                 adLabel.Text = em.Nombre + " " + em.Apellido + " es el gestor.";
@@ -38,14 +40,14 @@ namespace Vista.Ventas {
         protected void btnGuardarCambios_Click(object sender, EventArgs e) {
             SesionNegocio.Autenticar((data) => {
                 // Enviar los datos y recibir el ID y el AFFECTEDROWS
-                DateTime fn = DateTime.ParseExact(txtFecha.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
+                string ff = $"{txtFecha.Text} {txtHora.Text}";
+                DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                 var auth = Session[Utils.AUTH] as Utils.SessionData;
                 var emp = auth.User;
                 Venta obj = new Venta() {
                     EmpleadoGestor = emp,
                     TipoPago = txtMedio.Text,
-                    Fecha = fn.ToString("yyyy-MM-dd"),
+                    Fecha = fn.ToString("yyyy-MM-dd HH:mm"),
                     Total = 0
                 };
                 var res = VentaNegocio.IniciarVenta(obj);

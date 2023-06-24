@@ -3,6 +3,14 @@
     <div class="page">
         <h2 id="H2Titulo" runat="server">PetShop</h2>
         <ul>
+            <li>
+                Total vendido último día: <asp:Label ID="lblTotalVendidoUltimoDia" runat="server" Text="Label"></asp:Label>
+            </li>
+            <li>
+                Total vendido última semana: <asp:Label ID="lblTotalVendidoUltimaSemana" runat="server" Text="Label"></asp:Label>
+            </li>
+        </ul>
+        <ul>
             <b>Empleados</b>
             <li><a href="/Empleados/Administrar.aspx">Ver todos los empleados</a></li>
             <b>Ventas</b>

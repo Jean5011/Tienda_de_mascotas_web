@@ -84,5 +84,15 @@ namespace Negocio {
         public static Response VentasPorEmp(string dni) {
             return VentaDatos.GetVentaByDNI(dni);
         }
+
+        public static class Widgets {
+            public static Response TotalDeVentasUltimoDia() {
+                return VentaDatos.Widgets.TotalDeVentasUltimoDia();
+            }
+            public static Response TotalDeVentasUltimaSemana() {
+                return VentaDatos.Widgets.TotalDeVentasUltimaSemana();
+            }
+        }
+
     }
 }

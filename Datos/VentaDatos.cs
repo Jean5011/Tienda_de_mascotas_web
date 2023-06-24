@@ -10,10 +10,14 @@ namespace Datos {
 
         public static class Procedures {
             public const string IniciarVenta = "IniciarVenta";
+            public const string TotalVentasUltimoDia = "Widget_TotalVentas_UltimoDia";
+            public const string TotalVentasUltimaSemana = "Widget_TotalVentas_UltimaSemana";
         }
 
         public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
                                           $"[{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
+
+
 
         public static Response IniciarVenta(Venta obj) {
             Connection con = new Connection(Connection.Database.Pets);
@@ -59,5 +63,25 @@ namespace Datos {
                         query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}]"
                     );
         }
+
+        public static class Widgets {
+            public static Response TotalDeVentasUltimoDia() {
+                var con = new Connection(Connection.Database.Pets);
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.TotalVentasUltimoDia
+                        );
+            }
+            public static Response TotalDeVentasUltimaSemana() {
+                var con = new Connection(Connection.Database.Pets);
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.TotalVentasUltimaSemana
+                        );
+            }
+        }
+
     }
 }
