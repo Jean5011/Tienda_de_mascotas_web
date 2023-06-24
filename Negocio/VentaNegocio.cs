@@ -35,7 +35,7 @@ namespace Negocio {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Venta obj = new Venta() {
                     Id = Convert.ToInt32(primerRegistro[Venta.Columns.Id].ToString()),
-                    EmpleadoGestor = new Empleado() { DNI = primerRegistro[Venta.Columns.DNI].ToString()},
+                    EmpleadoGestor = new Empleado() { DNI = primerRegistro[Venta.Columns.DNI].ToString() },
                     TipoPago = primerRegistro[Venta.Columns.TipoPago].ToString(),
                     Fecha = primerRegistro[Venta.Columns.Fecha].ToString(),
                     Total = Convert.ToDouble(primerRegistro[Venta.Columns.Total].ToString())
@@ -95,10 +95,10 @@ namespace Negocio {
             public static Response ProductoMasVendidoUltimaSemana(out int cantidad) {
                 cantidad = 0;
                 var res = VentaDatos.Widgets.ProductoMasVendidoUltimaSemana();
-                if(!res.ErrorFound) {
+                if (!res.ErrorFound) {
                     var dt = res.ObjectReturned as DataSet;
                     Response obj = ProductoNegocio.ExtractDataFromDataSet(dt);
-                    if(!obj.ErrorFound) {
+                    if (!obj.ErrorFound) {
                         Producto p = obj.ObjectReturned as Producto;
                         cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
                         return new Response() {
@@ -116,7 +116,21 @@ namespace Negocio {
                     Message = "Error al obtener datos"
                 };
             }
-        }
 
+            public static Response CantidadDeProductosPorAgotarse(out int cantidad) {
+                cantidad = 0;
+                var res = VentaDatos.Widgets.CantidadDeProductosPorAgotarse();
+                if (!res.ErrorFound) {
+                    var dt = res.ObjectReturned as DataSet;
+                    cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+                    return new Response() {
+                        ErrorFound = false,
+                        ObjectReturned = dt
+                    };
+                }
+                return res;
+            }
+
+        }
     }
 }

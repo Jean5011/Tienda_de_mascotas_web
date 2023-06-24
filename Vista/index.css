@@ -190,3 +190,100 @@ body {
 ._header-important-btn {
     background: rgba(3,169,244,1) !important;
 }
+
+
+.mdc-card.widget .mdc-card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mdc-card.widget .mdc-card__content .row {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 0px 12px;
+}
+._title {
+    padding-top: 12px !important;
+    padding-bottom: 6px !important;
+    text-align: center;
+}
+._ltr {
+    text-align: center;
+}
+.row._p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.row._p ._side {
+    width: 100%;
+}
+.row._p ._side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.row ._side._primary {
+    background: rgba(167,255,235,1);
+    border-radius: 8px;
+    margin: 5px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.prmv_lb {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-transform: none;
+    padding: 4px 0px;
+}
+
+.__secondary-txt {
+    opacity: 0.6;
+}
+/* Estilo base para las cards */
+.card-viewer .mdc-card {
+    width: 100%;
+    max-width: 300px; 
+    margin: 5px;
+    
+  }
+  .card-viewer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    width: 100%;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .card-viewer {
+      justify-content: center; 
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .mdc-card {
+      max-width: 100%; 
+    }
+  }
+  
+
+
+
+  aside.menu {
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    border-right: 1px solid #343434;
+  }

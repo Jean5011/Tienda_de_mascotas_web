@@ -13,6 +13,7 @@ namespace Datos {
             public const string TotalVentasUltimoDia = "Widget_TotalVentas_UltimoDia";
             public const string TotalVentasUltimaSemana = "Widget_TotalVentas_UltimaSemana";
             public const string ProductoMasVendidoUltimaSemana = "Widget_ProductoMasVendido_UltimaSemana";
+            public const string CantidadDeProductosPorAgotarse = "Widget_ContarProductosConBajoStock";
         }
 
         public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
@@ -86,6 +87,13 @@ namespace Datos {
                     ? con.Response
                     : con.FetchStoredProcedure(
                             storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
+                        );
+            }
+            public static Response CantidadDeProductosPorAgotarse() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.CantidadDeProductosPorAgotarse
                         );
             }
         }

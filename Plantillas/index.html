@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pets Shop</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index.js"></script>
+</head>
+
+<body>
+    <form method="post" action="./Index.aspx" id="form1" class="contents">
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span id="spanPageTitle" class="mdc-top-app-bar__title">PetShop</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+
+                    <a id="lbActualUser" class="mdc-button mdc-top-app-bar__action-item _header-profile-btn"
+                        href="javascript:__doPostBack(&#39;ctl00$lbActualUser&#39;,&#39;&#39;)">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label"><b id="lbAUNombre">H&#233;ctor Da Silva</b>
+                            <br>
+                            <span id="lbAURol">Administrador</span></span>
+                    </a>
+                </section>
+            </div>
+        </header>
+        <main class="mdc-top-app-bar--fixed-adjust obj--main">
+            
+        <aside class="menu">
+            
+        </aside>
+            <div class="card-viewer">
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Productos
+                        </div>
+                        <div class="row">
+                            <ul class="mdc-list mdc-list--two-line">
+                                <li class="mdc-list-item" tabindex="0">
+                                    <span class="mdc-list-item__ripple"></span>
+                                    <span class="mdc-list-item__text">
+                                      <span class="mdc-list-item__primary-text">Collar para perro</span>
+                                      <span class="mdc-list-item__secondary-text">Más vendido esta semana</span>
+                                    </span>
+                                  </li>
+                                <li role="separator" class="mdc-list-divider"></li>
+                            </ul>
+                        </div>
+                        <div class="row _p">
+                            <div class="_side">
+                                <span class="mdc-typography--subtitle1">13</span>
+                                <span class="mdc-typography--body2 __secondary-txt">Por agotarse</span>
+                            </div>
+                            <div class="_side">
+                                <span class="mdc-typography--subtitle1">5</span>
+                                <span class="mdc-typography--body2 __secondary-txt">Sin stock</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-card__actions mdc-card__actions">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Ver el catálogo</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Inicio
+                        </div>
+                        <div class="row">
+                            <ul class="mdc-list mdc-list--two-line">
+                                <li class="mdc-list-item" tabindex="0">
+                                  <span class="mdc-list-item__ripple"></span>
+                                  <span class="mdc-list-item__text">
+                                    <span class="mdc-list-item__primary-text">Collar para perro</span>
+                                    <span class="mdc-list-item__secondary-text">Más vendido esta semana</span>
+                                  </span>
+                                </li>
+                                <li role="separator" class="mdc-list-divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Ventas
+                        </div>
+                        <div class="row _ltr mdc-typography--headline5">$1.475</div>
+                        <div class="row _ltr mdc-typography--body2 __secondary-txt">Hoy</div>
+                        <br>
+                        <div class="row _ltr mdc-typography--headline5">$16.980</div>
+                        <div class="row _ltr mdc-typography--body2 __secondary-txt">Esta semana</div>
+                    </div>
+                    <div class="mdc-card__actions mdc-card__actions">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Ver todas las ventas</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <br><br>
+            <!--div class="page">
+                <h2 id="ContentPlaceHolder1_H2Titulo">PetShop</h2>
+                <ul>
+                    <li>
+                        Total vendido último día: <span
+                            id="ContentPlaceHolder1_lblTotalVendidoUltimoDia">$750.0000</span>
+                    </li>
+                    <li>
+                        Total vendido última semana: <span
+                            id="ContentPlaceHolder1_lblTotalVendidoUltimaSemana">$9680.0000</span>
+                    </li>
+                    Productos:
+                    <li>
+                        Producto más vendido última semana: <span
+                            id="ContentPlaceHolder1_lblProductoMasVendidoUltimaSemana">TEST, con 27 unidades vendidas.
+                        </span>
+                    </li>
+                    <li>
+                        <span id="ContentPlaceHolder1_lblProductosPorAgotarse">2 productos están por agotarse. </span>
+                    </li>
+                </ul>
+                <ul>
+                    <b>Empleados</b>
+                    <li><a href="/Empleados/Administrar.aspx">Ver todos los empleados</a></li>
+                    <b>Ventas</b>
+                    <li><a href="/Ventas/Administrar.aspx">Ver todas las ventas</a></li>
+                    <li><a href="/Ventas/Crear.aspx">Agregar venta</a></li>
+                    <b>Productos</b>
+                    <li><a href="/Productos/Administrar.aspx">Ver todos los productos</a></li>
+                    <li><a href="/Productos/Agregar.aspx">Agregar producto (Sólo admins)</a></li>
+                    <b>Proveedores</b>
+                    <li><a href="/Proveedores/Administrar.aspx">Ver todos los proveedores</a></li>
+                    <li><a href="/Proveedores/Agregar.aspx">Agregar proveedor (Sólo admins)</a></li>
+                    <b>Animales</b>
+                    <li><a href="/Animales/VerAnimales.aspx">Ver todos los animales</a></li>
+                    <li><a href="/Animales/AgregarAnimal.aspx">Agregar animal (Sólo admins)</a></li>
+                    <b>Tipos</b>
+                    <li><a href="/Animales/VerTipoDeProducto.aspx">Ver todos los tipos</a></li>
+                    <li><a href="/Animales/IgresarTipoDePrductos.aspx">Agregar tipos (Sólo admins)</a></li>
+                </ul>
+            </div-->
+
+        </main>
+        <aside class="mdc-snackbar">
+            <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+                <div class="mdc-snackbar__label" aria-atomic="false"></div>
+            </div>
+        </aside>
+    </form>
+</body>
+
+</html>

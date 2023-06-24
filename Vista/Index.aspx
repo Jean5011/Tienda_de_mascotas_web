@@ -1,37 +1,81 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Vista.Index" MasterPageFile="/Root.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="page">
-        <h2 id="H2Titulo" runat="server">PetShop</h2>
-        <ul>
-            <li>
-                Total vendido último día: <asp:Label ID="lblTotalVendidoUltimoDia" runat="server" Text="Label"></asp:Label>
-            </li>
-            <li>
-                Total vendido última semana: <asp:Label ID="lblTotalVendidoUltimaSemana" runat="server" Text="Label"></asp:Label>
-            </li>
-            Productos:
-            <li>
-                Producto más vendido última semana: <asp:Label runat="server" ID="lblProductoMasVendidoUltimaSemana" Text="Label"></asp:Label>
-            </li>
-        </ul>
-        <ul>
-            <b>Empleados</b>
-            <li><a href="/Empleados/Administrar.aspx">Ver todos los empleados</a></li>
-            <b>Ventas</b>
-            <li><a href="/Ventas/Administrar.aspx">Ver todas las ventas</a></li>
-            <li><a href="/Ventas/Crear.aspx">Agregar venta</a></li>
-            <b>Productos</b>
-            <li><a href="/Productos/Administrar.aspx">Ver todos los productos</a></li>
-            <li><a href="/Productos/Agregar.aspx">Agregar producto (Sólo admins)</a></li>
-            <b>Proveedores</b>
-            <li><a href="/Proveedores/Administrar.aspx">Ver todos los proveedores</a></li>
-            <li><a href="/Proveedores/Agregar.aspx">Agregar proveedor (Sólo admins)</a></li>
-            <b>Animales</b>
-            <li><a href="/Animales/VerAnimales.aspx">Ver todos los animales</a></li>
-            <li><a href="/Animales/AgregarAnimal.aspx">Agregar animal (Sólo admins)</a></li>
-            <b>Tipos</b>
-            <li><a href="/Animales/VerTipoDeProducto.aspx">Ver todos los tipos</a></li>
-            <li><a href="/Animales/IgresarTipoDePrductos.aspx">Agregar tipos (Sólo admins)</a></li>
-        </ul>
-    </div>
+    <div class="card-viewer">
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Productos
+                        </div>
+                        <div class="row">
+                            <ul class="mdc-list mdc-list--two-line">
+                                <li class="mdc-list-item" tabindex="0">
+                                    <span class="mdc-list-item__ripple"></span>
+                                    <span class="mdc-list-item__text">
+                                    <asp:Label CssClass="mdc-list-item__primary-text" id="lblProductoMasVendidoUltimaSemana" runat="server" Text="Label"></asp:Label>
+                                      <span class="mdc-list-item__secondary-text">Más vendido esta semana</span>
+                                    </span>
+                                  </li>
+                                <li role="separator" class="mdc-list-divider"></li>
+                            </ul>
+                        </div>
+                        <div class="row _p">
+                            <div class="_side">
+                                <asp:Label CssClass="mdc-typography--subtitle1" id="lblProductosPorAgotarse" runat="server" Text=""></asp:Label>
+                                <span class="mdc-typography--body2 __secondary-txt">Por agotarse</span>
+                            </div>
+                            <div class="_side">
+                                <span class="mdc-typography--subtitle1">*</span>
+                                <span class="mdc-typography--body2 __secondary-txt">Sin stock</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-card__actions mdc-card__actions">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Ver el catálogo</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Inicio
+                        </div>
+                        <div class="row">
+                            <ul class="mdc-list mdc-list--two-line">
+                                <li class="mdc-list-item" tabindex="0">
+                                  <span class="mdc-list-item__ripple"></span>
+                                  <span class="mdc-list-item__text">
+                                      <span class="mdc-list-item__primary-text">Collar para perro</span>
+                                    <span class="mdc-list-item__secondary-text">Más vendido esta semana</span>
+                                  </span>
+                                </li>
+                                <li role="separator" class="mdc-list-divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-card widget">
+                    <div class="mdc-card__content">
+                        <div class="row _title mdc-typography--headline6">
+                            Ventas
+                        </div>
+                        <asp:Label CssClass="row _ltr mdc-typography--headline5" id="lblTotalVendidoUltimoDia" runat="server" Text=""></asp:Label>
+                        <div class="row _ltr mdc-typography--body2 __secondary-txt">Hoy</div>
+                        <br>
+                        <asp:Label CssClass="row _ltr mdc-typography--headline5" id="lblTotalVendidoUltimaSemana" runat="server" Text=""></asp:Label>
+                        <div class="row _ltr mdc-typography--body2 __secondary-txt">Esta semana</div>
+                    </div>
+                    <div class="mdc-card__actions mdc-card__actions">
+                        <a class="mdc-button mdc-card__action mdc-card__action--button" href="#">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label">Ver todas las ventas</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+       
 </asp:Content>

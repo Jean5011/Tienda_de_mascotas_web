@@ -13,13 +13,22 @@ namespace Vista {
     public partial class Index {
 
         /// <summary>
-        /// H2Titulo control.
+        /// lblProductoMasVendidoUltimaSemana control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl H2Titulo;
+        protected global::System.Web.UI.WebControls.Label lblProductoMasVendidoUltimaSemana;
+
+        /// <summary>
+        /// lblProductosPorAgotarse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProductosPorAgotarse;
 
         /// <summary>
         /// lblTotalVendidoUltimoDia control.
@@ -38,14 +47,5 @@ namespace Vista {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalVendidoUltimaSemana;
-
-        /// <summary>
-        /// lblProductoMasVendidoUltimaSemana control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductoMasVendidoUltimaSemana;
     }
 }
