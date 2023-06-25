@@ -334,5 +334,10 @@ namespace Vista {
                 t2 = DateTime.Now;
             }
         }
+
+        public static void SetTimeout(Action funcionAEjecutar, double segundos) {
+            EsperarSegundos(segundos);
+            funcionAEjecutar.Invoke();
+        }
     }
 }

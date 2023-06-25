@@ -27,10 +27,16 @@ namespace Vista.Empleados {
         }
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e) {
-            SesionNegocio.CerrarSesion();
-            Utils.MostrarMensaje("Has cerrado sesión. ", this.Page, GetType()); // ver cómo evitar que no aparezca el mensaje si no comento las siguientes 2 líneas de código.
-            Utils.EsperarSegundos(2);
-            Response.Redirect("/Empleados/IniciarSesion.aspx");
+            Response res = SesionNegocio.CerrarSesion();
+            if (!res.ErrorFound)
+            {
+                Utils.EsperarSegundos(2);
+                Response.Redirect("/Empleados/IniciarSesion.aspx");
+            }
+            else
+            {
+                Utils.MostrarMensaje("Ocurrió un error al intentar cerrar la sesión. Por favor, pruebe cerrar sesión nuevamente.", this.Page, GetType());
+            }
         }
     }
 }
