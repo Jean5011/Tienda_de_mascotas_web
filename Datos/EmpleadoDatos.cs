@@ -11,7 +11,7 @@ using Entidades;
 namespace Datos {
     public class EmpleadoDatos {
         public EmpleadoDatos() { }
-        private static readonly string ALL_COLUMNS = $"[{Empleado.Columns.DNI}], " +
+        public static readonly string ALL_COLUMNS = $"[{Empleado.Columns.DNI}], " +
                                                     $"[{Empleado.Columns.Nombre}], " +
                                                     $"[{Empleado.Columns.Apellido}], " +
                                                     $"[{Empleado.Columns.Sexo}], " +

@@ -20,6 +20,9 @@ namespace Datos {
         public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
                                           $"[{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
 
+        public readonly static string ALL_COLUMNS_BUT_TOTAL_FORMATTED = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
+                                          $"[{Venta.Columns.Fecha}], FORMAT([{Venta.Columns.Total}], 'C', 'es-AR') as [{Venta.Columns.Total}]";
+
 
 
         public static Response IniciarVenta(Venta obj) {
@@ -52,7 +55,7 @@ namespace Datos {
             return con.Response.ErrorFound
                 ? con.Response
                 : con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.DNI}] LIKE '%' + @id + '%'",
+                        query: $"SELECT {ALL_COLUMNS_BUT_TOTAL_FORMATTED} FROM [{Venta.Table}] WHERE [{Venta.Columns.DNI}] LIKE '%' + @id + '%'",
                         parameters: new Dictionary<string, object> {
                             { "@id", dni }
                         }
@@ -63,7 +66,7 @@ namespace Datos {
             return con.Response.ErrorFound
                 ? con.Response
                 : con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}]"
+                        query: $"SELECT {ALL_COLUMNS_BUT_TOTAL_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Venta.Table}] INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}]"
                     );
         }
 

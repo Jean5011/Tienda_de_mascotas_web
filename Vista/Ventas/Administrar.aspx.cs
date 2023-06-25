@@ -19,8 +19,8 @@ namespace Vista.Ventas {
 
             } else {
                 DataSet dt = res.ObjectReturned as DataSet;
-                gvVentas.DataSource = dt;
-                gvVentas.DataBind();
+                gvDatos.DataSource = dt;
+                gvDatos.DataBind();
             }
         }
 
@@ -44,5 +44,49 @@ namespace Vista.Ventas {
         protected void btnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
         }
+
+        protected void gvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+            gvDatos.PageIndex = e.NewPageIndex;
+            CargarDatos();
+        }
+
+        protected void gvDatos_RowCreated(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.Pager) {
+                TextBox txtPagerTextBox = e.Row.FindControl("gvDatosPagerPageTxtBox") as TextBox;
+                if (txtPagerTextBox != null) {
+                    txtPagerTextBox.Text = (gvDatos.PageIndex + 1) + "";
+                }
+                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
+                if (ddlPager != null) {
+                    ddlPager.SelectedValue = gvDatos.PageSize + "";
+                }
+            }
+        }
+        protected void gvProductsPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+            int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
+            if (intendedPage <= gvDatos.PageCount - 1) {
+                gvDatos.PageIndex = intendedPage;
+                CargarDatos();
+            }
+            else {
+                ((TextBox)sender).Text = gvDatos.PageIndex + "";
+            }
+        }
+
+        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
+            if (filasPorPaginaN > 0) {
+                gvDatos.PageSize = filasPorPaginaN;
+                CargarDatos();
+            }
+        }
+
+        protected void gvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+
+        }
+
+
+
+
     }
 }

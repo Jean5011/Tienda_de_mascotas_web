@@ -488,3 +488,32 @@ th {
     text-transform: inherit;
     text-transform: var(--mdc-typography-subtitle2-text-transform, inherit)
 }
+.page-roll {
+    padding: 0px !important;
+    min-width: 48px !important;
+    width: 48px !important;
+    height: 48px !important;
+}
+
+    .page-roll input, .page-roll select {
+        min-width: 100% !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+/* Ocultar las flechas del input de tipo número */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.pager {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+    .pager .pager-space {
+        width: 100% !important;
+    }
