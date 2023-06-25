@@ -21,7 +21,7 @@ namespace Vista {
 
                     // Ahora puedes acceder a los valores de las columnas de la primera fila
                     string total = primeraFila["Total"].ToString();
-                    lblTotalVendidoUltimoDia.Text = $"{total}";
+                    lblTotalVendidoUltimoDia.InnerText = $"{total}";
 
                 }
             }
@@ -36,7 +36,7 @@ namespace Vista {
 
                     // Ahora puedes acceder a los valores de las columnas de la primera fila
                     string total = primeraFila["Total"].ToString();
-                    lblTotalVendidoUltimaSemana.Text = $"{total}";
+                    lblTotalVendidoUltimaSemana.InnerText = $"{total}";
 
                 }
             }
@@ -45,21 +45,21 @@ namespace Vista {
             Response res = VentaNegocio.Widgets.ProductoMasVendidoUltimaSemana(out int cantidad);
             if (!res.ErrorFound) {
                 Producto p = res.ObjectReturned as Producto;
-                lblProductoMasVendidoUltimaSemana.Text = $"{p.Nombre}";
+                lblProductoMasVendidoUltimaSemana.InnerText = $"{p.Nombre}";
             }
         }
         public void Widget__CantidadDeProductosPorAgotarse() {
             Response res = VentaNegocio.Widgets.CantidadDeProductosPorAgotarse(out int cantidad);
             if (!res.ErrorFound) {
                 Producto p = res.ObjectReturned as Producto;
-                lblProductosPorAgotarse.Text = cantidad.ToString();
+                lblProductosPorAgotarse.InnerText = cantidad.ToString();
             }
         }
         public void Widget__CantidadDeProductosAgotados() {
             Response res = VentaNegocio.Widgets.CantidadDeProductosAgotados(out int cantidad);
             if (!res.ErrorFound) {
                 Producto p = res.ObjectReturned as Producto;
-                lblProductosAgotados.Text = cantidad.ToString();
+                lblProductosAgotados.InnerText = cantidad.ToString();
             }
         }
 

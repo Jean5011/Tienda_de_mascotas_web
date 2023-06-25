@@ -13,40 +13,13 @@ namespace Vista {
     public partial class Index {
 
         /// <summary>
-        /// lblProductoMasVendidoUltimaSemana control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductoMasVendidoUltimaSemana;
-
-        /// <summary>
-        /// lblProductosPorAgotarse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductosPorAgotarse;
-
-        /// <summary>
-        /// lblProductosAgotados control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductosAgotados;
-
-        /// <summary>
         /// lblTotalVendidoUltimoDia control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalVendidoUltimoDia;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotalVendidoUltimoDia;
 
         /// <summary>
         /// lblTotalVendidoUltimaSemana control.
@@ -55,6 +28,33 @@ namespace Vista {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalVendidoUltimaSemana;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotalVendidoUltimaSemana;
+
+        /// <summary>
+        /// lblProductoMasVendidoUltimaSemana control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductoMasVendidoUltimaSemana;
+
+        /// <summary>
+        /// lblProductosPorAgotarse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductosPorAgotarse;
+
+        /// <summary>
+        /// lblProductosAgotados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductosAgotados;
     }
 }
