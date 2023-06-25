@@ -57,14 +57,17 @@ window.onload = () => {
 			["Productos", "/Productos/Administrar.aspx"],
 			["Proveedores", "/Proveedores/Administrar.aspx"],
 			["Empleados", "/Empleados/Administrar.aspx"],
-			["Animales", "/Animales/Administrar.aspx"],
-			["Tipos de Producto", "/Tipos/Administrar.aspx"]
+			["Animales", "/Animales/VerAnimales.aspx"],
+			["Tipos de Producto", "/Tipos/VerTipoDeProducto.aspx"]
 		],
 		otherLinks: [
 			["Repositorio", "https://github.com/maximocanedo/PROGIII-TPI"],
 			[
 				"Foro",
 				"https://frgp.cvg.utn.edu.ar/mod/forum/view.php?id=255204",
+			],
+			[
+				"Cerrar sesión", "/Empleados/CerrarSesion.aspx"
 			]
 		],
 	});

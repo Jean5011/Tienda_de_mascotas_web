@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 class Header {
 	constructor(settings) {
 		let obj = {
@@ -51,14 +51,24 @@ window.MostrarMensaje = (mensaje) => {
 window.onload = () => {
 	let header = new Header({
 		title: "Trabajo Práctico Integrador",
-		group: "Pantallas",
-		links: [],
+		group: "Grupo N.º 5",
+		links: [
+			["Ventas", "/Ventas/Administrar.aspx"],
+			["Productos", "/Productos/Administrar.aspx"],
+			["Proveedores", "/Proveedores/Administrar.aspx"],
+			["Empleados", "/Empleados/Administrar.aspx"],
+			["Animales", "/Animales/VerAnimales.aspx"],
+			["Tipos de Producto", "/Tipos/VerTipoDeProducto.aspx"]
+		],
 		otherLinks: [
 			["Repositorio", "https://github.com/maximocanedo/PROGIII-TPI"],
 			[
 				"Foro",
 				"https://frgp.cvg.utn.edu.ar/mod/forum/view.php?id=255204",
 			],
+			[
+				"Cerrar sesión", "/Empleados/CerrarSesion.aspx"
+			]
 		],
 	});
 	header.putOnPage();

@@ -9,26 +9,18 @@ using System.Web.UI.WebControls;
 namespace Vista.Proveedores {
     public partial class Agregar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
-            /*Connection connection = new Connection("Pets");
-            Response response = connection.FetchData("SELECT * FROM Proveedores");
+            if(!IsPostBack) {
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para acceder a la lista de proveedores. "
+                };
 
-            if (!response.ErrorFound)
-            {
-                DataSet dataSet = response.ObjectReturned as DataSet;
+                Session[Utils.AUTH] = settings.ValidateSession(this);
 
-                // Asigna el DataSet al DataSource del GridView
-                GridView1.DataSource = dataSet.Tables["root"];
-
-                // Enlaza los datos al GridView
-                GridView1.DataBind();
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
             }
-            else
-            {
-                Label1.Text = response.Message+ "/"+response.Details;
-                // Maneja el error en caso de que ocurra
-                Console.WriteLine("Error al obtener datos de la base de datos: " + response.Message);
-            }
-            */
         }
     }
 }

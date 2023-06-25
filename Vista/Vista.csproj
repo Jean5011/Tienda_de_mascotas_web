@@ -76,6 +76,7 @@
     <Content Include="Empleados\EditarEmpleado.aspx" />
     <Content Include="Empleados\IniciarSesion.aspx" />
     <Content Include="Empleados\Perfil.aspx" />
+    <Content Include="Index.aspx" />
     <Content Include="index.css" />
     <Content Include="index.js" />
     <Content Include="Productos\ManageOLD.aspx" />
@@ -163,6 +164,13 @@
     <Compile Include="Empleados\Perfil.aspx.designer.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Productos\ManageOLD.aspx.cs">
       <DependentUpon>ManageOLD.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -198,6 +206,13 @@
     </Compile>
     <Compile Include="Proveedores\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Root.Master.cs">
+      <DependentUpon>Root.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Root.Master.designer.cs">
+      <DependentUpon>Root.Master</DependentUpon>
     </Compile>
     <Compile Include="Tipos\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
@@ -252,6 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Root.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

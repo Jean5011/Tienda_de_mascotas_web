@@ -10,7 +10,17 @@ namespace Datos {
 
         public static class Procedures {
             public const string IniciarVenta = "IniciarVenta";
+            public const string TotalVentasUltimoDia = "Widget_TotalVentas_UltimoDia";
+            public const string TotalVentasUltimaSemana = "Widget_TotalVentas_UltimaSemana";
+            public const string ProductoMasVendidoUltimaSemana = "Widget_ProductoMasVendido_UltimaSemana";
+            public const string CantidadDeProductosPorAgotarse = "Widget_ContarProductosConBajoStock";
+            public const string CantidadDeProductosAgotados = "Widget_ContarProductosSinStock";
         }
+
+        public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
+                                          $"[{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
+
+
 
         public static Response IniciarVenta(Venta obj) {
             Connection con = new Connection(Connection.Database.Pets);
@@ -26,5 +36,75 @@ namespace Datos {
                         }
                     );
         }
+        public static Response GetVentaByID(int id) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.Id}] = @id",
+                        parameters: new Dictionary<string, object> {
+                            { "@id", id }
+                        }
+                    );
+        }
+        public static Response GetVentaByDNI(string dni) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.DNI}] LIKE '%' + @id + '%'",
+                        parameters: new Dictionary<string, object> {
+                            { "@id", dni }
+                        }
+                    );
+        }
+        public static Response GetVentas() {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}]"
+                    );
+        }
+
+        public static class Widgets {
+            public static Connection con = new Connection(Connection.Database.Pets);
+            public static Response TotalDeVentasUltimoDia() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.TotalVentasUltimoDia
+                        );
+            }
+            public static Response TotalDeVentasUltimaSemana() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.TotalVentasUltimaSemana
+                        );
+            }
+            public static Response ProductoMasVendidoUltimaSemana() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
+                        );
+            }
+            public static Response CantidadDeProductosPorAgotarse() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.CantidadDeProductosPorAgotarse
+                        );
+            }
+            public static Response CantidadDeProductosAgotados() {
+                return con.Response.ErrorFound
+                    ? con.Response
+                    : con.FetchStoredProcedure(
+                            storedProcedureName: Procedures.CantidadDeProductosAgotados
+                        );
+            }
+        }
+
     }
 }

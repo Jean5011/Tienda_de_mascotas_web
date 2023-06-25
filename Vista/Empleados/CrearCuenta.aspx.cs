@@ -11,14 +11,6 @@ using Negocio;
 namespace Vista.Empleados {
     public partial class CrearCuenta : System.Web.UI.Page { 
         private readonly string actualUser = Utils.actualUser;
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
 
         protected void CargarDatosPrueba() {
             txtDNI.Text = "45009001";
@@ -39,21 +31,16 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para poder agregar empleados. ");
-                if (inicioSesion) {
-                    var UsuarioActual  = Session[actualUser] as Empleado;
-                    if (UsuarioActual.Rol != Empleado.Roles.ADMIN) {
-                        Utils.MostrarMensaje($"No tenés permiso para crear registros. ", this.Page, GetType());
-                        btnGuardarCambios.Visible = false;
-                        btnGuardarCambios.Enabled = false;
-                        string login_url = "/Empleados/IniciarSesion.aspx";
-                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        Response.Redirect($"{login_url}?next={next_url}&msg=Iniciá sesión con otra cuenta de administrador para continuar.");
-                        // *** Redirigir a página principal *** ///
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
+                    RejectNonMatches = true,
+                    Message = "Sólo los administradores pueden crear cuentas. "
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
 
-                    }
-                }
-                CargarDatosPrueba();
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+                //CargarDatosPrueba();
             }
         }
 

@@ -1,110 +1,94 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="Vista.Empleados.Perfil" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" MasterPageFile="/Root.Master" Inherits="Vista.Empleados.Perfil" %>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantilla</title>
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/index.css" />
-    <script src="/index.js"></script>
-</head>
-<body>
-    <form id="form1" runat="server" class="contents">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
-            <div class="mdc-top-app-bar__row">
-                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <span class="mdc-top-app-bar__title" runat="server" id="spanPageTitle">PetShop</span>
-                </section>
-                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    <ASP:LinkButton ID="lbIniciarSesion" runat="server" OnClick="IniciarSesion" CssClass="mdc-button mdc-button--raised _header-important-btn mdc-top-app-bar__action-item">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Iniciar sesión</span>
-                    </ASP:LinkButton>
-                    <ASP:LinkButton ID="lbActualUser" OnClick="VerPerfilActual" runat="server" CssClass="mdc-button mdc-top-app-bar__action-item _header-profile-btn">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label"><b runat="server" id="lbAUNombre"></b><br>
-                            <span runat="server" id="lbAURol"></span></span>
-                    </ASP:LinkButton>
-                </section>
-            </div>
-        </header>
-        <main class="mdc-top-app-bar--fixed-adjust obj--main main-grid">
-            <div class="col perfil">
-                <h2 id="NombreEmpleadoTitulo" runat="server"></h2>
-                <ul class="mdc-card mdc-card--outlined mdc-list mdc-list--two-line">
-                    <asp:ListView ID="DetallesList" runat="server">
-                        <ItemTemplate>
-                            <div class="mdc-list-item">
-                                <span class="mdc-list-item__ripple"></span>
-                                <span class="mdc-list-item__text">
-                                    <span class="mdc-list-item__primary-text"><%# Eval("Valor") %></span>
-                                    <span class="mdc-list-item__secondary-text"><%# Eval("Propiedad") %></span>
-                                </span>
-                            </div>
-                        </ItemTemplate>
-                    </asp:ListView>
-                    <li role="separator" class="mdc-list-divider"></li>
-                    <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click">
-                        <span class="mdc-list-item__ripple"></span>
-                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">
-                            edit
-                        </span>
-                        <span class="mdc-list-item__text">
-                            <span class="mdc-list-item__primary-text">Editar información</span>
-                            <span class="mdc-list-item__secondary-text">Cambiar sueldo, dirección.</span>
-                        </span>
-                    </asp:LinkButton>
-                    <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click">
-                        <span class="mdc-list-item__ripple"></span>
-                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">
-                            delete
-                        </span>
-                        <span class="mdc-list-item__text">
-                            <span class="mdc-list-item__primary-text">Deshabilitar empleado</span>
-                            <span class="mdc-list-item__secondary-text">En caso de despido, renuncia.</span>
-                        </span>
-                    </asp:LinkButton>
-                </ul>
-                <br>
-            </div>
-            <div class="col principal">
-                <h1>ESTADO:
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></h1>
-                <br>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:TemplateField HeaderText="Acciones">
-                            <ItemTemplate>
-                                <asp:Button ID="btnOpen" runat="server" CssClass="material-icons mdc-icon-button" Text="open_in_new" CommandName="Open" />
-                                <asp:Button ID="btnDelete" runat="server" CssClass="material-icons mdc-icon-button" Text="delete" CommandName="Delete" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                        <asp:TemplateField HeaderText="Empleado">
-                            <ItemTemplate>
-                                <a href="#"></a>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="MedioPago" HeaderText="Medio de pago" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
-                        <asp:BoundField DataField="Total" HeaderText="Total" />
-                    </Columns>
-                </asp:GridView>
+<%@ Import Namespace="Entidades" %>
 
-            </div>
-        </main>
-        <aside class="mdc-snackbar">
-            <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-                <div class="mdc-snackbar__label" aria-atomic="false"></div>
-            </div>
-        </aside>
-    </form>
-</body>
-</html>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script>
+        document.querySelector("main").classList.add("menu-main");
+    </script>
+    <div class="mdc-card col perfil">
+        <h2 id="NombreEmpleadoTitulo" runat="server"></h2>
+        <ul class="mdc-list mdc-list--two-line">
+            <asp:ListView ID="DetallesList" runat="server">
+                <itemtemplate>
+                    <div class="mdc-list-item">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true"><%# Eval("Icon") %></span>
+                        <span class="mdc-list-item__text">
+                            <span class="mdc-list-item__primary-text"><%# Eval("Valor") %></span>
+                            <span class="mdc-list-item__secondary-text"><%# Eval("Propiedad") %></span>
+                        </span>
+                    </div>
+                </itemtemplate>
+            </asp:ListView>
+        </ul><br>
+            <div class="mdc-card__actions mdc-card__actions--full-bleed mcard-actions">
+              <asp:LinkButton runat="server" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Editar</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+              </asp:LinkButton>
+              <asp:LinkButton runat="server" ID="BtnCambiarClave" OnClick="BtnCambiarClave_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button" >
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+              </asp:LinkButton>
+                <asp:LinkButton runat="server" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button" >
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
+                    <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">remove_circle</i>
+                </asp:LinkButton>
+        <br>
+    </div>
+        </div>
+    <div class="col principal">
+        <h2>Ventas que registró</h2>
+        <asp:GridView ID="gvVentas" CssClass="mdc-data-table" AutoGenerateColumns="False" runat="server">
+            <columns>
+                <asp:TemplateField HeaderText="Acciones">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <a href="/Ventas/VerFactura.aspx?ID=<%# Eval(Venta.Columns.Id) %>">Ver detalles</a>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="ID">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <asp:Label ID="lbID" runat="server" Text="<%# Eval(Venta.Columns.Id) %>"></asp:Label>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Empleado Gestor">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <asp:Label ID="lbEMPLEADOGESTOR" runat="server" Text="<%# Eval(Venta.Columns.DNI) %>"></asp:Label>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Medio de pago">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <asp:Label ID="lbTIPOPAGO" runat="server" Text="<%# Eval(Venta.Columns.TipoPago) %>"></asp:Label>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Fecha">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <asp:Label ID="lbFECHA" runat="server" Text="<%# Eval(Venta.Columns.Fecha) %>"></asp:Label>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Total">
+                    <itemtemplate>
+                        <div class="mdc-data-table__cell">
+                            <asp:Label ID="lbPTOTAL" runat="server" Text="<%# Eval(Venta.Columns.Total) %>"></asp:Label>
+                        </div>
+                    </itemtemplate>
+                </asp:TemplateField>
+            </columns>
+        </asp:GridView>
+
+    </div>
+</asp:Content>

@@ -10,6 +10,14 @@ namespace Entidades {
             public int Id { get; set; }
             public int AffectedRows { get; set; }
         }
+        public static class Columns {
+            public const string Id = "CodVenta_Vt";
+            public const string DNI = "DNIEmpleado_Vt";
+            public const string TipoPago = "TipoPago_Vt";
+            public const string Fecha = "Fecha_Vt";
+            public const string Total = "PrecioTotal_Vt";
+        }
+        public const string Table = "Ventas";
         public int Id { get; set; }
         public Empleado EmpleadoGestor { get; set; }
         public string TipoPago { get; set; }

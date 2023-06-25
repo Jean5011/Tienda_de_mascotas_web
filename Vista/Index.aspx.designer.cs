@@ -7,45 +7,54 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Tipos {
+namespace Vista {
 
 
-    public partial class VerTipoDeProducto {
+    public partial class Index {
 
         /// <summary>
-        /// txtBuscar control.
+        /// lblTotalVendidoUltimoDia control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotalVendidoUltimoDia;
 
         /// <summary>
-        /// btnBuscar control.
+        /// lblTotalVendidoUltimaSemana control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTotalVendidoUltimaSemana;
 
         /// <summary>
-        /// GV_Datos control.
+        /// lblProductoMasVendidoUltimaSemana control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GV_Datos;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductoMasVendidoUltimaSemana;
 
         /// <summary>
-        /// lbl_mensaje_error control.
+        /// lblProductosPorAgotarse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_mensaje_error;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductosPorAgotarse;
+
+        /// <summary>
+        /// lblProductosAgotados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProductosAgotados;
     }
 }

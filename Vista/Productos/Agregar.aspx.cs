@@ -9,98 +9,66 @@ using Negocio;
 
 namespace Vista.Productos {
     public partial class Agregar : System.Web.UI.Page {
-        private Empleado UsuarioActual; // Objeto que luego de CargarSesion() tendrá los datos del empleado activo.
-        /// <summary>
-        /// Se fija si se inició sesión y recupera los datos del empleado en cuestión.
-        /// </summary>
-        /// <returns>True si inició sesión, False si no hay sesión o si hubo un problema.</returns>
-        protected bool CargarSesion() {
-            Response res_b = SesionNegocio.ObtenerDatosEmpleadoActual();
-            if (res_b.ErrorFound) {
-                if (res_b.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND) {
-                    // No inició sesión, mandamos al usuario a que se loguee, y le decimos que luego vuelva.
-                    string login_url = "/Empleados/IniciarSesion.aspx";
-                    string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                    Response.Redirect($"{login_url}?next={next_url}");
-                }
-                Utils.MostrarMensaje($"Error verificando tu sesión. Detalles: {res_b.Details}.", this.Page, GetType());
-                return false;
-            }
-            UsuarioActual = res_b.ErrorFound ? null : res_b.ObjectReturned as Empleado;
-            return true;
-        }
         protected void Page_Load(object sender, EventArgs e) {
-            bool inicioSesion = CargarSesion();
-            if (inicioSesion) {
-                if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                    // El usuario logueado es un ADMINISTRADOR con derecho a crear y borrar productos.
-                    // Si llegó acá está todo bien.
+            if (!IsPostBack) {
 
-                    /// IMPORTANTE
-                    /// ANTES DE LLAMAR UNA FUNCIÓN QUE REALIZA UN CAMBIO (CUANDO SE PRESIONA EL BOTON "AGREGAR", POR EJEMPLO)
-                    /// TENÉS QUE AUTENTICAR
-                    /// AL USUARIO. PARA VERIFICAR QUE SIGA ACTIVO
-                    /// 
-                    bool auth = SesionNegocio.Autenticar(); // Si devuelve true, podés hacer acciones delicadas.
-                    // Si devuelve no, lo mandás de nuevo a la página de inicio para que vuelva a iniciar sesión.
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
+                    RejectNonMatches = true,
+                    Message = "Ingresá como administrador para agregar productos. "
+                };
 
+                Session[Utils.AUTH] = settings.ValidateSession(this);
 
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
+            }
+        }
+
+        protected void BtnGuardar_Click(object sender, EventArgs e) {
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
+            SesionNegocio.Autenticar(res => {
+                string numero = txtPrecioUnitario.Text;
+                double Pre;
+                if (double.TryParse(numero, out Pre)) {
+                    string stock = txtStock.Text;
+                    int st;
+                    if (int.TryParse(stock, out st)) {
+                        Producto Prod = new Producto() {
+                            Codigo = txtID.Text,
+                            Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                            Categoria = new TipoProducto() { tipoDeProducto = txtTipoProducto.Text },
+                            Nombre = txtNombre.Text,
+                            Marca = txtMarca.Text,
+                            Descripcion = txtDescripcion.Text,
+                            Stock = st,
+                            Imagen = txtURLImagen.Text,
+                            Precio = Pre,
+                            Estado = true,
+                        };
+                        Response response = ProductoNegocio.IngresarProducto(Prod);
+                        if (!response.ErrorFound) {
+                            Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
+                        }
+                        else {
+                            //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
+                            string error = response.Message;
+                            Utils.MostrarMensaje(error, this.Page, GetType());
+                        }
+                    }
+                    else {
+                        Utils.MostrarMensaje($"El stock ingresado no es valido. ", this.Page, GetType());
+                    }
                 }
                 else {
-                    Utils.MostrarMensaje("UNAUTHORIZED", this.Page, GetType());
+                    Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
                 }
-            } 
+            }, err => {
+                Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this.Page, GetType());
+            });
         }
 
-        protected void BtnGuardar_Click(object sender, EventArgs e)
-        {
-            //Utils.MostrarMensaje($"EVENTO CLIIIIICKKKKKKK. ", this.Page, GetType());
-            //aca casteo el precio para que se pueda cargar
-            // Autenticar acá más adelante
-            string numero = txtPrecioUnitario.Text;
-            double Pre;
-            if (double.TryParse(numero, out Pre))
-            {
-                string stock = txtStock.Text;
-                int st;
-                if(int.TryParse(stock, out st))
-              {
-                Producto Prod = new Producto()
-                {
-                    Codigo = txtID.Text,
-                    Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
-                    Categoria = new TipoProducto() { tipoDeProducto = txtTipoProducto.Text },
-                    Nombre = txtNombre.Text,
-                    Marca = txtMarca.Text,
-                    Descripcion = txtDescripcion.Text,
-                    Stock = st,
-                    Imagen = txtURLImagen.Text,
-                    Precio = Pre,
-                    Estado = true,
-                };
-                Response response = ProductoNegocio.IngresarProducto(Prod);
-                if (!response.ErrorFound)
-                {
-                    Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
-                }
-                else
-                {
-                    //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
-                    string error = response.Message;
-                    Utils.MostrarMensaje(error, this.Page, GetType());
-                }
-              }
-                else
-                {
-                    Utils.MostrarMensaje($"El stock ingresado no es valido. ", this.Page, GetType());
-                }
-            }
-            else
-            {
-                Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
-            }
-            
-        }
-        
     }
 }

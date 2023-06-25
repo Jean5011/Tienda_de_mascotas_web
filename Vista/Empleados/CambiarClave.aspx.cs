@@ -11,18 +11,10 @@ using System.Globalization;
 
 namespace Vista.Empleados {
     public partial class CambiarClave : System.Web.UI.Page {
-        private readonly string actualUser = Utils.actualUser;
         private readonly string editingUser = "Usuario_Perfil";
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected bool CargarPerfil() {
-            var UsuarioActual = Session[actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
             string dni_empleado = Request.QueryString["DNI"];
             if (string.IsNullOrEmpty(dni_empleado)) {
                 if (!string.IsNullOrEmpty(UsuarioActual.DNI)) {
@@ -39,10 +31,18 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                bool inicioSesion = Utils.CargarSesion(this, true, "Iniciá sesión para cambiar claves. Si no te acordás tu clave, pedile a un administrador que la cambie.");
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para continuar"
+                };
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+
                 bool cargoPerfil = CargarPerfil();
-                if (inicioSesion && cargoPerfil) {
-                    var UsuarioActual = Session[actualUser] as Empleado;
+                if (auth.Granted && cargoPerfil) {
+                    var UsuarioActual = auth.User;
                     var UsuarioPerfil = Session[editingUser] as Empleado;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
                         // El usuario actual es ELLA/ÉL MISMO ó un ADMINISTRADOR.
@@ -64,7 +64,8 @@ namespace Vista.Empleados {
         }
 
         protected void btnGuardarCambios_Click(object sender, EventArgs e) {
-            var UsuarioActual  = Session[actualUser] as Empleado;
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual  = auth.User;
             var UsuarioPerfil = Session[editingUser] as Empleado;
             string claveNueva = txtClave.Text;
             SesionNegocio.Autenticar((res) => {

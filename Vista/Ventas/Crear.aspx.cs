@@ -10,23 +10,27 @@ using System.Globalization;
 
 namespace Vista.Ventas {
     public partial class Crear : System.Web.UI.Page {
-        public void IniciarSesion(object sender, EventArgs e) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
-            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-            Response.Redirect($"{login_url}?next={next_url}");
-        }
-        public void VerPerfilActual(object sender, EventArgs e) {
-            Response.Redirect("/Empleados/Perfil.aspx");
-        }
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
+                var settings = new Utils.Authorization() {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para registrar una venta. "
+                };
+
+                Session[Utils.AUTH] = settings.ValidateSession(this);
+
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+
+
                 Utils.CargarSesion(this, true, "Primero tenés que iniciar sesión. ");
                 DateTime fechaHora = DateTime.Now;
                 string fecha = fechaHora.ToString("yyyy-MM-dd");
                 string hora = fechaHora.ToString("HH:mm");
                 txtFecha.Text = fecha;
-                txtMedio.Focus();
                 txtHora.Text = hora;
+                txtMedio.Focus();
                 var em = Session[Utils.actualUser] as Empleado;
                 adLabel.Text = em.Nombre + " " + em.Apellido + " es el gestor.";
 
@@ -36,18 +40,21 @@ namespace Vista.Ventas {
         protected void btnGuardarCambios_Click(object sender, EventArgs e) {
             SesionNegocio.Autenticar((data) => {
                 // Enviar los datos y recibir el ID y el AFFECTEDROWS
-                DateTime fn = DateTime.ParseExact(txtFecha.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                var emp = Session[Utils.actualUser] as Empleado;
+                string ff = $"{txtFecha.Text} {txtHora.Text}";
+                DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var emp = auth.User;
                 Venta obj = new Venta() {
                     EmpleadoGestor = emp,
                     TipoPago = txtMedio.Text,
-                    Fecha = fn.ToString("yyyy-MM-dd"),
+                    Fecha = fn.ToString("yyyy-MM-dd HH:mm"),
                     Total = 0
                 };
                 var res = VentaNegocio.IniciarVenta(obj);
                 if(!res.ErrorFound) {
                     var vp = res.ObjectReturned as Venta.Preliminar;
                     Utils.MostrarMensaje("Código de venta asignado: #" + vp.Id, this.Page, GetType());
+                    Response.Redirect($"/Ventas/VerFactura.aspx?ID={vp.Id}");
                     /// Redirigir a Administrar Venta #x
                 } else {
                     Utils.MostrarMensaje("Error: " + res.Details, this.Page, GetType());
