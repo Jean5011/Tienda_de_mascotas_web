@@ -35,8 +35,7 @@ namespace Vista.Proveedores {
 
         protected void btnBuscar_Click(object sender, EventArgs e) {
             string cuit = txtBuscar.Text;
-            ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
-            Response res = proveedorNegocio.ObtenerProveedorByCUIT(cuit);
+            Response res = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
             if (!string.IsNullOrEmpty(txtBuscar.Text) && !res.ErrorFound) {
                 CargarTabla(res);
 
