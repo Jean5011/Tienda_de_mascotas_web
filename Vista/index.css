@@ -78,7 +78,7 @@ body {
     margin-bottom: 10px;
 }
 
-    .searchbox input#txtBuscar {
+    .searchbox .search {
         background: transparent;
         border: 0px solid grey;
         width: 100%;
@@ -91,24 +91,24 @@ body {
         outline: 0px;
     }
 
-        .searchbox input#txtBuscar:focus {
+        .searchbox .search:focus {
             background: white;
         }
 
-        .searchbox input#txtBuscar:not(:focus):hover {
+        .searchbox .search:not(:focus):hover {
             background: rgba(255, 255, 255, 0.7);
         }
 
-    .searchbox #btnBuscar {
+    .searchbox .btn-search {
         transition: all 0.2s;
         border-radius: 50%;
     }
 
-        .searchbox #btnBuscar:hover {
+        .searchbox .btn-search:hover {
             background: rgba(63,81,181,0.05)
         }
 
-        .searchbox #btnBuscar:active {
+        .searchbox .btn-search:active {
             background: rgba(63,81,181,0.1)
         }
 
