@@ -83,6 +83,7 @@
     <Content Include="Productos\Agregar.aspx" />
     <Content Include="Productos\Administrar.aspx" />
     <Content Include="Proveedores\Administrar.aspx" />
+    <Content Include="Proveedores\Administrar.css" />
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
