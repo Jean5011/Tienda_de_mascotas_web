@@ -19,6 +19,7 @@ namespace Entidades {
             public const string Localidad = "Localidad_Prov";
             public const string Pais = "Pais_Prov";
             public const string CodigoPostal = "CodigoPostal_Prov";
+            public const string Estado = "Estado_Prov";
         }
         public const string Table = "Proveedores";
         public string CUIT { get; set; }
