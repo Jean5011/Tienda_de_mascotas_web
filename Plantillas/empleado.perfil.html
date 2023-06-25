@@ -1,132 +1,340 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantilla</title>
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="./index.css" />
-    <script src="./index.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pets Shop</title>
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="./index.css" />
+  <script src="./index.js"></script>
+
+
 </head>
+
 <body>
-  <div class="contents">
-   <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
-     <div class="mdc-top-app-bar__row">
-       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-         <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-           aria-label="Open navigation menu">menu</button>
-         <span class="mdc-top-app-bar__title">Pet Shop</span>
-       </section>
-       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-       
-        <button class="mdc-button mdc-top-app-bar__action-item">
-          <span class="mdc-button__ripple"></span>
-          <span class="mdc-button__label">ADMIN</span>
-        </button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-          aria-label="Options">more_vert</button>
-      </section>
-     </div>
-   </header>
-   <main class="mdc-top-app-bar--fixed-adjust obj--main main-grid">
-     <div class="col perfil">
-       <h2>Alejandro Gutiérrez</h2>
-       <ul class="mdc-card mdc-card--outlined mdc-list mdc-list--two-line">
-         <li class="mdc-list-item">
-           <span class="mdc-list-item__ripple"></span>
-           <span class="mdc-list-item__text">
-             <span class="mdc-list-item__primary-text">45 116 118</span>
-             <span class="mdc-list-item__secondary-text">D.N.I.</span>
-           </span>
-         </li>
-         <li class="mdc-list-item" tabindex="0">
-           <span class="mdc-list-item__ripple"></span>
-           <span class="mdc-list-item__text">
-             <span class="mdc-list-item__primary-text">27 de Febrero de 1989</span>
-             <span class="mdc-list-item__secondary-text">Fecha de nacimiento</span>
-           </span>
-         </li>
-         <li class="mdc-list-item" tabindex="0">
-           <span class="mdc-list-item__ripple"></span>
-           <span class="mdc-list-item__text">
-             <span class="mdc-list-item__primary-text">14 de Mayo de 2015</span>
-             <span class="mdc-list-item__secondary-text">Fecha de contratación</span>
-           </span>
-         </li>
-         <li class="mdc-list-item">
-           <span class="mdc-list-item__ripple"></span>
-           <span class="mdc-list-item__text">
-             <span class="mdc-list-item__primary-text">$ 450,000</span>
-             <span class="mdc-list-item__secondary-text">Salario bruto mensual</span>
-           </span>
-         </li>
-         <li class="mdc-list-item">
-           <span class="mdc-list-item__ripple"></span>
-           <span class="mdc-list-item__text">
-             <span class="mdc-list-item__primary-text">Albarellos 1560, Tigre, Bs. As.</span>
-             <span class="mdc-list-item__secondary-text">Dirección</span>
-           </span>
-         </li>
-       </ul>
-       <br>
-     </div>
-     <div class="col principal">
-       <h1>Ventas que realizó</h1>
-       <br>
-       <div class="mdc-data-table">
-         <div class="mdc-data-table__table-container">
-           <table class="mdc-data-table__table" aria-label="Dessert calories">
-             <thead>
-               <tr class="mdc-data-table__header-row">
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Acciones</th>
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Código</th>
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Empleado</th>
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Medio de pago</th>
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Fecha</th>
-                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Total</th>
-               </tr>
-             </thead>
-             <tbody class="mdc-data-table__content">
-               <tr class="mdc-data-table__row">
-                 <td class="mdc-data-table__cell"><button
-                     class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button></td>
-                 <td class="mdc-data-table__cell">000</td>
-                 <td class="mdc-data-table__cell"><a href='#'>Alejandro Gutiérrez</a></td>
-                 <td class="mdc-data-table__cell">Tarjeta de Crédito</td>
-                 <td class="mdc-data-table__cell">15 de junio de 2023 12:15</td>
-                 <td class="mdc-data-table__cell">$ 258.60</td>
-               </tr>
-               <tr class="mdc-data-table__row">
-                 <td class="mdc-data-table__cell"><button
-                     class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button></td>
-                 <td class="mdc-data-table__cell">001</td>
-                 <td class="mdc-data-table__cell"><a href='#'>Alejandro Gutiérrez</a></td>
-                 <td class="mdc-data-table__cell">Efectivo</td>
-                 <td class="mdc-data-table__cell">21 de agosto de 2022 15:15</td>
-                 <td class="mdc-data-table__cell">$ 1,861.58</td>
-               </tr>
-               <tr class="mdc-data-table__row">
-                 <td class="mdc-data-table__cell"><button
-                     class="material-icons mdc-icon-button btn-open_in_new">open_in_new</button></td>
-                 <td class="mdc-data-table__cell">002</td>
-                 <td class="mdc-data-table__cell"><a href='#'>Alejandro Gutiérrez</a></td>
-                 <td class="mdc-data-table__cell">Transferencia bancaria</td>
-                 <td class="mdc-data-table__cell">15 de septiembre de 2021 20:50</td>
-                 <td class="mdc-data-table__cell">$ 2,568.08</td>
-               </tr>
-             </tbody>
-           </table>
-         </div>
-       </div>
-     </div>
- 
-   </main>
-  </div>
- </body>
- 
- </html>
+  <form method="post" action="./Perfil.aspx" id="form1" class="contents">
+   
+
+    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+      <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+          <span id="spanPageTitle" class="mdc-top-app-bar__title">PetShop</span>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+
+          <a id="lbActualUser" class="mdc-button mdc-top-app-bar__action-item _header-profile-btn"
+            href="javascript:__doPostBack(&#39;ctl00$lbActualUser&#39;,&#39;&#39;)">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label"><b id="lbAUNombre">H&#233;ctor Da Silva</b>
+              <br>
+              <span id="lbAURol">Administrador</span></span>
+          </a>
+        </section>
+      </div>
+    </header>
+    <main class="mdc-top-app-bar--fixed-adjust obj--main menu-main">
+        <div class="mdc-card col perfil">
+          <h2 id="ContentPlaceHolder1_NombreEmpleadoTitulo">H&#233;ctor Da Silva</h2>
+          <ul class="mdc-list mdc-list--two-line">
+  
+            <div class="mdc-list-item">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">badge
+              </span>
+              <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">35001001 </span>
+                <span class="mdc-list-item__secondary-text">D.N.I.</span>
+              </span>
+            </div>
+  
+            <div class="mdc-list-item">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">cake
+              </span>
+              <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">20/06/1984 0:00:00</span>
+                <span class="mdc-list-item__secondary-text">Fecha de nacimiento</span>
+              </span>
+            </div>
+  
+            <div class="mdc-list-item">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">work
+              </span>
+              <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">01/05/2017 0:00:00</span>
+                <span class="mdc-list-item__secondary-text">Fecha de contratación</span>
+              </span>
+            </div>
+  
+            <div class="mdc-list-item">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">payments
+              </span>
+              <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">$540006</span>
+                <span class="mdc-list-item__secondary-text">Salario bruto mensual</span>
+              </span>
+            </div>
+  
+            <div class="mdc-list-item">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">location_city
+              </span>
+              <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text">Av. Lisboa 277, Forquilhinhas</span>
+                <span class="mdc-list-item__secondary-text">Dirección</span>
+              </span>
+            </div><br>
+            <div class="mdc-card__actions mdc-card__actions--full-bleed mcard-actions">
+              <a class="mdc-button mdc-card__action mdc-card__action--button" href="/">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Editar</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+              </a>
+              <a class="mdc-button mdc-card__action mdc-card__action--button" href="/">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+              </a>
+                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
+                    <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">remove_circle</i>
+                </a>
+            </div>
+          </ul>
+        </div>
+        <div class="col principal">
+          <div class="ventas">
+            
+        <h2>Ventas que registró</h2>
+        <div>
+          <table class="mdc-data-table" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_gvVentas"
+            style="border-collapse:collapse;">
+            <tr>
+              <th scope="col">Acciones</th>
+              <th scope="col">ID</th>
+              <th scope="col">Empleado Gestor</th>
+              <th scope="col">Medio de pago</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Total</th>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=1">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_0">1</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_0">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_0">Efectivo</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_0">06/07/2023 0:00:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_0">4200.0000</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=2">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_1">2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_1">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_1">Tarjeta de credito</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_1">06/07/2023 0:00:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_1">6500.0000</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=16">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_2">16</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_2">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_2">CASH</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_2">21/06/2023 0:00:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_2">0.0000</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=24">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_3">24</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_3">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_3">CASHier</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_3">21/06/2023 0:00:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_3">0.0000</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=28">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_4">28</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_4">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_4">BTC</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_4">24/06/2023 12:18:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_4">500.0000</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <a href="/Ventas/VerFactura.aspx?ID=29">Ver detalles</a>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbID_5">29</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbEMPLEADOGESTOR_5">35001001 </span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbTIPOPAGO_5">BTC</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbFECHA_5">24/06/2023 13:12:00</span>
+                </div>
+              </td>
+              <td>
+                <div class="mdc-data-table__cell">
+                  <span id="ContentPlaceHolder1_gvVentas_lbPTOTAL_5">250.0000</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+     
+          </div>
+
+        </div>
+
+    </main>
+    <aside class="mdc-snackbar">
+      <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+        <div class="mdc-snackbar__label" aria-atomic="false"></div>
+      </div>
+    </aside>
+  </form>
+</body>
+
+</html>

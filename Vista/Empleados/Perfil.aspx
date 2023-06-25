@@ -3,13 +3,17 @@
 <%@ Import Namespace="Entidades" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="col perfil">
+    <script>
+        document.querySelector("main").classList.add("menu-main");
+    </script>
+    <div class="mdc-card col perfil">
         <h2 id="NombreEmpleadoTitulo" runat="server"></h2>
-        <ul class="mdc-card mdc-card--outlined mdc-list mdc-list--two-line">
+        <ul class="mdc-list mdc-list--two-line">
             <asp:ListView ID="DetallesList" runat="server">
                 <itemtemplate>
                     <div class="mdc-list-item">
                         <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true"><%# Eval("Icon") %></span>
                         <span class="mdc-list-item__text">
                             <span class="mdc-list-item__primary-text"><%# Eval("Valor") %></span>
                             <span class="mdc-list-item__secondary-text"><%# Eval("Propiedad") %></span>
@@ -17,28 +21,26 @@
                     </div>
                 </itemtemplate>
             </asp:ListView>
-            <li role="separator" class="mdc-list-divider"></li>
-            <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click">
-                <span class="mdc-list-item__ripple"></span>
-                <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">edit
-                </span>
-                <span class="mdc-list-item__text">
-                    <span class="mdc-list-item__primary-text">Editar información</span>
-                    <span class="mdc-list-item__secondary-text">Cambiar sueldo, dirección.</span>
-                </span>
-            </asp:LinkButton>
-            <asp:LinkButton runat="server" class="mdc-list-item" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click">
-                <span class="mdc-list-item__ripple"></span>
-                <span class="mdc-deprecated-list-item__graphic material-icons" aria-hidden="true">delete
-                </span>
-                <span class="mdc-list-item__text">
-                    <span class="mdc-list-item__primary-text">Deshabilitar empleado</span>
-                    <span class="mdc-list-item__secondary-text">En caso de despido, renuncia.</span>
-                </span>
-            </asp:LinkButton>
-        </ul>
+        </ul><br>
+            <div class="mdc-card__actions mdc-card__actions--full-bleed mcard-actions">
+              <asp:LinkButton runat="server" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Editar</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+              </asp:LinkButton>
+              <asp:LinkButton runat="server" ID="BtnCambiarClave" OnClick="BtnCambiarClave_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button" >
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+              </asp:LinkButton>
+                <asp:LinkButton runat="server" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button" >
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
+                    <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">remove_circle</i>
+                </asp:LinkButton>
         <br>
     </div>
+        </div>
     <div class="col principal">
         <h2>Ventas que registró</h2>
         <asp:GridView ID="gvVentas" CssClass="mdc-data-table" AutoGenerateColumns="False" runat="server">

@@ -43,6 +43,11 @@
     top: 28px;
     left: 0px;
     width: 100%;
+    height: calc(100% - 28px);
+}
+
+.danger-color {
+    color: rgba(244,67,54,1) !important;
 }
 /* END OF HEADER STYLES */
 
@@ -134,19 +139,63 @@ body {
         height: 100%;
     }
 
-.col.perfil {
-    width: 500px;
+
+/* START OF PROFILE STYLES */
+
+
+.menu-main {
+    position: absolute;
+    top: 64px;
+    left: 0px;
+    width: 100%;
+    height: calc(100% - 64px);
 }
 
-.col.col.perfil img {
-    border-radius: 4px;
+.col.perfil {
+    background-color: white;
     width: auto;
-    height: 80px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
+
+    .col.perfil h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+.min-col-hor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    gap: 10px;
+    width: 100%;
+}
+
+    .min-col-hor .vnt {
+        width: 400px;
+    }
 
 .mdc-button--raised.danger {
     background: rgb(244,67,54) !important;
 }
+
+.col.principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+
+/* END OF PROFILE STYLES */
+
+
+
 
 .mdc-list-item__secondary-text {
     display: flex;
@@ -311,7 +360,25 @@ aside.menu {
     margin: 5px;
 }
 
+@media screen and (min-width: 1300px) {
+    .card-viewer {
+        flex-direction: row;
+    }
 
+    .big-col {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+        .big-col .col-a {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+}
 
 @media screen and (min-width: 600px) and (max-width: 1299px) {
     .card-viewer {
@@ -363,24 +430,4 @@ aside.menu {
     .mdc-card {
         width: 100%;
     }
-}
-
-@media screen and (min-width: 1250px) {
-    .card-viewer {
-        flex-direction: row;
-    }
-
-    .big-col {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
-    }
-
-        .big-col .col-a {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
 }

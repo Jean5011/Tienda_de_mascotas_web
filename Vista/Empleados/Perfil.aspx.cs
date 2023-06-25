@@ -33,20 +33,22 @@ namespace Vista.Empleados {
         class DetalleEmpleado {
             public string Valor { get; set; }
             public string Propiedad { get; set; }
+            public string Icon { get; set; }
 
-            public DetalleEmpleado(string primaryText, string secondaryText) {
+            public DetalleEmpleado(string primaryText, string secondaryText, string icon) {
                 Valor = primaryText;
                 Propiedad = secondaryText;
+                Icon = icon;
             }
         }
         protected void RellenarDatos() {
             NombreEmpleadoTitulo.InnerText = UsuarioPerfil.Nombre + " " + UsuarioPerfil.Apellido;
             List<DetalleEmpleado> items = new List<DetalleEmpleado> {
-                new DetalleEmpleado(UsuarioPerfil.DNI, "D.N.I."),
-                new DetalleEmpleado(UsuarioPerfil.FechaNacimiento, "Fecha de nacimiento"),
-                new DetalleEmpleado(UsuarioPerfil.FechaContrato, "Fecha de contratación"),
-                new DetalleEmpleado($"${UsuarioPerfil.Sueldo}", "Salario bruto mensual"),
-                new DetalleEmpleado($"{UsuarioPerfil.Direccion}, {UsuarioPerfil.Localidad}", "Dirección")
+                new DetalleEmpleado(UsuarioPerfil.DNI, "D.N.I.", "badge"),
+                new DetalleEmpleado(UsuarioPerfil.FechaNacimiento, "Fecha de nacimiento", "cake"),
+                new DetalleEmpleado(UsuarioPerfil.FechaContrato, "Fecha de contratación", "work"),
+                new DetalleEmpleado($"${UsuarioPerfil.Sueldo}", "Salario bruto mensual", "payments"),
+                new DetalleEmpleado($"{UsuarioPerfil.Direccion}, {UsuarioPerfil.Localidad}", "Dirección", "location_city")
             };
             DetallesList.DataSource = items;
             DetallesList.DataBind();
@@ -84,6 +86,7 @@ namespace Vista.Empleados {
                         RellenarDatos();
                     }
                     else {
+                        Utils.ShowSnackbar("No tenés permiso de acceder a esta información", this, GetType());
                         new Utils.Authorization() {
                             Message = "Ingresá como administrador para ver perfiles de otros empleados. "
                         }.GoLogin(this);
@@ -124,6 +127,23 @@ namespace Vista.Empleados {
             else {
                 Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
             }
+        }
+
+        protected void BtnCambiarClave_Click(object sender, EventArgs e) {
+            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var UsuarioActual = auth.User;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar((res) => {
+                    Response.Redirect("/Empleados/CambiarClave.aspx?DNI=" + UsuarioPerfil.DNI);
+                }, (err) => {
+                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                });
+            }
+            else {
+                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+            }
+
         }
     }
 }

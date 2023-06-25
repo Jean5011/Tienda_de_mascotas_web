@@ -40,6 +40,15 @@ namespace Vista.Empleados {
         protected global::System.Web.UI.WebControls.LinkButton BtnEditarDetalles;
 
         /// <summary>
+        /// BtnCambiarClave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton BtnCambiarClave;
+
+        /// <summary>
         /// BtnDeshabilitar control.
         /// </summary>
         /// <remarks>
