@@ -52,11 +52,11 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="gvDatosItemTemplateBtnSeleccionar" runat="server" CommandName="Select"
-                                CssClass="mdc-icon-button mdc-icon-button--danger smaller action">
-                    <span class="mdc-icon-button__ripple"></span>
-                    <i class="material-icons" aria-hidden="true">add</i>
-                            </asp:LinkButton>
+                            <a href="/Ventas/VerFactura.aspx?ID=<%# Eval(Venta.Columns.Id) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                                  <div class="mdc-button__ripple"></div>
+                                  <span class="mdc-button__label mcardbl-act">Abrir</span>
+                                  <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
+                            </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="ID">
@@ -66,10 +66,10 @@
                             </asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Empleado Gestor">
+                    <asp:TemplateField HeaderText="Fecha y hora">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__Empleado" runat="server"
-                                Text='<%# Eval(Venta.Columns.DNI) %>'>
+                            <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__Fecha" runat="server"
+                                Text='<%# Eval(Venta.Columns.Fecha) %>'>
                             </asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
