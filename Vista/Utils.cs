@@ -314,5 +314,25 @@ namespace Vista {
             }
             return true;
         }
+
+        public static void EsperarSegundos(double cantSeg)
+        {
+            // Creo la cadena para convertir en TimeSpan:
+            string s = "0.00:00:" + cantSeg.ToString().Replace(",", ".");
+            TimeSpan ts = TimeSpan.Parse(s);
+
+            // Le añado la diferencia a la hora actual:
+            DateTime t1 = DateTime.Now.Add(ts);
+
+            // Guardo la fecha y hora actual en una variable DateTime:
+            DateTime t2 = DateTime.Now;
+
+            // Mientras no haya pasado el tiempo indicado:
+            while (t2 < t1)
+            {
+                // Asignar la hora actual:
+                t2 = DateTime.Now;
+            }
+        }
     }
 }
