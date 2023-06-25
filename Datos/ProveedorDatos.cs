@@ -28,12 +28,12 @@ namespace Datos
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} "
+                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} where {Proveedor.Columns.Estado}=1 "
                     );
         }
         public static Response ObtenerProveedorByCUIT(string CUIT)
         {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit and where {Proveedor.Columns.Estado}=1 ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
