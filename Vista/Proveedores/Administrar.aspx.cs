@@ -16,27 +16,31 @@ namespace Vista.Proveedores {
         }
         protected void Page_Load(object sender, EventArgs e) {
 
-            var settings = new Utils.Authorization() {
-                AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                RejectNonMatches = true,
-                Message = "Iniciá sesión para acceder a la lista de proveedores. "
-            };
+            if (IsPostBack != true)
+            {
+                var settings = new Utils.Authorization()
+                {
+                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
+                    RejectNonMatches = true,
+                    Message = "Iniciá sesión para acceder a la lista de proveedores. "
+                };
 
-            Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = settings.ValidateSession(this);
 
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
-            var UsuarioActual = auth.User;
-            Response res = ProveedorNegocio.ObtenerListaDeProveedores();
-            if (!res.ErrorFound) {
-                CargarTabla(res);
+                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var UsuarioActual = auth.User;
+                Response res = ProveedorNegocio.ObtenerListaDeProveedores();
+                if (!res.ErrorFound)
+                {
+                    CargarTabla(res);
+                }
             }
 
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e) {
             string cuit = txtBuscar.Text;
-            ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
-            Response res = proveedorNegocio.ObtenerProveedorByCUIT(cuit);
+            Response res = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
             if (!string.IsNullOrEmpty(txtBuscar.Text) && !res.ErrorFound) {
                 CargarTabla(res);
 
@@ -48,12 +52,30 @@ namespace Vista.Proveedores {
 
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
 
         }
 
-        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e) {
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            
 
+            // Obtener el valor de una celda específica, por ejemplo, la primera celda
+            string cuit = ((Label)GridView1.Rows[e.RowIndex].FindControl("CUIT_Prov_lb")).Text;
+            pruebalb.Text = "valor de fila:"+ cuit;
+            ProveedorNegocio.EliminadoLogicoProveedor(cuit);
+
+        }
+
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            Response res = ProveedorNegocio.ObtenerListaDeProveedores();
+            if (!res.ErrorFound)
+            {
+                CargarTabla(res);
+            }
         }
     }
 }

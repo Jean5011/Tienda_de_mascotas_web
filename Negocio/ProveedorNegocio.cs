@@ -15,26 +15,14 @@ namespace Negocio
         {
             return ProveedorDatos.ObtenerListaDeProveedores();
         }
-        public bool ValidarStringNumerico(string input)
-        {
-            string patron = @"^\d{1,10}$";
-            return Regex.IsMatch(input, patron);
-        }
-        public Response ObtenerProveedorByCUIT(string CUIT)
-        {
-            bool esValido = ValidarStringNumerico(CUIT);
-            if (esValido)
-            {
-                return ProveedorDatos.ObtenerProveedorByCUIT(CUIT);
-            }
-            else
-            {
-                Response res = new Response();
-                res.Message = "El CUIT INGRESADO ES INCORRECTO";
-                return res;
-            }
-            
-        }
        
+        public static Response ObtenerProveedorByCUIT(string CUIT)
+        {
+            return ProveedorDatos.ObtenerProveedorByCUIT(CUIT);
+        }
+        public static Response EliminadoLogicoProveedor(string CUIT)
+        {
+            return ProveedorDatos.EliminadoLogicoProveedor(CUIT);
+        }
     }
 }

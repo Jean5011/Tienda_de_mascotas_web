@@ -1,6 +1,7 @@
 ﻿<%@ Page MasterPageFile="/Root.Master" Language="C#" AutoEventWireup="true" CodeBehind="Agregar.aspx.cs" Inherits="Vista.Proveedores.Agregar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+  
       <div class="page">
         <h2>Añadir proveedor</h2>
       <br>
