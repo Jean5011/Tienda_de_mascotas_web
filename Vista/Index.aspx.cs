@@ -41,31 +41,32 @@ namespace Vista {
                 }
             }
         }
-        public void Widget__ProductoMasVendidoUltimaSemana() {
+        public int Widget__ProductoMasVendidoUltimaSemana() {
             Response res = VentaNegocio.Widgets.ProductoMasVendidoUltimaSemana(out int cantidad);
             if (!res.ErrorFound) {
                 Producto p = res.ObjectReturned as Producto;
                 lblProductoMasVendidoUltimaSemana.InnerText = $"{p.Nombre}";
+                return cantidad;
             }
+            return -1;
         }
         public void Widget__CantidadDeProductosPorAgotarse() {
             Response res = VentaNegocio.Widgets.CantidadDeProductosPorAgotarse(out int cantidad);
             if (!res.ErrorFound) {
-                Producto p = res.ObjectReturned as Producto;
                 lblProductosPorAgotarse.InnerText = cantidad.ToString();
             }
         }
         public void Widget__CantidadDeProductosAgotados() {
             Response res = VentaNegocio.Widgets.CantidadDeProductosAgotados(out int cantidad);
             if (!res.ErrorFound) {
-                Producto p = res.ObjectReturned as Producto;
                 lblProductosAgotados.InnerText = cantidad.ToString();
             }
         }
 
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                var op_data = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+                AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+
                 Widget__TotalVentasUltimaSemana();
                 Widget__TotalVentasUltimoDia();
                 Widget__ProductoMasVendidoUltimaSemana();

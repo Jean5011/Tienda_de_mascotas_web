@@ -8,7 +8,7 @@
         <br>
         <br />
         <br />
-        <asp:LinkButton ID="btnDeshabilitar" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnDeshabilitar_Click">
+        <asp:LinkButton ID="btnDeshabilitar" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnDeshabilitar_Click">
                     <span class="mdc-button__label">Deshabilitar empleado</span>
         </asp:LinkButton>
     </div>

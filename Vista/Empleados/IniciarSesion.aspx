@@ -28,7 +28,7 @@
         </label>
         <br />
         <br>
-        <asp:LinkButton ID="btnIniciarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnIniciarSesion_Click">
+        <asp:LinkButton ID="btnIniciarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnIniciarSesion_Click">
         <span class="mdc-button__label">Iniciar sesión</span>
         </asp:LinkButton>
 

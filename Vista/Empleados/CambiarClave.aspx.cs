@@ -58,7 +58,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void btnGuardarCambios_Click(object sender, EventArgs e) {
+        protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
             var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual  = auth.User;
             var UsuarioPerfil = Session[editingUser] as Empleado;

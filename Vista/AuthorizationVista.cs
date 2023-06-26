@@ -14,7 +14,6 @@ namespace Vista {
             MasterPage page = currentWebForm.Master;
             LinkButton btnPerfil = (LinkButton)page.FindControl("lbActualUser");
             LinkButton btnIniciarSesion = (LinkButton)page.FindControl("lbIniciarSesion");
-            HtmlGenericControl spanPageTitle = (HtmlGenericControl)page.FindControl("spanPageTitle");
             HtmlGenericControl labelUserRole = (HtmlGenericControl)page.FindControl("lbAURol");
             HtmlGenericControl labelUserName = (HtmlGenericControl)page.FindControl("lbAUNombre");
 
@@ -51,7 +50,6 @@ namespace Vista {
         public static SessionData ValidateSession(MasterPage page, Authorization auth) {
             LinkButton btnPerfil = (LinkButton)page.FindControl("lbActualUser");
             LinkButton btnIniciarSesion = (LinkButton)page.FindControl("lbIniciarSesion");
-            HtmlGenericControl spanPageTitle = (HtmlGenericControl)page.FindControl("spanPageTitle");
             HtmlGenericControl labelUserRole = (HtmlGenericControl)page.FindControl("lbAURol");
             HtmlGenericControl labelUserName = (HtmlGenericControl)page.FindControl("lbAUNombre");
 

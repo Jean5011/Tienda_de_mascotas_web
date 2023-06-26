@@ -10,7 +10,6 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class Deshabilitar : System.Web.UI.Page {
-        private readonly string actualUser = Utils.actualUser;
         private readonly string editingUser = "Usuario_Perfil";
         private Empleado UsuarioPerfil;
         protected bool CargarPerfil() {
@@ -67,7 +66,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void btnDeshabilitar_Click(object sender, EventArgs e) {
+        protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
             var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;

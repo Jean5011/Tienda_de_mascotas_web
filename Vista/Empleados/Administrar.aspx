@@ -6,14 +6,14 @@
     <h2>Empleados</h2>
     <div class="searchbox">
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por nombre, apellido" runat="server"></asp:TextBox>
-        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="btnBuscar_Click" runat="server" Text="search" />
+        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
     <asp:CheckBox ID="chkEstado" Text="Mostrar empleados inactivos" Checked="false" runat="server" />
     <br />
     <div class="mdc-data-table">
-        <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="gvAdmin_PageIndexChanging"
-            AllowPaging="True" OnRowCreated="gvAdmin_RowCreated" PageSize="10" AutoGenerateSelectButton="False"
-            OnSelectedIndexChanging="gvAdmin_SelectedIndexChanging">
+        <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvAdmin_PageIndexChanging"
+            AllowPaging="True" OnRowCreated="GvAdmin_RowCreated" PageSize="10" AutoGenerateSelectButton="False"
+            OnSelectedIndexChanging="GvAdmin_SelectedIndexChanging">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -71,7 +71,7 @@
                         </span>
                         <asp:DropDownList ID="ddlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
                             AutoPostBack="true" runat="server"
-                            OnSelectedIndexChanged="ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
+                            OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
                             <asp:ListItem>5</asp:ListItem>
                             <asp:ListItem Selected="True">10</asp:ListItem>
@@ -98,7 +98,7 @@
                             <span class="mdc-notched-outline__trailing"></span>
                         </span>
                         <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="gvAdminPagerPageTxtBox" runat="server"
-                            OnTextChanged="gvAdminPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            OnTextChanged="GvAdminPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                     </label>
                     <asp:LinkButton ID="gvAdminPagerNext" runat="server" CommandName="Page" CommandArgument="Next"
                         CssClass="mdc-icon-button mdc-button--primary">
@@ -119,9 +119,9 @@
     </div>
 
     <div class="mdc-data-table">
-        <asp:GridView ID="gvEmpleado" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="gvEmpleado_PageIndexChanging"
-            AllowPaging="True" OnRowCreated="gvEmpleado_RowCreated" PageSize="5" AutoGenerateSelectButton="False"
-            OnSelectedIndexChanging="gvEmpleado_SelectedIndexChanging">
+        <asp:GridView ID="gvEmpleado" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvEmpleado_PageIndexChanging"
+            AllowPaging="True" OnRowCreated="GvEmpleado_RowCreated" PageSize="5" AutoGenerateSelectButton="False"
+            OnSelectedIndexChanging="GvEmpleado_SelectedIndexChanging">
             <Columns>
                 <asp:TemplateField HeaderText="Nombre">
                     <ItemTemplate>
@@ -156,7 +156,7 @@
                         </span>
                         <asp:DropDownList ID="gvEmpleadoddlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
                             AutoPostBack="true" runat="server"
-                            OnSelectedIndexChanged="gvEmpleadoddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
+                            OnSelectedIndexChanged="GvEmpleadoddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
                             <asp:ListItem Selected="True">5</asp:ListItem>
                             <asp:ListItem>10</asp:ListItem>
@@ -183,7 +183,7 @@
                             <span class="mdc-notched-outline__trailing"></span>
                         </span>
                         <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="gvEmpleadoPagerPageTxtBox" runat="server"
-                            OnTextChanged="gvEmpleadoPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            OnTextChanged="GvEmpleadoPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                     </label>
                     <asp:LinkButton ID="gvEmpleadoPagerNext" runat="server" CommandName="Page" CommandArgument="Next"
                         CssClass="mdc-icon-button mdc-button--primary">

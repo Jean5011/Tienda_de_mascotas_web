@@ -10,7 +10,6 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class CrearCuenta : System.Web.UI.Page { 
-        private readonly string actualUser = Utils.actualUser;
 
         protected void CargarDatosPrueba() {
             txtDNI.Text = "45009001";
@@ -33,13 +32,11 @@ namespace Vista.Empleados {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
                 //CargarDatosPrueba();
             }
         }
 
-        protected void btnGuardarCambios_Click(object sender, EventArgs e) {
+        protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
             DateTime fn = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             DateTime fi = DateTime.ParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             Empleado obj = new Empleado() {

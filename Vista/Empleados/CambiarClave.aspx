@@ -25,11 +25,11 @@
             <span class="mdc-notched-outline">
                 <span class="mdc-notched-outline__leading"></span>
                 <span class="mdc-notched-outline__notch">
-                    <span class="mdc-floating-label" id="clave-label">Volvé a escribir tu clave</span>
+                    <span class="mdc-floating-label" id="clave-repetida-label">Volvé a escribir tu clave</span>
                 </span>
                 <span class="mdc-notched-outline__trailing"></span>
             </span>
-            <asp:TextBox ID="txtConfirmar" ValidationGroup="A" runat="server" CssClass="mdc-text-field__input" aria-labelledby="clave-label" TextMode="Password"></asp:TextBox>
+            <asp:TextBox ID="txtConfirmar" ValidationGroup="A" runat="server" CssClass="mdc-text-field__input" aria-labelledby="clave-repetida-label" TextMode="Password"></asp:TextBox>
         </label>
 
         <div class="mdc-text-field-helper-line">
@@ -37,7 +37,7 @@
         </div>
         <br />
         <br>
-        <asp:LinkButton ID="btnGuardarCambios" ValidationGroup="A" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnGuardarCambios_Click">
+        <asp:LinkButton ID="btnGuardarCambios" ValidationGroup="A" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnGuardarCambios_Click">
         <span class="mdc-button__label">Guardar cambios</span>
         </asp:LinkButton>
     </div>

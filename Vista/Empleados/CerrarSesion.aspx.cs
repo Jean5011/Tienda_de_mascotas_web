@@ -9,7 +9,6 @@ using Negocio;
 
 namespace Vista.Empleados {
     public partial class CerrarSesion : System.Web.UI.Page {
-        private readonly string actualUser = Utils.actualUser;
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
@@ -21,7 +20,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void btnCerrarSesion_Click(object sender, EventArgs e) {
+        protected void BtnCerrarSesion_Click(object sender, EventArgs e) {
             Response res = SesionNegocio.CerrarSesion();
             if (!res.ErrorFound)
             {

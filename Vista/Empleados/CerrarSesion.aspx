@@ -8,7 +8,7 @@
         <br>
         <br />
         <br />
-        <asp:LinkButton ID="btnCerrarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="btnCerrarSesion_Click">
+        <asp:LinkButton ID="btnCerrarSesion" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnCerrarSesion_Click">
         <span class="mdc-button__label">Cerrar sesión</span>
         </asp:LinkButton>
     </div>

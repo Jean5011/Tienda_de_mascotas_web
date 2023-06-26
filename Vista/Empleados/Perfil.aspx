@@ -46,9 +46,9 @@
         <h2>Ventas que registró</h2>
         <div class="mdc-data-table">
 
-            <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="gvDatos_PageIndexChanging"
-                AllowPaging="True" OnRowCreated="gvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False"
-                OnSelectedIndexChanging="gvDatos_SelectedIndexChanging">
+            <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvDatos_PageIndexChanging"
+                AllowPaging="True" OnRowCreated="GvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False"
+                OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
@@ -98,7 +98,7 @@
                             </span>
                             <asp:DropDownList ID="ddlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
                                 AutoPostBack="true" runat="server"
-                                OnSelectedIndexChanged="ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
+                                OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
                                 <asp:ListItem>10</asp:ListItem>
                                 <asp:ListItem Selected="True">15</asp:ListItem>
@@ -125,7 +125,7 @@
                                 <span class="mdc-notched-outline__trailing"></span>
                             </span>
                             <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="gvDatosPagerPageTxtBox" runat="server"
-                                OnTextChanged="gvProductsPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                OnTextChanged="GvProductsPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                         </label>
                         <asp:LinkButton ID="gvDatosPagerNext" runat="server" CommandName="Page" CommandArgument="Next"
                             CssClass="mdc-icon-button mdc-button--primary">

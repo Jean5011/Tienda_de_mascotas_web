@@ -145,24 +145,22 @@ namespace Vista.Empleados {
         protected void CargarDatos() {
             CargarVentas();
         }
-        protected void gvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+        protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             gvDatos.PageIndex = e.NewPageIndex;
             CargarDatos();
         }
 
-        protected void gvDatos_RowCreated(object sender, GridViewRowEventArgs e) {
+        protected void GvDatos_RowCreated(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.Pager) {
-                TextBox txtPagerTextBox = e.Row.FindControl("gvDatosPagerPageTxtBox") as TextBox;
-                if (txtPagerTextBox != null) {
+                if (e.Row.FindControl("gvDatosPagerPageTxtBox") is TextBox txtPagerTextBox) {
                     txtPagerTextBox.Text = (gvDatos.PageIndex + 1) + "";
                 }
-                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
-                if (ddlPager != null) {
+                if (e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") is DropDownList ddlPager) {
                     ddlPager.SelectedValue = gvDatos.PageSize + "";
                 }
             }
         }
-        protected void gvProductsPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+        protected void GvProductsPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
             int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
             if (intendedPage <= gvDatos.PageCount - 1) {
                 gvDatos.PageIndex = intendedPage;
@@ -173,7 +171,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
             int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
             if (filasPorPaginaN > 0) {
                 gvDatos.PageSize = filasPorPaginaN;
@@ -181,7 +179,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void gvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+        protected void GvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
 
         }
 

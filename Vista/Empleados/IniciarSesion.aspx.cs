@@ -26,13 +26,12 @@ namespace Vista.Empleados {
 
                 
                 if(auth.User != null) {
-                    Empleado actual = auth.User;
                     lblResultado.Text = ($"Si cambiás de cuenta, se cerrará tu sesión actual.");
                 }
             }
         }
 
-        protected void btnIniciarSesion_Click(object sender, EventArgs e) {
+        protected void BtnIniciarSesion_Click(object sender, EventArgs e) {
             string dni = txtDNI.Text;
             string clave = txtClave.Text;
             Response res = EmpleadoNegocio.IniciarSesion(dni, clave);

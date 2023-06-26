@@ -17,8 +17,6 @@ namespace Vista.Ventas {
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
-
-                Utils.CargarSesion(this, true, "Primero tenés que iniciar sesión. ");
                 DateTime fechaHora = DateTime.Now;
                 string fecha = fechaHora.ToString("yyyy-MM-dd");
                 string hora = fechaHora.ToString("HH:mm");

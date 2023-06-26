@@ -49,15 +49,15 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e) {
+        protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
         }
 
-        protected void lbActualUser_Click(object sender, EventArgs e) {
+        protected void LbActualUser_Click(object sender, EventArgs e) {
 
         }
 
-        protected void lbIniciarSesion_Click(object sender, EventArgs e) {
+        protected void LbIniciarSesion_Click(object sender, EventArgs e) {
 
         }
 
@@ -70,24 +70,22 @@ namespace Vista.Empleados {
 
 
 
-        protected void gvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+        protected void GvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             gvAdmin.PageIndex = e.NewPageIndex;
             CargarDatos();
         }
 
-        protected void gvAdmin_RowCreated(object sender, GridViewRowEventArgs e) {
+        protected void GvAdmin_RowCreated(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.Pager) {
-                TextBox txtPagerTextBox = e.Row.FindControl("gvAdminPagerPageTxtBox") as TextBox;
-                if (txtPagerTextBox != null) {
+                if (e.Row.FindControl("gvAdminPagerPageTxtBox") is TextBox txtPagerTextBox) {
                     txtPagerTextBox.Text = (gvAdmin.PageIndex + 1) + "";
                 }
-                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
-                if (ddlPager != null) {
+                if (e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") is DropDownList ddlPager) {
                     ddlPager.SelectedValue = gvAdmin.PageSize + "";
                 }
             }
         }
-        protected void gvAdminPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+        protected void GvAdminPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
             int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
             if (intendedPage <= gvAdmin.PageCount - 1) {
                 gvAdmin.PageIndex = intendedPage;
@@ -98,7 +96,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
             int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
             if (filasPorPaginaN > 0) {
                 gvAdmin.PageSize = filasPorPaginaN;
@@ -106,7 +104,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void gvAdmin_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+        protected void GvAdmin_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
 
         }
 
@@ -120,24 +118,22 @@ namespace Vista.Empleados {
 
 
 
-        protected void gvEmpleado_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+        protected void GvEmpleado_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             gvEmpleado.PageIndex = e.NewPageIndex;
             CargarDatos();
         }
 
-        protected void gvEmpleado_RowCreated(object sender, GridViewRowEventArgs e) {
+        protected void GvEmpleado_RowCreated(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.Pager) {
-                TextBox txtPagerTextBox = e.Row.FindControl("gvEmpleadoPagerPageTxtBox") as TextBox;
-                if (txtPagerTextBox != null) {
+                if (e.Row.FindControl("gvEmpleadoPagerPageTxtBox") is TextBox txtPagerTextBox) {
                     txtPagerTextBox.Text = (gvEmpleado.PageIndex + 1) + "";
                 }
-                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
-                if (ddlPager != null) {
+                if (e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") is DropDownList ddlPager) {
                     ddlPager.SelectedValue = gvEmpleado.PageSize + "";
                 }
             }
         }
-        protected void gvEmpleadoPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+        protected void GvEmpleadoPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
             int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
             if (intendedPage <= gvEmpleado.PageCount - 1) {
                 gvEmpleado.PageIndex = intendedPage;
@@ -148,7 +144,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void gvEmpleadoddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void GvEmpleadoddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
             int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
             if (filasPorPaginaN > 0) {
                 gvEmpleado.PageSize = filasPorPaginaN;
@@ -156,7 +152,7 @@ namespace Vista.Empleados {
             }
         }
 
-        protected void gvEmpleado_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+        protected void GvEmpleado_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
 
         }
 
