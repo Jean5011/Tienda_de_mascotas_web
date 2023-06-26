@@ -98,23 +98,24 @@ namespace Datos
         }
         public static Response ActualizarProveedor(Proveedor proveedor)
         {
-            string consulta = $"UPDATE {Proveedor.Table}" +
-            "SET RazonSocial_Prov = @RazonSocial," +
-            "NombreDeContacto_Prov = @NombreContacto," +
-            "CorreoElectronico_Prov = @CorreoElectronico," +
-            "Telefono_Prov = @Telefono," +
-            "Direccion_Prov = @Direccion," +
-            "Provincia_Prov = @Provincia," +
-            "Localidad_Prov = @Localidad," +
-            "Pais_Prov = @Pais," +
-            "CodigoPostal_Prov = @CodigoPostal " +
-            "WHERE CUIT_Prov = @CUIT; ";
+            string consulta = $"UPDATE {Proveedor.Table} " +
+            $"SET {Proveedor.Columns.RazonSocial} = @RazonSocial, " +
+            $"{Proveedor.Columns.NombreContacto} = @NombreContacto, " +
+            $"{Proveedor.Columns.CorreoElectronico} = @CorreoElectronico, " +
+            $"{Proveedor.Columns.Telefono} = @Telefono, " +
+            $"{Proveedor.Columns.Direccion} = @Direccion, " +
+            $"{Proveedor.Columns.Provincia} = @Provincia, " +
+            $"{Proveedor.Columns.Localidad} = @Localidad, " +
+            $"{Proveedor.Columns.Pais} = @Pais, " +
+            $"{Proveedor.Columns.CodigoPostal} = @CodigoPostal " +
+            $"WHERE {Proveedor.Columns.CUIT} = @CUIT; ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
+                    { "@CUIT", proveedor.CUIT },
                     { "@RazonSocial", proveedor.RazonSocial },
                     { "@NombreContacto", proveedor.NombreContacto },
                     { "@CorreoElectronico", proveedor.CorreoElectronico },
