@@ -25,7 +25,6 @@ namespace Negocio
                     Marca = i[Producto.Columns.Marca].ToString(),
                     Descripcion = i[Producto.Columns.Descripcion].ToString(),
                     Stock = Convert.ToInt32(i[Producto.Columns.Stock].ToString()),
-                    Imagen = i[Producto.Columns.Imagen].ToString(),
                     Precio = Convert.ToDouble(i[Producto.Columns.Precio].ToString()),
                     Estado = Convert.ToBoolean(i[Producto.Columns.Estado].ToString())
                 };

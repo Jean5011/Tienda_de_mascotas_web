@@ -18,7 +18,6 @@ namespace Datos {
                                    $"[{Producto.Columns.Marca}], " +
                                    $"[{Producto.Columns.Descripcion}], " +
                                    $"[{Producto.Columns.Stock}], " +
-                                   $"[{Producto.Columns.Imagen}], " +
                                    $"[{Producto.Columns.Precio}], " +
                                    $"[{Producto.Columns.Estado}] ";
 
@@ -66,7 +65,7 @@ namespace Datos {
                             { "@Marca", Pr.Marca },
                             { "@Desc", Pr.Descripcion },
                             { "@Stock", Pr.Stock },
-                            { "@Imagen", Pr.Imagen },
+                            { "@Imagen", "" },
                             { "@Precio", Pr.Precio },
                             { "@Estado", Pr.Estado }
                         }
@@ -90,7 +89,7 @@ namespace Datos {
                             { "@Marca", Pr.Marca },
                             { "@Desc", Pr.Descripcion },
                             { "@Stock", Pr.Stock },
-                            { "@Imagen", Pr.Imagen },
+                            { "@Imagen", "" },
                             { "@Precio", Pr.Precio }
                             
                         }

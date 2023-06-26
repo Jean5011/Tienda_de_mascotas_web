@@ -52,7 +52,6 @@ namespace Vista.Productos {
             String Marca = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Marca")).Text;
             String Desc = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Desc")).Text;
             String Stck = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Stock")).Text;
-            String Img = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Imagen")).Text;
             String Precio = ((TextBox)grdProductos.Rows[e.RowIndex].FindControl("txt_eit_Precio")).Text;
             //bool Estado = ((CheckBox)grdProductos.Rows[e.RowIndex].FindControl("chk_eit_estado")).Checked;
 
@@ -69,7 +68,6 @@ namespace Vista.Productos {
                         Marca = Marca,
                         Descripcion = Desc,
                         Stock = Sto,
-                        Imagen = Img,
                         Precio = PrecioDouble,
                         //Estado = Estado
                     };

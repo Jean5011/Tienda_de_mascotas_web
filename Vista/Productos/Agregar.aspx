@@ -85,16 +85,6 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtStock"></asp:TextBox>
             </label>
-            <label class="mdc-text-field mdc-text-field--outlined">
-                <span class="mdc-notched-outline">
-                    <span class="mdc-notched-outline__leading"></span>
-                    <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbm">URL Imagen</span>
-                    </span>
-                    <span class="mdc-notched-outline__trailing"></span>
-                </span>
-                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtURLImagen"></asp:TextBox>
-            </label>
         </div>
 
         <div class="group">

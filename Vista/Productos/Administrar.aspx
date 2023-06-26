@@ -68,14 +68,6 @@
                     <asp:Label ID="lbl_it_stock" runat="server" Text='<%# Eval(Producto.Columns.Stock) %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Imagen">
-                <EditItemTemplate>
-                    <asp:TextBox ID="txt_eit_Imagen" runat="server" Text='<%# Eval(Producto.Columns.Imagen) %>'></asp:TextBox>
-                </EditItemTemplate>
-                <ItemTemplate>
-                    <asp:Label ID="lbl_it_Imagen" runat="server" Text='<%# Eval(Producto.Columns.Imagen) %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
             <asp:TemplateField HeaderText="Precio">
                 <EditItemTemplate>
                     <asp:TextBox ID="txt_eit_Precio" runat="server" Text='<%# Eval(Producto.Columns.Precio) %>'></asp:TextBox>

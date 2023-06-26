@@ -32,7 +32,6 @@ namespace Vista.Productos {
                             Marca = txtMarca.Text,
                             Descripcion = txtDescripcion.Text,
                             Stock = st,
-                            Imagen = txtURLImagen.Text,
                             Precio = Pre,
                             Estado = true,
                         };
