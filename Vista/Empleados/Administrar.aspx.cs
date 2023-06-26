@@ -65,5 +65,107 @@ namespace Vista.Empleados {
         protected void lbIniciarSesion_Click(object sender, EventArgs e) {
 
         }
+
+
+
+
+
+
+
+
+
+
+        protected void gvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+            gvAdmin.PageIndex = e.NewPageIndex;
+            CargarDatos();
+        }
+
+        protected void gvAdmin_RowCreated(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.Pager) {
+                TextBox txtPagerTextBox = e.Row.FindControl("gvAdminPagerPageTxtBox") as TextBox;
+                if (txtPagerTextBox != null) {
+                    txtPagerTextBox.Text = (gvAdmin.PageIndex + 1) + "";
+                }
+                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
+                if (ddlPager != null) {
+                    ddlPager.SelectedValue = gvAdmin.PageSize + "";
+                }
+            }
+        }
+        protected void gvAdminPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+            int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
+            if (intendedPage <= gvAdmin.PageCount - 1) {
+                gvAdmin.PageIndex = intendedPage;
+                CargarDatos();
+            }
+            else {
+                ((TextBox)sender).Text = gvAdmin.PageIndex + "";
+            }
+        }
+
+        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
+            if (filasPorPaginaN > 0) {
+                gvAdmin.PageSize = filasPorPaginaN;
+                CargarDatos();
+            }
+        }
+
+        protected void gvAdmin_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        protected void gvEmpleado_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+            gvEmpleado.PageIndex = e.NewPageIndex;
+            CargarDatos();
+        }
+
+        protected void gvEmpleado_RowCreated(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.Pager) {
+                TextBox txtPagerTextBox = e.Row.FindControl("gvEmpleadoPagerPageTxtBox") as TextBox;
+                if (txtPagerTextBox != null) {
+                    txtPagerTextBox.Text = (gvEmpleado.PageIndex + 1) + "";
+                }
+                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
+                if (ddlPager != null) {
+                    ddlPager.SelectedValue = gvEmpleado.PageSize + "";
+                }
+            }
+        }
+        protected void gvEmpleadoPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+            int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
+            if (intendedPage <= gvEmpleado.PageCount - 1) {
+                gvEmpleado.PageIndex = intendedPage;
+                CargarDatos();
+            }
+            else {
+                ((TextBox)sender).Text = gvEmpleado.PageIndex + "";
+            }
+        }
+
+        protected void gvEmpleadoddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
+            if (filasPorPaginaN > 0) {
+                gvEmpleado.PageSize = filasPorPaginaN;
+                CargarDatos();
+            }
+        }
+
+        protected void gvEmpleado_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+
+        }
+
+
+
     }
 }
