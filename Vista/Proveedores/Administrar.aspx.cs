@@ -11,7 +11,7 @@ namespace Vista.Proveedores {
     public partial class Administrar : System.Web.UI.Page {
         protected void CargarTabla(Response res) {
             DataSet myDataSet = res.ObjectReturned as DataSet;
-            GridView1.DataSource = myDataSet.Tables[0];
+            GridView1.DataSource = myDataSet.Tables["root"];
             GridView1.DataBind();
         }
         protected void Page_Load(object sender, EventArgs e) {
@@ -31,14 +31,13 @@ namespace Vista.Proveedores {
 
         protected void btnBuscar_Click(object sender, EventArgs e) {
             string cuit = txtBuscar.Text;
-            Response res = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
-            if (!string.IsNullOrEmpty(txtBuscar.Text) && !res.ErrorFound) {
-                CargarTabla(res);
-
+            Response resObtProveedorByCUIT = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
+            if ((!string.IsNullOrEmpty(txtBuscar.Text)) && (!resObtProveedorByCUIT.ErrorFound)) {
+                CargarTabla(resObtProveedorByCUIT);
             }
             else {
-                Response ress = ProveedorNegocio.ObtenerListaDeProveedores();
-                CargarTabla(ress);
+                Response resObtListDeProv = ProveedorNegocio.ObtenerListaDeProveedores();
+                CargarTabla(resObtListDeProv);
             }
 
         }
