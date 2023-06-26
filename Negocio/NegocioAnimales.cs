@@ -12,11 +12,13 @@ using System.Security.Claims;
 
 namespace Negocio {
     public class NegocioAnimales {
-        public Response GetAnimales() {
+        public Response GetAnimales()
+        {
             return DaoAnimales.ObtenerListaDeAnimales();
         }
 
-        public Response ObtenerPorCod(String cod) {
+        public Response ObtenerPorCod(String cod)
+        {
             return DaoAnimales.BuscarAnimalPorCod(cod);
         }
 
@@ -28,7 +30,8 @@ namespace Negocio {
             return DaoAnimales.ActualizarAnimal(A);
         }
 
-        public Response EliminarAnimal(Animal A) {
+        public Response EliminarAnimal(Animal A)
+        {
             return DaoAnimales.EliminarAnimal(A);
         }
 
@@ -36,6 +39,20 @@ namespace Negocio {
             return DaoAnimales.ObtenerLista();
         }
 
+        /***************************************************************************************************************************/
+        public Response GetAnimalesBaja()
+        {
+            return DaoAnimales.ObtenerListaBaja();
+        }
 
+        public Response ObtenerPorCodBaja(String cod)
+        {
+            return DaoAnimales.BuscarAnimalPorCodBaja(cod);
+        }
+
+        public Response AltaAnimal(Animal A)
+        {
+            return DaoAnimales.AltaAnimal(A);
+        }
     }
 }

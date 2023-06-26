@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Animales\AgregarAnimal.aspx" />
+    <Content Include="Animales\AltaAnimal.aspx" />
     <Content Include="Animales\VerAnimales.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
@@ -87,6 +88,7 @@
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
+    <Content Include="Tipos\AltaTiposdeproductosaspx.aspx" />
     <Content Include="Tipos\IgresarTipoDePrductos.aspx" />
     <Content Include="Tipos\VerTipoDeProducto.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
@@ -101,6 +103,13 @@
     </Compile>
     <Compile Include="Animales\AgregarAnimal.aspx.designer.cs">
       <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Animales\AltaAnimal.aspx.cs">
+      <DependentUpon>AltaAnimal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Animales\AltaAnimal.aspx.designer.cs">
+      <DependentUpon>AltaAnimal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Animales\VerAnimales.aspx.cs">
       <DependentUpon>VerAnimales.aspx</DependentUpon>
@@ -228,6 +237,13 @@
     </Compile>
     <Compile Include="Tipos\Agregar.aspx.designer.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos\AltaTiposdeproductosaspx.aspx.cs">
+      <DependentUpon>AltaTiposdeproductosaspx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tipos\AltaTiposdeproductosaspx.aspx.designer.cs">
+      <DependentUpon>AltaTiposdeproductosaspx.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tipos\VerTipoDeProducto.aspx.cs">
       <DependentUpon>VerTipoDeProducto.aspx</DependentUpon>

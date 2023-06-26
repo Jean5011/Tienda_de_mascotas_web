@@ -23,6 +23,7 @@ namespace Datos
             public static string Igresar = "SP_IngresarTipoDeProductos";
             public static string Eliminar = "SP_EliminarTipoDeProductos";
             public static string Actualizar = "SP_ActualizarTipoProducto";
+            public static string Alta = "SP_AltaAnimal";
         }
 
 
@@ -32,12 +33,12 @@ namespace Datos
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table}"
+                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} whrere {TipoProducto.Columns.Estado} =1"
                     );
         }
         public static Response BuscarTipoProductoPorCod(string ID)
         {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} WHERE [{TipoProducto.Columns.Codigo}] = @ID ";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} WHERE [{TipoProducto.Columns.Codigo}] = @ID and  {TipoProducto.Columns.Estado} =1 ";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
             return connection.Response.ErrorFound
@@ -91,6 +92,43 @@ namespace Datos
                             { "@CodAnimales_Tp", An.CodAnimal },
                             { "@TipoDeProducto_Tp", An.tipoDeProducto },
                             { "@Descripcion_TP", An.Descripcion }
+                        }
+                    );
+        }
+        /********************************************************************************************************************************************************************/
+        public static Response ObtenerListaDeTipoProductoBajas()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} whrere {TipoProducto.Columns.Estado} =0"
+                    );
+        }
+        public static Response BuscarTipoProductoPorCodBajas(string ID)
+        {
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} WHERE [{TipoProducto.Columns.Codigo}] = @ID and  {TipoProducto.Columns.Estado} =0 ";
+            Connection connection = new Connection(Connection.Database.Pets);
+            Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@ID", ID }
+                        }
+                    );
+        }
+
+        public static Response AltaTipoProducto(TipoProducto An)
+        {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.Alta,
+                        parameters: new Dictionary<string, object> {
+                            { "@PK_CodTipoProducto_TP", An.Codigo }
                         }
                     );
         }

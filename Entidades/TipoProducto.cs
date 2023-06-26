@@ -13,6 +13,7 @@ namespace Entidades {
             public const string CodAnimal = "CodAnimales_Tp";
             public const string TipoDeProducto= "TipoDeProducto_Tp";
             public const string Descripcion = "Descripcion_TP";
+            public const string Estado = "estado";
         }
         public const string Table = "TipoDeProductos";
 

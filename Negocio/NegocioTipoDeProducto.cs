@@ -39,5 +39,21 @@ namespace Negocio
         {
             return DaoTiposDeProductos.EliminarTipoProducto(A);
         }
+
+        /**********************************************************************************/
+        public Response GetTipoDeProductoBaja()
+        {
+            return DaoTiposDeProductos.ObtenerListaDeTipoProductoBajas();
+        }
+
+        public Response ObtenerPorCodBaja(String cod)
+        {
+            return DaoTiposDeProductos.BuscarTipoProductoPorCodBajas(cod);
+        }
+
+        public Response AltaTipoDeProducto(TipoProducto A)
+        {
+            return DaoTiposDeProductos.AltaTipoProducto(A);
+        }
     }
 }
