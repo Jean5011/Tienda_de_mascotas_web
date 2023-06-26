@@ -54,7 +54,7 @@
                                 Text="Eliminar" CommandArgument="<%# Eval(DetalleVenta.Columns.CodProducto_Dv) %>">
                         <div class="mdc-button__ripple"></div>
                         <span class="mdc-button__label mcardbl-act">Eliminar</span>
-                        <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">delete</i>
+                        <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">clear</i>
                             </asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
