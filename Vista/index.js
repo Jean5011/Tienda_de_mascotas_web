@@ -53,12 +53,7 @@ window.onload = () => {
 		title: "Trabajo Práctico Integrador",
 		group: "Grupo N.º 5",
 		links: [
-			["Ventas", "/Ventas/Administrar.aspx"],
-			["Productos", "/Productos/Administrar.aspx"],
-			["Proveedores", "/Proveedores/Administrar.aspx"],
-			["Empleados", "/Empleados/Administrar.aspx"],
-			["Animales", "/Animales/VerAnimales.aspx"],
-			["Tipos de Producto", "/Tipos/VerTipoDeProducto.aspx"]
+			["Inicio", "/Index.aspx"]
 		],
 		otherLinks: [
 			["Repositorio", "https://github.com/maximocanedo/PROGIII-TPI"],

@@ -132,5 +132,54 @@ namespace Vista.Ventas {
                 Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
             }
         }
+
+
+        public void CargarDatos() {
+            Venta obj = Session[VK] as Venta;
+            CargarDetalles(obj);
+        }
+
+        protected void gvDetalles_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+            gvDetalles.PageIndex = e.NewPageIndex;
+            CargarDatos();
+        }
+
+        protected void gvDetalles_RowCreated(object sender, GridViewRowEventArgs e) {
+            if (e.Row.RowType == DataControlRowType.Pager) {
+                TextBox txtPagerTextBox = e.Row.FindControl("gvDetallesPagerPageTxtBox") as TextBox;
+                if (txtPagerTextBox != null) {
+                    txtPagerTextBox.Text = (gvDetalles.PageIndex + 1) + "";
+                }
+                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
+                if (ddlPager != null) {
+                    ddlPager.SelectedValue = gvDetalles.PageSize + "";
+                }
+            }
+        }
+        protected void gvDetallesPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+            int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
+            if (intendedPage <= gvDetalles.PageCount - 1) {
+                gvDetalles.PageIndex = intendedPage;
+                CargarDatos();
+            }
+            else {
+                ((TextBox)sender).Text = gvDetalles.PageIndex + "";
+            }
+        }
+
+        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+            int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
+            if (filasPorPaginaN > 0) {
+                gvDetalles.PageSize = filasPorPaginaN;
+                CargarDatos();
+            }
+        }
+
+        protected void gvDetalles_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+
+        }
+
+
+
     }
 }

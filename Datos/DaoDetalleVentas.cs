@@ -32,7 +32,9 @@ namespace Datos {
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {DetalleVenta.Table} WHERE [{DetalleVenta.Columns.CodVenta_Dv}] = @Codigo AND [{DetalleVenta.Columns.Estado_Dv}] = 1",
+                        query: $"SELECT {ALL_COLUMNS}, [{Producto.Columns.Nombre}], [{Proveedor.Columns.RazonSocial}] FROM {DetalleVenta.Table} " +
+                        $"INNER JOIN [{Producto.Table}] ON [{DetalleVenta.Columns.CodProducto_Dv}] = [{Producto.Columns.Codigo_Prod}] " +
+                        $"INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{DetalleVenta.Columns.CUITProv}] WHERE [{DetalleVenta.Columns.CodVenta_Dv}] = @Codigo AND [{DetalleVenta.Columns.Estado_Dv}] = 1",
                         new Dictionary<string, object>
                         { {"@Codigo",Cod}
                         }
