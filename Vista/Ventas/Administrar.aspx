@@ -6,12 +6,12 @@
     <h2>Ventas</h2>
     <div class="searchbox">
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código de compra" runat="server"></asp:TextBox>
-        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="btnBuscar_Click" runat="server" Text="search" />
+        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
     <div class="mdc-data-table">
-        <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="gvDatos_PageIndexChanging"
-            AllowPaging="True" OnRowCreated="gvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False"
-            OnSelectedIndexChanging="gvDatos_SelectedIndexChanging">
+        <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvDatos_PageIndexChanging"
+            AllowPaging="True" OnRowCreated="GvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False"
+            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -98,7 +98,7 @@
                             <span class="mdc-notched-outline__trailing"></span>
                         </span>
                         <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="gvDatosPagerPageTxtBox" runat="server"
-                            OnTextChanged="gvProductsPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            OnTextChanged="GvDatosPagerPageTxtBox_TextChanged" AutoPostBack="true"></asp:TextBox>
                     </label>
                     <asp:LinkButton ID="gvDatosPagerNext" runat="server" CommandName="Page" CommandArgument="Next"
                         CssClass="mdc-icon-button mdc-button--primary">

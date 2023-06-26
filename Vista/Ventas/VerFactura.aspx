@@ -38,14 +38,14 @@
         <h2 id="h2Factura" runat="server"></h2>
         <asp:TextBox ID="txtIDProducto" placeholder="ID Producto" runat="server"></asp:TextBox>
         <asp:TextBox ID="txtCantidad" placeholder="Cantidad" type="number" runat="server"></asp:TextBox>
-        <asp:Button ID="btnAgregar" OnClick="btnAgregar_Click" runat="server" Text="Agregar Producto" />
+        <asp:Button ID="btnAgregar" OnClick="BtnAgregar_Click" runat="server" Text="Agregar Producto" />
         <br />
         <br />
         <h2>Productos</h2>
         <div class="mdc-data-table">
             <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="False"
-                OnPageIndexChanging="gvDetalles_PageIndexChanging" AllowPaging="True" OnRowCreated="gvDetalles_RowCreated"
-                PageSize="10" AutoGenerateSelectButton="False" OnSelectedIndexChanging="gvDetalles_SelectedIndexChanging">
+                OnPageIndexChanging="GvDetalles_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDetalles_RowCreated"
+                PageSize="10" AutoGenerateSelectButton="False" OnSelectedIndexChanging="GvDetalles_SelectedIndexChanging">
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
@@ -105,7 +105,7 @@
                             </span>
                             <asp:DropDownList ID="ddlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
                                 AutoPostBack="true" runat="server"
-                                OnSelectedIndexChanged="ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
+                                OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
                                 <asp:ListItem>5</asp:ListItem>
                                 <asp:ListItem Selected="True">10</asp:ListItem>
@@ -132,7 +132,7 @@
                                 <span class="mdc-notched-outline__trailing"></span>
                             </span>
                             <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="gvDetallesPagerPageTxtBox"
-                                runat="server" OnTextChanged="gvDetallesPagerPageTxtBox_TextChanged" AutoPostBack="true">
+                                runat="server" OnTextChanged="GvDetallesPagerPageTxtBox_TextChanged" AutoPostBack="true">
                             </asp:TextBox>
                         </label>
                         <asp:LinkButton ID="gvDetallesPagerNext" runat="server" CommandName="Page" CommandArgument="Next"

@@ -10,31 +10,25 @@ using System.Data;
 
 namespace Vista {
     public partial class Index : System.Web.UI.Page {
-
         public void Widget__TotalVentasUltimoDia() {
             Response res = VentaNegocio.Widgets.TotalDeVentasUltimoDia();
             if (!res.ErrorFound) {
                 DataSet dt = res.ObjectReturned as DataSet;
                 if (dt.Tables[0].Rows.Count > 0) {
-                    // Acceder a la primera fila del DataSet
                     DataRow primeraFila = dt.Tables[0].Rows[0];
-
-                    // Ahora puedes acceder a los valores de las columnas de la primera fila
                     string total = primeraFila["Total"].ToString();
                     lblTotalVendidoUltimoDia.InnerText = $"{total}";
 
                 }
             }
         }
+
         public void Widget__TotalVentasUltimaSemana() {
             Response res = VentaNegocio.Widgets.TotalDeVentasUltimaSemana();
             if (!res.ErrorFound) {
                 DataSet dt = res.ObjectReturned as DataSet;
                 if (dt.Tables[0].Rows.Count > 0) {
-                    // Acceder a la primera fila del DataSet
                     DataRow primeraFila = dt.Tables[0].Rows[0];
-
-                    // Ahora puedes acceder a los valores de las columnas de la primera fila
                     string total = primeraFila["Total"].ToString();
                     lblTotalVendidoUltimaSemana.InnerText = $"{total}";
 

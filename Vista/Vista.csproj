@@ -80,7 +80,6 @@
     <Content Include="Index.aspx" />
     <Content Include="index.css" />
     <Content Include="index.js" />
-    <Content Include="Productos\ManageOLD.aspx" />
     <Content Include="Productos\Agregar.aspx" />
     <Content Include="Productos\Administrar.aspx" />
     <Content Include="Proveedores\Administrar.aspx" />
@@ -181,13 +180,6 @@
     </Compile>
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Productos\ManageOLD.aspx.cs">
-      <DependentUpon>ManageOLD.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Productos\ManageOLD.aspx.designer.cs">
-      <DependentUpon>ManageOLD.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos\Agregar.aspx.cs">
       <DependentUpon>Agregar.aspx</DependentUpon>

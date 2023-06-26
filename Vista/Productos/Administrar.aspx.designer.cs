@@ -31,13 +31,13 @@ namespace Vista.Productos {
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// grdProductos control.
+        /// gvDatos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdProductos;
+        protected global::System.Web.UI.WebControls.GridView gvDatos;
 
         /// <summary>
         /// lbl_mensaje_error control.

@@ -13,9 +13,6 @@ namespace Vista.Productos {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
-
             }
         }
 
@@ -24,11 +21,9 @@ namespace Vista.Productos {
             var UsuarioActual = auth.User;
             SesionNegocio.Autenticar(res => {
                 string numero = txtPrecioUnitario.Text;
-                double Pre;
-                if (double.TryParse(numero, out Pre)) {
+                if (double.TryParse(numero, out double Pre)) {
                     string stock = txtStock.Text;
-                    int st;
-                    if (int.TryParse(stock, out st)) {
+                    if (int.TryParse(stock, out int st)) {
                         Producto Prod = new Producto() {
                             Codigo = txtID.Text,
                             Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
@@ -37,7 +32,6 @@ namespace Vista.Productos {
                             Marca = txtMarca.Text,
                             Descripcion = txtDescripcion.Text,
                             Stock = st,
-                            Imagen = txtURLImagen.Text,
                             Precio = Pre,
                             Estado = true,
                         };

@@ -17,7 +17,6 @@ namespace Entidades {
             public const string Marca = "Marca_Prod";
             public const string Descripcion = "Descripcion_Prod";
             public const string Stock = "Stock_Prod";
-            public const string Imagen = "Imagen_Prod";
             public const string Precio = "PrecioUnitario_Prod";
             public const string Estado = "Estado_Prod";
         }
@@ -31,7 +30,6 @@ namespace Entidades {
         public string Marca { get; set; }
         public string Descripcion { get; set; }
         public int Stock { get; set; }
-        public string Imagen { get; set; }
         public double Precio { get; set; }
         public bool Estado { get; set; }
 
