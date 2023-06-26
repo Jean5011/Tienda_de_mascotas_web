@@ -18,9 +18,6 @@ namespace Vista.Proveedores {
 
             if (IsPostBack != true) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
-
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
                 Response res = ProveedorNegocio.ObtenerListaDeProveedores();
                 if (!res.ErrorFound) {
                     CargarTabla(res);
@@ -69,17 +66,18 @@ namespace Vista.Proveedores {
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Proveedor proveedor = new Proveedor();
-            proveedor.CUIT=((Label)GridView1.Rows[e.RowIndex].FindControl("cuitEditar_lb")).Text;
-            proveedor.RazonSocial = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("RazonSocial_Prov_tb")).Text;
-            proveedor.NombreContacto = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("NombreDeContacto_Prov_tb")).Text;
-            proveedor.CorreoElectronico = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("CorreoElectronico_Prov_tb")).Text;
-            proveedor.Telefono = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Telefono_Prov_tb")).Text;
-            proveedor.Direccion = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Direccion_Prov_tb")).Text;
-            proveedor.Provincia = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Provincia_Prov_tb")).Text;
-            proveedor.Localidad = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Localidad_Prov_tb")).Text;
-            proveedor.Pais = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Pais_Prov_tb")).Text;
-            proveedor.CodigoPostal = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("CodigoPostal_Prov_tb")).Text;
+            Proveedor proveedor = new Proveedor {
+                CUIT = ((Label)GridView1.Rows[e.RowIndex].FindControl("cuitEditar_lb")).Text,
+                RazonSocial = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("RazonSocial_Prov_tb")).Text,
+                NombreContacto = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("NombreDeContacto_Prov_tb")).Text,
+                CorreoElectronico = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("CorreoElectronico_Prov_tb")).Text,
+                Telefono = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Telefono_Prov_tb")).Text,
+                Direccion = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Direccion_Prov_tb")).Text,
+                Provincia = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Provincia_Prov_tb")).Text,
+                Localidad = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Localidad_Prov_tb")).Text,
+                Pais = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("Pais_Prov_tb")).Text,
+                CodigoPostal = ((TextBox)GridView1.Rows[e.RowIndex].FindControl("CodigoPostal_Prov_tb")).Text
+            };
 
             Response res = ProveedorNegocio.ActualizarProveedor(proveedor);
             Response resMain = ProveedorNegocio.ObtenerListaDeProveedores();
