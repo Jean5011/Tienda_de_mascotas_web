@@ -33,7 +33,7 @@ namespace Datos
         }
         public static Response ObtenerProveedorByCUIT(string CUIT)
         {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit and where {Proveedor.Columns.Estado}=1 ";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit and {Proveedor.Columns.Estado}=1 ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
@@ -67,22 +67,6 @@ namespace Datos
                         }
                     );
         }
-        /*borrar registro
-        public static Response EliminaProveedor(string CUIT)
-        {
-            string consulta = $"DELETE FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit";
-            Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
-                        query: consulta,
-                        parameters: new Dictionary<string, object> {
-                            { "@cuit", CUIT }
-                        }
-                    );
-        }*/
-
-        //modificar estado
         public static Response EliminadoLogicoProveedor(string CUIT)
         {
             string consulta = $"UPDATE {Proveedor.Table} set Estado_Prov = 0  WHERE [{Proveedor.Columns.CUIT}] = @cuit";
