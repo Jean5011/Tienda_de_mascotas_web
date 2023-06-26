@@ -28,15 +28,9 @@ namespace Vista.Ventas {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para registrar una venta. "
-                };
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
                 string IDFactura = Request.QueryString["ID"];
@@ -58,7 +52,7 @@ namespace Vista.Ventas {
         }
 
         protected bool TieneDerechosNecesarios() {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             if (Session[VK] == null) return false;
             return auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == (Session[VK] as Venta).EmpleadoGestor.DNI;
 

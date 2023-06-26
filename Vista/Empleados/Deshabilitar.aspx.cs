@@ -14,7 +14,7 @@ namespace Vista.Empleados {
         private readonly string editingUser = "Usuario_Perfil";
         private Empleado UsuarioPerfil;
         protected bool CargarPerfil() {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             string dni_empleado = Request.QueryString["DNI"];
             if (string.IsNullOrEmpty(dni_empleado)) {
@@ -32,15 +32,9 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
-                    RejectNonMatches = true,
-                    Message = "Sólo los administradores pueden deshabilitar cuentas. "
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 bool cargoPerfil = CargarPerfil();
 
@@ -74,7 +68,7 @@ namespace Vista.Empleados {
         }
 
         protected void btnDeshabilitar_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if(UsuarioActual.DNI != UsuarioPerfil.DNI) {

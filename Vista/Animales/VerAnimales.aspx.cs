@@ -17,12 +17,7 @@ namespace Vista.Animales {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para continuar"
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
 
 
@@ -57,7 +52,7 @@ namespace Vista.Animales {
 
 
         protected void GV_Datos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             if (auth.User.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar(res => {
                     Animal a = new Animal();
@@ -84,7 +79,7 @@ namespace Vista.Animales {
         }
 
         protected void GV_Datos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             if (auth.User.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar(res => {
                     Animal a = new Animal();

@@ -12,16 +12,9 @@ namespace Vista.Productos {
     public partial class Editar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para acceder al catálogo de productos. "
-                };
-
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
                 cargarGridView();
@@ -52,7 +45,7 @@ namespace Vista.Productos {
             cargarGridView();
         }
         protected bool EsAdmin() {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             return UsuarioActual.Rol == Empleado.Roles.ADMIN;
         }
@@ -91,9 +84,9 @@ namespace Vista.Productos {
                     //lbl_mensaje_error.Text = Cod + " - " + Prov + " - " + Tipo + " - " + Nombre + " - " + Marca + " - " + Desc + " - " + Sto + " - " + Img + " - " + PrecioDouble + " - " + Estado;
                     
                     if(!EsAdmin()) {
-                        (new Utils.Authorization() {
+                        AuthorizationVista.GoLogin(this, new Authorization() {
                             Message = "Ingresá como administrador para realizar cambios. "
-                        }).GoLogin(this);
+                        });
                         return;
                     }
                     SesionNegocio.Autenticar((res) => {
@@ -132,9 +125,9 @@ namespace Vista.Productos {
 
         protected void grdProductos_RowDeleting(object sender, GridViewDeleteEventArgs e) {
             if(!EsAdmin()) {
-                (new Utils.Authorization() {
+                AuthorizationVista.GoLogin(this, new Authorization() {
                     Message = "Ingresá como administrador para realizar cambios. "
-                }).GoLogin(this);
+                });
                 return;
             }
             String Cod = ((Label)grdProductos.Rows[e.RowIndex].FindControl("lbl_it_codigo")).Text;

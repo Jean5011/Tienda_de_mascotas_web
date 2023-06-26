@@ -12,12 +12,7 @@ namespace Vista.Empleados {
     public partial class Administrar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para continuar"
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
             }
         }
@@ -31,7 +26,7 @@ namespace Vista.Empleados {
                             : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
             if (!data.ErrorFound) {
                 var dt = data.ObjectReturned as DataSet;
-                var auth = (Session[Utils.AUTH] as Utils.SessionData);
+                var auth = (Session[Utils.AUTH] as SessionData);
                 if (auth.User != null) {
                     var UsuarioActual = auth.User;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {

@@ -65,11 +65,7 @@ namespace Vista {
 
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                var auth = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true
-                };
-                var op_data = auth.ValidateSession(this);
+                var op_data = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 Widget__TotalVentasUltimaSemana();
                 Widget__TotalVentasUltimoDia();
                 Widget__ProductoMasVendidoUltimaSemana();

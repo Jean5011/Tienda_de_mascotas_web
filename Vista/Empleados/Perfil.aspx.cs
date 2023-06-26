@@ -13,7 +13,7 @@ namespace Vista.Empleados {
         private readonly string editingUser = "Usuario_Perfil";
         private Empleado UsuarioPerfil;
         protected bool CargarPerfil() {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             string dni_empleado = Request.QueryString["DNI"];
             if (string.IsNullOrEmpty(dni_empleado)) {
@@ -68,14 +68,8 @@ namespace Vista.Empleados {
         protected void Page_Load(object sender, EventArgs e) {
             
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para acceder a los perfiles. "
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
                 bool cargoPerfil = CargarPerfil();
@@ -87,9 +81,9 @@ namespace Vista.Empleados {
                     }
                     else {
                         Utils.ShowSnackbar("No tenés permiso de acceder a esta información", this, GetType());
-                        new Utils.Authorization() {
+                        AuthorizationVista.GoLogin(this, new Authorization() {
                             Message = "Ingresá como administrador para ver perfiles de otros empleados. "
-                        }.GoLogin(this);
+                        });
 
                     }
                 }
@@ -98,7 +92,7 @@ namespace Vista.Empleados {
         }
 
         protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
@@ -114,7 +108,7 @@ namespace Vista.Empleados {
         }
 
         protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
@@ -130,7 +124,7 @@ namespace Vista.Empleados {
         }
 
         protected void BtnCambiarClave_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
             if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {

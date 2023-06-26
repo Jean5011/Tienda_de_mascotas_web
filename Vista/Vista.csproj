@@ -118,6 +118,7 @@
     <Compile Include="Animales\VerAnimales.aspx.designer.cs">
       <DependentUpon>VerAnimales.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AuthorizationVista.cs" />
     <Compile Include="Empleados\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

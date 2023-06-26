@@ -12,14 +12,9 @@ namespace Vista.Empleados {
         private readonly string actualUser = Utils.actualUser;
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "No había sesión que cerrar"
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 H2Titulo.InnerText = $"Cerrar sesión";
                 LabelDescripcion.Text = $"Iniciaste sesión como {UsuarioActual.Nombre}.";

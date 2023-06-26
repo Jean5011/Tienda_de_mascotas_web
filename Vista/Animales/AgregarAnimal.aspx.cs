@@ -13,12 +13,7 @@ namespace Vista.Animales {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
-                    RejectNonMatches = true,
-                    Message = "Ingresá con una cuenta de administrador para continuar"
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
             }
         }

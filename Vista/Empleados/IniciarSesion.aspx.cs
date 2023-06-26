@@ -12,10 +12,7 @@ namespace Vista.Empleados {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var auth = (new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ANY,
-                    RejectNonMatches = false
-                }).ValidateSession(this);
+                var auth = AuthorizationVista.ValidateSession(this, Authorization.NO_RESTRICTIONS);
 
 
                 txtDNI.Focus();

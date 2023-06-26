@@ -11,23 +11,16 @@ namespace Vista.Productos {
     public partial class Agregar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
-                    RejectNonMatches = true,
-                    Message = "Ingresá como administrador para agregar productos. "
-                };
-
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
             }
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             SesionNegocio.Autenticar(res => {
                 string numero = txtPrecioUnitario.Text;

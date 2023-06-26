@@ -16,15 +16,9 @@ namespace Vista.Tipos {
     public partial class VerTipoDeProducto : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para continuar. "
-                };
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 CargarDatos();
             }
@@ -35,7 +29,7 @@ namespace Vista.Tipos {
             else BT_Filtrar_Click();
         }
         protected bool EsAdmin() {
-            var auth = Session[Utils.AUTH] as Utils.SessionData;
+            var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
             return UsuarioActual.Rol == Empleado.Roles.ADMIN;
         }

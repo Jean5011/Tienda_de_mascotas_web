@@ -13,7 +13,7 @@ namespace Vista {
     public static class Utils {
         public static readonly string actualUser = "Usuario_Actual";
         public static readonly string AUTH = "__auth";
-
+        /*
         public class Authorization {
             public static class AccessLevel {
                 public const int ANY = 0;
@@ -222,6 +222,7 @@ namespace Vista {
             public int Status { get; set; }
 
         }
+        */
 
         public static void ShowSnackbar(string message, Control control, Type type) {
             const string key = "MostrarMensaje";
@@ -234,7 +235,6 @@ namespace Vista {
                 addScriptTags: true
             );
         }
-
         public static void MostrarMensaje(string mensaje, Control control, Type type) {
             string script = "MostrarMensaje('" + mensaje + "');";
             ScriptManager.RegisterStartupScript(control, type, "MostrarMensaje", script, true);

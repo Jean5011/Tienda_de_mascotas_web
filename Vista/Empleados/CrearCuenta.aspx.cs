@@ -31,14 +31,9 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_ADMIN,
-                    RejectNonMatches = true,
-                    Message = "Sólo los administradores pueden crear cuentas. "
-                };
-                Session[Utils.AUTH] = settings.ValidateSession(this);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 //CargarDatosPrueba();
             }

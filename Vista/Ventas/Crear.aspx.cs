@@ -12,15 +12,9 @@ namespace Vista.Ventas {
     public partial class Crear : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
-                var settings = new Utils.Authorization() {
-                    AccessType = Utils.Authorization.AccessLevel.ONLY_LOGGED_IN_EMPLOYEE,
-                    RejectNonMatches = true,
-                    Message = "Iniciá sesión para registrar una venta. "
-                };
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                Session[Utils.AUTH] = settings.ValidateSession(this);
-
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
 
@@ -42,7 +36,7 @@ namespace Vista.Ventas {
                 // Enviar los datos y recibir el ID y el AFFECTEDROWS
                 string ff = $"{txtFecha.Text} {txtHora.Text}";
                 DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                var auth = Session[Utils.AUTH] as Utils.SessionData;
+                var auth = Session[Utils.AUTH] as SessionData;
                 var emp = auth.User;
                 Venta obj = new Venta() {
                     EmpleadoGestor = emp,
