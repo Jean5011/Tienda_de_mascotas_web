@@ -30,9 +30,6 @@ namespace Vista.Ventas {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
-
                 string IDFactura = Request.QueryString["ID"];
                 if(string.IsNullOrEmpty(IDFactura)) {
                     Utils.ShowSnackbar("No hay código de factura", this.Page, GetType());
@@ -59,7 +56,7 @@ namespace Vista.Ventas {
         }
 
 
-        protected void btnAgregar_Click(object sender, EventArgs e) {
+        protected void BtnAgregar_Click(object sender, EventArgs e) {
             if(TieneDerechosNecesarios()) {
                 if (Session[VK] != null) {
                     SesionNegocio.Autenticar(op => {
@@ -133,24 +130,22 @@ namespace Vista.Ventas {
             CargarDetalles(obj);
         }
 
-        protected void gvDetalles_PageIndexChanging(object sender, GridViewPageEventArgs e) {
+        protected void GvDetalles_PageIndexChanging(object sender, GridViewPageEventArgs e) {
             gvDetalles.PageIndex = e.NewPageIndex;
             CargarDatos();
         }
 
-        protected void gvDetalles_RowCreated(object sender, GridViewRowEventArgs e) {
+        protected void GvDetalles_RowCreated(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.Pager) {
-                TextBox txtPagerTextBox = e.Row.FindControl("gvDetallesPagerPageTxtBox") as TextBox;
-                if (txtPagerTextBox != null) {
+                if (e.Row.FindControl("gvDetallesPagerPageTxtBox") is TextBox txtPagerTextBox) {
                     txtPagerTextBox.Text = (gvDetalles.PageIndex + 1) + "";
                 }
-                DropDownList ddlPager = e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") as DropDownList;
-                if (ddlPager != null) {
+                if (e.Row.FindControl("ddlFilasPorPaginaPagerTemplate") is DropDownList ddlPager) {
                     ddlPager.SelectedValue = gvDetalles.PageSize + "";
                 }
             }
         }
-        protected void gvDetallesPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
+        protected void GvDetallesPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
             int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
             if (intendedPage <= gvDetalles.PageCount - 1) {
                 gvDetalles.PageIndex = intendedPage;
@@ -161,7 +156,7 @@ namespace Vista.Ventas {
             }
         }
 
-        protected void ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged(object sender, EventArgs e) {
             int filasPorPaginaN = int.Parse(((DropDownList)sender).SelectedValue);
             if (filasPorPaginaN > 0) {
                 gvDetalles.PageSize = filasPorPaginaN;
@@ -169,7 +164,7 @@ namespace Vista.Ventas {
             }
         }
 
-        protected void gvDetalles_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+        protected void GvDetalles_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
 
         }
 

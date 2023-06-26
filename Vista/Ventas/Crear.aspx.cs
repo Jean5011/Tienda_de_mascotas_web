@@ -13,23 +13,20 @@ namespace Vista.Ventas {
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
-
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
-
+                SessionData auth = Session[Utils.AUTH] as SessionData;
+                Empleado em = auth.User;
                 DateTime fechaHora = DateTime.Now;
                 string fecha = fechaHora.ToString("yyyy-MM-dd");
                 string hora = fechaHora.ToString("HH:mm");
                 txtFecha.Text = fecha;
                 txtHora.Text = hora;
                 txtMedio.Focus();
-                var em = Session[Utils.actualUser] as Empleado;
                 adLabel.Text = em.Nombre + " " + em.Apellido + " es el gestor.";
 
             }
         }
 
-        protected void btnGuardarCambios_Click(object sender, EventArgs e) {
+        protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
             SesionNegocio.Autenticar((data) => {
                 // Enviar los datos y recibir el ID y el AFFECTEDROWS
                 string ff = $"{txtFecha.Text} {txtHora.Text}";
