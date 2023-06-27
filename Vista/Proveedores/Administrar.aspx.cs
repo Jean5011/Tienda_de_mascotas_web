@@ -44,11 +44,8 @@ namespace Vista.Proveedores {
         }
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e) {
-            // Obtener el valor de una celda específica, por ejemplo, la primera celda
             string cuit = ((Label)GridView1.Rows[e.RowIndex].FindControl("CUIT_Prov_lb")).Text;
-            pruebalb.Text = "valor de fila:" + cuit;
             ProveedorNegocio.EliminadoLogicoProveedor(cuit);
-
         }
 
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {

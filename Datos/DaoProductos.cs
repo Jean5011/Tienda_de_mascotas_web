@@ -109,6 +109,21 @@ namespace Datos {
                         }
                     );
         }
+
+
+        public static Response VerificarExiste(string ID)
+        {
+            string consulta = $"SELECT COUNT ({Producto.Columns.Codigo_Prod}) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@ID", ID }
+                        }
+                    );
+        }
         /*
         public static Response ActualizarEstadoProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);

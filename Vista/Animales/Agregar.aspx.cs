@@ -9,7 +9,7 @@ using System.Data;
 using Negocio;
 
 namespace Vista.Animales {
-    public partial class AgregarAnimal : System.Web.UI.Page {
+    public partial class Agregar : System.Web.UI.Page {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
