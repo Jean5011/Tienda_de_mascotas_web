@@ -74,6 +74,11 @@ namespace Negocio
         {
             return DaoProductos.EliminarProducto(P);
         }
+
+        public static Response VerificarExiste(string ID)
+        {
+            return DaoProductos.VerificarExiste(ID);
+        }
         /*
         public Response ActualizarPrecio(Producto P)
         {
