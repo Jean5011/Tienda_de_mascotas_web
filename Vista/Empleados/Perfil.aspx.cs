@@ -140,6 +140,23 @@ namespace Vista.Empleados {
 
         }
 
+        protected void BtnAdminAccess_Click(object sender, EventArgs e) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            var UsuarioActual = auth.User;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar((res) => {
+                    Response.Redirect("/Empleados/AdministrarAccesos.aspx?DNI=" + UsuarioPerfil.DNI);
+                }, (err) => {
+                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                });
+            }
+            else {
+                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+            }
+
+        }
+
 
         // Funciones relacionadas al GridView:
         protected void CargarDatos() {

@@ -11,6 +11,9 @@ namespace Datos {
         public static string ALL_COLUMNS = $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
                                            $"[{Sesion.Columns.FechaAlta}], [{Sesion.Columns.Token}], " +
                                            $"[{Sesion.Columns.Estado}]";
+        public static string ALL_COLUMNS_BUT_FORMATTED = $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
+                                           $"[{Sesion.Columns.FechaAlta}], CONCAT('...', RIGHT([{Sesion.Columns.Token}], 15)) as [{Sesion.Columns.Token}], " +
+                                           $"[{Sesion.Columns.Estado}]";
         /// <summary>
         /// Inserta un registro en la tabla Sesiones
         /// </summary>
@@ -21,7 +24,7 @@ namespace Datos {
             return con.Response.ErrorFound
                 ? con.Response
                 : con.RunTransaction(
-                        query: $"INSERT INTO [{Sesion.Table}] ([{Sesion.Columns.DNI}], [{Sesion.Columns.Token}]) SELECT @dni, @token",
+                        query: $"INSERT INTO [{Sesion.Table}] ([{Sesion.Columns.DNI}], [{Sesion.Columns.Token}], [{Sesion.Columns.FechaAlta}]) SELECT @dni, @token, DATEADD(hour, -3, GETDATE())",
                         parameters: new Dictionary<string, object> {
                             { "@dni", obj.Empleado.DNI },
                             { "@token", obj.Token }
@@ -64,6 +67,17 @@ namespace Datos {
                         }
                     );
         }
+        public static Response ReabrirSesion(Sesion obj) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.RunTransaction(
+                        query: $"UPDATE [{Sesion.Table}] SET [{Sesion.Columns.Estado}] = '1' WHERE [{Sesion.Columns.Codigo}] = @codigo",
+                        parameters: new Dictionary<string, object> {
+                            { "@codigo", obj.Codigo }
+                        }
+                    );
+        }
 
         /// <summary>
         /// Deshabilita todos los registros/tokens de un usuario en particular.
@@ -77,7 +91,19 @@ namespace Datos {
                 : con.RunTransaction(
                         query: $"UPDATE [{Sesion.Table}] SET [{Sesion.Columns.Estado}] = '0' WHERE [{Sesion.Columns.DNI}] = @dni",
                         parameters: new Dictionary<string, object> {
-                            { "@codigo", obj.Empleado.DNI }
+                            { "@dni", obj.Empleado.DNI }
+                        }
+                    );
+        }
+
+        public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.Response.ErrorFound
+                ? con.Response
+                : con.FetchData(
+                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Sesion.Table}] INNER JOIN [{Empleado.Table}] ON [{Sesion.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.Codigo}] DESC",
+                        parameters: new Dictionary<string, object>() {
+                            { "@dni", DNI }
                         }
                     );
         }

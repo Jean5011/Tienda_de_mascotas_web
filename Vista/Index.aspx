@@ -17,7 +17,7 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Tipos/Administrar.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Tipos/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -50,7 +50,7 @@
                                     <span class="mdc-button__label mcardbl-act">Registrar nueva venta</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Ventas/Administrar.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Ventas/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todas las ventas</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -70,7 +70,7 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Proveedores/Administrar">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Proveedores/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -116,7 +116,7 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Productos/Administrar.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Productos/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver el catálogo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -136,7 +136,7 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Animales/VerAnimales.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Animales/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -158,17 +158,22 @@
                                     <span class="mdc-button__label mcardbl-act">Crear cuenta</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">person_add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/IniciarSesion.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/IniciarSesion">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Cambiar de cuenta</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">people</i>
                                 </a>
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/AdministrarAccesos.aspx">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label mcardbl-act">Administrar accesos</span>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+                                </a>
                                 <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/CambiarClave.aspx">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">password</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/Administrar.aspx">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>

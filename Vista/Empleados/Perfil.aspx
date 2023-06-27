@@ -22,17 +22,21 @@
                 </ItemTemplate>
             </asp:ListView>
         </ul>
-        <br>
         <div class="mdc-card__actions mdc-card__actions--full-bleed mcard-actions">
             <asp:LinkButton runat="server" ID="BtnEditarDetalles" OnClick="BtnEditarDetalles_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
                   <div class="mdc-button__ripple"></div>
                   <span class="mdc-button__label mcardbl-act">Editar</span>
                   <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
             </asp:LinkButton>
+            <asp:LinkButton runat="server" ID="BtnAdministrarAccesos" OnClick="BtnAdminAccess_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+                  <div class="mdc-button__ripple"></div>
+                  <span class="mdc-button__label mcardbl-act">Administrar accesos</span>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+            </asp:LinkButton>
             <asp:LinkButton runat="server" ID="BtnCambiarClave" OnClick="BtnCambiarClave_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
                   <div class="mdc-button__ripple"></div>
                   <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
-                  <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+                  <i class="material-icons mdc-button__icon" aria-hidden="true">password</i>
             </asp:LinkButton>
             <asp:LinkButton runat="server" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
                     <div class="mdc-button__ripple"></div>

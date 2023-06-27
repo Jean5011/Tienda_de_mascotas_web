@@ -82,13 +82,13 @@ namespace Vista {
         }
 
         public static void GoLogin(Page page, Authorization auth) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
+            string login_url = "/IniciarSesion";
             string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
             page.Response.Redirect($"{login_url}?next={next_url}&msg={auth.Message}");
 
         }
         public static void GoLogin(MasterPage page, Authorization auth) {
-            string login_url = "/Empleados/IniciarSesion.aspx";
+            string login_url = "/IniciarSesion";
             string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
             page.Response.Redirect($"{login_url}?next={next_url}&msg={auth.Message}");
 

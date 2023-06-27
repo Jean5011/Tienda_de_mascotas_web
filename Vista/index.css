@@ -517,3 +517,33 @@ input[type="number"]::-webkit-outer-spin-button {
     .pager .pager-space {
         width: 100% !important;
     }
+
+
+
+
+
+
+.__token_lb {
+    background: rgba(236,239,241,1);
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid rgba(176,190,197,1);
+    font-family: consolas;
+}
+
+
+._token_status {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+
+    ._token_status ._token_bad {
+        color: rgba(255,23,68,1);
+    }
+
+    ._token_status ._token_ok {
+        color: rgba(0,230,118,1);
+    }
