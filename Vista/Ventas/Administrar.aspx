@@ -71,7 +71,7 @@
                         </span>
                         <asp:DropDownList ID="ddlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
                             AutoPostBack="true" runat="server"
-                            OnSelectedIndexChanged="ddlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
+                            OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
                             <asp:ListItem>5</asp:ListItem>
                             <asp:ListItem Selected="True">10</asp:ListItem>
