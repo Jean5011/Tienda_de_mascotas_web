@@ -23,7 +23,7 @@ namespace Datos
             public static string Igresar = "SP_IngresarTipoDeProductos";
             public static string Eliminar = "SP_EliminarTipoDeProductos";
             public static string Actualizar = "SP_ActualizarTipoProducto";
-            public static string Alta = "SP_AltaAnimal";
+            public static string Alta = "SP_AltaTipoDeProductos";
         }
 
 

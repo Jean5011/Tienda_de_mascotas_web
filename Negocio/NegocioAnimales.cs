@@ -45,9 +45,9 @@ namespace Negocio {
             return DaoAnimales.ObtenerListaBaja();
         }
 
-        public Response ObtenerPorCodBaja(String cod)
+        public Response ObtenerPorCodBaja(Animal cod)
         {
-            return DaoAnimales.BuscarAnimalPorCodBaja(cod);
+            return DaoAnimales.BuscarAnimalPorCodBaja(cod.Codigo);
         }
 
         public Response AltaAnimal(Animal A)
