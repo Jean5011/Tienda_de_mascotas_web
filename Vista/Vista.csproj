@@ -66,9 +66,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Animales\AgregarAnimal.aspx" />
+    <Content Include="Animales\Agregar.aspx" />
     <Content Include="Animales\AltaAnimal.aspx" />
-    <Content Include="Animales\VerAnimales.aspx" />
+    <Content Include="Animales\Administrar.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
     <Content Include="Empleados\CerrarSesion.aspx" />
@@ -96,12 +96,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animales\AgregarAnimal.aspx.cs">
-      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+    <Compile Include="Animales\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Animales\AgregarAnimal.aspx.designer.cs">
-      <DependentUpon>AgregarAnimal.aspx</DependentUpon>
+    <Compile Include="Animales\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Animales\AltaAnimal.aspx.cs">
       <DependentUpon>AltaAnimal.aspx</DependentUpon>
@@ -110,12 +110,12 @@
     <Compile Include="Animales\AltaAnimal.aspx.designer.cs">
       <DependentUpon>AltaAnimal.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Animales\VerAnimales.aspx.cs">
-      <DependentUpon>VerAnimales.aspx</DependentUpon>
+    <Compile Include="Animales\Administrar.aspx.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Animales\VerAnimales.aspx.designer.cs">
-      <DependentUpon>VerAnimales.aspx</DependentUpon>
+    <Compile Include="Animales\Administrar.aspx.designer.cs">
+      <DependentUpon>Administrar.aspx</DependentUpon>
     </Compile>
     <Compile Include="AuthorizationVista.cs" />
     <Compile Include="Empleados\Administrar.aspx.cs">

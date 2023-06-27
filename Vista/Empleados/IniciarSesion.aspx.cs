@@ -47,6 +47,10 @@ namespace Vista.Empleados {
                     }
                     else Response.Redirect("/Index.aspx");
                 }
+            } else {
+                string err = res.Message;
+                string mes = err == "NO_ROWS" ? "El DNI ingresado no existe o está deshabilitado. " : (err == "INCORRECT_DATA" ? "La clave ingresada es incorrecta. " : "Error desconocido. " + err);
+                Utils.ShowSnackbar(mes, this, GetType());
             }
 
         }

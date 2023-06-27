@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 using System.Web;
 
 namespace Vista.Animales {
-    public partial class VerAnimales : System.Web.UI.Page {
+    public partial class Administrar : System.Web.UI.Page {
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
