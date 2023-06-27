@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AgregarAnimal.aspx.cs" MasterPageFile="/Root.Master" Inherits="Vista.Animales.AgregarAnimal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Agregar.aspx.cs" MasterPageFile="/Root.Master" Inherits="Vista.Animales.Agregar" %>
 <%@ Import Namespace="Entidades" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page">
