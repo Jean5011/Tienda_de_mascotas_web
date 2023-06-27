@@ -24,7 +24,7 @@
                 ControlToValidate="Cuit_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="Cuit_tb_RegexValidator" runat="server"
                 ControlToValidate="Cuit_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^\d{11}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>
             <!-- Razon Social-->
             <label>
                 <asp:TextBox ID="RazonSocial_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Razon social"></asp:TextBox>
