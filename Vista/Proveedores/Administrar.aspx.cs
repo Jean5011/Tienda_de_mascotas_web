@@ -26,7 +26,7 @@ namespace Vista.Proveedores {
 
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e) {
+        protected void filtrarProveedor_Click(object sender, EventArgs e) {
             string cuit = txtBuscar.Text;
             Response resObtProveedorByCUIT = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
             if ((!string.IsNullOrEmpty(txtBuscar.Text)) && (!resObtProveedorByCUIT.ErrorFound)) {
@@ -45,7 +45,15 @@ namespace Vista.Proveedores {
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e) {
             string cuit = ((Label)GridView1.Rows[e.RowIndex].FindControl("CUIT_Prov_lb")).Text;
-            ProveedorNegocio.EliminadoLogicoProveedor(cuit);
+            var respProveedorActualizado = ProveedorNegocio.EliminadoLogicoProveedor(cuit);
+            if (!respProveedorActualizado.ErrorFound)
+            {
+                Utils.ShowSnackbar("El proveedor ha sido eliminado correctamente!.", this, GetType());
+            }
+            else
+            {
+                Utils.ShowSnackbar("Hubo un error al eliminar el proveedor.", this, GetType());
+            }
         }
 
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) {
@@ -56,10 +64,6 @@ namespace Vista.Proveedores {
             }
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -82,8 +86,17 @@ namespace Vista.Proveedores {
             if (!res.ErrorFound)
              {
                 GridView1.EditIndex = -1;
-                if (!resMain.ErrorFound) { CargarTabla(resMain); }
-               
+                Utils.ShowSnackbar("Proveedor ha sido actualizado correctamente!.", this, GetType());
+                if (!resMain.ErrorFound) 
+                { 
+                    CargarTabla(resMain);
+                }
+                else Utils.ShowSnackbar("Algo salio mal.", this, GetType());
+
+            }
+            else
+            {
+                Utils.ShowSnackbar("No se pudo actualizar el proveedor.", this, GetType());
             }
         }
     }
