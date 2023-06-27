@@ -147,8 +147,9 @@ namespace Negocio {
         /// <param name="key">La propiedad.</param>
         public static void EliminarCookie(string key) {
             if (HttpContext.Current.Request.Cookies[key] != null) {
-                var cookie = new HttpCookie(key);
-                cookie.Expires = DateTime.Now.AddDays(-1); // Establece la fecha de expiración en el pasado para eliminar la cookie
+                var cookie = new HttpCookie(key) {
+                    Expires = DateTime.Now.AddDays(-1) // Establece la fecha de expiración en el pasado para eliminar la cookie
+                };
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }
         }
