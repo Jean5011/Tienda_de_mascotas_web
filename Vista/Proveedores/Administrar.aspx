@@ -120,7 +120,6 @@
                 </Columns>
 
             </asp:GridView>
-            <asp:Label ID="pruebalb" runat="server" Text="Label"></asp:Label>
             <br />
         </div>
     </div>

@@ -46,8 +46,8 @@ namespace Datos
         }
         public static Response InsertarProveedor(Proveedor proveedor)
         {
-            string consulta = $"INSERT INTO {ALL_COLUMNS}"+
-                              $"VALUES (@CUIT, @RazonSocial, @NombreContacto,@CorreoElectronico,@Telefono,@Direccion,@Provincia,@Localidad,@Pais,@CodigoPostal)";
+            string consulta = $"INSERT INTO {Proveedor.Table} ({ALL_COLUMNS})"+
+                              $" select @CUIT, @RazonSocial, @NombreContacto,@CorreoElectronico,@Telefono,@Direccion,@Provincia,@Localidad,@Pais,@CodigoPostal";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
