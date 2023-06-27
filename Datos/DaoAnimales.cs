@@ -42,7 +42,7 @@ namespace Datos
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {Animal.Columns.Codigo},({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Animal_A' FROM {Animal.Table} where {Animal.Columns.Estado}=1"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=1"
                     );
         }
         public static Response BuscarAnimalPorCod(string ID)
@@ -110,7 +110,7 @@ namespace Datos
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {Animal.Columns.Codigo},({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Animal_A' FROM {Animal.Table} where {Animal.Columns.Estado}=0"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=0"
                     );
         }
         public static Response BuscarAnimalPorCodBaja(string ID)
