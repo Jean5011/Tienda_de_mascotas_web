@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
+using System.Data;
 
 namespace Vista.Productos {
     public partial class Agregar : System.Web.UI.Page {
@@ -23,14 +24,21 @@ namespace Vista.Productos {
             {
 
                 Response existe = ProductoNegocio.VerificarExiste(txtID.Text);
+                int cantidad;
                 if (!existe.ErrorFound)
-                {   //Si no encuentra error el pq el producto existe
-
-                    Utils.MostrarMensaje($"El codigo de producto ingresado ya existe. ", this.Page, GetType());
-
-                }
-                else
                 {
+                    DataSet dt = existe.ObjectReturned as DataSet;
+                    cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+
+                    if (cantidad > 0)
+                    {   //Si es mayor a 0 significa que el producto existe
+
+
+                        Utils.MostrarMensaje($"El codigo de producto ingresado ya existe. ", this.Page, GetType());
+
+                    }
+                    else
+                    {
                     //si encontre error significa que el producto no existe asi que se puede continuar con la creacion
                     string numero = txtPrecioUnitario.Text;
                     if (double.TryParse(numero, out double Pre))
@@ -71,6 +79,7 @@ namespace Vista.Productos {
                     {
                         Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
                     }
+                   }
                 }
             }, err => {
                 Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this.Page, GetType());
