@@ -254,6 +254,16 @@ namespace Negocio {
             };
         }
 
+        public static Response RevocarSesion(Sesion obj) {
+            return SesionDatos.CerrarSesion(obj);
+        }
+        public static Response ReabrirSesion(Sesion obj) {
+            return SesionDatos.ReabrirSesion(obj);
+        }
+        public static Response RevocarTodasLasSesiones(Sesion obj) {
+            return SesionDatos.CerrarTodasLasSesiones(obj);
+        }
+
         /// <summary>
         /// Autentica. Verifica que el token sea válido, útil para antes de realizar una acción.
         /// </summary>
@@ -324,6 +334,8 @@ namespace Negocio {
             };
         }
 
-
+        public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) {
+            return SesionDatos.ObtenerSesionesAbiertasDeEmpleado(DNI);
+        }
     }
 }

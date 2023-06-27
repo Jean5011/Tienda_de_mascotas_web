@@ -70,6 +70,7 @@
     <Content Include="Animales\AltaAnimal.aspx" />
     <Content Include="Animales\VerAnimales.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
+    <Content Include="Empleados\AdministrarAccesos.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
     <Content Include="Empleados\CerrarSesion.aspx" />
     <Content Include="Empleados\CrearCuenta.aspx" />
@@ -124,6 +125,13 @@
     </Compile>
     <Compile Include="Empleados\Administrar.aspx.designer.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados\AdministrarAccesos.aspx.cs">
+      <DependentUpon>AdministrarAccesos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Empleados\AdministrarAccesos.aspx.designer.cs">
+      <DependentUpon>AdministrarAccesos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Empleados\CambiarClave.aspx.cs">
       <DependentUpon>CambiarClave.aspx</DependentUpon>

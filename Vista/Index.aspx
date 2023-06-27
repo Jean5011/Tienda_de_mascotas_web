@@ -70,7 +70,7 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
-                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Proveedores/Administrar">
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Proveedores/Administrar.aspx">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todo</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">arrow_forward</i>
@@ -163,10 +163,15 @@
                                     <span class="mdc-button__label mcardbl-act">Cambiar de cuenta</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">people</i>
                                 </a>
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/AdministrarAccesos.aspx">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label mcardbl-act">Administrar accesos</span>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+                                </a>
                                 <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/CambiarClave.aspx">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">security</i>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">password</i>
                                 </a>
                                 <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Empleados/Administrar.aspx">
                                     <div class="mdc-button__ripple"></div>
