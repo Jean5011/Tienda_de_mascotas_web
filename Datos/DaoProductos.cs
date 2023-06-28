@@ -65,7 +65,6 @@ namespace Datos {
                             { "@Marca", Pr.Marca },
                             { "@Desc", Pr.Descripcion },
                             { "@Stock", Pr.Stock },
-                            { "@Imagen", "" },
                             { "@Precio", Pr.Precio },
                             { "@Estado", Pr.Estado }
                         }
@@ -89,9 +88,8 @@ namespace Datos {
                             { "@Marca", Pr.Marca },
                             { "@Desc", Pr.Descripcion },
                             { "@Stock", Pr.Stock },
-                            { "@Imagen", "" },
-                            { "@Precio", Pr.Precio }
-                            
+                            { "@Precio", Pr.Precio },
+                            { "@Estado", Pr.Estado}
                         }
                     );         
         }
