@@ -32,7 +32,8 @@ namespace Entidades {
         public string Provincia { get; set; }
         public string Pais { get; set; }
         public string CodigoPostal { get; set; }
-        
+        public string Estado { get; set; }
+
     }
 }
 

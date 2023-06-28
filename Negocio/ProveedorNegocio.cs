@@ -25,7 +25,7 @@ namespace Negocio
         }
         public static Response EliminadoLogicoProveedor(String CUIT)
         {
-            return ProveedorDatos.EliminadoLogicoProveedor(CUIT);
+            return ProveedorDatos.EliminadoLogicoProveedor(new Proveedor() {CUIT=CUIT,Estado="0"});
         }
         public static Response ActualizarProveedor(Proveedor proveedor)
         {
