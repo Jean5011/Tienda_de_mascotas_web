@@ -112,6 +112,22 @@ namespace Datos
                         }
                     );
         }
-       
+
+
+
+        public static Response VerificarExiste(string CUIT)
+        {
+            string consulta = $"SELECT COUNT ({Proveedor.Columns.CUIT}) AS [CUIT] FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @CUIT ";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@CUIT", CUIT }
+                        }
+                    );
+        }
+
     }
 }

@@ -31,5 +31,10 @@ namespace Negocio
         {
             return ProveedorDatos.ActualizarProveedor(proveedor);
         }
+
+        public static Response VerificarExiste(string CUIT)
+        {
+            return ProveedorDatos.VerificarExiste(CUIT);
+        }
     }
 }
