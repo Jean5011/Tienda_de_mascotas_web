@@ -16,10 +16,10 @@
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <a href="/Producto/Ver?ID=<%# Eval(Producto.Columns.Codigo_Prod) %>"
+                        <a href="/Productos/Editar.aspx?ID=<%# Eval(Producto.Columns.Codigo_Prod) %>"
                             class="mdc-button mdc-card__action mdc-card__action--button">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label mcardbl-act">Abrir</span>
+                            <span class="mdc-button__label mcardbl-act">Editar</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
                         </a>
                     </ItemTemplate>
