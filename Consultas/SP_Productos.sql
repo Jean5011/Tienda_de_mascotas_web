@@ -91,3 +91,28 @@ Estado_Prod=@Estado
 WHERE CodProducto_Prod=@Codigo
 END
 GO
+alter PROCEDURE SP_Productos_Actualizar
+@Codigo varchar(10),
+@CUIT varchar(15),
+@Tipo varchar(10),
+@Nombre varchar(50),
+@Marca varchar(50),
+@Desc varchar(50),
+@Stock int,
+@Precio money,
+@Estado bit
+AS
+BEGIN
+UPDATE Productos
+SET 
+CUITProveedor_Prod=@CUIT,
+CodTipoProducto_Prod=@Tipo,
+Nombre_Prod=@Nombre,
+Marca_Prod=@Marca,
+Descripcion_Prod=@Desc,
+Stock_Prod=@Stock,
+PrecioUnitario_Prod=@Precio,
+Estado_Prod=@Estado
+WHERE CodProducto_Prod=@Codigo
+END
+GO
