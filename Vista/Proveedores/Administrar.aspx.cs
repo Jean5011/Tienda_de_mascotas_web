@@ -40,7 +40,7 @@ namespace Vista.Proveedores {
         }
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e) {
-
+           
         }
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e) {
@@ -99,5 +99,25 @@ namespace Vista.Proveedores {
                 Utils.ShowSnackbar("No se pudo actualizar el proveedor.", this, GetType());
             }
         }
+
+        //EDITAR PROVEEDOR A PARTIR DE ACA
+        protected void EditarProveedor(String CUIT)
+        {
+            string url = "Editar.aspx?cuit=" + CUIT;
+            Response.Redirect(url);
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditarProveedor")
+            {
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridView1.Rows[rowIndex];
+                String CUIT= row.Cells[0].Text; //ya que el cuit esta en la primera celda
+
+                EditarProveedor(CUIT);
+            }
+        }
+
     }
 }

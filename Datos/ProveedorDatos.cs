@@ -129,5 +129,19 @@ namespace Datos
                     );
         }
 
+
+        public static Response ObtenerProveedorCUITEditar(string CUIT)
+        {
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.Response.ErrorFound
+                ? connection.Response
+                : connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@cuit", CUIT }
+                        }
+                    );
+        }
     }
 }

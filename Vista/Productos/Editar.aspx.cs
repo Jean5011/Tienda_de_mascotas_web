@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
+
 namespace Vista.Productos
 {
     public partial class Editar1 : System.Web.UI.Page
@@ -67,7 +68,7 @@ namespace Vista.Productos
             {
                 Utils.MostrarMensaje("Hubo un error, no se puedo actualizar el producto.", this.Page, GetType());
             }
-            Label1.Text = resProductoActualizado.Details;
+            //Label1.Text = resProductoActualizado.Details;
             // Hacer algo con el ID (por ejemplo, mostrarlo en una etiqueta o redirigir a otra página)
         }
     }

@@ -36,5 +36,10 @@ namespace Negocio
         {
             return ProveedorDatos.VerificarExiste(CUIT);
         }
+
+        public static Response ObtenerProveedorCUITEditar(String CUIT)
+        {
+            return ProveedorDatos.ObtenerProveedorCUITEditar(CUIT);
+        }
     }
 }
