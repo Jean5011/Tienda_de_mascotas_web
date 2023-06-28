@@ -56,11 +56,12 @@ namespace Vista.Productos
                 Descripcion = Desc,
                 Stock = int.Parse(Stck),
                 Precio = double.Parse(Precio),
+                Estado= true
 
-            });
+            });;
             if (!resProductoActualizado.ErrorFound)
             {
-                Utils.MostrarMensaje("El Producto con el código"+ Cod+" actualizado correctamente!. ", this.Page, GetType());
+                Utils.MostrarMensaje("El Producto con el código"+ Cod+" fue actualizado!. ", this.Page, GetType());
             }
             else
             {

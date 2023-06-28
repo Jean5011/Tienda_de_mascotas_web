@@ -76,6 +76,4 @@
     </div>
     <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
 
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-
-</asp:Content>
+    </asp:Content>
