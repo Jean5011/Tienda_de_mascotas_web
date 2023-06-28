@@ -34,7 +34,7 @@ namespace Vista.Productos
             {
                 Producto producto = res.ObjectReturned as Producto;
                 txtNombre.Text = producto.Nombre;
-                txtTipoProducto.Text = producto.Categoria.Codigo;
+               // txtTipoProducto.Text = producto.Categoria.Codigo;
                 txtDescripcion.Text = producto.Descripcion;
                 txtMarca.Text = producto.Marca;
                 txtStock.Text = (producto.Stock).ToString();
@@ -60,7 +60,7 @@ namespace Vista.Productos
             {
                 Codigo = productoViejo.Codigo,
                 Nombre = txtNombre.Text,
-                Categoria = new TipoProducto() { Codigo = txtTipoProducto.Text },
+                Categoria = new TipoProducto() { Codigo = productoViejo.Categoria.Codigo },
                 Descripcion = txtDescripcion.Text,
                 Marca = txtMarca.Text,
                 Stock = int.Parse(txtStock.Text),
