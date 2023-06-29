@@ -55,7 +55,6 @@ namespace Vista.Ventas {
 
         }
 
-
         protected void BtnAgregar_Click(object sender, EventArgs e) {
             if(TieneDerechosNecesarios()) {
                 if (Session[VK] != null) {
@@ -175,11 +174,81 @@ namespace Vista.Ventas {
             }
         }
 
-        protected void GvDetalles_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+       protected void btnRestar_Click(object sender, EventArgs e)
+        {
+            if (TieneDerechosNecesarios())
+            {
+                if (Session[VK] != null)
+                {
+                    SesionNegocio.Autenticar(op => {
+                        Venta obj = Session[VK] as Venta;
+                        Producto prod = new Producto(); // ver si está bien esto.
+                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo);
+                        if (!res.ErrorFound)
+                        {
+                            prod = res.ObjectReturned as Producto; // el producto existe.
 
+                            // int cantidad = Convert.ToInt32((DataControlField)gvDetalles.Columns[3]); --> no sé si está bien esto.
+                            int cantidad = Convert.ToInt32(FindControl("gvDetallesItemTemplate__Cantidad")); // idem.
+
+                            // Verificar el stock del producto:
+                            if (cantidad <= prod.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se puede modificar la misma.
+                            {
+                                cantidad--; // Le resto 1 a la cantidad.
+                            }
+                            else
+                            {
+                                Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
+                            }
+                        }
+
+                    }, err => {
+                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
+                    });
+                }
+            }
+            else
+            {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
+            }
         }
 
+        protected void btnSumar_Click(object sender, EventArgs e)
+        {
+            if (TieneDerechosNecesarios())
+            {
+                if (Session[VK] != null)
+                {
+                    SesionNegocio.Autenticar(op => {
+                        Venta obj = Session[VK] as Venta;
+                        Producto prod = new Producto(); // ver si está bien esto.
+                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo);
+                        if (!res.ErrorFound)
+                        {
+                            prod = res.ObjectReturned as Producto; // el producto existe.
 
+                            // int cantidad = Convert.ToInt32((DataControlField)gvDetalles.Columns[3]); --> no sé si está bien esto.
+                            int cantidad = Convert.ToInt32(FindControl("gvDetallesItemTemplate__Cantidad")); // idem.
 
+                            // Verificar el stock del producto:
+                            if (cantidad <= prod.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se puede modificar la misma.
+                            {
+                                cantidad++; // Le sumo uno a la cantidad.
+                            }
+                            else
+                            {
+                                Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
+                            }
+                        }
+                    }, err => {
+                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
+                    });
+                }
+            }
+            else
+            {
+                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
+            }
+        } 
     }
 }

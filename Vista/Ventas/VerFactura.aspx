@@ -43,9 +43,7 @@
         <br />
         <h2>Productos</h2>
         <div class="mdc-data-table">
-            <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="False"
-                OnPageIndexChanging="GvDetalles_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDetalles_RowCreated"
-                PageSize="10" AutoGenerateSelectButton="False" OnSelectedIndexChanging="GvDetalles_SelectedIndexChanging">
+            <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="False">
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
@@ -75,9 +73,11 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Cantidad">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Cantidad" runat="server"
+                            &nbsp;<asp:Button ID="btnRestar" runat="server" OnClick="btnRestar_Click" Text="-" />
+&nbsp;<asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Cantidad" runat="server"
                                 Text='<%# Eval(DetalleVenta.Columns.Cantidad_Dv) %>'>
                             </asp:Label>
+                            &nbsp;<asp:Button ID="btnSumar" runat="server" OnClick="btnSumar_Click" Text="+" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Precio Unitario">
