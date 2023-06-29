@@ -67,25 +67,36 @@ namespace Vista.Ventas {
                         if (!res.ErrorFound) {
                             // Producto exists
                             Producto p = res.ObjectReturned as Producto;
-                            DetalleVenta dv = new DetalleVenta() {
-                                Id = obj,
-                                Producto = p,
-                                Proveedor = p.Proveedor,
-                                Cantidad = cantidad,
-                                PrecioUnitario = p.Precio,
-                                PrecioTotal = cantidad * p.Precio,
-                                Estado = true
-                            };
-                            var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
-                            if (!uploadres.ErrorFound) {
-                                Utils.ShowSnackbar($"El producto #{dv.Producto.Codigo} se agregó correctamente. ", this.Page, GetType());
-                                CargarDetalles(obj);
-                                CargarCabecera(obj);
-                            }
-                            else {
-                                Utils.ShowSnackbar($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
-                            }
 
+                            // Verificar el stock del producto:
+                            if (cantidad <= p.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se realiza la venta del producto.
+                            {
+                                DetalleVenta dv = new DetalleVenta()
+                                {
+                                    Id = obj,
+                                    Producto = p,
+                                    Proveedor = p.Proveedor,
+                                    Cantidad = cantidad,
+                                    PrecioUnitario = p.Precio,
+                                    PrecioTotal = cantidad * p.Precio,
+                                    Estado = true
+                                };
+                                var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
+                                if (!uploadres.ErrorFound)
+                                {
+                                    Utils.ShowSnackbar($"El producto #{dv.Producto.Codigo} se agregó correctamente. ", this.Page, GetType());
+                                    CargarDetalles(obj);
+                                    CargarCabecera(obj);
+                                }
+                                else
+                                {
+                                    Utils.ShowSnackbar($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
+                                }
+                            }
+                            else
+                            {
+                                Utils.ShowSnackbar("No hay suficiente stock para vender la cantidad de unidades indicada. ", this.Page, GetType());
+                            }
                         }
                         else {
                             Utils.ShowSnackbar("El producto no está disponible. ", this.Page, GetType());
