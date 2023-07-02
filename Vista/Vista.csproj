@@ -87,6 +87,7 @@
     <Content Include="Proveedores\Administrar.aspx" />
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Proveedores\Editar.aspx" />
+    <Content Include="Temp.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
     <Content Include="Tipos\AltaTiposdeproductosaspx.aspx" />
@@ -239,6 +240,13 @@
     </Compile>
     <Compile Include="Root.Master.designer.cs">
       <DependentUpon>Root.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Temp.aspx.cs">
+      <DependentUpon>Temp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Temp.aspx.designer.cs">
+      <DependentUpon>Temp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Tipos\Administrar.aspx.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
