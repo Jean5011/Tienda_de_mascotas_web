@@ -18,42 +18,42 @@ namespace Vista.Proveedores {
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
 
-                //  if (!string.IsNullOrEmpty(Request.QueryString["cuit"]))//Si el QueryString no se encuentra vacio, los datos se cargan.
-                //{
-                // string CUIT = Request.QueryString["cuit"];
-                string CUIT = "777777777777";//proveedor de testeo
+                if (!string.IsNullOrEmpty(Request.QueryString["CUIT"]))//Si el QueryString no se encuentra vacio, los datos se cargan.
+                {
+                    string CUIT = Request.QueryString["CUIT"];
+                    // string CUIT = "777777777777";//proveedor de testeo
 
 
-                Response response = ProveedorNegocio.ObtenerProveedorCUITEditar(CUIT);
-                if (!response.ErrorFound) {
-                    DataSet ds = response.ObjectReturned as DataSet;
-                    if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) {
-                        DataRow proveedorRow = ds.Tables[0].Rows[0];
+                    Response response = ProveedorNegocio.ObtenerProveedorCUITEditar(CUIT);
+                    if (!response.ErrorFound) {
+                        DataSet ds = response.ObjectReturned as DataSet;
+                        if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) {
+                            DataRow proveedorRow = ds.Tables[0].Rows[0];
 
-                        Cuit_tb.Text = proveedorRow["CUIT_Prov"].ToString();
-                        RazonSocial_tb.Text = proveedorRow["RazonSocial_Prov"].ToString();
-                        NombreContacto_tb.Text = proveedorRow["NombreDeContacto_Prov"].ToString();
-                        CorreoElectronico_tb.Text = proveedorRow["CorreoElectronico_Prov"].ToString();
-                        NumeroTelefono_tb.Text = proveedorRow["Telefono_Prov"].ToString();
-                        Direccion_tb.Text = proveedorRow["Direccion_Prov"].ToString();
-                        Provincia_tb.Text = proveedorRow["Provincia_Prov"].ToString();
-                        localidad_tb.Text = proveedorRow["Localidad_Prov"].ToString();
-                        Pais_tb.Text = proveedorRow["Pais_Prov"].ToString();
-                        CodigoPostal_tb.Text = proveedorRow["CodigoPostal_Prov"].ToString();
-                        //estado check box =  proveedorRow["Estado_Prov"].ToString();
+                            Cuit_tb.Text = proveedorRow["CUIT_Prov"].ToString();
+                            RazonSocial_tb.Text = proveedorRow["RazonSocial_Prov"].ToString();
+                            NombreContacto_tb.Text = proveedorRow["NombreDeContacto_Prov"].ToString();
+                            CorreoElectronico_tb.Text = proveedorRow["CorreoElectronico_Prov"].ToString();
+                            NumeroTelefono_tb.Text = proveedorRow["Telefono_Prov"].ToString();
+                            Direccion_tb.Text = proveedorRow["Direccion_Prov"].ToString();
+                            Provincia_tb.Text = proveedorRow["Provincia_Prov"].ToString();
+                            localidad_tb.Text = proveedorRow["Localidad_Prov"].ToString();
+                            Pais_tb.Text = proveedorRow["Pais_Prov"].ToString();
+                            CodigoPostal_tb.Text = proveedorRow["CodigoPostal_Prov"].ToString();
+                            //estado check box =  proveedorRow["Estado_Prov"].ToString();
 
 
+                        }
+                        else {
+
+                            Utils.MostrarMensaje($"No se encontro el CUIT ", this.Page, GetType());
+                        }
                     }
                     else {
-
-                        Utils.MostrarMensaje($"No se encontro el CUIT ", this.Page, GetType());
+                        Response.Redirect("Administrar.aspx");
+                        Utils.MostrarMensaje($"error ", this.Page, GetType());
                     }
                 }
-                else {
-                    Response.Redirect("Administrar.aspx");
-                    Utils.MostrarMensaje($"error ", this.Page, GetType());
-                }
-                //}
             }
         }
 
