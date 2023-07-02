@@ -22,7 +22,7 @@ namespace Datos {
 
 
         public static class Procedures {
-            public static string Agregar = "SP_agregarRegistro_DetalleDeVenta";
+            public static string Agregar = "SP_DetalleDeVenta_Agregar";
             public static string Bajar = "SP_DetalleDeVenta_DarDeBaja";
 
         }
