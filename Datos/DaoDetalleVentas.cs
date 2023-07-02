@@ -84,31 +84,31 @@ namespace Datos {
                     );
         }
 
-        public static Response aumentarCantidadVendida(DetalleVenta dv)
+        public static Response aumentarCantidadVendida(Venta venta, Producto producto)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", dv.Id.Id },
-                        { "@CodigoProducto", dv.Producto.Codigo },
-                        { "@CUITProveedor", dv.Proveedor.CUIT }
+                        { "@CodigoVenta", venta.Id },
+                        { "@CodigoProducto", producto.Codigo },
+                        { "@CUITProveedor", producto.Proveedor.CUIT }
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;
         }
 
-        public static Response disminuirCantidadVendida(DetalleVenta dv)
+        public static Response disminuirCantidadVendida(Venta venta, Producto producto)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.DisminuirCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", dv.Id.Id },
-                        { "@CodigoProducto", dv.Producto.Codigo },
-                        { "@CUITProveedor", dv.Proveedor.CUIT }
+                        { "@CodigoVenta", venta.Id },
+                        { "@CodigoProducto", producto.Codigo },
+                        { "@CUITProveedor", producto.Proveedor.CUIT }
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;
