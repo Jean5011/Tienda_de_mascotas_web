@@ -13,7 +13,7 @@ namespace Vista.Proveedores {
     public partial class Editar : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
