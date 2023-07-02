@@ -24,7 +24,8 @@ namespace Datos {
         public static class Procedures {
             public static string Agregar = "SP_DetalleDeVenta_Agregar";
             public static string Bajar = "SP_DetalleDeVenta_DarDeBaja";
-
+            public static string DisminuirCantidadVendida = "SP_DetalleDeVenta_disminuirCantidadVendida";
+            public static string AumentarCantidadVendida = "SP_DetalleDeVenta_aumentarCantidadVendida";
         }
 
         public static Response ObtenerDetalleVenta(int Cod) {

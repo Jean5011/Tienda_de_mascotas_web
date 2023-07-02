@@ -34,8 +34,7 @@ GO
 
 --Este procedimiento disminuye la cantidad en la tabla DetalleDeVenta, y aumenta el stock en la tabla Productos:
 CREATE PROCEDURE SP_DetalleDeVenta_disminuirCantidadVendida
-@CodigoProducto varchar(10), @CUITProveedor varchar(15), --Variables relacionadas con Productos y DetalleDeVenta.
-@CodigoVenta int --Variable relacionada solo con DetalleDeVenta.
+@CodigoVenta int, @CodigoProducto varchar(10), @CUITProveedor varchar(15)
 AS
 DECLARE @Stock int, @Resultado bit --(Resultado que devuelve el procedimiento).
 SELECT @Stock = Stock_Prod FROM Productos WHERE CodProducto_Prod = @CodigoProducto AND CUITProveedor_Prod = @CUITProveedor
@@ -61,8 +60,7 @@ GO
 
 --Este procedimiento aumenta la cantidad en la tabla DetalleDeVenta, y disminuye el stock en la tabla Productos:
 CREATE PROCEDURE SP_DetalleDeVenta_aumentarCantidadVendida
-@CodigoProducto varchar(10), @CUITProveedor varchar(15), --Variables relacionadas con Productos y DetalleDeVenta.
-@CodigoVenta int --Variable relacionada solo con DetalleDeVenta.
+@CodigoVenta int, @CodigoProducto varchar(10), @CUITProveedor varchar(15)
 AS
 DECLARE @Stock int, @Resultado bit --(Resultado que devuelve el procedimiento).
 SELECT @Stock = Stock_Prod FROM Productos WHERE CodProducto_Prod = @CodigoProducto AND CUITProveedor_Prod = @CUITProveedor
