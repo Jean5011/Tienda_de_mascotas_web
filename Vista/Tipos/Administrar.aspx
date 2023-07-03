@@ -1,88 +1,138 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administrar.aspx.cs" Inherits="Vista.Tipos.Administrar" %>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plantilla</title>
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="/index.css" />
-  <script src="/index.js"></script>
-</head>
-
-<body>
-<div class="contents">
-  <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
-    <div class="mdc-top-app-bar__row">
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-          aria-label="Open navigation menu">menu</button>
-        <span class="mdc-top-app-bar__title">Pet Shop</span>
-      </section>
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-       
-        <button class="mdc-button mdc-top-app-bar__action-item">
-          <span class="mdc-button__ripple"></span>
-          <span class="mdc-button__label">ADMIN</span>
-        </button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-          aria-label="Options">more_vert</button>
-      </section>
-    </div>
-  </header>
-  <main class="mdc-top-app-bar--fixed-adjust obj--main">
-    <h2>Tipos de producto</h2>
+﻿<%@ Page MasterPageFile="/Root.Master" Language="C#" AutoEventWireup="true" CodeBehind="Administrar.aspx.cs" Inherits="Vista.Tipos.Administrar" %>
+<%@ Import Namespace="Entidades" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <h2>Categorías</h2>
     <div class="searchbox">
-      <span class="text">Buscar</span>
-      <span class="material-icons">search</span>
+        <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código" runat="server"></asp:TextBox>
+        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="btnBuscar_Click" runat="server" Text="search" />
     </div>
     <div class="mdc-data-table">
-      <div class="mdc-data-table__table-container">
-        <table class="mdc-data-table__table" aria-label="Dessert calories">
-          <thead>
-            <tr class="mdc-data-table__header-row">
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Acciones</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">ID</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Nombre</th>
-              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Descripción</th>
-            </tr>
-          </thead>
-          <tbody class="mdc-data-table__content">
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">34</td>
-              <td class="mdc-data-table__cell">Tipo A</td>
-              <td class="mdc-data-table__cell">...</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">3</td>
-              <td class="mdc-data-table__cell">Tipo B</td>
-              <td class="mdc-data-table__cell">...</td>
-            </tr>
-            <tr class="mdc-data-table__row">
-              <td class="mdc-data-table__cell"><button class="material-icons mdc-icon-button btn-edit">edit</button><button
-                  class="material-icons mdc-icon-button btn-erase">delete</button></td>
-              <td class="mdc-data-table__cell">5</td>
-              <td class="mdc-data-table__cell">Tipo C</td>
-              <td class="mdc-data-table__cell">...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
-</div>
-</body>
+    <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
+        OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
+        PageSize="5" AutoGenerateSelectButton="False"
+        OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
+        <Columns>
+            <asp:TemplateField>
+                <ItemTemplate>
+                    <asp:LinkButton CommandName="edit"
+                        class="mdc-button mdc-card__action mdc-card__action--button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label mcardbl-act">Editar</span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                    </asp:LinkButton>
+                    <asp:LinkButton runat="server" CommandName="delete" class="mdc-button mdc-card__action mdc-card__action--button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label mcardbl-act">Eliminar</span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                    </asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Código">
+                <EditItemTemplate>
+                    <asp:Label ID="LV_EditCod" runat="server" Text='<%# Eval(TipoProducto.Columns.Codigo) %>'></asp:Label>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label CssClass="mdc-typography--body2" ID="LV_CodTipoDeProducto"
+                        runat="server" Text='<%# Eval(TipoProducto.Columns.Codigo) %>'>
+                    </asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Animal">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="DD_EditAnimal" runat="server">
+                        <asp:ListItem></asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label CssClass="mdc-typography--body2" ID="LV_CodAnimales"
+                        runat="server" Text='<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
+                    </asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Categoría">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="DD_EditTdp" runat="server">
+                        <asp:ListItem>Comida</asp:ListItem>
+                        <asp:ListItem>Accesorios</asp:ListItem>
+                        <asp:ListItem>Ropa</asp:ListItem>
+                        <asp:ListItem>Higiene</asp:ListItem>
+                        <asp:ListItem>Salud</asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label CssClass="mdc-typography--body2" ID="LV_TipoDeProducto"
+                        runat="server" Text='<%# Eval(TipoProducto.Columns.TipoDeProducto) %>'>
+                    </asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Descripción">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TB_EditDesc" runat="server" Text='<%# Eval(TipoProducto.Columns.Descripcion) %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label CssClass="mdc-typography--body2" ID="LV_Descripcion"
+                        runat="server" Text='<%# Eval(TipoProducto.Columns.Descripcion) %>'>
+                    </asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+        <PagerTemplate>
+            <div class="pager">
+                <span class="mdc-typography--body2" style="white-space: nowrap;">Filas por página: </span>
+                <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label page-roll">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                    <asp:DropDownList ID="DdlFilasPorPaginaPagerTemplate" CssClass="mdc-text-field__input"
+                        AutoPostBack="true" runat="server"
+                        OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
-</html>
+                        <asp:ListItem  Selected="True">5</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+
+                    </asp:DropDownList>
+                </label>
+                <div class="pager-space"></div>
+                <asp:LinkButton ID="GvDatosPagerFirst" runat="server" CommandName="Page"
+                    CommandArgument="First" CssClass="mdc-icon-button mdc-button--primary">
+                            <span class="mdc-icon-button__ripple"></span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">first_page</i>
+                            <!--span class="mdc-button__label"></span-->
+                </asp:LinkButton>
+                <asp:LinkButton ID="GvDatosPagerPrev" runat="server" CommandName="Page"
+                    CommandArgument="Prev" CssClass="mdc-icon-button mdc-button--primary">
+                            <span class="mdc-icon-button__ripple"></span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">chevron_left</i>
+                            <!--span class="mdc-button__label"></span-->
+                </asp:LinkButton>
+                <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label page-roll">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                    <asp:TextBox type="number" CssClass="mdc-text-field__input" ID="GvDatosPagerPageTxtBox"
+                        runat="server" OnTextChanged="GvDatosPagerPageTxtBox_TextChanged"
+                        AutoPostBack="true">
+                    </asp:TextBox>
+                </label>
+                <asp:LinkButton ID="GvDatosPagerNext" runat="server" CommandName="Page"
+                    CommandArgument="Next" CssClass="mdc-icon-button mdc-button--primary">
+                            <span class="mdc-icon-button__ripple"></span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">chevron_right</i>
+                            <!--span class="mdc-button__label"></span-->
+                </asp:LinkButton>
+                <asp:LinkButton ID="GvDatosPagerLast" runat="server" CommandName="Page"
+                    CommandArgument="Last" CssClass="mdc-icon-button mdc-button--primary">
+                            <span class="mdc-icon-button__ripple"></span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">last_page</i>
+                            <!--span class="mdc-button__label"></span-->
+                </asp:LinkButton>
+            </div>
+        </PagerTemplate>
+    </asp:GridView>
+
+</div>
+    <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
+</asp:Content>
