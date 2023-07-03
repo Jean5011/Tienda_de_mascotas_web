@@ -9,6 +9,9 @@ using Entidades;
 
 namespace Datos {
     public class Connection {
+        /// <summary>
+        /// Nombres de las bases de datos con las que trabaja Connection.
+        /// </summary>
         public static class Database {
             public static string Pets { get { return "Pets"; } }
         }
@@ -42,6 +45,7 @@ namespace Datos {
             }
             return connection;
         }
+
         /// <summary>
         /// Realiza una consulta en la base de datos y recolecta datos obtenidos. 
         /// Sólo para consultas que devuelvan tablas con datos.
@@ -79,6 +83,7 @@ namespace Datos {
                 ObjectReturned = dataSet
             };
         }
+
         /// <summary>
         /// Realiza una consulta en la base de datos. 
         /// Sólo consultas que actualizan, eliminan o agregan registros.
@@ -114,6 +119,12 @@ namespace Datos {
             }
         }
 
+        /// <summary>
+        /// Ejecuta un procedimiento almacenado y recibe una tabla como respuesta.
+        /// </summary>
+        /// <param name="storedProcedureName">Nombre del procedimiento almacenado.</param>
+        /// <param name="parameters">Parámetros requeridos por el procedimiento.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public Response FetchStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
             try {
                 DataSet dataSet = new DataSet();
@@ -148,6 +159,14 @@ namespace Datos {
                 };
             }
         }
+
+        /// <summary>
+        /// Ejecuta un procedimiento almacenado, que actualiza, elimina o agrega un registro. 
+        /// No espera por tablas resultado.
+        /// </summary>
+        /// <param name="storedProcedureName">Nombre del procedimiento almacenado.</param>
+        /// <param name="parameters">Parámetros requeridos por el procedimiento.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public Response ExecuteStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
