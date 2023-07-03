@@ -14,7 +14,8 @@ namespace Datos {
         private static readonly string ALL_COLUMNS = $"[{TipoProducto.Columns.Codigo}], " +
                                     $"[{TipoProducto.Columns.CodAnimal}], " +
                                    $"[{TipoProducto.Columns.TipoDeProducto}], " +
-                                   $"[{TipoProducto.Columns.Descripcion}] ";
+                                   $"[{TipoProducto.Columns.Descripcion}], " +
+                                   $"[{TipoProducto.Columns.Estado}] ";
 
         public static class Procedures {
             public static string Igresar = "SP_IngresarTipoDeProductos";
@@ -29,11 +30,11 @@ namespace Datos {
             return connection.Response.ErrorFound
                 ? connection.Response
                 : connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE [{TipoProducto.Columns.Estado}] =1"
+                        query: $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}]"
                     );
         }
         public static Response BuscarTipoProductoPorCod(string ID) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE [{TipoProducto.Columns.Codigo}] = @ID AND [{TipoProducto.Columns.Estado}] =1 ";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE [{TipoProducto.Columns.Codigo}] = @ID";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
             return connection.Response.ErrorFound

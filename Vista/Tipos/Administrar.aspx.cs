@@ -49,6 +49,68 @@ namespace Vista.Tipos {
             GvDatos.DataBind();
         }
 
+        protected void Habilitar(string codigo) {
+            if(EsAdmin()) {
+                SesionNegocio.Autenticar(success => {
+                    /* Habilitar */
+                    TipoProducto t = new TipoProducto();
+                    t.Codigo = codigo;
+                    NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
+                    Response resultado = NT.AltaTipoDeProducto(t);
+                    Utils.ShowSnackbar(
+                            message: !resultado.ErrorFound 
+                                ? "Se habilitó con éxito el registro. "
+                                : "Hubo un problema al intentar habilitar el registro. ",
+                            control: this, 
+                            type: GetType()
+                        );
+                }, err => {
+                    Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this, GetType());
+                });
+            } else {
+                Utils.ShowSnackbar("Carecés de privilegios suficientes para realizar esta acción. ", this, GetType());
+            }
+        }
+        protected void Deshabilitar(string codigo) {
+            if (EsAdmin()) {
+                SesionNegocio.Autenticar(success => {
+                    /* Deshabilitar */
+                    TipoProducto t = new TipoProducto();
+                    t.Codigo = codigo;
+                    NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
+                    Response resultado = NT.AltaTipoDeProducto(t); // FIXME: Cambiar por función de BAJA.
+                    Utils.ShowSnackbar(
+                            message: !resultado.ErrorFound
+                                ? "Se deshabilitó con éxito el registro. "
+                                : "Hubo un problema al intentar habilitar el registro. ",
+                            control: this,
+                            type: GetType()
+                        );
+                }, err => {
+                    Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this, GetType());
+                });
+            }
+            else {
+                Utils.ShowSnackbar("Carecés de privilegios suficientes para realizar esta acción. ", this, GetType());
+            }
+        }
+
+        protected void H_command(object sender, CommandEventArgs e) {
+            string codigo = e.CommandArgument.ToString();
+            switch(e.CommandName) {
+                case "Habilitar":
+                    Habilitar(codigo);
+                    break;
+                case "Deshabilitar":
+                    Deshabilitar(codigo);
+                    break;
+                default:
+                    Utils.ShowSnackbar("El nombre del comando especificado no es válido. ", this, GetType());
+                    break;
+            }
+            CargarDatos();
+        }
+
         protected void GvDatos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
             if (EsAdmin()) {
                 SesionNegocio.Autenticar(res => {
