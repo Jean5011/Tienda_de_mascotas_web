@@ -84,31 +84,31 @@ namespace Datos {
                     );
         }
 
-        public static Response aumentarCantidadVendida(Venta venta, Producto producto)
+        public static Response aumentarCantidadVendida(string codigo)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", venta.Id },
-                        { "@CodigoProducto", producto.Codigo },
-                        { "@CUITProveedor", producto.Proveedor.CUIT }
+                        { "@CodigoVenta", codigo },
+                        { "@CodigoProducto", DetalleVenta.Columns.CodProducto_Dv }, // corregir esto.
+                        { "@CUITProveedor", DetalleVenta.Columns.CUITProv } // corregir esto.
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;
         }
 
-        public static Response disminuirCantidadVendida(Venta venta, Producto producto)
+        public static Response disminuirCantidadVendida(string codigo)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.DisminuirCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", venta.Id },
-                        { "@CodigoProducto", producto.Codigo },
-                        { "@CUITProveedor", producto.Proveedor.CUIT }
+                        { "@CodigoVenta", codigo },
+                        { "@CodigoProducto", DetalleVenta.Columns.CodProducto_Dv }, // corregir esto.
+                        { "@CUITProveedor", DetalleVenta.Columns.CUITProv } // corregir esto.
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;

@@ -174,73 +174,25 @@ namespace Vista.Ventas {
             }
         }
 
-       protected void btnRestar_Click(object sender, EventArgs e)
+        protected void modificarCantidadVendida_Command(object sender, CommandEventArgs e)
         {
-            if (TieneDerechosNecesarios())
+            string codigo = e.CommandArgument.ToString();
+
+            var res = DetalleVentaNegocio.ObtenerDetalleVenta(Convert.ToInt32(codigo)); // revisar esto.
+            if (!res.ErrorFound)
             {
-                if (Session[VK] != null)
-                {
-                    SesionNegocio.Autenticar(op => {
-                        Venta obj = Session[VK] as Venta;
-                        Producto prod = new Producto(); 
-                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo); // Verifico si el producto está disponible.
-                        if (!res.ErrorFound)
-                        {
-                            prod = res.ObjectReturned as Producto; // el producto existe.
-
-                            // Verifico si se pudo ejecutar correctamente el SP correspondiente:
-                            var respuesta = DetalleVentaNegocio.disminuirCantidadVendida(obj, prod);
-                            if (respuesta.ErrorFound)
-                            {
-                                Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
-                            }
-                        }
-                        else
-                        {
-                            Utils.ShowSnackbar("El producto no está disponible. ", this.Page, GetType());
-                        }
-
-                    }, err => {
-                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
-                    });
-                }
+                // DataSet data = res.ObjectReturned as DataSet;
+                DataRow dr = res.ObjectReturned as DataRow;
             }
-            else
+
+            switch (e.CommandName)
             {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
+                case "Restar": // terminar esto.
+                    DetalleVentaNegocio.disminuirCantidadVendida(codigo);
+                    break;
+                case "Sumar": DetalleVentaNegocio.aumentarCantidadVendida(codigo);
+                    break;
             }
         }
-
-        protected void btnSumar_Click(object sender, EventArgs e)
-        {
-            if (TieneDerechosNecesarios())
-            {
-                if (Session[VK] != null)
-                {
-                    SesionNegocio.Autenticar(op => {
-                        Venta obj = Session[VK] as Venta;
-                        Producto prod = new Producto();
-                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo); // Verifico si el producto está disponible.
-                        if (!res.ErrorFound)
-                        {
-                            prod = res.ObjectReturned as Producto; // el producto existe.
-
-                            // Verifico si se pudo ejecutar correctamente el SP correspondiente:
-                            var respuesta = DetalleVentaNegocio.aumentarCantidadVendida(obj, prod);
-                            if (respuesta.ErrorFound)
-                            {
-                                Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
-                            }
-                        }
-                    }, err => {
-                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
-                    });
-                }
-            }
-            else
-            {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
-            }
-        } 
     }
 }

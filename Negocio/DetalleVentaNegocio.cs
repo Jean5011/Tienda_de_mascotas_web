@@ -34,14 +34,14 @@ namespace Negocio
             return DaoDetalleVentas.DarDeBajaRegistro(Cod);
         }
 
-        public static Response aumentarCantidadVendida(Venta venta, Producto producto)
+        public static Response aumentarCantidadVendida(string codigo)
         {
-            return DaoDetalleVentas.aumentarCantidadVendida(venta, producto);
+            return DaoDetalleVentas.aumentarCantidadVendida(codigo);
         }
 
-        public static Response disminuirCantidadVendida(Venta venta, Producto producto)
+        public static Response disminuirCantidadVendida(string codigo)
         {
-            return DaoDetalleVentas.disminuirCantidadVendida(venta, producto);
+            return DaoDetalleVentas.disminuirCantidadVendida(codigo);
         }
     }
 }
