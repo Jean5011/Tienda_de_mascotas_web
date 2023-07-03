@@ -627,6 +627,7 @@ AS
 	END
 GO 
 
+--NOTA: este procedimiento (SP_DetalleDeVentas_DarDeBaja) fue realizado también por Ezequiel Alejandro Martínez:
 CREATE PROCEDURE SP_DetalleDeVentas_DarDeBaja
 @CodigoVenta int
 AS
