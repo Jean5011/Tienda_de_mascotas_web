@@ -15,8 +15,8 @@ namespace Vista.Proveedores {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
+                // var auth = Session[Utils.AUTH] as SessionData;
+                // var UsuarioActual = auth.User;
 
                 if (!string.IsNullOrEmpty(Request.QueryString["CUIT"]))//Si el QueryString no se encuentra vacio, los datos se cargan.
                 {
