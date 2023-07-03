@@ -182,24 +182,22 @@ namespace Vista.Ventas {
                 {
                     SesionNegocio.Autenticar(op => {
                         Venta obj = Session[VK] as Venta;
-                        Producto prod = new Producto(); // ver si está bien esto.
-                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo);
+                        Producto prod = new Producto(); 
+                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo); // Verifico si el producto está disponible.
                         if (!res.ErrorFound)
                         {
                             prod = res.ObjectReturned as Producto; // el producto existe.
 
-                            // int cantidad = Convert.ToInt32((DataControlField)gvDetalles.Columns[3]); --> no sé si está bien esto.
-                            int cantidad = Convert.ToInt32(FindControl("gvDetallesItemTemplate__Cantidad")); // idem.
-
-                            // Verificar el stock del producto:
-                            if (cantidad <= prod.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se puede modificar la misma.
-                            {
-                                cantidad--; // Le resto 1 a la cantidad.
-                            }
-                            else
+                            // Verifico si se pudo ejecutar correctamente el SP correspondiente:
+                            var respuesta = DetalleVentaNegocio.disminuirCantidadVendida(obj, prod);
+                            if (respuesta.ErrorFound)
                             {
                                 Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
                             }
+                        }
+                        else
+                        {
+                            Utils.ShowSnackbar("El producto no está disponible. ", this.Page, GetType());
                         }
 
                     }, err => {
@@ -221,21 +219,15 @@ namespace Vista.Ventas {
                 {
                     SesionNegocio.Autenticar(op => {
                         Venta obj = Session[VK] as Venta;
-                        Producto prod = new Producto(); // ver si está bien esto.
-                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo);
+                        Producto prod = new Producto();
+                        var res = ProductoNegocio.ObtenerPorCodigo(prod.Codigo); // Verifico si el producto está disponible.
                         if (!res.ErrorFound)
                         {
                             prod = res.ObjectReturned as Producto; // el producto existe.
 
-                            // int cantidad = Convert.ToInt32((DataControlField)gvDetalles.Columns[3]); --> no sé si está bien esto.
-                            int cantidad = Convert.ToInt32(FindControl("gvDetallesItemTemplate__Cantidad")); // idem.
-
-                            // Verificar el stock del producto:
-                            if (cantidad <= prod.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se puede modificar la misma.
-                            {
-                                cantidad++; // Le sumo uno a la cantidad.
-                            }
-                            else
+                            // Verifico si se pudo ejecutar correctamente el SP correspondiente:
+                            var respuesta = DetalleVentaNegocio.aumentarCantidadVendida(obj, prod);
+                            if (respuesta.ErrorFound)
                             {
                                 Utils.ShowSnackbar("No hay suficiente stock para modificar la cantidad de unidades a vender. ", this.Page, GetType());
                             }

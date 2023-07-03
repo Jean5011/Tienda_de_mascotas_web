@@ -22,9 +22,10 @@ namespace Datos {
 
 
         public static class Procedures {
-            public static string Agregar = "SP_agregarRegistro_DetalleDeVenta";
+            public static string Agregar = "SP_DetalleDeVenta_Agregar";
             public static string Bajar = "SP_DetalleDeVenta_DarDeBaja";
-
+            public static string DisminuirCantidadVendida = "SP_DetalleDeVenta_disminuirCantidadVendida";
+            public static string AumentarCantidadVendida = "SP_DetalleDeVenta_aumentarCantidadVendida";
         }
 
         public static Response ObtenerDetalleVenta(int Cod) {
@@ -83,5 +84,34 @@ namespace Datos {
                     );
         }
 
+        public static Response aumentarCantidadVendida(Venta venta, Producto producto)
+        {
+            Connection conexion = new Connection(Connection.Database.Pets);
+            Response respuesta = conexion.ExecuteStoredProcedure(
+                    storedProcedureName: Procedures.AumentarCantidadVendida,
+                    parameters: new Dictionary<string, object>
+                    {
+                        { "@CodigoVenta", venta.Id },
+                        { "@CodigoProducto", producto.Codigo },
+                        { "@CUITProveedor", producto.Proveedor.CUIT }
+                    }
+                );
+            return respuesta.ErrorFound ? respuesta : conexion.Response;
+        }
+
+        public static Response disminuirCantidadVendida(Venta venta, Producto producto)
+        {
+            Connection conexion = new Connection(Connection.Database.Pets);
+            Response respuesta = conexion.ExecuteStoredProcedure(
+                    storedProcedureName: Procedures.DisminuirCantidadVendida,
+                    parameters: new Dictionary<string, object>
+                    {
+                        { "@CodigoVenta", venta.Id },
+                        { "@CodigoProducto", producto.Codigo },
+                        { "@CUITProveedor", producto.Proveedor.CUIT }
+                    }
+                );
+            return respuesta.ErrorFound ? respuesta : conexion.Response;
+        }
     }
 }

@@ -33,5 +33,15 @@ namespace Negocio
         {
             return DaoDetalleVentas.DarDeBajaRegistro(Cod);
         }
+
+        public static Response aumentarCantidadVendida(Venta venta, Producto producto)
+        {
+            return DaoDetalleVentas.aumentarCantidadVendida(venta, producto);
+        }
+
+        public static Response disminuirCantidadVendida(Venta venta, Producto producto)
+        {
+            return DaoDetalleVentas.disminuirCantidadVendida(venta, producto);
+        }
     }
 }
