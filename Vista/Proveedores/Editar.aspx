@@ -17,8 +17,15 @@
 
         <div class="group">
             <!-- CUIT-->
-            <label>
-                <asp:TextBox ID="Cuit_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Cuit"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">CUIT</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="Cuit_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="Cuit_tb_Validator" runat="server"
                 ControlToValidate="Cuit_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
@@ -26,8 +33,15 @@
                 ControlToValidate="Cuit_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>
             <!-- Razon Social-->
-            <label>
-                <asp:TextBox ID="RazonSocial_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Razon social"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Razón Social</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="RazonSocial_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="RazonSocial_tb_Validator" runat="server"
                 ControlToValidate="RazonSocial_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
@@ -37,8 +51,15 @@
         </div>
         <div class="group">
             <!-- Nombre de contacto-->
-            <label>
-                <asp:TextBox ID="NombreContacto_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Nombre contacto"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Nombre de contacto</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="NombreContacto_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="NombreContacto_tb_Validator" runat="server"
                 ControlToValidate="NombreContacto_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
@@ -46,8 +67,15 @@
                 ControlToValidate="NombreContacto_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-zñÑ\s]{1,30}$"></asp:RegularExpressionValidator>
              <!-- Codigo postal-->
-            <label>
-                <asp:TextBox ID="CodigoPostal_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Código postal"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Código Postal</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="CodigoPostal_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="CodigoPostal_tb_Validator" runat="server"
                 ControlToValidate="CodigoPostal_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
@@ -57,8 +85,15 @@
         </div>
         <div class="group">
              <!-- Correo electronico-->
-            <label>
-                <asp:TextBox ID="CorreoElectronico_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Correo Electronico"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Correo electrónico</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="CorreoElectronico_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="CorreoElectronico_tb_Validator" runat="server"
                 ControlToValidate="CorreoElectronico_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
@@ -66,8 +101,15 @@
                 ControlToValidate="CorreoElectronico_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"></asp:RegularExpressionValidator>
              <!-- Numero de telefono-->
-            <label>
-                <asp:TextBox ID="NumeroTelefono_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Numero de telefono"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Número de teléfono</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="NumeroTelefono_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="NumeroTelefono_tb_Validator" runat="server"
                 ControlToValidate="NumeroTelefono_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
@@ -77,8 +119,15 @@
         </div>
         <div class="group">
              <!-- Direccion-->
-            <label>
-                <asp:TextBox ID="Direccion_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Direccion"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Dirección</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="Direccion_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="Direccion_tb_Validator" runat="server"
                 ControlToValidate="Direccion_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
@@ -86,8 +135,15 @@
                 ControlToValidate="Direccion_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-z0-9\s]{1,30}$"></asp:RegularExpressionValidator>
               <!-- Localidad-->
-            <label>
-                <asp:TextBox ID="localidad_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Localidad"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Localidad</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="localidad_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="localidad_tb_Validator" runat="server"
                 ControlToValidate="localidad_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
@@ -97,8 +153,15 @@
         </div>
         <div class="group">
             <!--Provincia-->
-            <label>
-                <asp:TextBox ID="Provincia_tb" runat="server" CssClass="textBox" ValidationGroup="ValidationGroup" placeholder="Provincia"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">Provincia</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="Provincia_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="Provincia_tb_Validator" runat="server"
                 ControlToValidate="Provincia_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
@@ -106,8 +169,15 @@
                 ControlToValidate="Provincia_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-z\s]{1,30}$"></asp:RegularExpressionValidator>
               <!--Pais-->
-            <label>
-                <asp:TextBox ID="Pais_tb" runat="server" CssClass="textBox" placeholder="Pais" BorderColor="Black" ValidationGroup="ValidationGroup" BorderStyle="Solid"></asp:TextBox>
+             <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbnom">País</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="textBox mdc-text-field__input" ID="Pais_tb"  ValidationGroup="ValidationGroup"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="Pais_tb_Validator" runat="server"
                 ControlToValidate="Pais_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
