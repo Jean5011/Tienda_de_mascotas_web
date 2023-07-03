@@ -121,7 +121,7 @@
                     CommandArgument="Next" CssClass="mdc-icon-button mdc-button--primary">
                             <span class="mdc-icon-button__ripple"></span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">chevron_right</i>
-                            <!--span class="mdc-button__label"></span-->
+                            <!--span class="mdc-button__label"></span--> 
                 </asp:LinkButton>
                 <asp:LinkButton ID="GvDatosPagerLast" runat="server" CommandName="Page"
                     CommandArgument="Last" CssClass="mdc-icon-button mdc-button--primary">
