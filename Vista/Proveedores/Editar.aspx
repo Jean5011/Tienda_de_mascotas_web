@@ -47,7 +47,7 @@
                 ControlToValidate="RazonSocial_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
              <asp:RegularExpressionValidator ID="RazonSocial_tb_RegexValidator" runat="server"
                 ControlToValidate="RazonSocial_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-z0-9ñÑ\s]{1,50}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
         </div>
         <div class="group">
             <!-- Nombre de contacto-->
@@ -65,7 +65,7 @@
                 ControlToValidate="NombreContacto_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
                <asp:RegularExpressionValidator ID="NombreContacto_tb_RegexValidator" runat="server"
                 ControlToValidate="NombreContacto_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-zñÑ\s]{1,30}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,30}$"></asp:RegularExpressionValidator>
              <!-- Codigo postal-->
              <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
@@ -133,7 +133,7 @@
                 ControlToValidate="Direccion_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="Direccion_tb_RegexValidator" runat="server"
                 ControlToValidate="Direccion_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-z0-9\s]{1,30}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,30}$"></asp:RegularExpressionValidator>
               <!-- Localidad-->
              <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
@@ -149,7 +149,7 @@
                 ControlToValidate="localidad_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="localidad_tb_RegexValidator" runat="server"
                 ControlToValidate="localidad_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-z\s]{1,30}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,30}$"></asp:RegularExpressionValidator>
         </div>
         <div class="group">
             <!--Provincia-->
@@ -167,7 +167,7 @@
                 ControlToValidate="Provincia_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error"/>
               <asp:RegularExpressionValidator ID="Provincia_tb_RegexValidator" runat="server"
                 ControlToValidate="Provincia_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-z\s]{1,30}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,30}$"></asp:RegularExpressionValidator>
               <!--Pais-->
              <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
@@ -183,7 +183,7 @@
                 ControlToValidate="Pais_tb" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
               <asp:RegularExpressionValidator ID="Pais_tb_RegexValidator" runat="server"
                 ControlToValidate="Pais_tb" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-z\s]{1,20}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,20}$"></asp:RegularExpressionValidator>
         </div>
 
         <br>
