@@ -71,8 +71,19 @@ namespace Vista.Empleados {
 
 
         protected void GvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            gvAdmin.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            //gvAdmin.PageIndex = e.NewPageIndex;
+            //CargarDatos();
+
+            //guardamos el nuevo indice
+            int newPageIndex = e.NewPageIndex;
+            //nos fijamos de que no pueda acceder a una pagina inexistente
+            if (newPageIndex >= 0 && newPageIndex < gvAdmin.PageCount)
+            {
+                //cargamos el nuevo indice
+                gvAdmin.PageIndex = newPageIndex;
+                //cargamos datos
+                CargarDatos();
+            }
         }
 
         protected void GvAdmin_RowCreated(object sender, GridViewRowEventArgs e) {
