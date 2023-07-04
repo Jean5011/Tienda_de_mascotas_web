@@ -69,33 +69,6 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.RegularExpressionValidator txtPrecioUnitario_RegexValidator;
 
         /// <summary>
-        /// txtTipoProducto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTipoProducto;
-
-        /// <summary>
-        /// txtTipoProducto_Validator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtTipoProducto_Validator;
-
-        /// <summary>
-        /// txtTipoProducto_RegexValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtTipoProducto_RegexValidator;
-
-        /// <summary>
         /// txtDescripcion control.
         /// </summary>
         /// <remarks>
