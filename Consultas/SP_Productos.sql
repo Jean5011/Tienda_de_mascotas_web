@@ -116,3 +116,19 @@ Estado_Prod=@Estado
 WHERE CodProducto_Prod=@Codigo
 END
 GO
+alter PROCEDURE SP_Productos_Crear
+@Codigo varchar(10),
+@CUIT varchar(15),
+@Tipo varchar(10),
+@Nombre varchar(50),
+@Marca varchar(50),
+@Desc varchar(50),
+@Stock int,
+@Precio money,
+@Estado bit
+AS
+BEGIN
+INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,PrecioUnitario_Prod,Estado_Prod)
+SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Precio,@Estado
+END
+GO
