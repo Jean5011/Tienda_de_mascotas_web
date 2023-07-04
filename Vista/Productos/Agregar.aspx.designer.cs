@@ -24,13 +24,49 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
-        /// txtID control.
+        /// txtNombre_Validator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtID;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtNombre_Validator;
+
+        /// <summary>
+        /// txtNombre_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtNombre_RegexValidator;
+
+        /// <summary>
+        /// txtCodigo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigo;
+
+        /// <summary>
+        /// txtCodigo_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtCodigo_Validator;
+
+        /// <summary>
+        /// txtCodigo_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtCodigo_RegexValidator;
 
         /// <summary>
         /// txtTipoProducto control.
@@ -42,6 +78,24 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.TextBox txtTipoProducto;
 
         /// <summary>
+        /// txtTipoProducto_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtTipoProducto_Validator;
+
+        /// <summary>
+        /// txtTipoProducto_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtTipoProducto_RegexValidator;
+
+        /// <summary>
         /// txtCUITProveedor control.
         /// </summary>
         /// <remarks>
@@ -49,6 +103,24 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCUITProveedor;
+
+        /// <summary>
+        /// txtCUITProveedor_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtCUITProveedor_Validator;
+
+        /// <summary>
+        /// txtCUITProveedor_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtCUITProveedor_RegexValidator;
 
         /// <summary>
         /// txtDescripcion control.
@@ -60,6 +132,24 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
+        /// txtDescripcion_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtDescripcion_Validator;
+
+        /// <summary>
+        /// txtDescripcion_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtDescripcion_RegexValidator;
+
+        /// <summary>
         /// txtMarca control.
         /// </summary>
         /// <remarks>
@@ -67,6 +157,24 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMarca;
+
+        /// <summary>
+        /// txtMarca_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtMarca_Validator;
+
+        /// <summary>
+        /// txtMarca_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtMarca_RegexValidator;
 
         /// <summary>
         /// txtStock control.
@@ -78,6 +186,24 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.TextBox txtStock;
 
         /// <summary>
+        /// txtStock_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtStock_Validator;
+
+        /// <summary>
+        /// txtStock_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtStock_RegexValidator;
+
+        /// <summary>
         /// txtPrecioUnitario control.
         /// </summary>
         /// <remarks>
@@ -85,6 +211,24 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrecioUnitario;
+
+        /// <summary>
+        /// txtPrecioUnitario_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtPrecioUnitario_Validator;
+
+        /// <summary>
+        /// txtPrecioUnitario_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtPrecioUnitario_RegexValidator;
 
         /// <summary>
         /// btnVolverAtras control.
