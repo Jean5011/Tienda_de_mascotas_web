@@ -11,24 +11,37 @@ using Entidades;
 namespace Datos {
     public class DaoProductos {
         public DaoProductos() { }
-        private static readonly string ALL_COLUMNS = $"[{Producto.Columns.Codigo_Prod}], " +
-                                    $"[{Producto.Columns.CUITProv}], " +
-                                   $"[{Producto.Columns.CodTipoProducto}], " +
-                                   $"[{Producto.Columns.Nombre}], " +
-                                   $"[{Producto.Columns.Marca}], " +
-                                   $"[{Producto.Columns.Descripcion}], " +
-                                   $"[{Producto.Columns.Stock}], " +
-                                   $"[{Producto.Columns.Precio}], " +
-                                   $"[{Producto.Columns.Estado}] ";
 
+        /// <summary>
+        /// Todas las columnas de la tabla Producto.
+        /// </summary>
+        private static string ALL_COLUMNS {
+            get {
+                return $"[{Producto.Columns.Codigo_Prod}], " +
+                      $"[{Producto.Columns.CUITProv}], " +
+                     $"[{Producto.Columns.CodTipoProducto}], " +
+                     $"[{Producto.Columns.Nombre}], " +
+                     $"[{Producto.Columns.Marca}], " +
+                     $"[{Producto.Columns.Descripcion}], " +
+                     $"[{Producto.Columns.Stock}], " +
+                     $"[{Producto.Columns.Precio}], " +
+                     $"[{Producto.Columns.Estado}] ";
+            }
+        }
 
+        /// <summary>
+        /// Lista de procedimientos que se utilizan en esta clase.
+        /// </summary>
         public static class Procedures {
             public static string Crear = "SP_Productos_Crear";
             public static string ActualizarProducto = "SP_Productos_Actualizar";
             public static string EliminarProducto = "SP_Productos_Eliminar";
         }
 
-
+        /// <summary>
+        /// Obtener tabla de productos activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
@@ -38,7 +51,11 @@ namespace Datos {
                     );
         }
 
-
+        /// <summary>
+        /// Obtener un producto por su ID.
+        /// </summary>
+        /// <param name="ID">ID a buscar</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response BuscarProductoPorCod(string ID) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
@@ -52,11 +69,16 @@ namespace Datos {
                     );
         }
 
+        /// <summary>
+        /// Agregar un registro a la tabla Productos.
+        /// </summary>
+        /// <param name="Pr">Objeto Producto con sus propiedades establecidas.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response IngresarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             Response response = con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Crear,
-                        parameters: new Dictionary<string, object> 
+                        parameters: new Dictionary<string, object>
                         {
                             { "@Codigo", Pr.Codigo },
                             { "@CUIT", Pr.Proveedor.CUIT },
@@ -72,8 +94,12 @@ namespace Datos {
             return response.ErrorFound ? response : con.Response;
         }
 
-        public static Response ActualizarProducto(Producto Pr)
-        {
+        /// <summary>
+        /// Actualizar registro en la tabla Productos a partir de su código.
+        /// </summary>
+        /// <param name="Pr">Objeto Producto a actualizar.</param>
+        /// <returns>Objeto Response con el resultado de la operación. </returns>
+        public static Response ActualizarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -91,12 +117,15 @@ namespace Datos {
                             { "@Precio", Pr.Precio },
                             { "@Estado", Pr.Estado}
                         }
-                    );         
+                    );
         }
 
-
-        public static Response EliminarProducto(Producto Pr)//SOLO DA LA BAJA LOGICA
-        {
+        /// <summary>
+        /// Realiza la baja lógica de un registro en la tabla Productos.
+        /// </summary>
+        /// <param name="Pr">Objeto Producto a eliminar.</param>
+        /// <returns>Objeto Response con el resultado de la operación. </returns>
+        public static Response EliminarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.Response.ErrorFound
                 ? con.Response
@@ -108,10 +137,13 @@ namespace Datos {
                     );
         }
 
-
-        public static Response VerificarExiste(string ID)
-        {
-            string consulta = $"SELECT COUNT ({Producto.Columns.Codigo_Prod}) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
+        /// <summary>
+        /// Verifica si un registro con un ID dado existe en la tabla.
+        /// </summary>
+        /// <param name="ID">El ID del producto en cuestión.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response VerificarExiste(string ID) {
+            string consulta = $"SELECT COUNT([{Producto.Columns.Codigo_Prod}]) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.Response.ErrorFound
                 ? connection.Response
