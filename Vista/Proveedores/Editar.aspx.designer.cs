@@ -7,10 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Proveedores {
+namespace Vista.Proveedores
+{
 
 
-    public partial class Editar {
+    public partial class Editar
+    {
 
         /// <summary>
         /// Cuit_tb control.
@@ -281,6 +283,15 @@ namespace Vista.Proveedores {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator Pais_tb_RegexValidator;
+
+        /// <summary>
+        /// btnVolverAtras control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAtras;
 
         /// <summary>
         /// Button1 control.

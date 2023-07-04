@@ -187,7 +187,10 @@
         </div>
 
         <br>
-        <asp:Button class="mdc-button mdc-button--raised" ID="Button1" ValidationGroup="ValidationGroup" runat="server" Text="Guardar" OnClick="Button1_Click" />
         <br />
+         <div class="botones">
+            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="btnVolverAtras_Click" />
+             <asp:Button class="mdc-button mdc-button--raised" ID="Button1" ValidationGroup="ValidationGroup" runat="server" Text="Guardar" OnClick="Button1_Click" />
+        </div>
     </div>
 </asp:Content>

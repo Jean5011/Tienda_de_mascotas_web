@@ -85,5 +85,9 @@ namespace Vista.Proveedores {
             //Utils.MostrarMensaje($"El proveedor se agregaria correctamente en este caso. ", this.Page, GetType());//ELIMINAR ESTO, ES UN MENSAJE DE TESTEO AL VERIFICAR
         }
 
+        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Proveedores/Administrar.aspx");
+        }
     }
 }
