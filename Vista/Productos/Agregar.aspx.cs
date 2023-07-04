@@ -27,38 +27,66 @@ namespace Vista.Productos
             var UsuarioActual = auth.User;
             SesionNegocio.Autenticar(res =>
             {
-                string cadena = txtPrecioUnitario.Text;
 
-                // Eliminar las comas de la cadena
-                string valorSinComas = cadena.Replace(",", "");
+                Response existe = ProductoNegocio.VerificarExiste(txtCodigo.Text);
+                int cantidad;
+                if (!existe.ErrorFound)
+                {
+                    DataSet dt = existe.ObjectReturned as DataSet;
+                    cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
 
-                // Convertir la cadena a tipo "decimal"
-                decimal money = decimal.Parse(valorSinComas);
-                Producto Prod = new Producto()
-                {
-                    Codigo = txtCodigo.Text,
-                    Nombre = txtNombre.Text,
-                    Categoria = new TipoProducto() { Codigo = txtTipoProducto.Text },
-                    Descripcion = txtDescripcion.Text,
-                    Marca = txtMarca.Text,
-                    Stock = int.Parse(txtStock.Text),
-                    Precio = double.Parse(cadena),
-                    Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
-                    Estado = true
-                };
-                Response response = ProductoNegocio.IngresarProducto(Prod);
-                if (!response.ErrorFound)
-                {
-                    Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
+                    if (cantidad > 0)
+                    {   //Si es mayor a 0 significa que el producto existe
+
+
+                        Utils.MostrarMensaje($"El codigo de producto ingresado ya existe. ", this.Page, GetType());
+
+                    }
+                    else
+                    {
+                        //si encontre error significa que el producto no existe asi que se puede continuar con la creacion
+                        string numero = txtPrecioUnitario.Text;
+                        if (double.TryParse(numero, out double Pre))
+                        {
+                            string stock = txtStock.Text;
+                            if (int.TryParse(stock, out int st))
+                            {
+                                Producto Prod = new Producto()
+                                {
+                                    Codigo = txtCodigo.Text,
+                                    Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                                    Categoria = new TipoProducto() { Codigo = txtTipoProducto.Text },
+                                    Nombre = txtNombre.Text,
+                                    Marca = txtMarca.Text,
+                                    Descripcion = txtDescripcion.Text,
+                                    Stock = st,
+                                    Precio = Pre,
+                                    Estado = true,
+                                };
+                                Response response = ProductoNegocio.IngresarProducto(Prod);
+                                if (!response.ErrorFound)
+                                {
+                                    Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
+                                }
+                                else
+                                {
+                                    //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
+                                    string error = response.Message;
+                                    Utils.MostrarMensaje(error, this.Page, GetType());
+                                }
+                            }
+                            else
+                            {
+                                Utils.MostrarMensaje($"El stock ingresado no es valido. ", this.Page, GetType());
+                            }
+                        }
+                        else
+                        {
+                            Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
+                        }
+                    }
                 }
-                else
-                {
-                    //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
-                    string error = response.Message;
-                    Utils.MostrarMensaje(error, this.Page, GetType());
-                }
-            }, err =>
-            {
+            }, err => {
                 Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this.Page, GetType());
             });
         }

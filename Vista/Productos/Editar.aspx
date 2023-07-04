@@ -7,8 +7,9 @@
             align-content: center;
             justify-content: space-around
         }
-        .error{
-            color:red;
+
+        .error {
+            color: red;
         }
     </style>
     <div class="page">
@@ -31,9 +32,9 @@
                 ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtNombre_RegexValidator" runat="server"
                 ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
-                ValidationExpression="^[a-zA-Z0-9ñ\s-]{0,50}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
 
-             <label class="mdc-text-field mdc-text-field--outlined">
+            <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
@@ -43,26 +44,11 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtPrecioUnitario"></asp:TextBox>
             </label>
-             <asp:RequiredFieldValidator ID="txtPrecioUnitario_Validator" runat="server"
+            <asp:RequiredFieldValidator ID="txtPrecioUnitario_Validator" runat="server"
                 ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtPrecioUnitario_RegexValidator" runat="server"
                 ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
                 ValidationExpression="^[0-9]+(\.[0-9]+)?$"></asp:RegularExpressionValidator>
-           <!-- <label class="mdc-text-field mdc-text-field--outlined">
-                <span class="mdc-notched-outline">
-                    <span class="mdc-notched-outline__leading"></span>
-                    <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbtip">Tipo de producto</span>
-                    </span>
-                    <span class="mdc-notched-outline__trailing"></span>
-                </span>
-                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtTipoProducto"></asp:TextBox>
-            </label>
-            <asp:RequiredFieldValidator ID="txtTipoProducto_Validator" runat="server"
-                ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
-            <asp:RegularExpressionValidator ID="txtTipoProducto_RegexValidator" runat="server"
-                ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>-->
         </div>
         <div class="group">
             <label class="mdc-text-field mdc-text-field--outlined">
@@ -79,7 +65,8 @@
                 ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtDescripcion_RegexValidator" runat="server"
                 ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
-                ValidationExpression="^[a-zA-Z0-9ñ\s-]{0,50}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
+
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
@@ -94,7 +81,7 @@
                 ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtMarca_RegexValidator" runat="server"
                 ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
-                ValidationExpression="^[a-zA-Z0-9ñ\s-]{0,50}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
         </div>
 
         <div class="group">
@@ -108,12 +95,12 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtStock"></asp:TextBox>
             </label>
-              <asp:RequiredFieldValidator ID="txtStock_Validator" runat="server"
+            <asp:RequiredFieldValidator ID="txtStock_Validator" runat="server"
                 ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtStock_RegexValidator" runat="server"
                 ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
                 ValidationExpression="-?\d+$"></asp:RegularExpressionValidator>
-           
+
         </div>
         <div class="group">
             <h3>Desactivar<asp:CheckBox ID="DesactivarProducto" runat="server" /></h3>
