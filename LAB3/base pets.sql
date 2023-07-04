@@ -803,14 +803,14 @@ GO
 
 /**** Trigger ****/
 /*-- TRIGGER CREADOS POR MARÍA OLIVIA HANCZYC  ---*/
-CREATE TRIGGER TR_actualizarStockProductos
+alter TRIGGER TR_actualizarStockProductos
 ON DetalleDeVenta AFTER INSERT AS
 	BEGIN 
-		SET NOCOUNT ON
+		SET NOCOUNT ON 
 		UPDATE Productos
 		SET Stock_Prod = Stock_Prod - (SELECT Cantidad_Dv FROM INSERTED)
 		WHERE CodProducto_Prod = (SELECT CodProducto_Dv FROM INSERTED) AND
-		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod != 0
+		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod <> 0
 	END
 GO
 ---- Integrantes ----
