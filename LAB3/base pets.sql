@@ -1,7 +1,10 @@
 use master
 go
 
-create database pets
+create database Pets
+go
+
+use Pets
 go
 
 /**** TABLAS ****/
@@ -813,5 +816,17 @@ ON DetalleDeVenta AFTER INSERT AS
 		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod <> 0
 	END
 GO
+
+/*-- TRIGGER CREADOS POR EZEQUIEL ALEJANDRO MARTINEZ  ---*/
+
+CREATE TRIGGER TR_Productos_PrevenirEliminar
+ON Productos
+INSTEAD OF DELETE
+AS
+BEGIN
+    PRINT('No está permitido eliminar registros de la tabla "Productos" mediante el uso de "Delete".');
+    ROLLBACK;
+END;
+go
 ---- Integrantes ----
-select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen)
+select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen')
