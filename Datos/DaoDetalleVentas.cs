@@ -84,7 +84,7 @@ namespace Datos {
                     );
         }
 
-        public static Response aumentarCantidadVendida(string codigo)
+        public static Response aumentarCantidadVendida(string codigo, DetalleVenta dv)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
@@ -92,14 +92,14 @@ namespace Datos {
                     parameters: new Dictionary<string, object>
                     {
                         { "@CodigoVenta", codigo },
-                        { "@CodigoProducto", DetalleVenta.Columns.CodProducto_Dv }, // corregir esto.
-                        { "@CUITProveedor", DetalleVenta.Columns.CUITProv } // corregir esto.
+                        { "@CodigoProducto", dv.Producto.Codigo }, // ver esto.
+                        { "@CUITProveedor", dv.Proveedor.CUIT } // ver esto.
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;
         }
 
-        public static Response disminuirCantidadVendida(string codigo)
+        public static Response disminuirCantidadVendida(string codigo, DetalleVenta dv)
         {
             Connection conexion = new Connection(Connection.Database.Pets);
             Response respuesta = conexion.ExecuteStoredProcedure(
@@ -107,8 +107,8 @@ namespace Datos {
                     parameters: new Dictionary<string, object>
                     {
                         { "@CodigoVenta", codigo },
-                        { "@CodigoProducto", DetalleVenta.Columns.CodProducto_Dv }, // corregir esto.
-                        { "@CUITProveedor", DetalleVenta.Columns.CUITProv } // corregir esto.
+                        { "@CodigoProducto", dv.Producto.Codigo }, // ver esto.
+                        { "@CUITProveedor", dv.Proveedor.CUIT } // ver esto.
                     }
                 );
             return respuesta.ErrorFound ? respuesta : conexion.Response;

@@ -177,21 +177,28 @@ namespace Vista.Ventas {
         protected void modificarCantidadVendida_Command(object sender, CommandEventArgs e)
         {
             string codigo = e.CommandArgument.ToString();
+            // DetalleVenta dv = (DetalleVenta)e.CommandArgument;
 
             var res = DetalleVentaNegocio.ObtenerDetalleVenta(Convert.ToInt32(codigo)); // revisar esto.
             if (!res.ErrorFound)
             {
                 // DataSet data = res.ObjectReturned as DataSet;
-                DataRow dr = res.ObjectReturned as DataRow;
-            }
+                // DataRow dr = res.ObjectReturned as DataRow;
+                DetalleVenta dv = res.ObjectReturned as DetalleVenta;
 
-            switch (e.CommandName)
+                switch (e.CommandName)
+                {
+                    case "Restar": // terminar esto.
+                        DetalleVentaNegocio.disminuirCantidadVendida(codigo, dv);
+                        break;
+                    case "Sumar":
+                        DetalleVentaNegocio.aumentarCantidadVendida(codigo, dv);
+                        break;
+                }
+            }
+            else
             {
-                case "Restar": // terminar esto.
-                    DetalleVentaNegocio.disminuirCantidadVendida(codigo);
-                    break;
-                case "Sumar": DetalleVentaNegocio.aumentarCantidadVendida(codigo);
-                    break;
+                Utils.ShowSnackbar("No es posible obtener el detalle de la venta. ", this.Page, GetType());
             }
         }
     }
