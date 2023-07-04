@@ -57,6 +57,9 @@ namespace Datos {
             DataSet dataSet = new DataSet();
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    if(this.Response.ErrorFound) {
+                        return this.Response;
+                    }
                     using (SqlCommand command = new SqlCommand(query, con)) {
                         string q = query;
                         if (parameters != null) {
@@ -79,7 +82,7 @@ namespace Datos {
                     Exception = ex
                 };
             }
-            return new Response() {
+            return this.Response.ErrorFound ? this.Response : new Response() {
                 ObjectReturned = dataSet
             };
         }
@@ -94,6 +97,9 @@ namespace Datos {
         public Response RunTransaction(string query, Dictionary<string, object> parameters = null) {
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    if (this.Response.ErrorFound) {
+                        return this.Response;
+                    }
                     using (SqlCommand command = new SqlCommand(query, con)) {
                         if (parameters != null) {
                             foreach (KeyValuePair<string, object> parameter in parameters) {
@@ -129,6 +135,9 @@ namespace Datos {
             try {
                 DataSet dataSet = new DataSet();
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    if (this.Response.ErrorFound) {
+                        return this.Response;
+                    }
                     using (SqlCommand command = new SqlCommand(storedProcedureName, con)) {
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -170,6 +179,9 @@ namespace Datos {
         public Response ExecuteStoredProcedure(string storedProcedureName, Dictionary<string, object> parameters = null) {
             try {
                 using (SqlConnection con = OpenConnection(this.DatabaseName)) {
+                    if (this.Response.ErrorFound) {
+                        return this.Response;
+                    }
                     using (SqlCommand command = new SqlCommand(storedProcedureName, con)) {
                         command.CommandType = CommandType.StoredProcedure;
 

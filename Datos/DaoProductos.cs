@@ -44,9 +44,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = 1"
                     );
         }
@@ -59,9 +57,7 @@ namespace Datos {
         public static Response BuscarProductoPorCod(string ID) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
@@ -76,7 +72,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response IngresarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
-            Response response = con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Crear,
                         parameters: new Dictionary<string, object>
                         {
@@ -91,7 +87,6 @@ namespace Datos {
                             { "@Estado", Pr.Estado }
                         }
                     );
-            return response.ErrorFound ? response : con.Response;
         }
 
         /// <summary>
@@ -101,9 +96,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación. </returns>
         public static Response ActualizarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarProducto,
                         parameters: new Dictionary<string, object>
                         {
@@ -127,9 +120,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación. </returns>
         public static Response EliminarProducto(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.EliminarProducto,
                         parameters: new Dictionary<string, object> {
                             { "@Codigo", Pr.Codigo },
@@ -145,57 +136,14 @@ namespace Datos {
         public static Response VerificarExiste(string ID) {
             string consulta = $"SELECT COUNT([{Producto.Columns.Codigo_Prod}]) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
                         }
                     );
         }
-        /*
-        public static Response ActualizarEstadoProducto(Producto Pr) {
-            Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.ActualizarEstado,
-                        parameters: new Dictionary<string, object> {
-                            { "@Codigo", Pr.Codigo },
-                            { "@Estado",Pr.Estado }
-                        }
-                    );
-        }
-        
-        public static Response ActualizarPrecio(Producto Pr) {
-            Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.ActualizarPrecio,
-                        parameters: new Dictionary<string, object> {
-                            { "@Codigo", Pr.Codigo },
-                            { "@Precio", Pr.Precio }
-
-                        }
-                    );
-        }
-
-        public static Response ActualizarStock(Producto Pr) {
-            Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.ActualizarPrecio,
-                        parameters: new Dictionary<string, object> {
-                            { "@Codigo", Pr.Codigo },
-                            { "@Stock", Pr.Stock }
-
-                        }
-                    );
-        }
-        */
+       
     }
 
 }

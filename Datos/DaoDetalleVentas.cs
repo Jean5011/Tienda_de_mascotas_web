@@ -45,9 +45,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación</returns>
         public static Response ObtenerDetalleVenta(int Cod) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS}, [{Producto.Columns.Nombre}], [{Proveedor.Columns.RazonSocial}] FROM {DetalleVenta.Table} " +
                                $"INNER JOIN [{Producto.Table}] ON [{DetalleVenta.Columns.CodProducto_Dv}] = [{Producto.Columns.Codigo_Prod}] " +
                                $"INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{DetalleVenta.Columns.CUITProv}] WHERE [{DetalleVenta.Columns.CodVenta_Dv}] = @Codigo AND [{DetalleVenta.Columns.Estado_Dv}] = 1",
@@ -65,9 +63,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response EliminarDetalle(int codVenta, string codProducto) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.RunTransaction(
+            return connection.RunTransaction(
                         query: $"DELETE FROM {DetalleVenta.Table} WHERE [{DetalleVenta.Columns.CodVenta_Dv}] = @Codigo AND [{DetalleVenta.Columns.CodProducto_Dv}] = @Prod",
                         new Dictionary<string, object> {
                             { "@Codigo", codVenta},
@@ -83,7 +79,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response AgregarRegistro(DetalleVenta Dv) {
             Connection con = new Connection(Connection.Database.Pets);
-            Response response = con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Agregar,
                         parameters: new Dictionary<string, object>
                         {
@@ -93,15 +89,12 @@ namespace Datos {
                             { "@Cantidad", Dv.Cantidad }
                         }
                     );
-            return response.ErrorFound ? response : con.Response;
         }
 
         /// @Deprecated
         public static Response DarDeBajaRegistro(int Cod) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Bajar,
                         parameters: new Dictionary<string, object> {
                             { "@Codigo", Cod },
@@ -117,7 +110,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response aumentarCantidadVendida(string codigo, DetalleVenta dv) {
             Connection conexion = new Connection(Connection.Database.Pets);
-            Response respuesta = conexion.ExecuteStoredProcedure(
+            return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
@@ -126,7 +119,6 @@ namespace Datos {
                         { "@CUITProveedor", dv.Proveedor.CUIT }
                     }
                 );
-            return respuesta.ErrorFound ? conexion.Response : respuesta;
         }
 
         /// <summary>
@@ -137,7 +129,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response disminuirCantidadVendida(string codigo, DetalleVenta dv) {
             Connection conexion = new Connection(Connection.Database.Pets);
-            Response respuesta = conexion.ExecuteStoredProcedure(
+            return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.DisminuirCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
@@ -146,7 +138,6 @@ namespace Datos {
                         { "@CUITProveedor", dv.Proveedor.CUIT } 
                     }
                 );
-            return respuesta.ErrorFound ? conexion.Response : respuesta;
         }
     }
 }

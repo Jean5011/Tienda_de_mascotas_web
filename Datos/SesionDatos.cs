@@ -21,9 +21,7 @@ namespace Datos {
         /// <returns>Response con el resultado de la operación</returns>
         public static Response AbrirSesion(Sesion obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.RunTransaction(
+            return con.RunTransaction(
                         query: $"INSERT INTO [{Sesion.Table}] ([{Sesion.Columns.DNI}], [{Sesion.Columns.Token}], [{Sesion.Columns.FechaAlta}]) SELECT @dni, @token, DATEADD(hour, -3, GETDATE())",
                         parameters: new Dictionary<string, object> {
                             { "@dni", obj.Empleado.DNI },
@@ -40,9 +38,7 @@ namespace Datos {
         /// <returns>Response con el resultado de la operación.</returns>
         public static Response ObtenerSesion(string token, string dni) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchData(
+            return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM [{Sesion.Table}] WHERE [{Sesion.Columns.Token}] = @token AND [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.FechaAlta}] DESC",
                         parameters: new Dictionary<string, object> {
                             { "@token", token },
@@ -58,9 +54,7 @@ namespace Datos {
         /// <returns>Response con el resultado de la operación.</returns>
         public static Response CerrarSesion(Sesion obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.RunTransaction(
+            return con.RunTransaction(
                         query: $"UPDATE [{Sesion.Table}] SET [{Sesion.Columns.Estado}] = '0' WHERE [{Sesion.Columns.Codigo}] = @codigo",
                         parameters: new Dictionary<string, object> {
                             { "@codigo", obj.Codigo }
@@ -69,9 +63,7 @@ namespace Datos {
         }
         public static Response ReabrirSesion(Sesion obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.RunTransaction(
+            return con.RunTransaction(
                         query: $"UPDATE [{Sesion.Table}] SET [{Sesion.Columns.Estado}] = '1' WHERE [{Sesion.Columns.Codigo}] = @codigo",
                         parameters: new Dictionary<string, object> {
                             { "@codigo", obj.Codigo }
@@ -86,9 +78,7 @@ namespace Datos {
         /// <returns>Response con el resultado de la operación.</returns>
         public static Response CerrarTodasLasSesiones(Sesion obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.RunTransaction(
+            return con.RunTransaction(
                         query: $"UPDATE [{Sesion.Table}] SET [{Sesion.Columns.Estado}] = '0' WHERE [{Sesion.Columns.DNI}] = @dni",
                         parameters: new Dictionary<string, object> {
                             { "@dni", obj.Empleado.DNI }
@@ -98,9 +88,7 @@ namespace Datos {
 
         public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchData(
+            return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Sesion.Table}] INNER JOIN [{Empleado.Table}] ON [{Sesion.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.Codigo}] DESC",
                         parameters: new Dictionary<string, object>() {
                             { "@dni", DNI }

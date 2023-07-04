@@ -27,9 +27,7 @@ namespace Datos {
 
         public static Response IniciarVenta(Venta obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchStoredProcedure(
+            return con.FetchStoredProcedure(
                         storedProcedureName: Procedures.IniciarVenta,
                         parameters: new Dictionary<string, object> {
                             { "@DNI", obj.EmpleadoGestor.DNI },
@@ -41,9 +39,7 @@ namespace Datos {
         }
         public static Response GetVentaByID(int id) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchData(
+            return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.Id}] = @id",
                         parameters: new Dictionary<string, object> {
                             { "@id", id }
@@ -52,9 +48,7 @@ namespace Datos {
         }
         public static Response GetVentaByDNI(string dni) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchData(
+            return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_TOTAL_FORMATTED} FROM [{Venta.Table}] WHERE [{Venta.Columns.DNI}] LIKE '%' + @id + '%'  ORDER BY [{Venta.Columns.Id}] DESC",
                         parameters: new Dictionary<string, object> {
                             { "@id", dni }
@@ -63,9 +57,7 @@ namespace Datos {
         }
         public static Response GetVentas() {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.FetchData(
+            return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_TOTAL_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Venta.Table}] INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] ORDER BY [{Venta.Columns.Id}] DESC"
                     );
         }
@@ -73,37 +65,27 @@ namespace Datos {
         public static class Widgets {
             public static Connection con = new Connection(Connection.Database.Pets);
             public static Response TotalDeVentasUltimoDia() {
-                return con.Response.ErrorFound
-                    ? con.Response
-                    : con.FetchStoredProcedure(
+                return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimoDia
                         );
             }
             public static Response TotalDeVentasUltimaSemana() {
-                return con.Response.ErrorFound
-                    ? con.Response
-                    : con.FetchStoredProcedure(
+                return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimaSemana
                         );
             }
             public static Response ProductoMasVendidoUltimaSemana() {
-                return con.Response.ErrorFound
-                    ? con.Response
-                    : con.FetchStoredProcedure(
+                return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
                         );
             }
             public static Response CantidadDeProductosPorAgotarse() {
-                return con.Response.ErrorFound
-                    ? con.Response
-                    : con.FetchStoredProcedure(
+                return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosPorAgotarse
                         );
             }
             public static Response CantidadDeProductosAgotados() {
-                return con.Response.ErrorFound
-                    ? con.Response
-                    : con.FetchStoredProcedure(
+                return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosAgotados
                         );
             }

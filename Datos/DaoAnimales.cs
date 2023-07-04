@@ -39,9 +39,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeAnimales() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table}  where {Animal.Columns.Estado}=1"
                     );
         }
@@ -52,9 +50,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerLista() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=1"
                     );
         }
@@ -68,9 +64,7 @@ namespace Datos {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Animal.Table} WHERE [{Animal.Columns.Codigo}] = @ID and {Animal.Columns.Estado}=1 ";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
@@ -85,9 +79,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response IgresarAnimal(Animal An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Ingresar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodAnimales_An", An.Codigo },
@@ -104,9 +96,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response EliminarAnimal(Animal An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Eliminar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodAnimales_An", An.Codigo }
@@ -121,9 +111,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response ActualizarAnimal(Animal An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Actializar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodAnimales_An", An.Codigo },
@@ -139,9 +127,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaBaja() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=0"
                     );
         }
@@ -155,9 +141,7 @@ namespace Datos {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Animal.Table} WHERE [{Animal.Columns.Codigo}] = @ID and {Animal.Columns.Estado}=0 ";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
@@ -172,9 +156,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response AltaAnimal(Animal An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Alta,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodAnimales_An", An.Codigo }

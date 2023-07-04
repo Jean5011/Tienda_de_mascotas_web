@@ -30,9 +30,7 @@ namespace Datos
         public static Response ObtenerListaDeProveedores()
         {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} where {Proveedor.Columns.Estado}=1 "
                     );
         }
@@ -40,9 +38,7 @@ namespace Datos
         {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit and {Proveedor.Columns.Estado}=1 ";
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@cuit", CUIT }
@@ -52,7 +48,7 @@ namespace Datos
         public static Response InsertarProveedor(Proveedor proveedor)
         {
             Connection con = new Connection(Connection.Database.Pets);
-            Response response = con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Crear,
                         parameters: new Dictionary<string, object>
                         {
@@ -68,15 +64,12 @@ namespace Datos
                             { "@CodigoPostal", proveedor.CodigoPostal }
                         }
                     );
-            return response.ErrorFound ? response : con.Response;
 
         }
         public static Response EliminadoLogicoProveedor(Proveedor prov)
         {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.EliminarProducto,
                         parameters: new Dictionary<string, object> {
                             { "@CUIT", prov.CUIT },
@@ -87,9 +80,7 @@ namespace Datos
         public static Response ActualizarProveedor(Proveedor proveedor)
         {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarProducto,
                         parameters: new Dictionary<string, object>
                         {
@@ -113,9 +104,7 @@ namespace Datos
         {
             string consulta = $"SELECT COUNT ({Proveedor.Columns.CUIT}) AS [CUIT] FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @CUIT ";
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@CUIT", CUIT }
@@ -128,9 +117,7 @@ namespace Datos
         {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit";
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@cuit", CUIT }

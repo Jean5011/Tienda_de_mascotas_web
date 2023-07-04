@@ -27,9 +27,7 @@ namespace Datos {
 
         public static Response ObtenerListaDeTipoProducto() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}]"
                     );
         }
@@ -37,9 +35,7 @@ namespace Datos {
             string consulta = $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE [{TipoProducto.Columns.Codigo}] = @ID";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
@@ -49,9 +45,7 @@ namespace Datos {
 
         public static Response IgresarTipoProducto(TipoProducto An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Igresar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodTipoProducto_TP", An.Codigo },
@@ -64,9 +58,7 @@ namespace Datos {
 
         public static Response EliminarTipoProducto(TipoProducto An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Eliminar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodTipoProducto_TP", An.Codigo }
@@ -76,9 +68,7 @@ namespace Datos {
 
         public static Response ActualizarTipoProducto(TipoProducto An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Actualizar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodTipoProducto_TP", An.Codigo },
@@ -91,9 +81,7 @@ namespace Datos {
         /********************************************************************************************************************************************************************/
         public static Response ObtenerListaDeTipoProductoBajas() {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} whrere {TipoProducto.Columns.Estado} =0"
                     );
         }
@@ -101,9 +89,7 @@ namespace Datos {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} WHERE [{TipoProducto.Columns.Codigo}] = @ID and  {TipoProducto.Columns.Estado} =0 ";
             Connection connection = new Connection(Connection.Database.Pets);
             Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }
@@ -113,9 +99,7 @@ namespace Datos {
 
         public static Response AltaTipoProducto(TipoProducto An) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Alta,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodTipoProducto_TP", An.Codigo }

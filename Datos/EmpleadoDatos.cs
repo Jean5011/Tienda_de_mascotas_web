@@ -61,9 +61,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response ObtenerListaDeEmpleados(bool soloActivos = true) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] { (soloActivos ? $"WHERE [{Empleado.Columns.Estado}] = '1' " : "")}"
                     );
         }
@@ -76,9 +74,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool soloActivos = true) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @nombre + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") }",
                         parameters: new Dictionary<string, object>() {
                             { "@nombre", nombre }
@@ -94,10 +90,7 @@ namespace Datos {
         public static Response BuscarEmpleadoPorDNI(string DNI) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.DNI}] = @dni AND [{Empleado.Columns.Estado}] = '1'";
             Connection connection = new Connection(Connection.Database.Pets);
-            Trace.Write("BuscarEmpleadoPorDNI", $"Consulta: {consulta}");
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: consulta,
                         parameters: new Dictionary<string, object> {
                             { "@dni", DNI }
@@ -112,9 +105,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response BuscarEmpleadoPorNombre(string Nombre) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.Nombre}] LIKE '%@name%' AND [{Empleado.Columns.Estado}] = '1'",
                         parameters: new Dictionary<string, object> {
                             { "@name", Nombre }
@@ -129,9 +120,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response BuscarEmpleadoPorApellido(string Apellido) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.FetchData(
+            return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.Apellido}] LIKE '%@surname%' AND [{Empleado.Columns.Estado}] = '1'",
                         parameters: new Dictionary<string, object> {
                             { "@surname", Apellido }
@@ -147,9 +136,7 @@ namespace Datos {
         /// <returns>Response con el resultado de la transacción.</returns>
         public static Response CrearEmpleado(Empleado obj) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.ExecuteStoredProcedure(
+            return connection.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.CrearEmpleado,
                         parameters: new Dictionary<string, object>() {
                             { "@DNI", obj.DNI },
@@ -178,9 +165,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response Modificar(Empleado obj, string oldDNI) {
             Connection connection = new Connection(Connection.Database.Pets);
-            return connection.Response.ErrorFound
-                ? connection.Response
-                : connection.RunTransaction(
+            return connection.RunTransaction(
                         query: $"UPDATE [{Empleado.Table}] SET " +
                         $"[{Empleado.Columns.DNI}] = @DNI, " +
                         $"[{Empleado.Columns.Nombre}] = @NOMBRE, " +
@@ -220,9 +205,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response CambiarClave(Empleado obj) {
             Connection con = new Connection(Connection.Database.Pets);
-            return con.Response.ErrorFound
-                ? con.Response
-                : con.ExecuteStoredProcedure(
+            return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.CambiarClave,
                         parameters: new Dictionary<string, object> {
                             { "@DNI", obj.DNI },
