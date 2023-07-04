@@ -7,35 +7,53 @@ using System.Threading.Tasks;
 using Entidades;
 
 
-namespace Datos
-{
-    public class ProveedorDatos
-    {
-        private static string ALL_COLUMNS = $"[{Proveedor.Columns.CUIT}]," +
-            $"[{Proveedor.Columns.RazonSocial}]," +
-            $"[{Proveedor.Columns.NombreContacto}]," +
-            $"[{Proveedor.Columns.CorreoElectronico}]," +
-            $"[{Proveedor.Columns.Telefono}]," +
-            $"[{Proveedor.Columns.Direccion}]," +
-            $"[{Proveedor.Columns.Provincia}]," +
-            $"[{Proveedor.Columns.Localidad}]," +
-            $"[{Proveedor.Columns.Pais}]," +
-            $"[{Proveedor.Columns.CodigoPostal}]";
-        public static class Procedures
-        {
+namespace Datos {
+    public class ProveedorDatos {
+
+        /// <summary>
+        /// Todas las columnas de la tabla Proveedores.
+        /// </summary>
+        private static string ALL_COLUMNS {
+            get {
+                return $"[{Proveedor.Columns.CUIT}]," +
+          $"[{Proveedor.Columns.RazonSocial}]," +
+          $"[{Proveedor.Columns.NombreContacto}]," +
+          $"[{Proveedor.Columns.CorreoElectronico}]," +
+          $"[{Proveedor.Columns.Telefono}]," +
+          $"[{Proveedor.Columns.Direccion}]," +
+          $"[{Proveedor.Columns.Provincia}]," +
+          $"[{Proveedor.Columns.Localidad}]," +
+          $"[{Proveedor.Columns.Pais}]," +
+          $"[{Proveedor.Columns.CodigoPostal}]";
+            }
+        }
+
+        /// <summary>
+        /// Lista de procedimientos utilizados en esta clase.
+        /// </summary>
+        public static class Procedures {
             public static string Crear = "SP_Proveedor_Crear";
             public static string ActualizarProducto = "SP_Proveedores_Actualizar";
             public static string EliminarProducto = "SP_Proveedores_ActualizarEstado";
         }
-        public static Response ObtenerListaDeProveedores()
-        {
+
+        /// <summary>
+        /// Obtener lista de proveedores activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerListaDeProveedores() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} where {Proveedor.Columns.Estado}=1 "
                     );
         }
-        public static Response ObtenerProveedorByCUIT(string CUIT)
-        {
+
+        /// <summary>
+        /// Obtener un registro Proveedor a partir de un CUIT dado.
+        /// </summary>
+        /// <param name="CUIT">CUIT del Proveedor en cuestión.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerProveedorByCUIT(string CUIT) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit and {Proveedor.Columns.Estado}=1 ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
@@ -45,8 +63,13 @@ namespace Datos
                         }
                     );
         }
-        public static Response InsertarProveedor(Proveedor proveedor)
-        {
+
+        /// <summary>
+        /// Agrega un registro a la tabla Proveedores.
+        /// </summary>
+        /// <param name="proveedor">Objeto Proveedor a insertar.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
+        public static Response InsertarProveedor(Proveedor proveedor) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Crear,
@@ -66,8 +89,13 @@ namespace Datos
                     );
 
         }
-        public static Response EliminadoLogicoProveedor(Proveedor prov)
-        {
+
+        /// <summary>
+        /// Realiza un borrado lógico de un registro.
+        /// </summary>
+        /// <param name="prov">Objeto Proveedor a eliminar.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
+        public static Response EliminadoLogicoProveedor(Proveedor prov) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.EliminarProducto,
@@ -77,8 +105,13 @@ namespace Datos
                         }
                     );
         }
-        public static Response ActualizarProveedor(Proveedor proveedor)
-        {
+
+        /// <summary>
+        /// Actualizar proveedor en la tabla.
+        /// </summary>
+        /// <param name="proveedor">Objeto Proveedor a actualizar.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
+        public static Response ActualizarProveedor(Proveedor proveedor) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.ActualizarProducto,
@@ -98,10 +131,12 @@ namespace Datos
                     );
         }
 
-
-
-        public static Response VerificarExiste(string CUIT)
-        {
+        /// <summary>
+        /// Comprueba si existe un registro en la tabla Proveedores cuyo CUIT coincida con el dado.
+        /// </summary>
+        /// <param name="CUIT">CUIT a comprobar.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response VerificarExiste(string CUIT) {
             string consulta = $"SELECT COUNT ({Proveedor.Columns.CUIT}) AS [CUIT] FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @CUIT ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
@@ -112,9 +147,12 @@ namespace Datos
                     );
         }
 
-
-        public static Response ObtenerProveedorCUITEditar(string CUIT)
-        {
+        /// <summary>
+        /// Obtener un proveedor a partir de un CUIT.
+        /// </summary>
+        /// <param name="CUIT">CUIT a buscar.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerProveedorCUITEditar(string CUIT) {
             string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(

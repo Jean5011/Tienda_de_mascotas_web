@@ -11,6 +11,10 @@ using Entidades;
 namespace Datos {
     public class EmpleadoDatos {
         public EmpleadoDatos() { }
+
+        /// <summary>
+        /// Todas las columnas de la tabla Empleados.
+        /// </summary>
         public static string ALL_COLUMNS {
             get {
                 return $"[{Empleado.Columns.DNI}], " +
@@ -30,6 +34,10 @@ namespace Datos {
                    $"[{Empleado.Columns.Rol}]";
             }
         }
+
+        /// <summary>
+        /// Todas las columnas de la tabla Empleados, con el sueldo formateado en pesos argentinos.
+        /// </summary>
         public static string ALL_COLUMNS_BUT_FORMATTED {
             get {
                 return $"[{Empleado.Columns.DNI}], " +
@@ -49,6 +57,10 @@ namespace Datos {
      $"[{Empleado.Columns.Rol}]";
             }
         }
+
+        /// <summary>
+        /// Lista de procedimientos utilizados en esta clase.
+        /// </summary>
         public static class Procedures {
             public static string CambiarClave = "CambiarClave";
             public static string CrearEmpleado = "CrearEmpleado";

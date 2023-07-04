@@ -8,12 +8,29 @@ using Entidades;
 namespace Datos {
     public class SesionDatos {
         public SesionDatos() { }
-        public static string ALL_COLUMNS = $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
-                                           $"[{Sesion.Columns.FechaAlta}], [{Sesion.Columns.Token}], " +
-                                           $"[{Sesion.Columns.Estado}]";
-        public static string ALL_COLUMNS_BUT_FORMATTED = $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
-                                           $"[{Sesion.Columns.FechaAlta}], CONCAT('...', RIGHT([{Sesion.Columns.Token}], 15)) as [{Sesion.Columns.Token}], " +
-                                           $"[{Sesion.Columns.Estado}]";
+
+        /// <summary>
+        /// Todas las columnas de la tabla Sesiones.
+        /// </summary>
+        public static string ALL_COLUMNS {
+            get {
+                return  $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
+                        $"[{Sesion.Columns.FechaAlta}], [{Sesion.Columns.Token}], " +
+                        $"[{Sesion.Columns.Estado}]";
+            }
+        }
+
+        /// <summary>
+        /// Todas las columnas de la tabla Sesiones, formateado como para presentación user-friendly.
+        /// </summary>
+        public static string ALL_COLUMNS_BUT_FORMATTED {
+            get {
+                return  $"[{Sesion.Columns.Codigo}], [{Sesion.Columns.DNI}], " +
+                        $"[{Sesion.Columns.FechaAlta}], CONCAT('...', RIGHT([{Sesion.Columns.Token}], 15)) as [{Sesion.Columns.Token}], " +
+                        $"[{Sesion.Columns.Estado}]";
+            }
+        }
+
         /// <summary>
         /// Inserta un registro en la tabla Sesiones
         /// </summary>
@@ -61,6 +78,12 @@ namespace Datos {
                         }
                     );
         }
+
+        /// <summary>
+        /// Autoriza un token que fue revocado.
+        /// </summary>
+        /// <param name="obj">Objeto Sesion a autorizar.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response ReabrirSesion(Sesion obj) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.RunTransaction(
@@ -86,7 +109,12 @@ namespace Datos {
                     );
         }
 
-        public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) {
+        /// <summary>
+        /// Obtener sesiones alguna vez abiertas por el usuario en cuestión.
+        /// </summary>
+        /// <param name="DNI">DNI del usuario.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) { // TODO: Quitar "Abiertas".
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
                         query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Sesion.Table}] INNER JOIN [{Empleado.Table}] ON [{Sesion.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE [{Sesion.Columns.DNI}] = @dni ORDER BY [{Sesion.Columns.Codigo}] DESC",

@@ -8,6 +8,9 @@ using Entidades;
 namespace Datos {
     public class VentaDatos {
 
+        /// <summary>
+        /// Lista de procedimientos utilizados en esta clase.
+        /// </summary>
         public static class Procedures {
             public const string IniciarVenta = "IniciarVenta";
             public const string TotalVentasUltimoDia = "Widget_TotalVentas_UltimoDia";
@@ -17,14 +20,30 @@ namespace Datos {
             public const string CantidadDeProductosAgotados = "Widget_ContarProductosSinStock";
         }
 
-        public readonly static string ALL_COLUMNS = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
-                                          $"[{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
+        /// <summary>
+        /// Todas las columnas de la tabla Ventas.
+        /// </summary>
+        public static string ALL_COLUMNS {
+            get {
+                return $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], [{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
+            }
+        }
 
-        public readonly static string ALL_COLUMNS_BUT_TOTAL_FORMATTED = $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], " +
-                                          $"[{Venta.Columns.Fecha}], FORMAT([{Venta.Columns.Total}], 'C', 'es-AR') as [{Venta.Columns.Total}]";
+        /// <summary>
+        /// Todas las columnas de la tabla Ventas, con total formateado a pesos argentinos.
+        /// </summary>
+        public static string ALL_COLUMNS_BUT_TOTAL_FORMATTED {
+            get {
+                return $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], [{Venta.Columns.Fecha}], FORMAT([{Venta.Columns.Total}], 'C', 'es-AR') as [{Venta.Columns.Total}]";
+            }
+        }
 
 
-
+        /// <summary>
+        /// Crear un registro Venta.
+        /// </summary>
+        /// <param name="obj">Objeto Venta a insertar en la tabla.</param>
+        /// <returns>Objeto Response con el resultado de la transacción.</returns>
         public static Response IniciarVenta(Venta obj) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchStoredProcedure(
@@ -37,6 +56,12 @@ namespace Datos {
                         }
                     );
         }
+
+        /// <summary>
+        /// Obtener un registro por su ID.
+        /// </summary>
+        /// <param name="id">ID a buscar.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response GetVentaByID(int id) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
@@ -46,6 +71,12 @@ namespace Datos {
                         }
                     );
         }
+
+        /// <summary>
+        /// Obtener ventas hechas/creadas por un empleado en particular.
+        /// </summary>
+        /// <param name="dni">DNI del empleado.</param>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response GetVentaByDNI(string dni) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
@@ -55,6 +86,11 @@ namespace Datos {
                         }
                     );
         }
+
+        /// <summary>
+        /// Obtener todas las ventas.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response GetVentas() {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
@@ -62,28 +98,56 @@ namespace Datos {
                     );
         }
 
+        /// <summary>
+        /// Uso para Widgets en la página de Inicio.
+        /// </summary>
         public static class Widgets {
-            public static Connection con = new Connection(Connection.Database.Pets);
+            public static Connection con = new Connection(Connection.Database.Pets); // TODO: Revisar "public"
+
+            /// <summary>
+            /// Total recaudado en ventas de las últimas 24 horas.
+            /// </summary>
+            /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response TotalDeVentasUltimoDia() {
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimoDia
                         );
             }
+
+            /// <summary>
+            /// Total recaudado en ventas de los últimos siete días.
+            /// </summary>
+            /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response TotalDeVentasUltimaSemana() {
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimaSemana
                         );
             }
+
+            /// <summary>
+            /// Producto con mayor cantidad vendida en los últimos siete días.
+            /// </summary>
+            /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response ProductoMasVendidoUltimaSemana() {
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
                         );
             }
+
+            /// <summary>
+            /// Cantidad de productos con stock menor a cinco.
+            /// </summary>
+            /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response CantidadDeProductosPorAgotarse() {
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosPorAgotarse
                         );
             }
+
+            /// <summary>
+            /// Cantidad de productos con stock cero.
+            /// </summary>
+            /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response CantidadDeProductosAgotados() {
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosAgotados
