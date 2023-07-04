@@ -86,5 +86,10 @@ namespace Vista.Productos {
             });
         }
 
+        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Productos/Administrar.aspx");
+
+        }
     }
 }

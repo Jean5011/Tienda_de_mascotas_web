@@ -10,6 +10,11 @@
         .error{
             color:red;
         }
+         .botones {
+            display: flex;
+            align-content: center;
+            justify-content: space-around
+        }
     </style>
     <div class="page">
         <h2>Añadir proveedor</h2>
@@ -186,7 +191,11 @@
                 ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,30}$"></asp:RegularExpressionValidator>
         </div>
         <br>
-        <asp:Button class="mdc-button mdc-button--raised" ID="Button1" ValidationGroup="ValidationGroup" runat="server" Text="Guardar" OnClick="Button1_Click" />
+       
         <br />
+         <div class="botones">
+            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="btnVolverAtras_Click" />
+            <asp:Button class="mdc-button mdc-button--raised" ID="Button1" ValidationGroup="ValidationGroup" runat="server" Text="Guardar" OnClick="Button1_Click" />
+        </div>
     </div>
 </asp:Content>

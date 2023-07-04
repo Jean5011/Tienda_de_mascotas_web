@@ -77,5 +77,10 @@ namespace Vista.Proveedores {
             }
 
         }
+
+        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Proveedores/Administrar.aspx");
+        }
     }
 }

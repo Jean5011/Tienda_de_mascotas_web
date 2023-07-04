@@ -7,10 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Productos {
+namespace Vista.Productos
+{
 
 
-    public partial class Agregar {
+    public partial class Agregar
+    {
 
         /// <summary>
         /// txtNombre control.
@@ -83,6 +85,15 @@ namespace Vista.Productos {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrecioUnitario;
+
+        /// <summary>
+        /// btnVolverAtras control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVolverAtras;
 
         /// <summary>
         /// btnGuardar control.

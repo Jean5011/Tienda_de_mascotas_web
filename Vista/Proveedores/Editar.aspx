@@ -7,6 +7,11 @@
             width: 214px;
             height: 56px;
         }
+         .botones {
+            display: flex;
+            align-content: center;
+            justify-content: space-around
+        }
         .error{
             color:red;
         }

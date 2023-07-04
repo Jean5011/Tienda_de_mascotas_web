@@ -1,6 +1,21 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Agregar.aspx.cs" MasterPageFile="/Root.Master" Inherits="Vista.Productos.Agregar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <style>
+        .textBox {
+            border-radius: 4px 4px 0px 0px;
+            width: 214px;
+            height: 56px;
+        }
+         .botones {
+            display: flex;
+            align-content: center;
+            justify-content: space-around
+        }
+        .error{
+            color:red;
+        }
+    </style>
     <div class="page">
         <h2>Añadir producto</h2>
         <br />
@@ -85,10 +100,7 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtStock"></asp:TextBox>
             </label>
-        </div>
-
-        <div class="group">
-            <label class="mdc-text-field mdc-text-field--outlined">
+              <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
@@ -99,8 +111,10 @@
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtPrecioUnitario"></asp:TextBox>
             </label>
         </div>
-
         <br />
-        <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" />
+         <div class="botones">
+            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="btnVolverAtras_Click" />
+            <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" />
+        </div>
     </div>
 </asp:Content>
