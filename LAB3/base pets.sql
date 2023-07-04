@@ -8,7 +8,7 @@ go
 
 ---- tABLAS CREADAS POR JEAN ESQUEN ----
 
-Create table animales
+Create table Animales
 (
 
 Pk_CodAnimales_An varchar(10) not null,
@@ -17,7 +17,7 @@ nombre_An char(20) not null,
 
 NombreDeRaza_An char(20) null,
 
-estado bit not null default 1,
+estado_An bit not null default 1,
 
 Constraint PK_Animales primary key (Pk_CodAnimales_An)
 )
@@ -31,7 +31,7 @@ PK_CodTipoProducto_TP varchar(10) NOT NULL,
 CodAnimales_Tp varchar(10) NOT NULL,
 TipoDeProducto_Tp varchar(15) NOT NULL CHECK(TipoDeProducto_Tp='Comida' OR TipoDeProducto_Tp='Accesorios' OR TipoDeProducto_Tp='Ropa' OR TipoDeProducto_Tp='Higiene' OR TipoDeProducto_Tp='Salud'),
 Descripcion_TP text NOT NULL,
-estado bit not null default 1,
+estado_Tp bit not null default 1,
 Constraint PK_TipoDeProductos primary key (PK_CodTipoProducto_TP),
 constraint FK_TipoDeProductosxAnimales foreign key (CodAnimales_Tp)
 references Animales(Pk_CodAnimales_An)
@@ -801,4 +801,17 @@ WHERE CodProducto_Prod=@Codigo
 END
 GO
 
-select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo')
+/**** Trigger ****/
+/*-- TRIGGER CREADOS POR MARÍA OLIVIA HANCZYC  ---*/
+CREATE TRIGGER TR_actualizarStockProductos
+ON DetalleDeVenta AFTER INSERT AS
+	BEGIN 
+		SET NOCOUNT ON
+		UPDATE Productos
+		SET Stock_Prod = Stock_Prod - (SELECT Cantidad_Dv FROM INSERTED)
+		WHERE CodProducto_Prod = (SELECT CodProducto_Dv FROM INSERTED) AND
+		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod != 0
+	END
+GO
+---- Integrantes ----
+select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen)
