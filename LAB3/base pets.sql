@@ -8,9 +8,7 @@ use Pets
 go
 
 /**** TABLAS ****/
-
----- tABLAS CREADAS POR JEAN ESQUEN ----
-
+---- TABLAS CREADAS POR JEAN ESQUEN ----
 Create table Animales
 (
 
@@ -26,8 +24,6 @@ Constraint PK_Animales primary key (Pk_CodAnimales_An)
 )
 go
 
-
-
 create TABLE TipoDeProductos
 (
 PK_CodTipoProducto_TP varchar(10) NOT NULL,
@@ -40,8 +36,8 @@ constraint FK_TipoDeProductosxAnimales foreign key (CodAnimales_Tp)
 references Animales(Pk_CodAnimales_An)
 )
 go
----- tABLAS CREADAS POR JAVIER ANDRES TORALES ----
 
+---- TABLAS CREADAS POR JAVIER ANDRÉS TORALES ----
 CREATE TABLE Proveedores
 (
 CUIT_Prov varchar(10) NOT NULL,
@@ -58,8 +54,8 @@ Estado_Prov bit NOT NULL DEFAULT 1,
 CONSTRAINT PK_Proveedores PRIMARY KEY(CUIT_Prov)
 )
 go
----- tABLAS CREADAS POR MÁXIMO CANEDO ----
 
+---- TABLAS CREADAS POR MÁXIMO CANEDO ----
 CREATE TABLE Empleados (
 	DNI_Em CHAR(12) NOT NULL,
 	Nombre_Em VARCHAR(48) NOT NULL,
@@ -80,8 +76,6 @@ CREATE TABLE Empleados (
 )
 GO
 
-
-
 --- TABLA "SESIONES"
 CREATE TABLE Sesiones (
 	CodSesion_Se INT IDENTITY(1, 1) NOT NULL,
@@ -94,8 +88,7 @@ CREATE TABLE Sesiones (
 )
 GO
 
----- tABLAS CREADAS POR EZEQUIEL ALEJANDRO MARTINEZ ----
-
+---- TABLAS CREADAS POR EZEQUIEL ALEJANDRO MARTíNEZ ----
 Create Table Productos
 (
 CodProducto_Prod varchar(10) not null,
@@ -115,7 +108,6 @@ references Proveedores (CUIT_Prov),
 
 CONSTRAINT FK_Productos_TIPO FOREIGN KEY (CodTipoProducto_Prod)
 references TipoDeProductos (PK_CodTipoProducto_TP)
-
 )
 go
 
@@ -133,10 +125,7 @@ references Empleados (DNI_Em)
 )
 go
 
-
-
----- tABLAS CREADAS POR MARÍA OLIVIA HANCZYC  ----
-
+---- TABLAS CREADAS POR MARÍA OLIVIA HANCZYC  ----
 CREATE TABLE DetalleDeVenta
 (
 CodVenta_Dv int NOT NULL,
@@ -153,11 +142,9 @@ CONSTRAINT FK_DetalleDeVenta_Productos FOREIGN KEY (CodProducto_Dv, CUITProveedo
 GO
 
 /**** PROCEDIMIENTOS ALMACENADOS ****/
-
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR JEAN ESQUEN ---*/
 --Agregar--
-
 CREATE procedure SP_IngresarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10),
@@ -177,7 +164,6 @@ select @PK_CodTipoProducto_TP,@CodAnimales_Tp,@TipoDeProducto_Tp,@Descripcion_TP
 end
 go
 
---ALTER procedure SP_IngresarAnimal
 CREATE procedure SP_IngresarAnimal
 (
 @PK_CodAnimales_An varchar(10),
@@ -197,8 +183,7 @@ end
 go
 
 --Baja--
-
-ALTER procedure SP_EliminarAnimal
+CREATE procedure SP_EliminarAnimal
 (
 @PK_CodAnimales_An varchar(10)
 )
@@ -206,7 +191,7 @@ as
 update Animales set estado = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-ALTER procedure SP_EliminarTipoDeProductos
+CREATE procedure SP_EliminarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10)
 )
@@ -232,7 +217,6 @@ update TipoDeProductos set estado = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoPr
 go
 
 --Actualizar--
-
 create procedure SP_ActualizarTipoProducto
 (
 @PK_CodTipoProducto_TP varchar(10),
@@ -255,10 +239,8 @@ AS
 update Animales set nombre_An=@nombre_An,NombreDeRaza_An = upper(@NombreDeRaza_An) where PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-select * from Empleados 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR MÁXIMO CANEDO ---*/
-
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Añade un registro a la tabla Empleados.
 -- Uso: /Empleados/CrearCuenta.aspx
@@ -286,8 +268,6 @@ CREATE PROCEDURE CrearEmpleado
     END
 GO
 
-
-
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Cambia el hash y el salt de un empleado en particular.
 -- Uso: Página /Empleados/CambiarClave.aspx.
@@ -306,8 +286,6 @@ CREATE PROC CambiarClave
                 DNI_Em = @DNI
     END
 GO
-
-
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Cambia el sueldo de un registro Empleado. Devuelve 1 si se pudo, o 0 si no.
@@ -330,8 +308,6 @@ CREATE PROC CambiarSueldo
     END
 GO
 
-
-
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Deshabilita un registro Empleado. Devuelve 1 si se pudo, o 0 si no.
 CREATE PROC DeshabilitarEmpleado 
@@ -351,8 +327,6 @@ CREATE PROC DeshabilitarEmpleado
         RETURN
     END
 GO
-
-
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Devuelve la cantidad y los detalles del producto más vendido en los últimos siete días.
@@ -384,8 +358,7 @@ BEGIN
             AND 
             D.CUITProveedor_Dv = CUITProveedor_Prod
 END
-
-
+GO
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Devuelve el total de las ventas de las últimas 24 horas.
@@ -402,8 +375,7 @@ BEGIN
         AND 
         Ventas.Fecha_Vt <= DATEADD(hour, -3, GETDATE())
 END
-
-
+GO
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Devuelve el total de las ventas de los últimos siete días.
@@ -420,8 +392,7 @@ BEGIN
         AND 
         Ventas.Fecha_Vt <= DATEADD(hour, -3, GETDATE())
 END
-
-
+GO
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Devuelve la cantidad de productos que cuentan con stock menor a cinco.
@@ -438,8 +409,7 @@ BEGIN
             AND 
             Stock_Prod > 0
 END
-
-
+GO
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Devuelve la cantidad de productos que cuentan con stock cero.
@@ -453,8 +423,7 @@ BEGIN
         WHERE 
             Stock_Prod = 0
 END
-
-
+GO
 
 --- PROCEDIMIENTO ALMACENADO
 -- Descripción: Crea un registro en la tabla Ventas, y devuelve una tabla con el ID del nuevo registro y la cantidad de filas modificadas. Esta última se usa para verificar en el código que sí se haya podido ejecutar el INSERT.
@@ -488,128 +457,68 @@ CREATE PROCEDURE IniciarVenta
         SELECT ID, AFFECTEDROWS FROM @RESULTADO;
     END
 GO
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
-/*-- PROCEDIMIENTOS CREADOS POR JAVIER ANDRES TORALES ---*/
-
-CREATE PROCEDURE SP_Productos_Crear
-@Codigo varchar(10),
+/*-- PROCEDIMIENTOS CREADOS POR JAVIER ANDRÉS TORALES ---*/
+CREATE PROCEDURE SP_Proveedor_Crear
 @CUIT varchar(15),
-@Tipo varchar(10),
-@Nombre varchar(50),
-@Marca varchar(50),
-@Desc varchar(50),
-@Stock int,
-@Imagen varchar(100),
-@Precio money,
-@Estado bit
+@RazonSocial varchar(50),
+@NombreContacto varchar(30),
+@CorreoElectronico varchar(75),
+@Telefono varchar(20),
+@Direccion varchar(30),
+@Provincia varchar(30),
+@Localidad varchar(30),
+@Pais varchar(20),
+@CodigoPostal varchar(10)
 AS
 BEGIN
-INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,Imagen_Prod,PrecioUnitario_Prod,Estado_Prod)
-SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Imagen,@Precio,@Estado
+INSERT INTO Proveedores(CUIT_Prov,RazonSocial_Prov,NombreDeContacto_Prov,CorreoElectronico_Prov,Telefono_Prov,Direccion_Prov,Provincia_Prov,Localidad_Prov,Pais_Prov,CodigoPostal_Prov)
+SELECT @CUIT,@RazonSocial,@NombreContacto,@CorreoElectronico,@Telefono,@Direccion,@Provincia,@Localidad,@Pais,@CodigoPostal
 END
 GO
 
-CREATE PROCEDURE SP_Productos_ActualizarEstado
-@Codigo varchar(10),
-@Estado bit
-AS
-BEGIN
-UPDATE Productos
-SET Estado_Prod=@Estado
-where CodProducto_Prod=@Codigo
-END
-GO
-
-
-CREATE PROCEDURE SP_Productos_ActualizarPrecio
-@Codigo varchar(10),
-@Precio money
-AS
-BEGIN
-UPDATE Productos
-SET PrecioUnitario_Prod=@Precio
-where CodProducto_Prod=@Codigo
-END
-GO
-
-CREATE PROCEDURE SP_Productos_ActualizarStock
-@Codigo varchar(10),
-@Stock int
-AS
-BEGIN
-UPDATE Productos
-SET Stock_Prod=@Stock
-where CodProducto_Prod=@Codigo
-END
-GO
-
-CREATE TRIGGER TR_Productos_PrevenirEliminar
-ON Productos
-INSTEAD OF DELETE
-AS
-BEGIN
-    PRINT('No está permitido eliminar registros de la tabla "Productos" mediante el uso de "Delete".');
-    ROLLBACK;
-END;
-go
-
-
-CREATE PROCEDURE SP_Productos_Actualizar
-@Codigo varchar(10),
+CREATE PROCEDURE SP_Proveedores_ActualizarEstado
 @CUIT varchar(15),
-@Tipo varchar(10),
-@Nombre varchar(50),
-@Marca varchar(50),
-@Desc varchar(50),
-@Stock int,
-@Imagen varchar(100),
-@Precio money,
 @Estado bit
 AS
 BEGIN
-UPDATE Productos
+UPDATE Proveedores
+SET Estado_Prov=@Estado
+where CUIT_Prov=@CUIT
+END
+GO
+
+CREATE PROCEDURE SP_Proveedores_Actualizar
+@CUIT varchar(15),
+@RazonSocial varchar(50),
+@NombreContacto varchar(30),
+@CorreoElectronico varchar(75),
+@Telefono varchar(20),
+@Direccion varchar(30),
+@Provincia varchar(30),
+@Localidad varchar(30),
+@Pais varchar(20),
+@CodigoPostal varchar(10)
+AS
+BEGIN
+UPDATE Proveedores
 SET 
-CUITProveedor_Prod=@CUIT,
-CodTipoProducto_Prod=@Tipo,
-Nombre_Prod=@Nombre,
-Marca_Prod=@Marca,
-Descripcion_Prod=@Desc,
-Stock_Prod=@Stock,
-Imagen_Prod=@Imagen,
-PrecioUnitario_Prod=@Precio,
-Estado_Prod=@Estado
-WHERE CodProducto_Prod=@Codigo
-END
-GO
-alter PROCEDURE SP_Productos_Actualizar
-@Codigo varchar(10),
-@CUIT varchar(15),
-@Tipo varchar(10),
-@Nombre varchar(50),
-@Marca varchar(50),
-@Desc varchar(50),
-@Stock int,
-@Precio money,
-@Estado bit
-AS
-BEGIN
-UPDATE Productos
-SET 
-CUITProveedor_Prod=@CUIT,
-CodTipoProducto_Prod=@Tipo,
-Nombre_Prod=@Nombre,
-Marca_Prod=@Marca,
-Descripcion_Prod=@Desc,
-Stock_Prod=@Stock,
-PrecioUnitario_Prod=@Precio,
-Estado_Prod=@Estado
-WHERE CodProducto_Prod=@Codigo
+RazonSocial_Prov=@RazonSocial,
+NombreDeContacto_Prov=@NombreContacto,
+CorreoElectronico_Prov=@CorreoElectronico,
+Telefono_Prov=@Telefono,
+Direccion_Prov=@Direccion,
+Provincia_Prov=@Provincia,
+Localidad_Prov=@Localidad,
+Pais_Prov=@Pais,
+CodigoPostal_Prov=@CodigoPostal
+WHERE CUIT_Prov=@CUIT
 END
 GO
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR MARÍA OLIVIA HANCZYC  ---*/
-
 CREATE PROCEDURE SP_DetalleDeVenta_Agregar
 @CodigoVenta int,
 @CodigoProducto varchar(10),
@@ -692,9 +601,9 @@ ELSE --En cambio, si el stock es menor o igual a cero:
 		SELECT @Resultado AS RESULTADO
 	END
 GO
-----------------------------------------------------------------------------------------------------------------------------------------------
-/*-- PROCEDIMIENTOS CREADOS POR EZEQUIEL ALEJANDRO MARTINEZ  ---*/
 
+----------------------------------------------------------------------------------------------------------------------------------------------
+/*-- PROCEDIMIENTOS CREADOS POR EZEQUIEL ALEJANDRO MARTíNEZ  ---*/
 Create procedure SP_Ventas_Crear
 @DNI_Empleado char(12),
 @Tipo_De_Pago varchar(50),
@@ -724,13 +633,12 @@ CREATE PROCEDURE SP_Productos_Crear
 @Marca varchar(50),
 @Desc varchar(50),
 @Stock int,
-@Imagen varchar(100),
 @Precio money,
 @Estado bit
 AS
 BEGIN
-INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,Imagen_Prod,PrecioUnitario_Prod,Estado_Prod)
-SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Imagen,@Precio,@Estado
+INSERT INTO Productos(CodProducto_Prod,CUITProveedor_Prod,CodTipoProducto_Prod,Nombre_Prod,Marca_Prod,Descripcion_Prod,Stock_Prod,PrecioUnitario_Prod,Estado_Prod)
+SELECT @Codigo,@CUIT,@Tipo,@Nombre,@Marca,@Desc,@Stock,@Precio,@Estado
 END
 GO
 
@@ -744,7 +652,6 @@ SET Estado_Prod=@Estado
 where CodProducto_Prod=@Codigo
 END
 GO
-
 
 CREATE PROCEDURE SP_Productos_ActualizarPrecio
 @Codigo varchar(10),
@@ -767,16 +674,6 @@ SET Stock_Prod=@Stock
 where CodProducto_Prod=@Codigo
 END
 GO
-
-CREATE TRIGGER TR_Productos_PrevenirEliminar
-ON Productos
-INSTEAD OF DELETE
-AS
-BEGIN
-    PRINT('No está permitido eliminar registros de la tabla "Productos" mediante el uso de "Delete".');
-    ROLLBACK;
-END;
-go
 
 CREATE PROCEDURE SP_Productos_Actualizar
 @Codigo varchar(10),
@@ -804,9 +701,9 @@ WHERE CodProducto_Prod=@Codigo
 END
 GO
 
-/**** Trigger ****/
-/*-- TRIGGER CREADOS POR MARÍA OLIVIA HANCZYC  ---*/
-alter TRIGGER TR_actualizarStockProductos
+/**** Triggers ****/
+/*--- TRIGGER CREADO POR MARÍA OLIVIA HANCZYC  ---*/
+CREATE TRIGGER TR_actualizarStockProductos
 ON DetalleDeVenta AFTER INSERT AS
 	BEGIN 
 		SET NOCOUNT ON 
@@ -817,8 +714,7 @@ ON DetalleDeVenta AFTER INSERT AS
 	END
 GO
 
-/*-- TRIGGER CREADOS POR EZEQUIEL ALEJANDRO MARTINEZ  ---*/
-
+/*-- TRIGGER CREADO POR EZEQUIEL ALEJANDRO MARTíNEZ  ---*/
 CREATE TRIGGER TR_Productos_PrevenirEliminar
 ON Productos
 INSTEAD OF DELETE
@@ -828,5 +724,17 @@ BEGIN
     ROLLBACK;
 END;
 go
+
+/*--- TRIGGER CREADO POR JAVIER ANDRÉS TORALES ---*/
+CREATE TRIGGER TR_Proveedores_PrevenirEliminar
+ON Proveedores
+INSTEAD OF DELETE
+AS
+BEGIN
+    PRINT('No está permitido eliminar registros de la tabla "Proveedores" mediante el uso de "Delete".');
+    ROLLBACK;
+END;
+go
+
 ---- Integrantes ----
 select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen')
