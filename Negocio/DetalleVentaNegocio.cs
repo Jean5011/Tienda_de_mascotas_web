@@ -29,7 +29,8 @@ namespace Negocio
             return DaoDetalleVentas.EliminarDetalle(cv, cp);
         }
 
-        public static Response DarDeBaja (int Cod)
+        /// @Deprecated
+        public static Response DarDeBaja(int Cod) 
         {
             return DaoDetalleVentas.DarDeBajaRegistro(Cod);
         }
