@@ -77,7 +77,7 @@ namespace Datos {
         /// </summary>
         /// <param name="An">Objeto Animal con los datos a ingresar.</param>
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
-        public static Response IgresarAnimal(Animal An) {
+        public static Response IngresarAnimal(Animal An) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
                         storedProcedureName: Procedures.Ingresar,

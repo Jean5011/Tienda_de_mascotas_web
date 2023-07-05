@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+Plantillas/crear.tipo.html
+Plantillas/crear.tipo.html

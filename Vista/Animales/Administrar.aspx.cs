@@ -1,75 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades;
 using System.Data;
-using System.Diagnostics;
-using System.Security.Claims;
-using Negocio;
 using System.Web.UI.WebControls;
-using System.Web;
+using Entidades;
+using Negocio;
 
 namespace Vista.Animales {
+    /// <summary>
+    /// Vista Animales > Administrar.
+    /// Contiene una tabla desde la que se pueden ver todos los registros.
+    /// </summary>
     public partial class Administrar : System.Web.UI.Page {
 
+        /// Eventos
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
-
-
-
                 CargarDatos();
             }
         }
 
-        protected void GvDatos_SelectedIndexChanged(object sender, EventArgs e) {
-
-        }
-
-        public void CargarDatos(bool restartEditIndex = true) {
-            string tbuscar = txtBuscar.Text;
-            bool cargarTodo = tbuscar == "";
-            NegocioAnimales nt = new NegocioAnimales();
-            Response resultado = cargarTodo ? nt.GetAnimales() : nt.ObtenerPorCod(tbuscar);
-            if (!resultado.ErrorFound) {
-                DataSet dt = resultado.ObjectReturned as DataSet;
-                if (restartEditIndex) GvDatos.EditIndex = -1;
-                GvDatos.DataSource = dt;
-                GvDatos.DataBind();
-            }
-            else {
-                Utils.ShowSnackbar("Error cargando los registros. ", this, GetType());
-            }
-        }
-
-        public void BtnBuscar_Click(object sender, EventArgs e) {
+        protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
-
-
         }
 
+        protected void GvDatos_SelectedIndexChanged (object sender, EventArgs e) { }
 
-        protected void GvDatos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
-            var auth = Session[Utils.AUTH] as SessionData;
-            if (auth.User.Rol == Empleado.Roles.ADMIN) {
-                SesionNegocio.Autenticar(res => {
-                    Animal a = new Animal {
-                        Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_Cod_Animal")).Text
-                    };
-                    NegocioAnimales nt = new NegocioAnimales();
-                    nt.EliminarAnimal(a);
-                    CargarDatos();
-                }, err => {
-                    Utils.ShowSnackbar("El Token caducó. Iniciá sesión de nuevo.", this, GetType());
-                });
-
-            }
-            else {
-                Utils.ShowSnackbar("No disponés de los permisos suficientes para realizar esta acción. ", this, GetType());
-            }
+        protected void GvDatos_RowDeleting(object sender, GridViewDeleteEventArgs e) {
+            EliminarRegistro(e);
         }
 
         protected void GvDatos_RowEditing(object sender, GridViewEditEventArgs e) {
@@ -82,39 +40,13 @@ namespace Vista.Animales {
         }
 
         protected void GvDatos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            var auth = Session[Utils.AUTH] as SessionData;
-            if (auth.User.Rol == Empleado.Roles.ADMIN) {
-                SesionNegocio.Autenticar(res => {
-                    Animal a = new Animal {
-                        Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text,
-                        Nombre = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditNombre")).Text,
-                        Raza = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditRaza")).Text
-                    };
-                    ////////////////////////////////////////////////////////////////////////////////
-                    NegocioAnimales nt = new NegocioAnimales();
-                    nt.ActualizarAnimal(a);
-                    CargarDatos();
-                }, err => {
-                    Utils.ShowSnackbar("El token caducó. Deberás iniciar sesión de nuevo. ", this, GetType());
-                });
-            }
-            else {
-                Utils.ShowSnackbar("No disponés de los permisos suficientes para realizar esta acción. ", this, GetType());
-            }
+            EditarRegistro(e);
         }
 
         protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            //GvDatos.PageIndex = e.NewPageIndex;
-            //CargarDatos();
-
-            //guardamos el nuevo indice
             int newPageIndex = e.NewPageIndex;
-            //nos fijamos de que no pueda acceder a una pagina inexistente
-            if (newPageIndex >= 0 && newPageIndex < GvDatos.PageCount)
-            {
-                //cargamos el nuevo indice
+            if (newPageIndex >= 0 && newPageIndex < GvDatos.PageCount) {
                 GvDatos.PageIndex = newPageIndex;
-                //cargamos datos
                 CargarDatos();
             }
         }
@@ -129,6 +61,7 @@ namespace Vista.Animales {
                 }
             }
         }
+
         protected void GvDatosPagerPageTxtBox_TextChanged(object sender, EventArgs e) {
             int intendedPage = int.Parse(((TextBox)sender).Text) - 1;
             if (intendedPage <= GvDatos.PageCount - 1) {
@@ -148,8 +81,56 @@ namespace Vista.Animales {
             }
         }
 
-        protected void GvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
+        protected void GvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) { }
 
+        /// Métodos
+        
+        ///<summary>
+        /// Carga los datos del GridView.
+        /// </summary>
+        /// <param name="reiniciarEditIndex">Indica si se debe establecer el EditIndex en -1.</param>
+        protected void CargarDatos(bool reiniciarEditIndex = true) {
+            string textoABuscar = txtBuscar.Text;
+            var response = NegocioAnimales.BuscarAnimales(textoABuscar);
+            if (!response.ErrorFound) {
+                DataSet dt = response.ObjectReturned as DataSet;
+                if (reiniciarEditIndex) GvDatos.EditIndex = -1;
+                GvDatos.DataSource = dt;
+                GvDatos.DataBind();
+                return;
+            }
+            Utils.ShowSnackbar("Error cargando los registros. ", this);
         }
+
+        /// <summary>
+        /// Manda a eliminar un registro e informa el resultado obtenido.
+        /// </summary>
+        protected void EliminarRegistro(GridViewDeleteEventArgs e) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            var animal = new Animal {
+                Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_Cod_Animal")).Text
+            };
+            var respuesta = NegocioAnimales.EliminarAnimal(auth, animal);
+            if (!respuesta.ErrorFound) CargarDatos();
+            Utils.ShowSnackbar(respuesta.Message, this);
+            
+        }
+
+        /// <summary>
+        /// Manda a editar un registro e informa el resultado obtenido.
+        /// </summary>
+        protected void EditarRegistro(GridViewUpdateEventArgs e) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            var animal = new Animal {
+                Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text,
+                Nombre = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditNombre")).Text,
+                Raza = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditRaza")).Text
+            };
+            var respuesta = NegocioAnimales.ActualizarAnimal(auth, animal);
+            if (!respuesta.ErrorFound) CargarDatos();
+            Utils.ShowSnackbar(respuesta.Message, this);
+        }
+
+
     }
 }
