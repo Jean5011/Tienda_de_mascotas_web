@@ -30,10 +30,9 @@ namespace Vista.Productos
         {
 
             Response codigos = NegocioTipoDeProducto.ObtenerIDS();
-            DataSet ds = new DataSet();
             if (!codigos.ErrorFound)
             {
-                ds = codigos.ObjectReturned as DataSet;
+                DataSet ds = codigos.ObjectReturned as DataSet;
                 ddlTipoProducto.DataSource = ds;
                 int startingIndex = 1; // Posición de inicio para cargar los datos
 
@@ -46,7 +45,7 @@ namespace Vista.Productos
             }
 
         }
-        protected void vaciarCampos()
+        protected void VaciarCampos()
         {
             txtCodigo.Text = "";
             txtCUITProveedor.Text = "";
@@ -75,11 +74,12 @@ namespace Vista.Productos
             }
  
         }
-        bool validarCamposProducto(bool[] productoNuevo, int tam)
+        bool ValidarCamposProducto(bool[] productoNuevo, int tam)
         {
-            List<string> messages = new List<string>();
-            messages.Add("Error, el codigo de producto ingresado ya existe.");
-            messages.Add("Error, el cuit de proveedor ingresado no existe.");
+            List<string> messages = new List<string>() { 
+                "Error, el codigo de producto ingresado ya existe.",
+                "Error, el cuit de proveedor ingresado no existe."
+            };
             bool pNew = true;
             for (int i = 0; i < tam; i++)
             {
@@ -101,7 +101,7 @@ namespace Vista.Productos
             SesionNegocio.Autenticar(res =>
             {
                 RellenarVectorProductoNuevo(productoNuevo);
-                if (validarCamposProducto(productoNuevo, tam))
+                if (ValidarCamposProducto(productoNuevo, tam))
                 {
                     Producto Prod = new Producto()
                     {
@@ -118,7 +118,7 @@ namespace Vista.Productos
                     Response response = ProductoNegocio.IngresarProducto(Prod);
                     if (!response.ErrorFound)
                     {
-                        vaciarCampos();
+                        VaciarCampos();
                         Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
                     }
                     else

@@ -13,12 +13,9 @@ namespace Vista.Proveedores {
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
-
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
             }
         }
-        protected void vaciarTextBoxs()
+        protected void VaciarTextBoxs()
         {
             Cuit_tb.Text = "";
             RazonSocial_tb.Text = "";
@@ -64,7 +61,7 @@ namespace Vista.Proveedores {
                     Response resInsertarProveedor = ProveedorNegocio.InsertarProveedor(proveedor);
                     if (!resInsertarProveedor.ErrorFound)
                     {
-                        vaciarTextBoxs();
+                        VaciarTextBoxs();
                         Utils.ShowSnackbar("Proveedor ha sido agregado correctamente!.", this, GetType());
 
                     }
@@ -77,7 +74,7 @@ namespace Vista.Proveedores {
 
         }
 
-        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        protected void BtnVolverAtras_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Proveedores/Administrar.aspx");
         }
