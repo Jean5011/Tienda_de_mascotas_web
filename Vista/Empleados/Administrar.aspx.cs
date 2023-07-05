@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
@@ -14,38 +10,6 @@ namespace Vista.Empleados {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
-            }
-        }
-
-        public void CargarDatos() {
-            bool soloActivos = !chkEstado.Checked;
-            string searchquery = txtBuscar.Text;
-            bool hayParaBuscar = !string.IsNullOrEmpty(searchquery);
-            Response data = hayParaBuscar 
-                            ? EmpleadoNegocio.FiltrarEmpleadosPorNombreCompleto(searchquery, soloActivos)
-                            : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
-            if (!data.ErrorFound) {
-                var dt = data.ObjectReturned as DataSet;
-                var auth = (Session[Utils.AUTH] as SessionData);
-                if (auth.User != null) {
-                    var UsuarioActual = auth.User;
-                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                        gvAdmin.DataSource = dt;
-                        gvAdmin.DataBind();
-                        gvEmpleado.Visible = false;
-                        gvEmpleado.Enabled = false;
-                    }
-                    else {
-                        gvEmpleado.DataSource = dt;
-                        gvEmpleado.DataBind();
-                        gvAdmin.Visible = false;
-                        gvAdmin.Enabled = false;
-
-                    }
-                }
-            }
-            else {
-                Utils.MostrarMensaje($"Error. {data.Details} . {data.Message} .", this.Page, GetType());
             }
         }
 
@@ -61,27 +25,10 @@ namespace Vista.Empleados {
 
         }
 
-
-
-
-
-
-
-
-
-
         protected void GvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            //gvAdmin.PageIndex = e.NewPageIndex;
-            //CargarDatos();
-
-            //guardamos el nuevo indice
             int newPageIndex = e.NewPageIndex;
-            //nos fijamos de que no pueda acceder a una pagina inexistente
-            if (newPageIndex >= 0 && newPageIndex < gvAdmin.PageCount)
-            {
-                //cargamos el nuevo indice
+            if (newPageIndex >= 0 && newPageIndex < gvAdmin.PageCount) {
                 gvAdmin.PageIndex = newPageIndex;
-                //cargamos datos
                 CargarDatos();
             }
         }
@@ -168,6 +115,37 @@ namespace Vista.Empleados {
         }
 
 
+        public void CargarDatos() {
+            bool soloActivos = !chkEstado.Checked;
+            string searchquery = txtBuscar.Text;
+            bool hayParaBuscar = !string.IsNullOrEmpty(searchquery);
+            Response data = hayParaBuscar
+                            ? EmpleadoNegocio.FiltrarEmpleadosPorNombreCompleto(searchquery, soloActivos)
+                            : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
+            if (!data.ErrorFound) {
+                var dt = data.ObjectReturned as DataSet;
+                var auth = (Session[Utils.AUTH] as SessionData);
+                if (auth.User != null) {
+                    var UsuarioActual = auth.User;
+                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
+                        gvAdmin.DataSource = dt;
+                        gvAdmin.DataBind();
+                        gvEmpleado.Visible = false;
+                        gvEmpleado.Enabled = false;
+                    }
+                    else {
+                        gvEmpleado.DataSource = dt;
+                        gvEmpleado.DataBind();
+                        gvAdmin.Visible = false;
+                        gvAdmin.Enabled = false;
+
+                    }
+                }
+            }
+            else {
+                Utils.MostrarMensaje($"Error. {data.Details} . {data.Message} .", this.Page, GetType());
+            }
+        }
 
     }
 }

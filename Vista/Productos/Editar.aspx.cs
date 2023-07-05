@@ -8,33 +8,34 @@ using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
 
-namespace Vista.Productos
-{
-    public partial class Editar1 : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (IsPostBack == false)
-            {
-                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+namespace Vista.Productos {
+    // TODO: ELIMINAR EN OTRA WEBFORM
+    public partial class Editar1 : System.Web.UI.Page {
+        protected void Page_Load(object sender, EventArgs e) {
+            if (IsPostBack == false) {
+                // Página accesible para administradores.
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
-                if (Request.QueryString["ID"] != null)
-                {
+                if (Request.QueryString["ID"] != null) {
                     string userId = Request.QueryString["ID"];
                     cargarCamposProducto(userId);
                 }
 
             }
         }
+        protected void btnVolverAtras_Click(object sender, EventArgs e) {
+            Response.Redirect("/Productos/");
+        }
+        protected void BtnGuardar_Click(object sender, EventArgs e) {
+            GuardarCambios();
+        }
 
-        protected void cargarCamposProducto(string cod)
-        {
+        protected void cargarCamposProducto(string cod) {
             var res = ProductoNegocio.ObtenerPorCodigo(cod);
-            if (!res.ErrorFound)
-            {
+            if (!res.ErrorFound) {
                 Producto producto = res.ObjectReturned as Producto;
                 txtNombre.Text = producto.Nombre;
-               // txtTipoProducto.Text = producto.Categoria.Codigo;
+                // txtTipoProducto.Text = producto.Categoria.Codigo;
                 txtDescripcion.Text = producto.Descripcion;
                 txtMarca.Text = producto.Marca;
                 txtStock.Text = (producto.Stock).ToString();
@@ -42,67 +43,36 @@ namespace Vista.Productos
             }
 
         }
-        protected void EliminaProducto(string cod)
-        {
-            Response resProductoEliminado = ProductoNegocio.EliminarProducto(new Producto() { Codigo = cod });
-            if (!resProductoEliminado.ErrorFound)
-            {
-                Utils.MostrarMensaje("El Producto con el código " + cod + " fue eliminado!. ", this.Page, GetType());
-            }
-            else
-            {
-                Utils.MostrarMensaje("Hubo un error, no se puedo eliminar el producto.", this.Page, GetType());
-            }
+        protected void EliminaProducto(string cod) {
+            SessionData auth = Session[Utils.AUTH] as SessionData;
+            var res = ProductoNegocio.EliminarProducto(auth, new Producto() { Codigo = cod });
+            Utils.ShowSnackbar(res.Message, this);
         }
-        protected void ActualizaProducto(Producto productoViejo )
-        {
-            Producto p = new Producto()
-            {
+        protected void ActualizaProducto(Producto productoViejo) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            var producto = new Producto() {
                 Codigo = productoViejo.Codigo,
                 Nombre = txtNombre.Text,
                 Categoria = new TipoProducto() { Codigo = productoViejo.Categoria.Codigo },
                 Descripcion = txtDescripcion.Text,
                 Marca = txtMarca.Text,
                 Stock = int.Parse(txtStock.Text),
-                Precio = int.Parse(txtPrecioUnitario.Text),
-                Proveedor=productoViejo.Proveedor,
-                Estado= productoViejo.Estado
-
+                Precio = double.Parse(txtPrecioUnitario.Text),
+                Proveedor = productoViejo.Proveedor,
+                Estado = productoViejo.Estado
             };
-            Response resProductoEliminado = ProductoNegocio.ActualizarProducto(p);
-            if (!resProductoEliminado.ErrorFound)
-            {
-                Utils.MostrarMensaje("El Producto con el código " + productoViejo.Codigo + " fue actualizado!. ", this.Page, GetType());
-            }
-            else
-            {
-                Utils.MostrarMensaje("Hubo un error, no se puedo actualizar el producto.", this.Page, GetType());
-            }
-            
-
+            var res = ProductoNegocio.ActualizarProducto(auth, producto);
+            Utils.ShowSnackbar(res.Message, this);
         }
-        protected void BtnGuardar_Click(object sender, EventArgs e)
-        {
-            if (Request.QueryString["ID"] != null)
-            {
+        protected void GuardarCambios() {
+            if (Request.QueryString["ID"] != null) {
                 string cod = Request.QueryString["ID"];
                 var res = ProductoNegocio.ObtenerPorCodigo(cod);
-                if (DesactivarProducto.Checked)
-                {
-                    EliminaProducto(cod);
+                if (!res.ErrorFound) {
+                    ActualizaProducto((Producto)res.ObjectReturned);
                 }
-                else
-                {
-                    if(!res.ErrorFound) ActualizaProducto((Producto)res.ObjectReturned);
 
-                }
             }
-
-        }
-
-        protected void btnVolverAtras_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Productos/Administrar.aspx");
         }
 
     }

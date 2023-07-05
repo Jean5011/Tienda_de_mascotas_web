@@ -143,8 +143,11 @@ namespace Vista.Empleados {
 
 
         protected void GvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            gvAdmin.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            int newPageIndex = e.NewPageIndex;
+            if (newPageIndex >= 0 && newPageIndex < gvAdmin.PageCount) {
+                gvAdmin.PageIndex = newPageIndex;
+                CargarDatos();
+            }
         }
         protected void GvAdmin_RowCreated(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.Pager) {
