@@ -20,5 +20,18 @@ namespace Entidades {
             this.AffectedRows = 0;
             this.Exception = null;
         }
+
+        public static Response TokenCaducado = new Response {
+            ErrorFound = true,
+            Message = "El token caducó, iniciá sesión para continuar. "
+        };
+        public static Response ErrorDesconocido = new Response {
+            ErrorFound = true,
+            Message = "Error desconocido. "
+        };
+        public static Response PermisosInsuficientes = new Response {
+            ErrorFound = true,
+            Message = "No disponés de los permisos suficientes para realizar esta acción. "
+        };
     }
 }
