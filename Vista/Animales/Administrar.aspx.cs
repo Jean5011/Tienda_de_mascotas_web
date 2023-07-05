@@ -104,8 +104,19 @@ namespace Vista.Animales {
         }
 
         protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            GvDatos.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            //GvDatos.PageIndex = e.NewPageIndex;
+            //CargarDatos();
+
+            //guardamos el nuevo indice
+            int newPageIndex = e.NewPageIndex;
+            //nos fijamos de que no pueda acceder a una pagina inexistente
+            if (newPageIndex >= 0 && newPageIndex < GvDatos.PageCount)
+            {
+                //cargamos el nuevo indice
+                GvDatos.PageIndex = newPageIndex;
+                //cargamos datos
+                CargarDatos();
+            }
         }
 
         protected void GvDatos_RowCreated(object sender, GridViewRowEventArgs e) {

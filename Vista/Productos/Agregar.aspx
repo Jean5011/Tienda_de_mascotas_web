@@ -66,9 +66,10 @@
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
-                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtTipoProducto"></asp:TextBox>
+                <asp:DropDownList id="ddlTipoProducto" runat="server" class="mdc-text-field__input"></asp:DropDownList>
+              <!--  <asp:DropDownList runat="server" CssClass="mdc-text-field__input" ID="txtTipoProducto"></asp:DropDownList>-->
             </label>
-            <asp:RequiredFieldValidator ID="txtTipoProducto_Validator" runat="server"
+           <!-- <asp:RequiredFieldValidator ID="txtTipoProducto_Validator" runat="server"
                 ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtTipoProducto_RegexValidator" runat="server"
                 ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup"

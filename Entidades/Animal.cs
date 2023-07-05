@@ -13,7 +13,7 @@ namespace Entidades
             public const string Codigo = "PK_CodAnimales_An";
             public const string Nombre = "nombre_An";
             public const string Raza = "NombreDeRaza_An";
-            public const string Estado = "estado";
+            public const string Estado = "Estado_An";
         }
         public const string Table = "Animales";
         public string Codigo { get; set; }
