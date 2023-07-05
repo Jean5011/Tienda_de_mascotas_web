@@ -35,12 +35,17 @@ namespace Vista.Productos
             {
                 ds = codigos.ObjectReturned as DataSet;
                 ddlTipoProducto.DataSource= ds;
-                ddlTipoProducto.DataTextField = "Descripcion_TP";
-                ddlTipoProducto.DataValueField = "PK_CodTipoProducto_TP";
-                ddlTipoProducto.DataBind();
-                ddlTipoProducto.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
+                int startingIndex = 1; // Posición de inicio para cargar los datos
+
+                // Cargar los datos a partir de la posición 1
+                for (int i = startingIndex; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    DataRow row = ds.Tables[0].Rows[i];
+                    ddlTipoProducto.Items.Add(new ListItem(row["Descripcion_TP"].ToString(), row["PK_CodTipoProducto_TP"].ToString()));
+                }
             }
-           
+            //ddlTipoProducto.Items.Insert(0, new ListItem("Seleccionar Tipo", "0"));
+
         }
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
@@ -119,7 +124,7 @@ namespace Vista.Productos
             });
         }
 
-        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        protected void BtnVolverAtras_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Productos/Administrar.aspx");
 
