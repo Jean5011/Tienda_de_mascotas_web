@@ -31,6 +31,7 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
                 var auth = Session[Utils.AUTH] as SessionData;
@@ -44,13 +45,10 @@ namespace Vista.Empleados {
                         
                     }
                     else {
-                        Utils.MostrarMensaje($"No tenés permiso para cambiar la clave de alguien más. ", this.Page, GetType());
                         btnGuardarCambios.Enabled = false;
-                        string login_url = "/Empleados/IniciarSesion.aspx";
-                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        Response.Redirect($"{login_url}?next={next_url}&msg=No podés cambiar la clave de otra persona sin ser administrador.");
-
-                        // *** Redirigir a página principal *** ///
+                        AuthorizationVista.GoLogin(this, new Authorization {
+                            Message = "Ingresá como administrador para cambiar la clave de otro usuario. "
+                        });
 
                     }
                 }
@@ -59,21 +57,15 @@ namespace Vista.Empleados {
         }
 
         protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
+            GenerarClaves();
+        }
+
+        protected void GenerarClaves() {
             var auth = Session[Utils.AUTH] as SessionData;
-            var UsuarioActual  = auth.User;
             var UsuarioPerfil = Session[editingUser] as Empleado;
             string claveNueva = txtClave.Text;
-            SesionNegocio.Autenticar((res) => {
-                Response op = EmpleadoNegocio.CrearClaves(UsuarioPerfil.DNI, claveNueva);
-                if (!op.ErrorFound) {
-                    Utils.MostrarMensaje("Se cambió la clave correctamente. ", this.Page, GetType());
-                }
-                else {
-                    Utils.MostrarMensaje("Error. " + op.Message + " " + op.Details, this.Page, GetType());
-                }
-            }, (err) => {
-                Utils.MostrarMensaje("Caducó el token. Tenés que volver a iniciar sesión. ", this.Page, GetType());
-            });
+            var respuesta = EmpleadoNegocio.CrearClaves(auth, UsuarioPerfil, claveNueva);
+            Utils.ShowSnackbar(respuesta.Message, this);
 
         }
     }

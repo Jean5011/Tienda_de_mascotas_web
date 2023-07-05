@@ -69,7 +69,7 @@ namespace Negocio
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
                 // Verificamos si existe.
-                var verificarExistencia = VerificarExiste(producto.Codigo);
+                var verificarExistencia = VerificarExistenciaProducto(producto.Codigo);
                 if(!verificarExistencia.ErrorFound) {
                     var dt = verificarExistencia.ObjectReturned as DataSet;
                     int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);

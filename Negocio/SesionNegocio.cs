@@ -256,13 +256,49 @@ namespace Negocio {
         }
 
         public static Response RevocarSesion(Sesion obj) {
-            return SesionDatos.CerrarSesion(obj);
+            var respuesta = Response.ErrorDesconocido;
+            Autenticar(a => {
+                var res = SesionDatos.CerrarSesion(obj);
+                respuesta = new Response {
+                    ErrorFound = res.ErrorFound,
+                    Message = !res.ErrorFound
+                        ? $"Se revocó el token #{obj.Codigo}"
+                        : "Ocurrió un error al intentar revocar. "
+                };
+            }, err => {
+                respuesta = Response.TokenCaducado;
+            });
+            return respuesta;
         }
         public static Response ReabrirSesion(Sesion obj) {
-            return SesionDatos.ReabrirSesion(obj);
+            var respuesta = Response.ErrorDesconocido;
+            Autenticar(a => {
+                var res = SesionDatos.ReabrirSesion(obj);
+                respuesta = new Response {
+                    ErrorFound = res.ErrorFound,
+                    Message = !res.ErrorFound
+                        ? $"Se autorizó el token #{obj.Codigo}"
+                        : "Ocurrió un error al intentar autorizar. "
+                };
+            }, err => {
+                respuesta = Response.TokenCaducado;
+            });
+            return respuesta;
         }
         public static Response RevocarTodasLasSesiones(Sesion obj) {
-            return SesionDatos.CerrarTodasLasSesiones(obj);
+            var respuesta = Response.ErrorDesconocido;
+            Autenticar(a => {
+                var res = SesionDatos.CerrarTodasLasSesiones(obj);
+                respuesta = new Response {
+                    ErrorFound = res.ErrorFound,
+                    Message = !res.ErrorFound
+                        ? $"Se revocaron todos los tokens. "
+                        : "Ocurrió un error al intentar revocar todos los tokens. "
+                };
+            }, err => {
+                respuesta = Response.TokenCaducado;
+            });
+            return respuesta;
         }
 
         /// <summary>

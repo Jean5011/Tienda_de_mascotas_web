@@ -40,59 +40,72 @@ namespace Vista.Empleados {
                 if (auth.Granted && cargoPerfil) {
                     UsuarioPerfil = Session[editingUser] as Empleado;
                     H2Titulo.InnerText = UsuarioPerfil.Apellido + ", " + UsuarioPerfil.Nombre;
-                    LabelDescripcion.Text = "¿Estás seguro de deshabilitar a este usuario?";
+
+                    if (UsuarioPerfil.Estado) DeshabilitarSeccion();
+                    else HabilitarSeccion();
+
+
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                        // El usuario actual es ADMINISTRADOR. Puede proceder a eliminar
                         if(UsuarioActual.DNI == UsuarioPerfil.DNI) {
-                            Utils.MostrarMensaje("No te podés eliminar a vos mismo. Otro administrador debe realizar esa acción. ", this.Page, GetType());
                             btnDeshabilitar.Enabled = false;
-                            string login_url = "/Empleados/IniciarSesion.aspx";
-                            string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                            Response.Redirect($"{login_url}?next={next_url}&msg=No podés deshabilitarte a vos mismo. Iniciá sesión con otra cuenta de administrador para continuar.");
+                            AuthorizationVista.GoLogin(this, new Authorization {
+                                Message = "No podés deshabilitarte a vos mismo. Iniciá sesión con una cuenta diferente. "
+                            });
                         }
                     }
                     else {
                         btnDeshabilitar.Enabled = false;
-                        string login_url = "/Empleados/IniciarSesion.aspx";
-                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        Response.Redirect($"{login_url}?next={next_url}&msg=Iniciá sesión con una cuenta de administrador para continuar.");
-                        Utils.MostrarMensaje($"No tenés permiso para borrar registros. ", this.Page, GetType());
-                        
-                        // *** Redirigir a página principal *** ///
-
+                        AuthorizationVista.GoLogin(this, new Authorization {
+                            Message = "Iniciá sesión con una cuenta de administrador para continuar. "
+                        });
                     }
                 }
 
             }
         }
 
-        protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as SessionData;
-            var UsuarioActual = auth.User;
-            UsuarioPerfil = Session[editingUser] as Empleado;
-            if(UsuarioActual.DNI != UsuarioPerfil.DNI) {
-                // Nos volvemos a asegurar que el usuario no se quiera eliminar a sí mismo.
-                SesionNegocio.Autenticar((res) => { 
-                    DateTime fn = DateTime.ParseExact(UsuarioPerfil.FechaNacimiento, "dd/MM/yyyy H:mm:ss", CultureInfo.InvariantCulture);
-                    DateTime fi = DateTime.ParseExact(UsuarioPerfil.FechaContrato, "dd/MM/yyyy H:mm:ss", CultureInfo.InvariantCulture);
-                    UsuarioPerfil.FechaNacimiento = fn.ToString("yyyy-MM-dd");
-                    UsuarioPerfil.FechaContrato = fn.ToString("yyyy-MM-dd");
-                    UsuarioPerfil.Estado = false;
-                    Response operacion = EmpleadoNegocio.ModificarEmpleado(UsuarioPerfil, UsuarioPerfil.DNI);
-                    if (!operacion.ErrorFound) {
-                        Utils.MostrarMensaje($"El/La empleado/a {UsuarioPerfil.Apellido} fue deshabilitado y no podrá volver a iniciar sesión con sus credenciales. ", this.Page, GetType());
-                    }
-                    else {
-                        Utils.MostrarMensaje($"Error. {operacion.Message} : {operacion.Details}", this.Page, GetType());
-                    }
-                }, (err) => {
-                    Utils.MostrarMensaje($"El token caducó y no se pudo completar la operación. Volvé a iniciar sesión. ", this.Page, GetType());
-                });
-            } else {
-                Utils.MostrarMensaje("No te podés eliminar a vos mismo. Otro administrador debe realizar esa acción. ", this.Page, GetType());
-                btnDeshabilitar.Enabled = false;
-            }
+        protected void HabilitarBtn(bool state) {
+            btnHabilitar.Enabled = state;
+            btnHabilitar.Visible = state;
+        }
+        protected void DeshabilitarBtn(bool state) {
+            btnDeshabilitar.Enabled = state;
+            btnDeshabilitar.Visible = state;
+        }
 
+        protected void HabilitarSeccion() {
+            LabelDescripcion.Text = "¿Habilitar a este usuario?";
+            DeshabilitarBtn(false);
+            HabilitarBtn(true);
+
+        }
+
+        protected void DeshabilitarSeccion() {
+            LabelDescripcion.Text = "¿Estás seguro de deshabilitar a este usuario?";
+            DeshabilitarBtn(true);
+            HabilitarBtn(false);
+
+        }
+
+        protected void Inhabilitar() {
+            var auth = Session[Utils.AUTH] as SessionData;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            var respuesta = EmpleadoNegocio.Deshabilitar(auth, UsuarioPerfil);
+            Utils.ShowSnackbar(respuesta.Message, this);
+        }
+        protected void Habilitar() {
+            var auth = Session[Utils.AUTH] as SessionData;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            var respuesta = EmpleadoNegocio.Habilitar(auth, UsuarioPerfil);
+            Utils.ShowSnackbar(respuesta.Message, this);
+        }
+
+
+        protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
+            Inhabilitar();
+        }
+        protected void BtnHabilitar_Click(object sender, EventArgs e) {
+            Habilitar();
         }
     }
 }

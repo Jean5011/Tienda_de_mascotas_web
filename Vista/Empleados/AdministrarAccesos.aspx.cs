@@ -30,25 +30,22 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
+                // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 var auth = Session[Utils.AUTH] as SessionData;
 
+                // Verificamos que el empleado esté revisando sus propias sesiones, o que sea administrador.
                 bool cargoPerfil = CargarPerfil();
                 if (auth.Granted && cargoPerfil) {
                     var UsuarioActual = auth.User;
                     var UsuarioPerfil = Session[editingUser] as Empleado;
                     if (UsuarioActual.Rol == Empleado.Roles.ADMIN || UsuarioActual.DNI == UsuarioPerfil.DNI) {
-                        // El usuario actual es ELLA/ÉL MISMO ó un ADMINISTRADOR.
                         CargarDatos();
-
                     }
                     else {
-                        Utils.MostrarMensaje($"No tenés permiso para cambiar la clave de alguien más. ", this.Page, GetType());
                         AuthorizationVista.GoLogin(this, new Authorization() {
                             Message = "No podés acceder al historial de sesiones de otra persona. "
                         });
-                        // *** Redirigir a página principal *** ///
-
                     }
                 }
             }
@@ -72,57 +69,32 @@ namespace Vista.Empleados {
         }
         public void RevocarTodo(object sender, EventArgs e) {
             var UsuarioPerfil = Session[editingUser] as Empleado;
-            string DNI = UsuarioPerfil.DNI;
-            SesionNegocio.Autenticar(a => {
-                Sesion obj = new Sesion() {
-                    Empleado = new Empleado() { DNI =  DNI }
-                };
-                var res = SesionNegocio.RevocarTodasLasSesiones(obj);
-                if (!res.ErrorFound) {
-                    Utils.ShowSnackbar($"Se revocaron todos los tokens. ", this, GetType());
-                    AuthorizationVista.GoLogin(this, new Authorization() {
-                        Message = "Se revocaron todos los tokens y se cerró tu sesión. "
-                    });
-                }
-                else {
-                    Utils.ShowSnackbar($"Ocurrió un error al intentar revocar. {res.Message} | {res.Details} ", this, GetType());
-                }
-            }, err => {
-                Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión para realizar esta acción. ", this, GetType());
-            });
+            Sesion obj = new Sesion() {
+                Empleado = UsuarioPerfil
+            };
+            var respuesta = SesionNegocio.RevocarTodasLasSesiones(obj);
+            if(!respuesta.ErrorFound) {
+                AuthorizationVista.GoLogin(this, new Authorization() {
+                    Message = "Se revocaron todos los tokens y se cerró tu sesión. "
+                });
+            }
+            Utils.ShowSnackbar(respuesta.Message, this);
+            
         }
 
         public void Disable(int id) {
-            SesionNegocio.Autenticar(a => {
-                Sesion obj = new Sesion() {
-                    Codigo = id
-                };
-                var res = SesionNegocio.RevocarSesion(obj);
-                if (!res.ErrorFound) {
-                    Utils.ShowSnackbar($"Se revocó el token #{obj.Codigo}. ", this, GetType());
-                }
-                else {
-                    Utils.ShowSnackbar($"Ocurrió un error al intentar revocar. {res.Message} | {res.Details} ", this, GetType());
-                }
-            }, err => {
-                Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión para realizar esta acción. ", this, GetType());
-            });
+            Sesion obj = new Sesion() {
+                Codigo = id
+            };
+            var respuesta = SesionNegocio.RevocarSesion(obj);
+            Utils.ShowSnackbar(respuesta.Message, this);
         }
         public void Enable(int id) {
-            SesionNegocio.Autenticar(a => {
-                Sesion obj = new Sesion() {
-                    Codigo = id
-                };
-                var res = SesionNegocio.ReabrirSesion(obj);
-                if (!res.ErrorFound) {
-                    Utils.ShowSnackbar($"Se autorizó el token #{obj.Codigo}. ", this, GetType());
-                }
-                else {
-                    Utils.ShowSnackbar($"Ocurrió un error al intentar autorizar. {res.Message} | {res.Details} ", this, GetType());
-                }
-            }, err => {
-                Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión para realizar esta acción. ", this, GetType());
-            });
+            Sesion obj = new Sesion() {
+                Codigo = id
+            };
+            var respuesta = SesionNegocio.ReabrirSesion(obj);
+            Utils.ShowSnackbar(respuesta.Message, this);
         }
 
         protected void SwitchStatusCommand(object sender, CommandEventArgs e) {

@@ -55,20 +55,9 @@ namespace Vista.Empleados {
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
             string claveIngresada = txtClave.Text;
-
-            SesionNegocio.Autenticar((res) => { // Si todo está en orden (El token existe, y está habilitado), mandamos a crear el empleado.
-                Response operacion = EmpleadoNegocio.CrearEmpleado(obj, claveIngresada);
-                if (operacion.ErrorFound) {
-                    Utils.MostrarMensaje($"Error. {operacion.Message + " / " + operacion.Details}.", this.Page, GetType());
-                    //Trace.Write(operacion.Exception.ToString());
-                }
-                else {
-                    Utils.MostrarMensaje("El empleado fue registrado exitosamente. ", this.Page, GetType());
-                }
-            }, (err) => { // Si hubo un error con el token, no hacemos nada.
-                Utils.MostrarMensaje("Caducó el token de sesión. Volvé a iniciar sesión.", this.Page, GetType());
-            });
-            
+            var auth = Session[Utils.AUTH] as SessionData;
+            var respuesta = EmpleadoNegocio.CrearEmpleado(auth, obj, claveIngresada);
+            Utils.ShowSnackbar(respuesta.Message, this);
 
         }
     }

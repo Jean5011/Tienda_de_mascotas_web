@@ -100,7 +100,7 @@ namespace Datos {
         /// <param name="DNI">El DNI a buscar</param>
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response BuscarEmpleadoPorDNI(string DNI) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.DNI}] = @dni AND [{Empleado.Columns.Estado}] = '1'";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {Empleado.Table} WHERE [{Empleado.Columns.DNI}] = @dni";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: consulta,
@@ -225,6 +225,26 @@ namespace Datos {
                             { "@SALT", obj.Salt }
                         }
                     );
+        }
+
+        public static Response Deshabilitar(Empleado obj) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"UPDATE [{Empleado.Table}] SET [{Empleado.Columns.Estado}] = 0 WHERE [{Empleado.Columns.DNI}] = @dni",
+                    parameters: new Dictionary<string, object> {
+                        { "@dni", obj.DNI }
+                    }
+                );
+        }
+
+        public static Response Habilitar(Empleado obj) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"UPDATE [{Empleado.Table}] SET [{Empleado.Columns.Estado}] = 1 WHERE [{Empleado.Columns.DNI}] = @dni",
+                    parameters: new Dictionary<string, object> {
+                        { "@dni", obj.DNI }
+                    }
+                );
         }
     }
 }

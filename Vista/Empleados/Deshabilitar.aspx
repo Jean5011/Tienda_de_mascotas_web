@@ -8,8 +8,11 @@
         <br>
         <br />
         <br />
-        <asp:LinkButton ID="btnDeshabilitar" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnDeshabilitar_Click">
-                    <span class="mdc-button__label">Deshabilitar empleado</span>
+        <asp:LinkButton ID="btnDeshabilitar" Visible="false" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnDeshabilitar_Click">
+            <span class="mdc-button__label">Deshabilitar</span>
+        </asp:LinkButton>
+        <asp:LinkButton ID="btnHabilitar" Visible="false" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BtnHabilitar_Click">
+            <span class="mdc-button__label">Habilitar</span>
         </asp:LinkButton>
     </div>
 </asp:Content>

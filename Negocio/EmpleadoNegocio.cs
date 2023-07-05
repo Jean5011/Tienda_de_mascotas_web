@@ -49,7 +49,7 @@ namespace Negocio {
             }
         }
 
-        public static Response CrearEmpleado(Empleado obj, string clave) {
+        public static Response CrearEmpleado(SessionData auth, Empleado obj, string clave) {
             // Generamos el hash y el salt.
             byte[] newSalt = GenerarSalt();
             byte[] newHash = GenerarHash(clave, newSalt);
@@ -59,10 +59,22 @@ namespace Negocio {
             if(!existeEmpleado.ErrorFound && existeEmpleado.Message != SesionNegocio.ErrorCode.NO_ROWS) {
                 return new Response() {
                     ErrorFound = true,
-                    Message = EmpleadoNegocio.ErrorCode.ALREADY_EXISTS
+                    Message = ErrorCode.ALREADY_EXISTS
                 };
             }
-            return EmpleadoDatos.CrearEmpleado(obj);
+            var respuesta = Response.ErrorDesconocido;
+            if(auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = EmpleadoDatos.CrearEmpleado(obj);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El empleado se creó correctamente. "
+                            : "Hubo un error al intentar crear el registro. "
+                    };
+                }, err => { respuesta = Response.TokenCaducado;  });
+            }
+            return Response.PermisosInsuficientes;
         }
 
 
@@ -102,17 +114,66 @@ namespace Negocio {
 
         }
 
-        public static Response CrearClaves(string DNI, string password) {
-            byte[] salt = GenerarSalt();
-            byte[] hash = GenerarHash(password, salt);
-            string nhash = Convert.ToBase64String(hash);
-            string nsalt = Convert.ToBase64String(salt);
-            return EmpleadoDatos.CambiarClave(new Empleado() {
-                DNI = DNI,
-                Hash = nhash,
-                Salt = nsalt
-            });
+        public static Response CrearClaves(SessionData auth, Empleado empleado, string password) {
+            var respuesta = Response.ErrorDesconocido;
+            if(auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == empleado.DNI) {
+                SesionNegocio.Autenticar(ok => {
+                    byte[] salt = GenerarSalt();
+                    byte[] hash = GenerarHash(password, salt);
+                    string nhash = Convert.ToBase64String(hash);
+                    string nsalt = Convert.ToBase64String(salt);
+                    var operacion = EmpleadoDatos.CambiarClave(new Empleado() {
+                        DNI = empleado.DNI,
+                        Hash = nhash,
+                        Salt = nsalt
+                    });
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "Se cambió la clave correctamente. "
+                            : "Hubo un error al intentar cambiar la clave. "
+                    };
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+            } 
+            return Response.PermisosInsuficientes;
         }
+
+        public static Response Deshabilitar(SessionData auth, Empleado empleado) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = EmpleadoDatos.Deshabilitar(empleado);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El empleado ha sido deshabilitado y no podrá volver a iniciar sesión. "
+                            : "Hubo un error al intentar deshabilitar al empleado. "
+                    };
+                }, err => { respuesta = Response.TokenCaducado; });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
+
+        public static Response Habilitar(SessionData auth, Empleado empleado) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = EmpleadoDatos.Habilitar(empleado);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El empleado ha sido habilitado, y podrá volver a iniciar sesión. "
+                            : "Hubo un error al intentar habilitar al empleado. "
+                    };
+                }, err => { respuesta = Response.TokenCaducado; });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
+
 
         /// <summary>
         /// Extrae los datos de un DataSet y los convierte en un objeto tipo Empleado.
