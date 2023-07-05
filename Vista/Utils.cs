@@ -26,6 +26,12 @@ namespace Vista {
                 addScriptTags: true
             );
         }
+
+        public static void ShowSnackbar(string message, Control control) {
+            Type type = control.GetType();
+            ShowSnackbar(message, control, type);
+
+        }
         public static void MostrarMensaje(string mensaje, Control control, Type type) {
             string script = "MostrarMensaje('" + mensaje + "');";
             ScriptManager.RegisterStartupScript(control, type, "MostrarMensaje", script, true);
