@@ -40,7 +40,7 @@ go
 ---- TABLAS CREADAS POR JAVIER ANDRÉS TORALES ----
 CREATE TABLE Proveedores
 (
-CUIT_Prov varchar(10) NOT NULL,
+CUIT_Prov varchar(15) NOT NULL,
 RazonSocial_Prov varchar(50) NOT NULL,
 NombreDeContacto_Prov varchar(30) NOT NULL,
 CorreoElectronico_Prov varchar(75) NOT NULL,
@@ -92,7 +92,7 @@ GO
 Create Table Productos
 (
 CodProducto_Prod varchar(10) not null,
-CUITProveedor_Prod varchar(10) not null,
+CUITProveedor_Prod varchar(15) not null,
 CodTipoProducto_Prod varchar(10) not null,
 Nombre_Prod varchar(50) not null,
 Marca_Prod varchar(50) not null,
@@ -134,7 +134,7 @@ CUITProveedor_Dv varchar(15) NOT NULL,
 Cantidad_Dv int NOT NULL,
 PrecioUnitario_Dv money NOT NULL,
 PrecioTotal_Dv money NOT NULL,
-Estado_Prod bit default 1,
+Estado_Dv bit default 1,
 CONSTRAINT PK_DetalleDeVenta PRIMARY KEY (CodVenta_Dv, CodProducto_Dv, CUITProveedor_Dv),
 CONSTRAINT FK_DetalleDeVenta_Ventas FOREIGN KEY (CodVenta_Dv) REFERENCES Ventas (CodVenta_Vt),
 CONSTRAINT FK_DetalleDeVenta_Productos FOREIGN KEY (CodProducto_Dv, CUITProveedor_Dv) REFERENCES Productos (CodProducto_Prod, CUITProveedor_Prod)
@@ -188,7 +188,7 @@ CREATE procedure SP_EliminarAnimal
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set estado = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set estado_An = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
 CREATE procedure SP_EliminarTipoDeProductos
@@ -196,7 +196,7 @@ CREATE procedure SP_EliminarTipoDeProductos
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set estado = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set estado_Tp = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
 
 --Alta--
@@ -205,7 +205,7 @@ create procedure SP_AltaAnimal
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set estado = 1 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set estado_An = 1 where  PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
 create procedure SP_AltaTipoDeProductos
@@ -213,7 +213,7 @@ create procedure SP_AltaTipoDeProductos
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set estado = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set estado_Tp = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
 
 --Actualizar--
