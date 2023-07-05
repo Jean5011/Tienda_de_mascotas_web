@@ -52,7 +52,7 @@
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbid">ID</span>
+                        <span class="mdc-floating-label" id="lbid">Código</span>
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
@@ -162,6 +162,7 @@
         <div class="botones">
             <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="BtnVolverAtras_Click" />
             <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" ValidationGroup="ValidationGroup" />
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         </div>
     </div>
 </asp:Content>

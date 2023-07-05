@@ -31,10 +31,10 @@ namespace Vista.Productos
 
             Response codigos = NegocioTipoDeProducto.ObtenerIDS();
             DataSet ds = new DataSet();
-            if(!codigos.ErrorFound)
+            if (!codigos.ErrorFound)
             {
                 ds = codigos.ObjectReturned as DataSet;
-                ddlTipoProducto.DataSource= ds;
+                ddlTipoProducto.DataSource = ds;
                 int startingIndex = 1; // Posición de inicio para cargar los datos
 
                 // Cargar los datos a partir de la posición 1
@@ -47,79 +47,90 @@ namespace Vista.Productos
             //ddlTipoProducto.Items.Insert(0, new ListItem("Seleccionar Tipo", "0"));
 
         }
+        protected void vaciarCampos()
+        {
+            txtCodigo.Text = "";
+            txtCUITProveedor.Text = "";
+            txtNombre.Text = "";
+            txtMarca.Text = "";
+            txtDescripcion.Text = "";
+            txtPrecioUnitario.Text = "";
+            txtStock.Text = "";
+            ddlTipoProducto.SelectedIndex = 0;
+        }
+        protected void RellenarVectorProductoNuevo(bool[] productoNuevo)
+        {
+            Response existeProducto = ProductoNegocio.VerificarExistenciaProducto(txtCodigo.Text);
+            if (!existeProducto.ErrorFound)
+            {
+                DataSet dt = existeProducto.ObjectReturned as DataSet;
+                int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+                productoNuevo[0] = cantidad == 0;
+            }
+            Response existeProveedor = ProductoNegocio.VerificarExistenciaProveedor(txtCUITProveedor.Text);
+            if (!existeProveedor.ErrorFound)
+            {
+                DataSet dt = existeProveedor.ObjectReturned as DataSet;
+                int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+                productoNuevo[1] = cantidad == 1;
+            }
+ 
+        }
+        bool validarCamposProducto(bool[] productoNuevo, int tam)
+        {
+            List<string> messages = new List<string>();
+            messages.Add("Error, el codigo de producto ingresado ya existe.");
+            messages.Add("Error, el cuit de proveedor ingresado no existe.");
+            bool pNew = true;
+            for (int i = 0; i < tam; i++)
+            {
+                if (productoNuevo[i] == false)
+                {
+                    Utils.MostrarMensaje(messages[i], this.Page, GetType());
+                    pNew = false;
+                }
+            }
+            return pNew;
+        }
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
             var auth = Session[Utils.AUTH] as SessionData;
             var UsuarioActual = auth.User;
+            const int tam = 2;
+            bool[] productoNuevo = new bool[tam] { false, false };
+
             SesionNegocio.Autenticar(res =>
             {
-
-                Response existe = ProductoNegocio.VerificarExiste(txtCodigo.Text);
-                int cantidad;
-                if (!existe.ErrorFound)
+                RellenarVectorProductoNuevo(productoNuevo);
+                if (validarCamposProducto(productoNuevo, tam))
                 {
-                    DataSet dt = existe.ObjectReturned as DataSet;
-                    cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
-
-                    if (cantidad > 0)
-                    {   //Si es mayor a 0 significa que el producto existe
-
-
-                        Utils.MostrarMensaje($"El codigo de producto ingresado ya existe. ", this.Page, GetType());
-
+                    Producto Prod = new Producto()
+                    {
+                        Codigo = txtCodigo.Text,
+                        Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                        Categoria = new TipoProducto() { Codigo = ddlTipoProducto.SelectedValue },
+                        Nombre = txtNombre.Text,
+                        Marca = txtMarca.Text,
+                        Descripcion = txtDescripcion.Text,
+                        Stock = int.Parse(txtStock.Text),
+                        Precio = double.Parse(txtPrecioUnitario.Text),
+                        Estado = true,
+                    };
+                    Response response = ProductoNegocio.IngresarProducto(Prod);
+                    if (!response.ErrorFound)
+                    {
+                        vaciarCampos();
+                        Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
                     }
                     else
                     {
-                        if (ddlTipoProducto.SelectedIndex == 0)
-                        {
-                            Utils.MostrarMensaje($"Seleccione un tipo de producto. ", this.Page, GetType());
-                        }
-                        else
-                        {
-                            //si encontre error significa que el producto no existe asi que se puede continuar con la creacion
-                            string numero = txtPrecioUnitario.Text;
-                            if (double.TryParse(numero, out double Pre))
-                            {
-                                string stock = txtStock.Text;
-                                if (int.TryParse(stock, out int st))
-                                {
-                                    Producto Prod = new Producto()
-                                    {
-                                        Codigo = txtCodigo.Text,
-                                        Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
-                                        Categoria = new TipoProducto() { Codigo = ddlTipoProducto.SelectedValue },
-                                        Nombre = txtNombre.Text,
-                                        Marca = txtMarca.Text,
-                                        Descripcion = txtDescripcion.Text,
-                                        Stock = st,
-                                        Precio = Pre,
-                                        Estado = true,
-                                    };
-                                    Response response = ProductoNegocio.IngresarProducto(Prod);
-                                    if (!response.ErrorFound)
-                                    {
-                                        Utils.MostrarMensaje($"Producto guardado correctamente. ", this.Page, GetType());
-                                    }
-                                    else
-                                    {
-                                        //Utils.MostrarMensaje($"Error al guardar producto. ", this.Page, GetType());
-                                        string error = response.Message;
-                                        Utils.MostrarMensaje(error, this.Page, GetType());
-                                    }
-                                }
-                                else
-                                {
-                                    Utils.MostrarMensaje($"El stock ingresado no es valido. ", this.Page, GetType());
-                                }
-                            }
-                            else
-                            {
-                                Utils.MostrarMensaje($"El precio ingresado no es valido. ", this.Page, GetType());
-                            }
-                        }
+                        string error = response.Message;
+                        Utils.MostrarMensaje(error, this.Page, GetType());
                     }
                 }
-            }, err => {
+
+            }, err =>
+            {
                 Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this.Page, GetType());
             });
         }
@@ -129,5 +140,7 @@ namespace Vista.Productos
             Response.Redirect("~/Productos/Administrar.aspx");
 
         }
+
+
     }
 }

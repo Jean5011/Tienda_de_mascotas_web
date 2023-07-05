@@ -133,7 +133,7 @@ namespace Datos {
         /// </summary>
         /// <param name="ID">El ID del producto en cuestión.</param>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response VerificarExiste(string ID) {
+        public static Response VerificarExistenciaProducto(string ID) {
             string consulta = $"SELECT COUNT([{Producto.Columns.Codigo_Prod}]) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
@@ -143,7 +143,18 @@ namespace Datos {
                         }
                     );
         }
-       
+        public static Response VerificarExistenciaProveedor(string CUIT)
+        {
+            string consulta = $"SELECT COUNT([{Proveedor.Columns.CUIT}]) AS [Cantidad] FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @CUIT ";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@CUIT", CUIT }
+                        }
+                    );
+        }
+
     }
 
 }
