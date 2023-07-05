@@ -44,7 +44,6 @@ namespace Vista.Productos
                     ddlTipoProducto.Items.Add(new ListItem(row["Descripcion_TP"].ToString(), row["PK_CodTipoProducto_TP"].ToString()));
                 }
             }
-            //ddlTipoProducto.Items.Insert(0, new ListItem("Seleccionar Tipo", "0"));
 
         }
         protected void vaciarCampos()
