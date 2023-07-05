@@ -27,7 +27,7 @@ namespace Vista.Tipos {
             Response resultado = nt.GettAnimales();
             DataSet dt = resultado.ObjectReturned as DataSet;
             DD_Animal.DataSource = dt;
-            DD_Animal.DataTextField = Animal.Columns.Nombre;/// NombreDeRaza_An";
+            DD_Animal.DataTextField = "Ani";/// NombreDeRaza_An";
             DD_Animal.DataValueField = Animal.Columns.Codigo;
             DD_Animal.DataBind();
         }
@@ -40,7 +40,15 @@ namespace Vista.Tipos {
                 t.CodAnimal = DD_Animal.SelectedValue;
                 t.Descripcion = TB_Descripcion.Text;
                 NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                nt.IgresarTipoDeProducto(t);
+                Response RES = nt.IgresarTipoDeProducto(t);
+                if (!RES.ErrorFound)
+                {
+                    Lv_Verificacion.Text = "Se cargo excelentemente ";
+                }
+                else
+                {
+                    Lv_Verificacion.Text = "Error en la carga / archivo ya existente";
+                }
 
             }, err => {
                 Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this, GetType());

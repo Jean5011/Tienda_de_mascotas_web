@@ -64,5 +64,6 @@
         <asp:LinkButton CssClass="mdc-button mdc-button--raised" ID="BT_Guardar" runat="server" OnClick="BT_Guardar_Click" Text="Guardar">
             <span class="mdc-button__label">Guardar</span>
         </asp:LinkButton>
+        <asp:Label ID="Lv_Verificacion" runat="server" Text="Label"></asp:Label>
     </div>
 </asp:Content>

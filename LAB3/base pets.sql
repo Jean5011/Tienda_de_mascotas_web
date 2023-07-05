@@ -145,7 +145,7 @@ GO
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR JEAN ESQUEN ---*/
 --Agregar--
-CREATE procedure SP_IngresarTipoDeProductos
+alter procedure SP_IngresarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10),
 @CodAnimales_Tp varchar(10) ,
@@ -153,29 +153,22 @@ CREATE procedure SP_IngresarTipoDeProductos
 @Descripcion_TP text
 )
 as
-if @PK_CodTipoProducto_TP =(select PK_CodTipoProducto_TP from TipoDeProductos)
-begin 
-print 'Existe Tipo de productos'
-end
-else 
-begin
-insert into TipoDeProductos(PK_CodTipoProducto_TP,CodAnimales_Tp,TipoDeProducto_Tp,Descripcion_TP)
-select @PK_CodTipoProducto_TP,@CodAnimales_Tp,@TipoDeProducto_Tp,@Descripcion_TP
-end
-go
 
-CREATE procedure SP_IngresarAnimal
+insert into TipoDeProductos(PK_CodTipoProducto_TP,CodAnimales_Tp,TipoDeProducto_Tp,Descripcion_TP)
+select upper(@PK_CodTipoProducto_TP),@CodAnimales_Tp,@TipoDeProducto_Tp,@Descripcion_TP
+
+go
+S
+
+ALTER procedure SP_IngresarAnimal
+--CREATE procedure SP_IngresarAnimal
 (
 @PK_CodAnimales_An varchar(10),
 @nombre_An char(20),
 @NombreDeRaza_An char(20)
 )
 as 
-if @PK_CodAnimales_An = (select PK_CodAnimales_An from Animales) and upper(@NombreDeRaza_An) = (select NombreDeRaza_An from Animales) AND upper(@nombre_An) = (select nombre_An from Animales)
-begin
- return null
-end
-else
+if NOT EXISTS (select * from Animales WHERE upper(@nombre_An) =  (nombre_An) AND  UPPER(@NombreDeRaza_An) = UPPER(NombreDeRaza_An))
 begin
 insert into Animales(PK_CodAnimales_An,nombre_An,NombreDeRaza_An)
 select @PK_CodAnimales_An,@nombre_An,upper(@NombreDeRaza_An)
@@ -183,37 +176,41 @@ end
 go
 
 --Baja--
-CREATE procedure SP_EliminarAnimal
+alter procedure SP_EliminarAnimal
 (
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set estado_An = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set Estado_An = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-CREATE procedure SP_EliminarTipoDeProductos
+alter procedure SP_EliminarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set estado_Tp = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set Estado_TP = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
+
+exec SP_EliminarTipoDeProductos 'F48'
+select * from Animales
+
 
 --Alta--
-create procedure SP_AltaAnimal
+alter procedure SP_AltaAnimal
 (
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set estado_An = 1 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set Estado_An = 1 where  PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-create procedure SP_AltaTipoDeProductos
+alter procedure SP_AltaTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set estado_Tp = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set Estado_TP = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
 
 --Actualizar--
