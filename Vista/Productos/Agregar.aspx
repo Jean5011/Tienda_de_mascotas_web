@@ -7,7 +7,10 @@
             width: 214px;
             height: 56px;
         }
-
+         .ddl {
+            width: 214px;
+            height: 56px;
+        }
         .botones {
             display: flex;
             align-content: center;
@@ -17,6 +20,11 @@
         .error {
             color: red;
         }
+        .validadorDdl_error{
+            color:red;
+            margin-right:16.9px;
+        }
+      
     </style>
     <div class="page">
         <h2>Añadir producto</h2>
@@ -44,7 +52,7 @@
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbid">ID</span>
+                        <span class="mdc-floating-label" id="lbid">Código</span>
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
@@ -58,22 +66,11 @@
         </div>
         <div class="group">
             <!--Tipo de producto-->
-            <label class="mdc-text-field mdc-text-field--outlined">
-                <span class="mdc-notched-outline">
-                    <span class="mdc-notched-outline__leading"></span>
-                    <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbtip">Tipo de producto</span>
-                    </span>
-                    <span class="mdc-notched-outline__trailing"></span>
-                </span>
-                <asp:DropDownList id="ddlTipoProducto" runat="server" class="mdc-text-field__input"></asp:DropDownList>
-              <!--  <asp:DropDownList runat="server" CssClass="mdc-text-field__input" ID="txtTipoProducto"></asp:DropDownList>-->
-            </label>
-           <!-- <asp:RequiredFieldValidator ID="txtTipoProducto_Validator" runat="server"
-                ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
-            <asp:RegularExpressionValidator ID="txtTipoProducto_RegexValidator" runat="server"
-                ControlToValidate="txtTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-zñÑ.0-9]{1,10}$"></asp:RegularExpressionValidator>
+            <asp:DropDownList id="ddlTipoProducto" CssClass="ddl" runat="server" CausesValidation="True" ValidationGroup="ValidationGroup"  >
+                <asp:ListItem>Seleccionar Tipo</asp:ListItem>
+            </asp:DropDownList>
+           <asp:RequiredFieldValidator  ID="txtTipoProducto_Validator" runat="server"
+                ControlToValidate="ddlTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="validadorDdl_error" InitialValue="Seleccionar Tipo" />
             <!--CUIT-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
@@ -163,7 +160,7 @@
         </div>
         <br />
         <div class="botones">
-            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="btnVolverAtras_Click" />
+            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="BtnVolverAtras_Click" />
             <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" ValidationGroup="ValidationGroup" />
         </div>
     </div>

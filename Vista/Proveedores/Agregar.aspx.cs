@@ -13,12 +13,21 @@ namespace Vista.Proveedores {
         protected void Page_Load(object sender, EventArgs e) {
             if(!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
-
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
             }
         }
-
+        protected void VaciarTextBoxs()
+        {
+            Cuit_tb.Text = "";
+            RazonSocial_tb.Text = "";
+            NombreContacto_tb.Text = "";
+            CorreoElectronico_tb.Text = "";
+            NumeroTelefono_tb.Text = "";
+            Direccion_tb.Text = "";
+            Provincia_tb.Text = "";
+            localidad_tb.Text = "";
+            Pais_tb.Text = "";
+            CodigoPostal_tb.Text = "";
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             Response existe = ProveedorNegocio.VerificarExiste(Cuit_tb.Text);
@@ -48,23 +57,11 @@ namespace Vista.Proveedores {
                         CodigoPostal = CodigoPostal_tb.Text
                     };
 
-                    void vaciarTextBoxs()
-                    {
-                        Cuit_tb.Text = "";
-                        RazonSocial_tb.Text = "";
-                        NombreContacto_tb.Text = "";
-                        CorreoElectronico_tb.Text = "";
-                        NumeroTelefono_tb.Text = "";
-                        Direccion_tb.Text = "";
-                        Provincia_tb.Text = "";
-                        localidad_tb.Text = "";
-                        Pais_tb.Text = "";
-                        CodigoPostal_tb.Text = "";
-                    }
+                    
                     Response resInsertarProveedor = ProveedorNegocio.InsertarProveedor(proveedor);
                     if (!resInsertarProveedor.ErrorFound)
                     {
-                        vaciarTextBoxs();
+                        VaciarTextBoxs();
                         Utils.ShowSnackbar("Proveedor ha sido agregado correctamente!.", this, GetType());
 
                     }
@@ -72,13 +69,12 @@ namespace Vista.Proveedores {
                     {
                         Utils.ShowSnackbar("Hubo un error, no se pudo agregar el proveedor.", this, GetType());
                     }
-                    //Utils.MostrarMensaje($"El proveedor se agregaria correctamente en este caso. ", this.Page, GetType());//ELIMINAR ESTO, ES UN MENSAJE DE TESTEO AL VERIFICAR
                 }
             }
 
         }
 
-        protected void btnVolverAtras_Click(object sender, EventArgs e)
+        protected void BtnVolverAtras_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Proveedores/Administrar.aspx");
         }

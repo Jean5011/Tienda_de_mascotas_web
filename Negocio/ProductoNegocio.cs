@@ -144,9 +144,13 @@ namespace Negocio
             return Response.PermisosInsuficientes;
         }
 
-        public static Response VerificarExiste(string ID)
+        public static Response VerificarExistenciaProducto(string ID)
         {
-            return DaoProductos.VerificarExiste(ID);
+            return DaoProductos.VerificarExistenciaProducto(ID);
+        }
+        public static Response VerificarExistenciaProveedor(string CUIT)
+        {
+            return DaoProductos.VerificarExistenciaProveedor(CUIT);
         }
         /*
         public Response ActualizarPrecio(Producto P)

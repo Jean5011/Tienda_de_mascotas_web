@@ -62,5 +62,7 @@ namespace Vista.Productos {
             var respuesta = ProductoNegocio.IngresarProducto(auth, producto);
             Utils.ShowSnackbar(respuesta.Message, this);
         }
+
+
     }
 }
