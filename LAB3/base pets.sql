@@ -158,7 +158,7 @@ insert into TipoDeProductos(PK_CodTipoProducto_TP,CodAnimales_Tp,TipoDeProducto_
 select upper(@PK_CodTipoProducto_TP),@CodAnimales_Tp,@TipoDeProducto_Tp,@Descripcion_TP
 
 go
-S
+
 
 ALTER procedure SP_IngresarAnimal
 --CREATE procedure SP_IngresarAnimal
@@ -191,10 +191,6 @@ alter procedure SP_EliminarTipoDeProductos
 as 
 update TipoDeProductos set Estado_TP = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
-
-exec SP_EliminarTipoDeProductos 'F48'
-select * from Animales
-
 
 --Alta--
 alter procedure SP_AltaAnimal
