@@ -55,5 +55,10 @@ namespace Negocio
         {
             return DaoTiposDeProductos.AltaTipoProducto(A);
         }
+
+        public static Response ObtenerIDS()
+        {
+            return DaoTiposDeProductos.ObtenerListaDeIDS();
+        }
     }
 }

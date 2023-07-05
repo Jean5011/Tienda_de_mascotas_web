@@ -116,7 +116,7 @@ namespace Datos {
         public static Response ObtenerListaDeTipoProductoBajas() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} whrere {TipoProducto.Columns.Estado} =0"
+                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} where {TipoProducto.Columns.Estado} =0"
                     );
         }
 
@@ -151,5 +151,18 @@ namespace Datos {
                         }
                     );
         }
+
+        /// <summary>
+        /// Obtener los IDS
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación. </returns>
+        public static Response ObtenerListaDeIDS()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT {TipoProducto.Columns.Codigo},{TipoProducto.Columns.Descripcion} FROM [{TipoProducto.Table}] WHERE {TipoProducto.Columns.Estado} = 1"
+                    ) ;
+        }
     }
+
 }
