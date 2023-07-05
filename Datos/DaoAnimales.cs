@@ -51,7 +51,7 @@ namespace Datos {
         public static Response ObtenerLista() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=1"
+                        query: $"SELECT ({Animal.Columns.Nombre}+    +{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo} FROM {Animal.Table} where {Animal.Columns.Estado}=1"
                     );
         }
 

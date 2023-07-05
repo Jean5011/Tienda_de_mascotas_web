@@ -54,6 +54,7 @@
         <asp:LinkButton ID="btnGuardarCambios" ValidationGroup="A" runat="server" CssClass="mdc-button mdc-button--raised" OnClick="BT_Datos_Click">
             <span class="mdc-button__label">Guardar cambios</span>
         </asp:LinkButton>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </div>
 
 </asp:Content>

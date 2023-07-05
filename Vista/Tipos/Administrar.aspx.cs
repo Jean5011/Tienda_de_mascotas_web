@@ -78,7 +78,7 @@ namespace Vista.Tipos {
                     TipoProducto t = new TipoProducto();
                     t.Codigo = codigo;
                     NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
-                    Response resultado = NT.AltaTipoDeProducto(t); // FIXME: Cambiar por función de BAJA.
+                    Response resultado = NT.EliminarTipoDeProducto(t); // FIXME: Cambiar por función de BAJA.
                     Utils.ShowSnackbar(
                             message: !resultado.ErrorFound
                                 ? "Se deshabilitó con éxito el registro. "
