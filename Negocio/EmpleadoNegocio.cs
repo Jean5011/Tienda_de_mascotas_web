@@ -260,14 +260,23 @@ namespace Negocio {
             
         }
 
-        public static Response ModificarEmpleado(Empleado obj, string oldDNI) {
-            if (SesionNegocio.Autenticar()) {
-                return EmpleadoDatos.Modificar(obj, oldDNI);
+        public static Response ModificarEmpleado(SessionData auth, Empleado obj, string oldDNI) {
+            var respuesta = Response.ErrorDesconocido;
+            if(auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = EmpleadoDatos.Modificar(obj, oldDNI);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro se modificó correctamente. "
+                            : "Hubo un error al intentar modificar el registro. "
+                    };
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
             }
-            else return new Response() {
-                ErrorFound = true,
-                Message = SesionNegocio.ErrorCode.NO_SESSION_FOUND
-            };
+            return Response.PermisosInsuficientes;
         }
 
         /// <summary>

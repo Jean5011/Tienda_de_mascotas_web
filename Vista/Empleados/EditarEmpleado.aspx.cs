@@ -49,6 +49,7 @@ namespace Vista.Empleados {
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
+                // Página accesible sólo para administradores
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
 
                 var auth = Session[Utils.AUTH] as SessionData;
@@ -63,11 +64,9 @@ namespace Vista.Empleados {
                     }
                     else {
                         btnGuardarCambios.Enabled = false;
-                        string login_url = "/Empleados/IniciarSesion.aspx";
-                        string next_url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        Response.Redirect($"{login_url}?next={next_url}&msg=Iniciá sesión con una cuenta de administrador para continuar.");
-                        // *** Redirigir a página principal *** ///
-
+                        AuthorizationVista.GoLogin(this, new Authorization { 
+                            Message = "Ingresá como administrador para continuar. "
+                        });
                     }
                 }
 
@@ -76,14 +75,12 @@ namespace Vista.Empleados {
 
         protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
             var auth = Session[Utils.AUTH] as SessionData;
-            var UsuarioActual = auth.User;
             UsuarioPerfil = Session[editingUser] as Empleado;
-            string oldDNI = UsuarioPerfil.DNI;
             DateTime fn = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             DateTime fi = DateTime.ParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             Empleado obj = new Empleado() {
-                DNI = txtDNI.Text,
+                DNI = UsuarioPerfil.DNI,
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Sexo = ddlGenero.SelectedValue,
@@ -97,35 +94,8 @@ namespace Vista.Empleados {
                 Estado = chkEstado.Checked,
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
-
-            SesionNegocio.Autenticar(data => {
-                // Función que se ejecuta si autenticó
-                Response operacion = EmpleadoNegocio.ModificarEmpleado(obj, oldDNI);
-                if(operacion.ErrorFound) {
-                    string mensajeError = "";
-                    switch(operacion.Message) {
-                        case SesionNegocio.ErrorCode.NO_SESSION_FOUND:
-                            mensajeError = "No hay sesion iniciada o el token caducó. ";
-                            break;
-                        case SesionNegocio.ErrorCode.UNAUTHORIZED:
-                            mensajeError = "No tenés permiso para realizar esta acción. ";
-                            break;
-                        default:
-                            mensajeError = $"Ocurrió un error. Detalles: [{operacion.Message}] {operacion.Details}.";
-                            break;
-                    }
-                    Utils.MostrarMensaje(mensajeError, this.Page, GetType());
-                } else {
-                    Utils.MostrarMensaje("Se han guardado los cambios. ", this.Page, GetType());
-                }
-
-            }, error => {
-                // Función que se ejecuta si NO autenticó
-                bool huboError = error.ErrorFound;
-                string mensajeError = error.Message;
-                Utils.MostrarMensaje("Error de autenticación. " + mensajeError, this.Page, GetType());
-
-            });
+            var respuesta = EmpleadoNegocio.ModificarEmpleado(auth, obj, obj.DNI);
+            Utils.ShowSnackbar(respuesta.Message, this);
 
         }
 
