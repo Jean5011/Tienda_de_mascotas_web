@@ -14,11 +14,11 @@ Create table Animales
 
 Pk_CodAnimales_An varchar(10) not null,
 
-nombre_An char(20) not null,
+Nombre_An char(20) not null,
 
 NombreDeRaza_An char(20) null,
 
-estado_An bit not null default 1,
+Estado_An bit not null default 1,
 
 Constraint PK_Animales primary key (Pk_CodAnimales_An)
 )
@@ -30,7 +30,7 @@ PK_CodTipoProducto_TP varchar(10) NOT NULL,
 CodAnimales_Tp varchar(10) NOT NULL,
 TipoDeProducto_Tp varchar(15) NOT NULL CHECK(TipoDeProducto_Tp='Comida' OR TipoDeProducto_Tp='Accesorios' OR TipoDeProducto_Tp='Ropa' OR TipoDeProducto_Tp='Higiene' OR TipoDeProducto_Tp='Salud'),
 Descripcion_TP text NOT NULL,
-estado_Tp bit not null default 1,
+Estado_Tp bit not null default 1,
 Constraint PK_TipoDeProductos primary key (PK_CodTipoProducto_TP),
 constraint FK_TipoDeProductosxAnimales foreign key (CodAnimales_Tp)
 references Animales(Pk_CodAnimales_An)
@@ -98,7 +98,6 @@ Nombre_Prod varchar(50) not null,
 Marca_Prod varchar(50) not null,
 Descripcion_Prod varchar(50) not null,
 Stock_Prod int not null,
-Imagen_Prod varchar(100) null,
 PrecioUnitario_Prod money not null,
 Estado_Prod bit default 1,
 CONSTRAINT PK_Productos PRIMARY KEY (CodProducto_Prod,CUITProveedor_Prod),
@@ -125,7 +124,7 @@ references Empleados (DNI_Em)
 )
 go
 
----- TABLAS CREADAS POR MARÍA OLIVIA HANCZYC  ----
+---- TABLAS CREADAS POR MARÍA OLIVIA HANCZYC ----
 CREATE TABLE DetalleDeVenta
 (
 CodVenta_Dv int NOT NULL,
@@ -145,7 +144,7 @@ GO
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR JEAN ESQUEN ---*/
 --Agregar--
-alter procedure SP_IngresarTipoDeProductos
+create procedure SP_IngresarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10),
 @CodAnimales_Tp varchar(10) ,
@@ -159,54 +158,52 @@ select upper(@PK_CodTipoProducto_TP),@CodAnimales_Tp,@TipoDeProducto_Tp,@Descrip
 
 go
 
-
-ALTER procedure SP_IngresarAnimal
---CREATE procedure SP_IngresarAnimal
+CREATE procedure SP_IngresarAnimal
 (
 @PK_CodAnimales_An varchar(10),
 @nombre_An char(20),
 @NombreDeRaza_An char(20)
 )
 as 
-if NOT EXISTS (select * from Animales WHERE upper(@nombre_An) =  (nombre_An) AND  UPPER(@NombreDeRaza_An) = UPPER(NombreDeRaza_An))
+if NOT EXISTS (select * from Animales WHERE upper(@nombre_An) = (Nombre_An) AND UPPER(@NombreDeRaza_An) = UPPER(NombreDeRaza_An))
 begin
-insert into Animales(PK_CodAnimales_An,nombre_An,NombreDeRaza_An)
+insert into Animales(PK_CodAnimales_An,Nombre_An,NombreDeRaza_An)
 select @PK_CodAnimales_An,@nombre_An,upper(@NombreDeRaza_An)
 end 
 go
 
 --Baja--
-alter procedure SP_EliminarAnimal
+create procedure SP_EliminarAnimal
 (
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set Estado_An = 0 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set Estado_An = 0 where PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-alter procedure SP_EliminarTipoDeProductos
+create procedure SP_EliminarTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set Estado_TP = 0 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set Estado_TP = 0 where PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
 
 --Alta--
-alter procedure SP_AltaAnimal
+create procedure SP_AltaAnimal
 (
 @PK_CodAnimales_An varchar(10)
 )
 as 
-update Animales set Estado_An = 1 where  PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set Estado_An = 1 where PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
-alter procedure SP_AltaTipoDeProductos
+create procedure SP_AltaTipoDeProductos
 (
 @PK_CodTipoProducto_TP varchar(10)
 )
 as 
-update TipoDeProductos set Estado_TP = 1 where  PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
+update TipoDeProductos set Estado_TP = 1 where PK_CodTipoProducto_TP=@PK_CodTipoProducto_TP 
 go
 
 --Actualizar--
@@ -218,7 +215,7 @@ create procedure SP_ActualizarTipoProducto
 @Descripcion_TP text
 )
 as 
-update TipoDeProductos set  CodAnimales_Tp = @CodAnimales_Tp,TipoDeProducto_Tp = @TipoDeProducto_Tp,Descripcion_TP = @Descripcion_TP 
+update TipoDeProductos set CodAnimales_Tp = @CodAnimales_Tp,TipoDeProducto_Tp = @TipoDeProducto_Tp,Descripcion_TP = @Descripcion_TP 
 where  PK_CodTipoProducto_TP = @PK_CodTipoProducto_TP
 go
 
@@ -229,7 +226,7 @@ create procedure SP_ActualizarAnimales
 @NombreDeRaza_An char(20)
 )
 AS
-update Animales set nombre_An=@nombre_An,NombreDeRaza_An = upper(@NombreDeRaza_An) where PK_CodAnimales_An=@PK_CodAnimales_An
+update Animales set Nombre_An=@nombre_An,NombreDeRaza_An = upper(@NombreDeRaza_An) where PK_CodAnimales_An=@PK_CodAnimales_An
 go
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -428,7 +425,7 @@ CREATE PROCEDURE IniciarVenta
 	@TOTAL money
     AS
     BEGIN
-        -- Declararmos variables
+        -- Declaramos variables
         DECLARE @RESULTADO TABLE (ID int, AFFECTEDROWS int)
         DECLARE @VentaID int
 
@@ -511,7 +508,7 @@ END
 GO
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
-/*-- PROCEDIMIENTOS CREADOS POR MARÍA OLIVIA HANCZYC  ---*/
+/*-- PROCEDIMIENTOS CREADOS POR MARÍA OLIVIA HANCZYC ---*/
 CREATE PROCEDURE SP_DetalleDeVenta_Agregar
 @CodigoVenta int,
 @CodigoProducto varchar(10),
@@ -703,7 +700,7 @@ ON DetalleDeVenta AFTER INSERT AS
 		UPDATE Productos
 		SET Stock_Prod = Stock_Prod - (SELECT Cantidad_Dv FROM INSERTED)
 		WHERE CodProducto_Prod = (SELECT CodProducto_Dv FROM INSERTED) AND
-		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod > 0 --Stock_Prod <> 0
+		CUITProveedor_Prod = (SELECT CUITProveedor_Dv FROM INSERTED) and Stock_Prod > 0
 	END
 GO
 
@@ -730,4 +727,4 @@ END;
 go
 
 ---- Integrantes ----
-select  upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen')
+select upper('Javier Andres Torales'), upper('María Olivia Hanczyc '),upper('Ezequiel Alejandro Martinez'),upper('Máximo Canedo'),upper('jean esquen')
