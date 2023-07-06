@@ -27,18 +27,24 @@ namespace Vista.Empleados {
         }
 
         protected void BtnIniciarSesion_Click(object sender, EventArgs e) {
+            Login();
+        }
+
+        /// <summary>
+        /// Realiza el login y comunica al usuario el resultado.
+        /// </summary>
+        protected void Login() {
             string dni = txtDNI.Text;
             string clave = txtClave.Text;
             var res = EmpleadoNegocio.IniciarSesion(dni, clave);
             Utils.ShowSnackbar(res.Message, this);
-            if(!res.ErrorFound) {
-                    string goNext = Request.QueryString["next"];
-                    if (!string.IsNullOrEmpty(goNext)) {
-                        Response.Redirect(HttpUtility.UrlDecode(goNext));
-                    }
-                    else Response.Redirect("/");
+            if (!res.ErrorFound) {
+                string goNext = Request.QueryString["next"];
+                if (!string.IsNullOrEmpty(goNext)) {
+                    Response.Redirect(HttpUtility.UrlDecode(goNext));
+                }
+                else Response.Redirect("/");
             }
-
         }
     }
 }
