@@ -45,17 +45,8 @@ namespace Vista.Proveedores {
             };
 
             Response resInsertarProveedor = ProveedorNegocio.InsertarProveedor(proveedor);
-            if (!resInsertarProveedor.ErrorFound)
-            {
-                VaciarTextBoxs();
-                Utils.ShowSnackbar(resInsertarProveedor.Message, this, GetType());
-
-            }
-            else
-            {
-                Utils.ShowSnackbar(resInsertarProveedor.Message, this, GetType());
-            }
-           
+            Utils.ShowSnackbar(resInsertarProveedor.Message, this, GetType());
+            if (!resInsertarProveedor.ErrorFound)VaciarTextBoxs();
         }
 
         protected void BtnVolverAtras_Click(object sender, EventArgs e)
