@@ -19,7 +19,7 @@ namespace Vista.Productos {
                 if (Request.QueryString["ID"] != null) {
                     string userId = Request.QueryString["ID"];
                     CargarDDL();
-                    cargarCamposProducto(userId);
+                    CargarCamposProducto(userId);
 
                 }
 
@@ -38,7 +38,7 @@ namespace Vista.Productos {
                 ddlTipoProducto.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
             }
         }
-        protected void btnVolverAtras_Click(object sender, EventArgs e) {
+        protected void BtnVolverAtras_Click(object sender, EventArgs e) {
             Response.Redirect("/Productos/");
         }
         protected void BtnGuardar_Click(object sender, EventArgs e) {
@@ -59,7 +59,7 @@ namespace Vista.Productos {
             }
         }
 
-        protected void cargarCamposProducto(string cod) {
+        protected void CargarCamposProducto(string cod) {
             var res = ProductoNegocio.ObtenerPorCodigo(cod);
             if (!res.ErrorFound) {
                 Producto producto = res.ObjectReturned as Producto;
