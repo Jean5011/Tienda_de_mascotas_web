@@ -15,29 +15,53 @@ namespace Negocio
     public class NegocioTipoDeProducto
     {
         
-        public Response GetTipoDeProducto()
+        public DataSet GetTipoDeProducto()
         {
-            return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
+            Response resultado = DaoTiposDeProductos.ObtenerListaDeTipoProducto();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            return dt;
         }
 
-        public Response ObtenerPorCod(String cod)
+        public DataSet ObtenerPorCod(String cod)
         {
-            return DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
+            Response resultado = DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            return dt;
         }
 
-        public Response IgresarTipoDeProducto(TipoProducto A)
+        public bool IgresarTipoDeProducto(string cod, string tipoDeProducto, string CodAnimal, string Descripcion)
         {
-            return DaoTiposDeProductos.IgresarTipoProducto(A);
+            TipoProducto A = new TipoProducto();
+            A.Codigo = cod;
+            A.tipoDeProducto = tipoDeProducto;
+            A.CodAnimal = CodAnimal;
+            A.Descripcion = Descripcion;
+            Response RES = DaoTiposDeProductos.IgresarTipoProducto(A);
+            if (!RES.ErrorFound)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public Response ActualizarTipoDeProducto(TipoProducto A)
+        public Response ActualizarTipoDeProducto(string Codigo, string CodAnimal, string tipoDeProducto, string Descripcion)
         {
+            TipoProducto Tp = new TipoProducto();
+            Tp.Codigo = Codigo;
+            Tp.CodAnimal = CodAnimal;
+            Tp.tipoDeProducto = tipoDeProducto;
+            Tp.Descripcion = Descripcion;
             return DaoTiposDeProductos.ActualizarTipoProducto(A);
         }
 
-        public Response EliminarTipoDeProducto(TipoProducto A)
+        public Response EliminarTipoDeProducto(string A)
         {
-            return DaoTiposDeProductos.EliminarTipoProducto(A);
+            TipoProducto t = new TipoProducto();
+            t.CodAnimal = A;
+            return DaoTiposDeProductos.EliminarTipoProducto(t);
         }
 
         /**********************************************************************************/
@@ -51,9 +75,11 @@ namespace Negocio
             return DaoTiposDeProductos.BuscarTipoProductoPorCodBajas(cod);
         }
 
-        public Response AltaTipoDeProducto(TipoProducto A)
+        public Response AltaTipoDeProducto(string codigo)
         {
-            return DaoTiposDeProductos.AltaTipoProducto(A);
+            TipoProducto t = new TipoProducto();
+            t.Codigo = codigo;
+            return DaoTiposDeProductos.AltaTipoProducto(t);
         }
 
         public static Response ObtenerIDS()

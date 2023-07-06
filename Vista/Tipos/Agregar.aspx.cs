@@ -34,14 +34,9 @@ namespace Vista.Tipos {
 
         protected void BT_Guardar_Click(object sender, EventArgs e) {
             SesionNegocio.Autenticar(res => {
-                TipoProducto t = new TipoProducto();
-                t.Codigo = TB_cod.Text;
-                t.tipoDeProducto = DD_Tpd.SelectedValue;
-                t.CodAnimal = DD_Animal.SelectedValue;
-                t.Descripcion = TB_Descripcion.Text;
                 NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                Response RES = nt.IgresarTipoDeProducto(t);
-                if (!RES.ErrorFound)
+                bool RES = nt.IgresarTipoDeProducto(TB_cod.Text, DD_Tpd.SelectedValue, DD_Animal.SelectedValue, TB_Descripcion.Text);
+                if (RES)
                 {
                     Lv_Verificacion.Text = "Se cargo excelentemente ";
                 }

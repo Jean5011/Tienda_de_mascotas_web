@@ -35,17 +35,13 @@ namespace Vista.Tipos {
 
         protected void BT_Filtrar_Click() {
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            Response resultado = nt.ObtenerPorCod(txtBuscar.Text);
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GvDatos.DataSource = dt;
+            GvDatos.DataSource = nt.ObtenerPorCod(txtBuscar.Text);
             GvDatos.DataBind();
         }
 
         protected void BT_Todo_Click() {
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            Response resultado = nt.GetTipoDeProducto();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            GvDatos.DataSource = dt;
+            GvDatos.DataSource = nt.GetTipoDeProducto();
             GvDatos.DataBind();
         }
 
@@ -53,10 +49,8 @@ namespace Vista.Tipos {
             if(EsAdmin()) {
                 SesionNegocio.Autenticar(success => {
                     /* Habilitar */
-                    TipoProducto t = new TipoProducto();
-                    t.Codigo = codigo;
                     NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
-                    Response resultado = NT.AltaTipoDeProducto(t);
+                    Response resultado = NT.AltaTipoDeProducto(codigo);
                     Utils.ShowSnackbar(
                             message: !resultado.ErrorFound 
                                 ? "Se habilitó con éxito el registro. "
@@ -75,10 +69,8 @@ namespace Vista.Tipos {
             if (EsAdmin()) {
                 SesionNegocio.Autenticar(success => {
                     /* Deshabilitar */
-                    TipoProducto t = new TipoProducto();
-                    t.Codigo = codigo;
                     NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
-                    Response resultado = NT.EliminarTipoDeProducto(t); // FIXME: Cambiar por función de BAJA.
+                    Response resultado = NT.EliminarTipoDeProducto(codigo); // FIXME: Cambiar por función de BAJA.
                     Utils.ShowSnackbar(
                             message: !resultado.ErrorFound
                                 ? "Se deshabilitó con éxito el registro. "
@@ -113,12 +105,10 @@ namespace Vista.Tipos {
 
         protected void GvDatos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
             if (EsAdmin()) {
-                SesionNegocio.Autenticar(res => {
-                    TipoProducto t = new TipoProducto();
+                SesionNegocio.Autenticar(res => {             
                     string cod = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
-                    t.Codigo = cod;
                     NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                    nt.EliminarTipoDeProducto(t);
+                    nt.EliminarTipoDeProducto(cod);
                     CargarDatos();
                 }, err => {
                     Utils.ShowSnackbar("Caducó tu token. Volvé a iniciar sesión. ", this.Page, GetType());
@@ -143,12 +133,12 @@ namespace Vista.Tipos {
             if (EsAdmin()) {
                 SesionNegocio.Autenticar(res => {
                     TipoProducto Tp = new TipoProducto();
-                    Tp.Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
-                    Tp.CodAnimal = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
-                    Tp.tipoDeProducto = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
-                    Tp.Descripcion = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
+                    string Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
+                    string CodAnimal = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
+                    string tipoDeProducto = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
+                    string Descripcion = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
                     NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                    nt.ActualizarTipoDeProducto(Tp);
+                    nt.ActualizarTipoDeProducto(Codigo, CodAnimal,tipoDeProducto, Descripcion);
                 }, err => {
                     Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión", this.Page, GetType());
                 });
