@@ -64,6 +64,90 @@ namespace Negocio {
             else return res;
         }
 
+        public static Response AgregarProducto(SessionData auth, Venta venta, Producto producto, int cantidad) {
+            var respuesta = Response.ErrorDesconocido;
+            bool tieneDerechoDeEdicion = auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == venta.EmpleadoGestor.DNI;
+            if (tieneDerechoDeEdicion) {
+                SesionNegocio.Autenticar(op => {
+                    var res = ProductoNegocio.ObtenerPorCodigo(producto.Codigo);
+                    if (!res.ErrorFound) {
+                        // Producto exists
+                        Producto p = res.ObjectReturned as Producto;
+                        // Verificar el stock del producto:
+                        if (cantidad <= p.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se realiza la venta del producto.
+                        {
+                            DetalleVenta dv = new DetalleVenta() {
+                                Id = venta,
+                                Producto = p,
+                                Proveedor = p.Proveedor,
+                                Cantidad = cantidad,
+                                PrecioUnitario = p.Precio,
+                                PrecioTotal = cantidad * p.Precio,
+                                Estado = true
+                            };
+                            var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
+                            respuesta = new Response {
+                                ErrorFound = uploadres.ErrorFound,
+                                Message = !uploadres.ErrorFound
+                                    ? $"El producto #{dv.Producto.Codigo} se agregó correctamente. "
+                                    : $"Problema al registrar detalle. {uploadres.Details}. "
+                            };
+                        }
+                        else {
+                            respuesta = new Response {
+                                ErrorFound = true,
+                                Message = "No hay stock."
+                            };
+                        }
+                    }
+                    else {
+                        respuesta = new Response {
+                            ErrorFound = true,
+                            Message = "El producto ingresado no está disponible. "
+                        };
+                    }
+
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            else {
+                respuesta = Response.PermisosInsuficientes;
+            }
+            return respuesta;
+        }
+
+        public static Response EliminarPermanentementeVentaPorID(SessionData auth, Venta venta) {
+            var res = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    // Verificamos que exista la venta en cuestión:
+                    var existe = BuscarVentaPorID(venta.Id);
+                    if (!existe.ErrorFound) {
+                        // La Venta sí existe, procedemos, ahora sí, a eliminar.
+                        var operacion = VentaDatos.EliminarVentaYDetalles(venta);
+                        res = new Response {
+                            ErrorFound = operacion.ErrorFound,
+                            Message = !operacion.ErrorFound
+                                ? "La venta se ha eliminado correctamente. "
+                                : "Hubo un error al intentar eliminar la venta y/o los detalles. "
+                        };
+                    }
+                    else {
+                        res = new Response {
+                            ErrorFound = true,
+                            Message = "No existe un registro Venta con ese ID."
+                        };
+                    }
+                }, err => {
+                    res = Response.TokenCaducado;
+                });
+                return res;
+            }
+            return Response.PermisosInsuficientes;
+        }
+
         public static Response GetVentas() {
             var res = VentaDatos.GetVentas();
             return res;

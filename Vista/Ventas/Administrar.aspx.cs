@@ -14,10 +14,11 @@ namespace Vista.Ventas {
         public void CargarDatos() {
             string tbuscar = txtBuscar.Text;
             var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.GetVentaPorID(Convert.ToInt32(tbuscar));
-            if(res.ErrorFound) {
+            if (res.ErrorFound) {
                 Utils.MostrarMensaje("Error cargando ventas. ", this.Page, GetType());
 
-            } else {
+            }
+            else {
                 DataSet dt = res.ObjectReturned as DataSet;
                 gvDatos.DataSource = dt;
                 gvDatos.DataBind();
@@ -25,7 +26,7 @@ namespace Vista.Ventas {
         }
 
         protected void Page_Load(object sender, EventArgs e) {
-            if(!IsPostBack) {
+            if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
             }
@@ -36,17 +37,9 @@ namespace Vista.Ventas {
         }
 
         protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            //gvDatos.PageIndex = e.NewPageIndex;
-            //CargarDatos();
-
-            //guardamos el nuevo indice
             int newPageIndex = e.NewPageIndex;
-            //nos fijamos de que no pueda acceder a una pagina inexistente
-            if (newPageIndex >= 0 && newPageIndex < gvDatos.PageCount)
-            {
-                //cargamos el nuevo indice
+            if (newPageIndex >= 0 && newPageIndex < gvDatos.PageCount) {
                 gvDatos.PageIndex = newPageIndex;
-                //cargamos datos
                 CargarDatos();
             }
         }

@@ -33,15 +33,19 @@ namespace Vista.Ventas {
                 string IDFactura = Request.QueryString["ID"];
                 if(string.IsNullOrEmpty(IDFactura)) {
                     Utils.ShowSnackbar("No hay código de factura", this.Page, GetType());
+                    BtnBorrar.Visible = false;
+                    BtnBorrar.Enabled = false;
                 } else {
                     int idFactura = Convert.ToInt32(IDFactura);
                     var res = VentaNegocio.BuscarVentaPorID(idFactura);
-                    if(!res.ErrorFound) {
+                    if(!res.ErrorFound && res.ObjectReturned != null) {
                         Venta obj = res.ObjectReturned as Venta;
                         Session[VK] = obj;
                         CargarCabecera(obj);
                         CargarDetalles(obj);
                     } else {
+                        BtnBorrar.Visible = false;
+                        BtnBorrar.Enabled = false;
                         Utils.ShowSnackbar("Error 32. " + res.Details + ". " + res.Message, this.Page, GetType());
                     }
                 }
@@ -55,60 +59,31 @@ namespace Vista.Ventas {
 
         }
 
+        public void BtnBorrar_Click(object sender, EventArgs e) {
+            Borrar();
+        }
+
+        public void Borrar() {
+            var venta = Session[VK] as Venta;
+            Response.Redirect("/Venta/Eliminar.aspx?ID=" + venta.Id);
+
+        }
+
         protected void BtnAgregar_Click(object sender, EventArgs e) {
-            if(TieneDerechosNecesarios()) {
-                if (Session[VK] != null) {
-                    SesionNegocio.Autenticar(op => {
-                        Venta obj = Session[VK] as Venta;
-                        string idProducto = txtIDProducto.Text;
-                        int cantidad = Convert.ToInt32(txtCantidad.Text);
-                        var res = ProductoNegocio.ObtenerPorCodigo(idProducto);
-                        if (!res.ErrorFound) {
-                            // Producto exists
-                            Producto p = res.ObjectReturned as Producto;
-
-                            // Verificar el stock del producto:
-                            if (cantidad <= p.Stock) // Si la cantidad indicada es menor o igual que el stock del producto, se realiza la venta del producto.
-                            {
-                                DetalleVenta dv = new DetalleVenta()
-                                {
-                                    Id = obj,
-                                    Producto = p,
-                                    Proveedor = p.Proveedor,
-                                    Cantidad = cantidad,
-                                    PrecioUnitario = p.Precio,
-                                    PrecioTotal = cantidad * p.Precio,
-                                    Estado = true
-                                };
-                                var uploadres = DetalleVentaNegocio.AgregarDetalleVenta(dv);
-                                if (!uploadres.ErrorFound)
-                                {
-                                    Utils.ShowSnackbar($"El producto #{dv.Producto.Codigo} se agregó correctamente. ", this.Page, GetType());
-                                    CargarDetalles(obj);
-                                    CargarCabecera(obj);
-                                }
-                                else
-                                {
-                                    Utils.ShowSnackbar($"Problema al registrar detalle. {uploadres.Details}. ", this.Page, GetType());
-                                }
-                            }
-                            else
-                            {
-                                Utils.ShowSnackbar("No hay suficiente stock para vender la cantidad de unidades indicada. ", this.Page, GetType());
-                            }
-                        }
-                        else {
-                            Utils.ShowSnackbar("El producto no está disponible. ", this.Page, GetType());
-                        }
-
-                    }, err => {
-                        Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this.Page, GetType());
-                    });
+            var auth = Session[Utils.AUTH] as SessionData;
+            Venta obj = Session[VK] as Venta;
+            var prod = new Producto { Codigo = txtIDProducto.Text };
+            int cantidad = Convert.ToInt32(txtCantidad.Text);
+            if(Session[VK] != null) {
+                var respuesta = VentaNegocio.AgregarProducto(auth, obj, prod, cantidad);
+                Utils.ShowSnackbar(respuesta.Message, this);
+                if(!respuesta.ErrorFound) {
+                    CargarDetalles(obj);
                 }
             }
-            else {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
-            }
+
+
+
         }
 
         protected void GVDETALLESBTNELIMINAR_Command(object sender, CommandEventArgs e) {
@@ -184,7 +159,10 @@ namespace Vista.Ventas {
             {
                 // DataSet data = res.ObjectReturned as DataSet;
                 // DataRow dr = res.ObjectReturned as DataRow;
-                DetalleVenta dv = res.ObjectReturned as DetalleVenta;
+                var dt = res.ObjectReturned as DataSet;
+                var dv = new DetalleVenta {
+                    
+                };
 
                 switch (e.CommandName)
                 {

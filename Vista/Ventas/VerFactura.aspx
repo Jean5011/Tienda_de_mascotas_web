@@ -2,6 +2,9 @@
 <%@ Import Namespace="Entidades" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="col perfil">
+        <br />
+        <br />
+        <br />
         <ul class="mdc-card mdc-card--outlined mdc-list mdc-list--two-line">
             <li class="mdc-list-item" tabindex="0">
                 <span class="mdc-list-item__ripple"></span>
@@ -33,6 +36,12 @@
                 </span>
             </li>
         </ul>
+            
+        <asp:LinkButton OnClick="BtnBorrar_Click" runat="server" ID="BtnBorrar" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mcardbl-act">Eliminar permanentemente</span>
+                    <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">delete</i>
+            </asp:LinkButton>
     </div>
     <div class="col">
         <h2 id="h2Factura" runat="server"></h2>
