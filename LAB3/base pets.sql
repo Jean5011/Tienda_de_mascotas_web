@@ -448,6 +448,16 @@ CREATE PROCEDURE IniciarVenta
     END
 GO
 
+CREATE PROCEDURE EliminarVenta
+@ID int
+AS
+BEGIN
+	DELETE FROM DetalleDeVenta WHERE CodVenta_Dv = @ID;
+	DELETE FROM Ventas WHERE CodVenta_Vt = @ID;
+
+END
+GO
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 /*-- PROCEDIMIENTOS CREADOS POR JAVIER ANDRÉS TORALES ---*/
 CREATE PROCEDURE SP_Proveedor_Crear
