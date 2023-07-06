@@ -10,17 +10,17 @@
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
-            PageSize="5" AutoGenerateSelectButton="False"
+            PageSize="5" AutoGenerateSelectButton="False" OnRowEditing="GvDatos_RowEditing"
             OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
                         <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
-                        <asp:LinkButton CommandName="edit"
+                        <asp:LinkButton CommandName="edit" runat="server"
                             class="mdc-button mdc-card__action mdc-card__action--button">
-                        <div class="mdc-button__ripple"></div>
-                        <span class="mdc-button__label mcardbl-act">Editar</span>
-                        <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Editar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
                         </asp:LinkButton>
                         <asp:Panel runat="server" Visible='<%# Convert.ToBoolean(Eval(TipoProducto.Columns.Estado)) %>'>
                             <!--Estado = true -->
