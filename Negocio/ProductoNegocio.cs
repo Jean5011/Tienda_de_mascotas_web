@@ -81,10 +81,9 @@ namespace Negocio
             var respuesta = Response.ErrorDesconocido;
             if (auth.User.Rol == Empleado.Roles.ADMIN)
             {
-                //verificamos que el proveedor ingresado sea valido
+                //verificamos que el proveedor y codigo ingresado sea valido
                 respuesta = VerificaCamposProducto(producto);
                 if (respuesta.ErrorFound) return respuesta;
-                // No existe ningún registro bajo ese código con mismo proveedor.
                 SesionNegocio.Autenticar(ok =>
                 {
                     var operacion = DaoProductos.IngresarProducto(producto);
@@ -108,6 +107,14 @@ namespace Negocio
         }
         public static Response VerificaCamposProducto(Producto producto)
         {
+            Response respuesta = new Response();
+            respuesta = VerificaCampoCodigoYProveedor(producto);
+            if (respuesta.ErrorFound) return respuesta;
+            respuesta = VerificaCampoProveedor(producto);
+            return respuesta;
+        }
+        public static Response VerificaCampoProveedor(Producto producto)
+        {
             //verificamos que el proveedor ingresado sea valido
             var verificarProv = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
             Response respuesta = new Response();
@@ -119,10 +126,15 @@ namespace Negocio
                 {
                     respuesta.ErrorFound = true;
                     respuesta.Message = "El CUIT de Proveedor ingresado no existe. ";
-                    return respuesta;
                 }
 
             }
+            return respuesta;
+        }
+        public static Response VerificaCampoCodigoYProveedor(Producto producto)
+        {
+            //verificamos que el proveedor ingresado sea valido
+            Response respuesta = new Response();            
             var verificarExistencia = VerificarExistenciaProductoProveedor(producto.Codigo, producto.Proveedor.CUIT);
             if (!verificarExistencia.ErrorFound)
             {
@@ -137,12 +149,13 @@ namespace Negocio
             }
             return respuesta;
         }
-
         public static Response ActualizarProducto(SessionData auth, Producto producto)
         {
             var respuesta = Response.ErrorDesconocido;
             if (auth.User.Rol == Empleado.Roles.ADMIN)
             {
+                respuesta = VerificaCampoProveedor(producto);
+                if (respuesta.ErrorFound) return respuesta;
                 SesionNegocio.Autenticar(ok =>
                 {
                     var operacion = DaoProductos.ActualizarProducto(producto);

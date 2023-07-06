@@ -16,8 +16,7 @@
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
-            PageSize="5" AutoGenerateSelectButton="False"
-            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
+            PageSize="5" AutoGenerateSelectButton="False">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>

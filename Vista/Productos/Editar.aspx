@@ -2,6 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
+         .textBox {
+            border-radius: 4px 4px 0px 0px;
+            width: 214px;
+            height: 56px;
+        }
+         .ddl {
+            width: 214px;
+            height: 56px;
+        }
         .botones {
             display: flex;
             align-content: center;
@@ -11,30 +20,34 @@
         .error {
             color: red;
         }
+        .validadorDdl_error{
+            color:red;
+            margin-right:16.9px;
+        }
     </style>
     <div class="page">
         <h2>Editar Producto</h2>
         <br />
 
-        <div class="group">
-
+       <div class="group">
+            <!--Nombre-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbnom">Nombre</span>
+                        <span class="mdc-floating-label" id="lbnom">Nombre del producto</span>
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtNombre"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="txtNombre_Validator" runat="server"
-                ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
+                ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtNombre_RegexValidator" runat="server"
-                ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
+                ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
-
-            <label class="mdc-text-field mdc-text-field--outlined">
+               <!--Precio Unitario-->
+           <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
@@ -44,13 +57,39 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtPrecioUnitario"></asp:TextBox>
             </label>
-            <asp:RequiredFieldValidator ID="txtPrecioUnitario_Validator" runat="server"
-                ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
+             <asp:RequiredFieldValidator ID="txtPrecioUnitario_Validator" runat="server"
+                ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtPrecioUnitario_RegexValidator" runat="server"
-                ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
-                ValidationExpression="^[0-9]+(\.[0-9]+)?$"></asp:RegularExpressionValidator>
+                ControlToValidate="txtPrecioUnitario" ErrorMessage="*" ValidationGroup="ValidationGroup"
+                ValidationExpression="^-?\d+(\.\d{1,2})?$"></asp:RegularExpressionValidator>
         </div>
         <div class="group">
+            <!--Tipo de producto-->
+            <asp:DropDownList id="ddlTipoProducto" CssClass="ddl" runat="server" CausesValidation="True" ValidationGroup="ValidationGroup"  >
+                <asp:ListItem>Seleccionar Tipo</asp:ListItem>
+            </asp:DropDownList>
+           <asp:RequiredFieldValidator  ID="txtTipoProducto_Validator" runat="server"
+                ControlToValidate="ddlTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="validadorDdl_error" InitialValue="Seleccionar Tipo" />
+            <!--CUIT-->
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbcuit">CUIT del Proveedor</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtCUITProveedor"></asp:TextBox>
+            </label>
+            <asp:RequiredFieldValidator ID="txtCUITProveedor_Validator" runat="server"
+                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
+            <asp:RegularExpressionValidator ID="txtCUITProveedor_RegexValidator" runat="server"
+                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup"
+                ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>
+        </div>
+
+        <div class="group">
+            <!--Descripcion-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
@@ -62,11 +101,11 @@
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtDescripcion"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="txtDescripcion_Validator" runat="server"
-                ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
+                ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtDescripcion_RegexValidator" runat="server"
-                ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
+                ControlToValidate="txtDescripcion" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
-
+            <!--Marca-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
@@ -78,13 +117,14 @@
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtMarca"></asp:TextBox>
             </label>
             <asp:RequiredFieldValidator ID="txtMarca_Validator" runat="server"
-                ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
+                ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtMarca_RegexValidator" runat="server"
-                ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
+                ControlToValidate="txtMarca" ErrorMessage="*" ValidationGroup="ValidationGroup"
                 ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
         </div>
 
         <div class="group">
+            <!--Stock-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
@@ -95,21 +135,19 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtStock"></asp:TextBox>
             </label>
-            <asp:RequiredFieldValidator ID="txtStock_Validator" runat="server"
-                ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd" CssClass="error" />
+              <asp:RequiredFieldValidator ID="txtStock_Validator" runat="server"
+                ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtStock_RegexValidator" runat="server"
-                ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroupEditarProd"
-                ValidationExpression="-?\d+$"></asp:RegularExpressionValidator>
-
-        </div>
-        <div class="group">
-            <h3>Desactivar<asp:CheckBox ID="DesactivarProducto" runat="server" /></h3>
+                ControlToValidate="txtStock" ErrorMessage="*" ValidationGroup="ValidationGroup"
+                ValidationExpression="^-?\d+$"></asp:RegularExpressionValidator>
+        
+            
         </div>
 
         <br />
         <div class="botones">
             <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="btnVolverAtras_Click" />
-            <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" ValidationGroup="ValidationGroupEditarProd" />
+            <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" ValidationGroup="ValidationGroup" />
         </div>
 
     </div>

@@ -69,6 +69,51 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.RegularExpressionValidator txtPrecioUnitario_RegexValidator;
 
         /// <summary>
+        /// ddlTipoProducto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoProducto;
+
+        /// <summary>
+        /// txtTipoProducto_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtTipoProducto_Validator;
+
+        /// <summary>
+        /// txtCUITProveedor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCUITProveedor;
+
+        /// <summary>
+        /// txtCUITProveedor_Validator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator txtCUITProveedor_Validator;
+
+        /// <summary>
+        /// txtCUITProveedor_RegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtCUITProveedor_RegexValidator;
+
+        /// <summary>
         /// txtDescripcion control.
         /// </summary>
         /// <remarks>
@@ -148,15 +193,6 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator txtStock_RegexValidator;
-
-        /// <summary>
-        /// DesactivarProducto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox DesactivarProducto;
 
         /// <summary>
         /// btnVolverAtras control.
