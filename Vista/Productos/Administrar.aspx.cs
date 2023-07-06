@@ -11,6 +11,12 @@ namespace Vista.Productos {
                 // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                if (Request.QueryString["CODIGO"] != null)
+                {
+                    string userId = Request.QueryString["CODIGO"];
+                    CargarDatos(userId);
+
+                }
             }
         }
 
@@ -76,8 +82,12 @@ namespace Vista.Productos {
         /// <summary>
         /// Carga los datos en la tabla.
         /// </summary>
-        public void CargarDatos() {
+        public void CargarDatos(string cod=null) {
             string codigo = txtBuscar.Text;
+            if (cod!=null)
+            {
+                 codigo = cod;
+            }
             var response = ProductoNegocio.BuscarProductos(codigo);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
