@@ -1,16 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Entidades;
 using Negocio;
 
 namespace Vista.Empleados {
     public partial class EditarEmpleado : System.Web.UI.Page {
+        protected void Page_Load(object sender, EventArgs e) {
+            if (!IsPostBack) {
+                // Página accesible sólo para administradores
+                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
+
+                CargarPerfil();
+                UsuarioPerfil = Session[editingUser] as Empleado;
+                CargarValores(UsuarioPerfil);
+            }
+        }
+        protected void CustomValidator_ServerValidate(object source, ServerValidateEventArgs args) {
+            args.IsValid = true;
+        }
+        protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
+            GuardarCambios();
+        }
         private readonly string editingUser = "Usuario_Perfil";
         private Empleado UsuarioPerfil;
         protected bool CargarPerfil() {
@@ -33,7 +44,7 @@ namespace Vista.Empleados {
         protected void CargarValores(Empleado obj) {
             DateTime fn = DateTime.Parse(obj.FechaNacimiento);
             DateTime fi = DateTime.Parse(obj.FechaContrato);
-            txtDNI.Text = obj.DNI;
+            // txtDNI.Text = obj.DNI;
             txtNombre.Text = obj.Nombre;
             txtApellido.Text = obj.Apellido;
             ddlGenero.SelectedValue = obj.Sexo;
@@ -47,39 +58,12 @@ namespace Vista.Empleados {
             chkEstado.Checked = obj.Estado;
             chkAdmin.Checked = (obj.Rol == Empleado.Roles.ADMIN);
         }
-        protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                // Página accesible sólo para administradores
-                Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_ADMINS_STRICT);
-
-                var auth = Session[Utils.AUTH] as SessionData;
-                var UsuarioActual = auth.User;
-
-
-                bool cargoPerfil = CargarPerfil();
-                if (auth.Granted && cargoPerfil) {
-                    UsuarioPerfil = Session[editingUser] as Empleado;
-                    if (UsuarioActual.Rol == Empleado.Roles.ADMIN) {
-                        CargarValores(UsuarioPerfil);
-                    }
-                    else {
-                        btnGuardarCambios.Enabled = false;
-                        AuthorizationVista.GoLogin(this, new Authorization { 
-                            Message = "Ingresá como administrador para continuar. "
-                        });
-                    }
-                }
-
-            }
-        }
-
-        protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
-            var auth = Session[Utils.AUTH] as SessionData;
+        protected Empleado RescatarValores() {
             UsuarioPerfil = Session[editingUser] as Empleado;
             DateTime fn = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             DateTime fi = DateTime.ParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-            Empleado obj = new Empleado() {
+            var empleado = new Empleado() {
                 DNI = UsuarioPerfil.DNI,
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
@@ -94,16 +78,17 @@ namespace Vista.Empleados {
                 Estado = chkEstado.Checked,
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
-            var respuesta = EmpleadoNegocio.ModificarEmpleado(auth, obj, obj.DNI);
+            return empleado;
+        }
+        protected void GuardarCambios() {
+            var auth = Session[Utils.AUTH] as SessionData;
+            UsuarioPerfil = Session[editingUser] as Empleado;
+            var empleado = RescatarValores();
+            var respuesta = EmpleadoNegocio.ModificarEmpleado(auth, empleado);
             Utils.ShowSnackbar(respuesta.Message, this);
-
         }
 
-        protected void CustomValidator_ServerValidate(object source, ServerValidateEventArgs args) {
-            
-            args.IsValid = true;
 
-        }
     }
 
 }

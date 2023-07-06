@@ -254,17 +254,45 @@ namespace Negocio {
             bool clavesCorrectas = !(resultadoClaves.ErrorFound);
             if(clavesCorrectas) {
                 Response res = SesionNegocio.AbrirSesion(DNI);
-                return res;
+                if (res.ErrorFound) return new Response {
+                    ErrorFound = true,
+                    Message = "No se pudo guardar la sesión. ¿Tenés las cookies habilitadas?"
+                };
+                else {
+                    var buscar_empleado = SesionNegocio.ObtenerDatosEmpleadoActual();
+                    if(buscar_empleado.ErrorFound) {
+                        return new Response {
+                            ErrorFound = false,
+                            Message = "Iniciaste sesión pero no pudimos recolectar tus datos. "
+                        };
+                    }
+                    var empleado = buscar_empleado.ObjectReturned as Empleado;
+                    bool esMasculino = (empleado.Sexo == "M");
+                    return new Response {
+                        ErrorFound = false,
+                        Message = $"¡Bienvenid{(esMasculino ? "o" : "a")}, {empleado.Nombre}!"
+                    };
+                }
+
             }
-            return resultadoClaves;
+            if(resultadoClaves.Message == "INCORRECT_DATA" || resultadoClaves.Message == "NO_ROWS") {
+                return new Response {
+                    ErrorFound = true,
+                    Message = "Los datos ingresados son incorrectos. "
+                };
+            }
+            return new Response {
+                ErrorFound = true,
+                Message = "Hubo un error al intentar iniciar sesión. "
+            };
             
         }
 
-        public static Response ModificarEmpleado(SessionData auth, Empleado obj, string oldDNI) {
+        public static Response ModificarEmpleado(SessionData auth, Empleado obj) {
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar(ok => {
-                    var operacion = EmpleadoDatos.Modificar(obj, oldDNI);
+                    var operacion = EmpleadoDatos.Modificar(obj, obj.DNI);
                     respuesta = new Response {
                         ErrorFound = operacion.ErrorFound,
                         Message = !operacion.ErrorFound

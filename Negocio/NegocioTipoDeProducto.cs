@@ -18,14 +18,14 @@ namespace Negocio
         public DataSet GetTipoDeProducto()
         {
             Response resultado = DaoTiposDeProductos.ObtenerListaDeTipoProducto();
-            DataSet dt = resultado.ObjectReturned as DataSet;
+            DataSet dt = resultado.ObjectReturned as DataSet;// Cómo manejás los errores?
             return dt;
         }
 
         public DataSet ObtenerPorCod(String cod)
         {
             Response resultado = DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
-            DataSet dt = resultado.ObjectReturned as DataSet;
+            DataSet dt = resultado.ObjectReturned as DataSet; // Cómo manejás los errores?
             return dt;
         }
 
@@ -49,12 +49,15 @@ namespace Negocio
 
         public Response ActualizarTipoDeProducto(string Codigo, string CodAnimal, string tipoDeProducto, string Descripcion)
         {
+            // FIXME: Reducir cantidad de parámetros. Considerar enviar un objeto TipoProducto.
+            // FIXME: Recibir un objeto SessionData y realizar la autenticación acá.
+            // FIXME: NO RETORNAR DIRECTAMENTE MÉTODOS DE DATOS/DAO.
             TipoProducto Tp = new TipoProducto();
             Tp.Codigo = Codigo;
             Tp.CodAnimal = CodAnimal;
             Tp.tipoDeProducto = tipoDeProducto;
             Tp.Descripcion = Descripcion;
-            return DaoTiposDeProductos.ActualizarTipoProducto(A);
+            return DaoTiposDeProductos.ActualizarTipoProducto(Tp); // Evitar esto a toda costa.
         }
 
         public Response EliminarTipoDeProducto(string A)
@@ -63,8 +66,6 @@ namespace Negocio
             t.CodAnimal = A;
             return DaoTiposDeProductos.EliminarTipoProducto(t);
         }
-
-        /**********************************************************************************/
         public Response GetTipoDeProductoBaja()
         {
             return DaoTiposDeProductos.ObtenerListaDeTipoProductoBajas();
