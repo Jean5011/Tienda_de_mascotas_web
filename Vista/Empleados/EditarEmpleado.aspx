@@ -142,10 +142,6 @@
         </div>
         <br>
         <br>
-        <asp:CheckBox ValidationGroup="A" ID="chkEstado" runat="server" Text="Habilitado" />
-        <br>
-        <br>
-        <hr />
         <br />
         <asp:CheckBox ValidationGroup="A" ID="chkAdmin" runat="server" Text="Conceder permisos de administrador" />
         <br />

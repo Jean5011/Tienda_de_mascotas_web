@@ -38,10 +38,16 @@
                   <span class="mdc-button__label mcardbl-act">Cambiar clave</span>
                   <i class="material-icons mdc-button__icon" aria-hidden="true">password</i>
             </asp:LinkButton>
-            <asp:LinkButton runat="server" ID="BtnDeshabilitar" OnClick="BtnDeshabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+            <asp:LinkButton runat="server" ID="BtnDeshabilitar" Visible="False" OnClick="BtnDeshabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
                     <div class="mdc-button__ripple"></div>
                     <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
                     <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">remove_circle</i>
+            </asp:LinkButton>
+            
+            <asp:LinkButton runat="server" ID="BtnHabilitar" Visible="False" OnClick="BtnHabilitar_Click" CssClass="mdc-button mdc-card__action mdc-card__action--button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label mcardbl-act">Habilitar</span>
+                    <i class="material-icons mdc-button__icon danger-color" aria-hidden="true">unarchive</i>
             </asp:LinkButton>
             <br>
         </div>

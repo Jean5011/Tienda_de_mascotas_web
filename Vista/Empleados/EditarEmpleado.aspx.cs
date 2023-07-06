@@ -55,7 +55,7 @@ namespace Vista.Empleados {
             txtProvincia.Text = obj.Provincia;
             txtLocalidad.Text = obj.Localidad;
             txtNacionalidad.Text = obj.Nacionalidad;
-            chkEstado.Checked = obj.Estado;
+            // chkEstado.Checked = obj.Estado;
             chkAdmin.Checked = (obj.Rol == Empleado.Roles.ADMIN);
         }
         protected Empleado RescatarValores() {
@@ -75,7 +75,7 @@ namespace Vista.Empleados {
                 Provincia = txtProvincia.Text,
                 Localidad = txtLocalidad.Text,
                 Nacionalidad = txtNacionalidad.Text,
-                Estado = chkEstado.Checked,
+                Estado = UsuarioPerfil.Estado,
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
             return empleado;
