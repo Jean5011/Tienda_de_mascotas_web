@@ -19,6 +19,12 @@ namespace Vista.Animales {
                 CargarDatos();
             }
         }
+        protected void SwitchStatus_Command(object sender, CommandEventArgs e) {
+            string codigo = e.CommandArgument.ToString();
+            if(e.CommandName == "Habilitar") {
+                HabilitarRegistro(codigo);
+            }
+        }
 
         protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
@@ -114,6 +120,20 @@ namespace Vista.Animales {
             if (!respuesta.ErrorFound) CargarDatos();
             Utils.ShowSnackbar(respuesta.Message, this);
             
+        }
+
+        /// <summary>
+        /// Manda a habilitar un registro e informa el resultado obtenido.
+        /// </summary>
+        protected void HabilitarRegistro(string codigo) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            var animal = new Animal {
+                Codigo = codigo
+            };
+            var respuesta = NegocioAnimales.HabilitarAnimal(auth, animal);
+            if (!respuesta.ErrorFound) CargarDatos();
+            Utils.ShowSnackbar(respuesta.Message, this);
+
         }
 
         /// <summary>
