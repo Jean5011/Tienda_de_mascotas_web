@@ -32,6 +32,13 @@ namespace Vista.Empleados {
             };
             DetallesList.DataSource = items;
             DetallesList.DataBind();
+            if(UsuarioPerfil.Estado) {
+                BtnDeshabilitar.Visible = true;
+                BtnHabilitar.Visible = false;
+            } else {
+                BtnDeshabilitar.Visible = false;
+                BtnHabilitar.Visible = true;
+            }
         }
 
         protected void CargarVentas() {
@@ -113,6 +120,9 @@ namespace Vista.Empleados {
         protected void BtnDeshabilitar_Click(object sender, EventArgs e) {
             Deshabilitar();
         }
+        protected void BtnHabilitar_Click(object sender, EventArgs e) {
+            Deshabilitar();
+        }
 
         protected void BtnEditarDetalles_Click(object sender, EventArgs e) {
             Editar();
@@ -167,6 +177,7 @@ namespace Vista.Empleados {
                 Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
             }
         }
+
 
         /// <summary>
         /// Redirige a la página de Editar.

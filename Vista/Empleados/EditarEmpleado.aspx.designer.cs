@@ -166,15 +166,6 @@ namespace Vista.Empleados {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
 
         /// <summary>
-        /// chkEstado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkEstado;
-
-        /// <summary>
         /// chkAdmin control.
         /// </summary>
         /// <remarks>
