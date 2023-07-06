@@ -30,48 +30,32 @@ namespace Vista.Proveedores {
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response existe = ProveedorNegocio.VerificarExiste(Cuit_tb.Text);
-            int cantidad;
-            if (!existe.ErrorFound)
+            Proveedor proveedor = new Proveedor
             {
-                DataSet dt = existe.ObjectReturned as DataSet;
-                cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["CUIT"]);
+                CUIT = Cuit_tb.Text,
+                RazonSocial = RazonSocial_tb.Text,
+                NombreContacto = NombreContacto_tb.Text,
+                CorreoElectronico = CorreoElectronico_tb.Text,
+                Telefono = NumeroTelefono_tb.Text,
+                Direccion = Direccion_tb.Text,
+                Provincia = Provincia_tb.Text,
+                Localidad = localidad_tb.Text,
+                Pais = Pais_tb.Text,
+                CodigoPostal = CodigoPostal_tb.Text
+            };
 
-                if (cantidad > 0)
-                {   //si cantidad es mayor a cero es pq ya existe
-                    Utils.MostrarMensaje($"El CUIT de proveedor ingresado ya existe. ", this.Page, GetType());
-                }
-                else
-                {   //si es igual a cero es pq no existe, se crea el proveedor
-                    Proveedor proveedor = new Proveedor
-                    {
-                        CUIT = Cuit_tb.Text,
-                        RazonSocial = RazonSocial_tb.Text,
-                        NombreContacto = NombreContacto_tb.Text,
-                        CorreoElectronico = CorreoElectronico_tb.Text,
-                        Telefono = NumeroTelefono_tb.Text,
-                        Direccion = Direccion_tb.Text,
-                        Provincia = Provincia_tb.Text,
-                        Localidad = localidad_tb.Text,
-                        Pais = Pais_tb.Text,
-                        CodigoPostal = CodigoPostal_tb.Text
-                    };
+            Response resInsertarProveedor = ProveedorNegocio.InsertarProveedor(proveedor);
+            if (!resInsertarProveedor.ErrorFound)
+            {
+                VaciarTextBoxs();
+                Utils.ShowSnackbar(resInsertarProveedor.Message, this, GetType());
 
-                    
-                    Response resInsertarProveedor = ProveedorNegocio.InsertarProveedor(proveedor);
-                    if (!resInsertarProveedor.ErrorFound)
-                    {
-                        VaciarTextBoxs();
-                        Utils.ShowSnackbar("Proveedor ha sido agregado correctamente!.", this, GetType());
-
-                    }
-                    else
-                    {
-                        Utils.ShowSnackbar("Hubo un error, no se pudo agregar el proveedor.", this, GetType());
-                    }
-                }
             }
-
+            else
+            {
+                Utils.ShowSnackbar(resInsertarProveedor.Message, this, GetType());
+            }
+           
         }
 
         protected void BtnVolverAtras_Click(object sender, EventArgs e)
