@@ -69,14 +69,18 @@ namespace Negocio
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
                 //verificamos que el proveedor ingresado sea valido
-                var verificarExist = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
-                if(verificarExist.ErrorFound)
+                var verificarProv = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
+                if(!verificarProv.ErrorFound)
                 {
-                    return new Response
-                    {
-                        ErrorFound = true,
-                        Message = "El CUIT de Proveedor ingresado no existe"
-                    };
+                    var dataT = verificarProv.ObjectReturned as DataSet;
+                    int cant = Convert.ToInt32(dataT.Tables[0].Rows[0]["Cantidad"]);
+                    if (cant == 0) {
+                        return new Response
+                        {
+                            ErrorFound = true,
+                            Message = "El CUIT de Proveedor ingresado no existe. "
+                        };
+                    }
                 }
                 // Verificamos si existe un producto con mismo codigo y si pertenece al mismo proveedor.
                 var verificarExistencia = VerificarExistenciaProductoProveedor(producto.Codigo,producto.Proveedor.CUIT);
