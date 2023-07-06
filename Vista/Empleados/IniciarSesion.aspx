@@ -36,4 +36,12 @@
         <br />
         <asp:Label ID="lblResultado" runat="server" Text=""></asp:Label>
     </div>
+    <script type="text/javascript">
+    function HandleKeyPress(e) {
+        if (e.keyCode === 13) { 
+            __doPostBack("<%=txtClave.UniqueID %>", "enter");
+            return false;
+        }
+    }
+    </script>
 </asp:Content>

@@ -9,20 +9,6 @@
             <span class="mdc-notched-outline">
                 <span class="mdc-notched-outline__leading"></span>
                 <span class="mdc-notched-outline__notch">
-                    <span class="mdc-floating-label" id="dni-label">DNI *</span>
-                </span>
-                <span class="mdc-notched-outline__trailing"></span>
-            </span>
-            <asp:TextBox ID="txtDNI" minlength="8" runat="server" CssClass="mdc-text-field__input" aria-labelledby="dni-label"></asp:TextBox>
-        </label>
-        <div class="mdc-text-field-helper-line">
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" CssClass="mdc-text-field-helper-text" aria-hidden="true" ControlToValidate="txtDNI" runat="server" ErrorMessage="" ValidationGroup="A" SetFocusOnError="True" Text="Ingresá un DNI."></asp:RequiredFieldValidator>
-        </div>
-        <br>
-        <label class="mdc-text-field mdc-text-field--outlined">
-            <span class="mdc-notched-outline">
-                <span class="mdc-notched-outline__leading"></span>
-                <span class="mdc-notched-outline__notch">
                     <span class="mdc-floating-label" id="nombre-label">Nombre *</span>
                 </span>
                 <span class="mdc-notched-outline__trailing"></span>
