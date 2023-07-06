@@ -26,10 +26,15 @@
                             <span class="mdc-button__label mcardbl-act">Editar</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
                         </a>
-                        <asp:LinkButton runat="server" OnCommand="Lb_Command" CommandName="EliminarProveedor" CommandArgument="<%# Eval(Proveedor.Columns.CUIT) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                        <asp:LinkButton runat="server" Visible="<%# Convert.ToBoolean(Eval(Proveedor.Columns.Estado)) %>" OnClientClick="return confirm('¿Estás seguro de deshabilitar este registro?');" OnCommand="Lb_Command" CommandName="EliminarProveedor" CommandArgument="<%# Eval(Proveedor.Columns.CUIT) %>" class="mdc-button mdc-card__action mdc-card__action--button">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label mcardbl-act">Eliminar</span>
+                            <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                        </asp:LinkButton>
+                        <asp:LinkButton runat="server" Visible="<%# !Convert.ToBoolean(Eval(Proveedor.Columns.Estado)) %>" OnClientClick="return confirm('¿Estás seguro de habilitar este registro?');" OnCommand="Lb_Command" CommandName="Habilitar" CommandArgument="<%# Eval(Proveedor.Columns.CUIT) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Habilitar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">unarchive</i>
                         </asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>

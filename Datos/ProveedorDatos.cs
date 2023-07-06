@@ -24,7 +24,8 @@ namespace Datos {
           $"[{Proveedor.Columns.Provincia}]," +
           $"[{Proveedor.Columns.Localidad}]," +
           $"[{Proveedor.Columns.Pais}]," +
-          $"[{Proveedor.Columns.CodigoPostal}]";
+          $"[{Proveedor.Columns.CodigoPostal}], " +
+          $"[{Proveedor.Columns.Estado}]";
             }
         }
 
@@ -33,8 +34,8 @@ namespace Datos {
         /// </summary>
         public static class Procedures {
             public static string Crear = "SP_Proveedor_Crear";
-            public static string ActualizarProducto = "SP_Proveedores_Actualizar";
-            public static string EliminarProducto = "SP_Proveedores_ActualizarEstado";
+            public static string ActualizarProveedor = "SP_Proveedores_Actualizar";
+            public static string ActualizarEstado = "SP_Proveedores_ActualizarEstado";
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Datos {
         public static Response ObtenerListaDeProveedores() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} where {Proveedor.Columns.Estado}=1 "
+                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table}"
                     );
         }
 
@@ -54,7 +55,7 @@ namespace Datos {
         /// <param name="CUIT">CUIT del Proveedor en cuestión.</param>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerProveedorByCUIT(string CUIT) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] =@cuit and {Proveedor.Columns.Estado}=1 ";
+            string consulta = $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} WHERE [{Proveedor.Columns.CUIT}] = @cuit ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: consulta,
@@ -98,10 +99,21 @@ namespace Datos {
         public static Response EliminadoLogicoProveedor(Proveedor prov) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.EliminarProducto,
+                        storedProcedureName: Procedures.ActualizarEstado,
                         parameters: new Dictionary<string, object> {
                             { "@CUIT", prov.CUIT },
-                            { "@Estado", prov.Estado },
+                            { "@Estado", false }
+                        }
+                    );
+        }
+
+        public static Response HabilitarProveedor(Proveedor prov) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.ExecuteStoredProcedure(
+                        storedProcedureName: Procedures.ActualizarEstado,
+                        parameters: new Dictionary<string, object> {
+                            { "@CUIT", prov.CUIT },
+                            { "@Estado", true }
                         }
                     );
         }
@@ -114,7 +126,7 @@ namespace Datos {
         public static Response ActualizarProveedor(Proveedor proveedor) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.ActualizarProducto,
+                        storedProcedureName: Procedures.ActualizarProveedor,
                         parameters: new Dictionary<string, object>
                         {
                             { "@CUIT", proveedor.CUIT },

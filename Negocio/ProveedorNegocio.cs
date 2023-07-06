@@ -53,9 +53,41 @@ namespace Negocio
 
             return response;
         }
-        public static Response EliminadoLogicoProveedor(String CUIT)
-        {
-            return ProveedorDatos.EliminadoLogicoProveedor(new Proveedor() { CUIT = CUIT, Estado = "0" });
+        public static Response EliminadoLogicoProveedor(SessionData auth, Proveedor proveedor) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = ProveedorDatos.EliminadoLogicoProveedor(proveedor);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro fue deshabilitado correctamente. "
+                            : "Hubo un error al intentar deshabilitar el registro. "
+                    };
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
+        public static Response HabilitarProveedor(SessionData auth, Proveedor proveedor) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = ProveedorDatos.HabilitarProveedor(proveedor);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro fue habilitado correctamente. "
+                            : "Hubo un error al intentar habilitar el registro. "
+                    };
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
         }
         public static Response ActualizarProveedor(Proveedor proveedor)
         {
