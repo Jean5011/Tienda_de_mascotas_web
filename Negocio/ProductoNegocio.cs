@@ -14,10 +14,13 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
-        public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
-            if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
+        public static Response ExtractDataFromDataSet(DataSet resultDataSet)
+        {
+            if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0)
+            {
                 DataRow i = resultDataSet.Tables[0].Rows[0];
-                Producto obj = new Producto() {
+                Producto obj = new Producto()
+                {
                     Codigo = i[Producto.Columns.Codigo_Prod].ToString(),
                     Proveedor = new Proveedor() { CUIT = i[Producto.Columns.CUITProv].ToString() },
                     Categoria = new TipoProducto() { Codigo = i[Producto.Columns.CodTipoProducto].ToString() },
@@ -28,13 +31,16 @@ namespace Negocio
                     Precio = Convert.ToDouble(i[Producto.Columns.Precio].ToString()),
                     Estado = Convert.ToBoolean(i[Producto.Columns.Estado].ToString())
                 };
-                return new Response() {
+                return new Response()
+                {
                     ErrorFound = false,
                     ObjectReturned = obj
                 };
             }
-            else {
-                return new Response() {
+            else
+            {
+                return new Response()
+                {
                     ErrorFound = true,
                     Message = SesionNegocio.ErrorCode.NO_ROWS,
                     ObjectReturned = null
@@ -42,96 +48,113 @@ namespace Negocio
             }
 
         }
-        public static Response ListarTodo() {
+        public static Response ListarTodo()
+        {
             return DaoProductos.ObtenerListaDeProductos();
         }
 
-        public static Response BuscarPorCodigo(string codigo) {
+        public static Response BuscarPorCodigo(string codigo)
+        {
             return DaoProductos.BuscarProductoPorCod(codigo);
         }
 
 
-        public static Response BuscarProductos(string codigo = null) {
+        public static Response BuscarProductos(string codigo = null)
+        {
             return string.IsNullOrEmpty(codigo)
                 ? ListarTodo()
                 : BuscarPorCodigo(codigo);
         }
-        public static Response ObtenerPorCodigo(string cod) {
+        public static Response ObtenerPorCodigo(string cod)
+        {
             var res1 = DaoProductos.BuscarProductoPorCod(cod);
-            if(!res1.ErrorFound) {
+            if (!res1.ErrorFound)
+            {
                 var res2 = ProductoNegocio.ExtractDataFromDataSet(res1.ObjectReturned as DataSet);
                 return res2;
             }
             return res1;
         }
 
-        public static Response IngresarProducto(SessionData auth, Producto producto) {
+        public static Response IngresarProducto(SessionData auth, Producto producto)
+        {
             var respuesta = Response.ErrorDesconocido;
-            if(auth.User.Rol == Empleado.Roles.ADMIN) {
+            if (auth.User.Rol == Empleado.Roles.ADMIN)
+            {
                 //verificamos que el proveedor ingresado sea valido
-                var verificarProv = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
-                if(!verificarProv.ErrorFound)
+                respuesta = VerificaCamposProducto(producto);
+                if (respuesta.ErrorFound) return respuesta;
+                // No existe ningún registro bajo ese código con mismo proveedor.
+                SesionNegocio.Autenticar(ok =>
                 {
-                    var dataT = verificarProv.ObjectReturned as DataSet;
-                    int cant = Convert.ToInt32(dataT.Tables[0].Rows[0]["Cantidad"]);
-                    if (cant == 0) {
-                        return new Response
-                        {
-                            ErrorFound = true,
-                            Message = "El CUIT de Proveedor ingresado no existe. "
-                        };
-                    }
-                }
-                // Verificamos si existe un producto con mismo codigo y si pertenece al mismo proveedor.
-                var verificarExistencia = VerificarExistenciaProductoProveedor(producto.Codigo,producto.Proveedor.CUIT);
-                if (!verificarExistencia.ErrorFound) {
-                    var dt = verificarExistencia.ObjectReturned as DataSet;
-                    int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
-                    if(cantidad != 0) {
-                        // Hay un registro bajo ese código y bajo mismo proveedor. Se aborta la operación.
-                        return new Response {
-                            ErrorFound = true,
-                            Message = "Ya existe un registro con ese código y proveedor. Intente con otro."
-                        };
-                    } else {
-                        // No existe ningún registro bajo ese código con mismo proveedor.
-                        SesionNegocio.Autenticar(ok => {
-                            var operacion = DaoProductos.IngresarProducto(producto);
-                            respuesta = new Response {
-                                ErrorFound = operacion.ErrorFound,
-                                Message = !operacion.ErrorFound
-                                    ? "El registro se agregó correctamente. "
-                                    : "Hubo un error al intentar agregar el registro. "
-                            };
-                        }, err => {
-                            respuesta = Response.TokenCaducado;
-                        });
-                    }
-                } else {
-                    return new Response {
-                        ErrorFound = true,
-                        Message = "No se pudo comprobar la existencia del registro. Intente más tarde. "
+                    var operacion = DaoProductos.IngresarProducto(producto);
+                    respuesta = new Response
+                    {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro se agregó correctamente. "
+                            : "Hubo un error al intentar agregar el registro. "
                     };
-                }
+                }, err =>
+                {
+                    respuesta = Response.TokenCaducado;
+                });
+
+
 
                 return respuesta;
             }
             return Response.PermisosInsuficientes;
         }
-       
+        public static Response VerificaCamposProducto(Producto producto)
+        {
+            //verificamos que el proveedor ingresado sea valido
+            var verificarProv = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
+            Response respuesta = new Response();
+            if (!verificarProv.ErrorFound)
+            {
+                var dataT = verificarProv.ObjectReturned as DataSet;
+                int cant = Convert.ToInt32(dataT.Tables[0].Rows[0]["Cantidad"]);
+                if (cant == 0)
+                {
+                    respuesta.ErrorFound = true;
+                    respuesta.Message = "El CUIT de Proveedor ingresado no existe. ";
+                    return respuesta;
+                }
 
-        public static Response ActualizarProducto(SessionData auth, Producto producto) {
+            }
+            var verificarExistencia = VerificarExistenciaProductoProveedor(producto.Codigo, producto.Proveedor.CUIT);
+            if (!verificarExistencia.ErrorFound)
+            {
+                var dt = verificarExistencia.ObjectReturned as DataSet;
+                int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
+                if (cantidad != 0)
+                {
+                    // Hay un registro bajo ese código y bajo mismo proveedor. Se aborta la operación.
+                    respuesta.ErrorFound = true;
+                    respuesta.Message = "Ya existe un registro con ese código y proveedor. Intente con otro.";
+                }
+            }
+            return respuesta;
+        }
+
+        public static Response ActualizarProducto(SessionData auth, Producto producto)
+        {
             var respuesta = Response.ErrorDesconocido;
-            if(auth.User.Rol == Empleado.Roles.ADMIN) {
-                SesionNegocio.Autenticar(ok => {
+            if (auth.User.Rol == Empleado.Roles.ADMIN)
+            {
+                SesionNegocio.Autenticar(ok =>
+                {
                     var operacion = DaoProductos.ActualizarProducto(producto);
-                    respuesta = new Response {
+                    respuesta = new Response
+                    {
                         ErrorFound = operacion.ErrorFound,
                         Message = !operacion.ErrorFound
                             ? "Se actualizó correctamente el registro. "
                             : "Hubo un error al intentar actualizar el registro. "
                     };
-                }, err => {
+                }, err =>
+                {
                     respuesta = Response.TokenCaducado;
                 });
                 return respuesta;
@@ -139,18 +162,23 @@ namespace Negocio
             return Response.PermisosInsuficientes;
         }
 
-        public static Response EliminarProducto(SessionData auth, Producto producto){
+        public static Response EliminarProducto(SessionData auth, Producto producto)
+        {
             var respuesta = Response.ErrorDesconocido;
-            if(auth.User.Rol == Empleado.Roles.ADMIN) {
-                SesionNegocio.Autenticar(ok => {
+            if (auth.User.Rol == Empleado.Roles.ADMIN)
+            {
+                SesionNegocio.Autenticar(ok =>
+                {
                     var operacion = DaoProductos.EliminarProducto(producto);
-                    respuesta = new Response {
+                    respuesta = new Response
+                    {
                         ErrorFound = operacion.ErrorFound,
                         Message = !operacion.ErrorFound
                             ? "El registro se eliminó correctamente. "
                             : "Hubo un problema al intentar eliminar el registro. "
                     };
-                }, err => {
+                }, err =>
+                {
                     respuesta = Response.TokenCaducado;
                 });
                 return respuesta;
@@ -167,7 +195,7 @@ namespace Negocio
             return DaoProductos.VerificarExistenciaProveedor(CUIT);
         }
 
-        public static Response VerificarExistenciaProductoProveedor(string ID,string CUIT)
+        public static Response VerificarExistenciaProductoProveedor(string ID, string CUIT)
         {
             return DaoProductos.VerificarExistenciaProductoYProveedor(ID, CUIT);
         }
