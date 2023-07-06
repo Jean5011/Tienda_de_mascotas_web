@@ -16,7 +16,7 @@ namespace Vista.Productos {
                 CargarDDL();
             }
         }
-        protected void btnVolverAtras_Click(object sender, EventArgs e) {
+        protected void BtnVolverAtras_Click(object sender, EventArgs e) {
             Response.Redirect("/Productos/");
         }
         protected void BtnGuardar_Click(object sender, EventArgs e) {
