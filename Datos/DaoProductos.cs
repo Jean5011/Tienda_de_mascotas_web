@@ -155,6 +155,18 @@ namespace Datos {
                     );
         }
 
+        public static Response VerificarExistenciaProductoYProveedor(string ID,string CUIT)
+        {
+            string consulta = $"SELECT COUNT([{Producto.Columns.Codigo_Prod}]) AS [Cantidad] FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID AND [{Producto.Columns.CUITProv}] = @CUIT";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@ID", ID },
+                            { "@CUIT",CUIT }
+                        }
+                    );
+        }
     }
 
 }

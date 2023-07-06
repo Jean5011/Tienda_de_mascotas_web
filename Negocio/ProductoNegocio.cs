@@ -68,19 +68,29 @@ namespace Negocio
         public static Response IngresarProducto(SessionData auth, Producto producto) {
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
-                // Verificamos si existe.
-                var verificarExistencia = VerificarExistenciaProducto(producto.Codigo);
-                if(!verificarExistencia.ErrorFound) {
+                //verificamos que el proveedor ingresado sea valido
+                var verificarExist = VerificarExistenciaProveedor(producto.Proveedor.CUIT);
+                if(verificarExist.ErrorFound)
+                {
+                    return new Response
+                    {
+                        ErrorFound = true,
+                        Message = "El CUIT de Proveedor ingresado no existe"
+                    };
+                }
+                // Verificamos si existe un producto con mismo codigo y si pertenece al mismo proveedor.
+                var verificarExistencia = VerificarExistenciaProductoProveedor(producto.Codigo,producto.Proveedor.CUIT);
+                if (!verificarExistencia.ErrorFound) {
                     var dt = verificarExistencia.ObjectReturned as DataSet;
                     int cantidad = Convert.ToInt32(dt.Tables[0].Rows[0]["Cantidad"]);
                     if(cantidad != 0) {
-                        // Hay un registro bajo ese código. Se aborta la operación.
+                        // Hay un registro bajo ese código y bajo mismo proveedor. Se aborta la operación.
                         return new Response {
                             ErrorFound = true,
-                            Message = "Ya existe un registro con ese código. Intente con otro."
+                            Message = "Ya existe un registro con ese código y proveedor. Intente con otro."
                         };
                     } else {
-                        // No existe ningún registro bajo ese código.
+                        // No existe ningún registro bajo ese código con mismo proveedor.
                         SesionNegocio.Autenticar(ok => {
                             var operacion = DaoProductos.IngresarProducto(producto);
                             respuesta = new Response {
@@ -151,6 +161,11 @@ namespace Negocio
         public static Response VerificarExistenciaProveedor(string CUIT)
         {
             return DaoProductos.VerificarExistenciaProveedor(CUIT);
+        }
+
+        public static Response VerificarExistenciaProductoProveedor(string ID,string CUIT)
+        {
+            return DaoProductos.VerificarExistenciaProductoYProveedor(ID, CUIT);
         }
         /*
         public Response ActualizarPrecio(Producto P)
