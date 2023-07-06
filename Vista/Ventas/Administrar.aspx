@@ -20,6 +20,11 @@
                             <span class="mdc-button__label mcardbl-act">Abrir</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
                         </a>
+                        <a href="/Ventas/Eliminar.aspx?ID=<%# Eval(Venta.Columns.Id) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Eliminar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="ID">

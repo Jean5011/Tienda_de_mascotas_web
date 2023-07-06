@@ -91,6 +91,7 @@
     <Content Include="Tipos\Agregar.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
     <Content Include="Ventas\Crear.aspx" />
+    <Content Include="Ventas\Eliminar.aspx" />
     <Content Include="Ventas\VerFactura.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -265,6 +266,13 @@
     </Compile>
     <Compile Include="Ventas\Crear.aspx.designer.cs">
       <DependentUpon>Crear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\Eliminar.aspx.cs">
+      <DependentUpon>Eliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas\Eliminar.aspx.designer.cs">
+      <DependentUpon>Eliminar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas\VerFactura.aspx.cs">
       <DependentUpon>VerFactura.aspx</DependentUpon>

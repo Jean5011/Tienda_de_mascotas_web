@@ -112,8 +112,7 @@ namespace Datos {
             Connection conexion = new Connection(Connection.Database.Pets);
             return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
-                    parameters: new Dictionary<string, object>
-                    {
+                    parameters: new Dictionary<string, object> {
                         { "@CodigoVenta", codigo }, // TODO: Reemplazar codigo por dv.CodigoVenta o algo así.
                         { "@CodigoProducto", dv.Producto.Codigo }, 
                         { "@CUITProveedor", dv.Proveedor.CUIT }

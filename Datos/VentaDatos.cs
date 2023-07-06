@@ -18,6 +18,7 @@ namespace Datos {
             public const string ProductoMasVendidoUltimaSemana = "Widget_ProductoMasVendido_UltimaSemana";
             public const string CantidadDeProductosPorAgotarse = "Widget_ContarProductosConBajoStock";
             public const string CantidadDeProductosAgotados = "Widget_ContarProductosSinStock";
+            public const string EliminarVenta = "EliminarVenta";
         }
 
         /// <summary>
@@ -153,6 +154,17 @@ namespace Datos {
                             storedProcedureName: Procedures.CantidadDeProductosAgotados
                         );
             }
+
+            
+        }
+        public static Response EliminarVentaYDetalles(Venta venta) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.ExecuteStoredProcedure(
+                    storedProcedureName: Procedures.EliminarVenta,
+                    parameters: new Dictionary<string, object> {
+                            { "@ID", venta.Id }
+                    }
+                );
         }
 
     }
