@@ -13,7 +13,8 @@
             </span>
             <span class="mdc-notched-outline__trailing"></span>
         </span>
-        <asp:TextBox ID="txtMedio" minlength="8" runat="server" CssClass="mdc-text-field__input" aria-labelledby="dni-label"></asp:TextBox>
+        <!--<asp:TextBox ID="txtMedio" minlength="8" runat="server" CssClass="mdc-text-field__input" aria-labelledby="dni-label"></asp:TextBox>-->
+        <asp:DropDownList ID="ddlMedioPago" runat="server" CssClass="mdc-text-field__input" aria-labelledby="dni-label"></asp:DropDownList>
     </label>
     <div class="mdc-text-field-helper-line">
         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" CssClass="mdc-text-field-helper-text" aria-hidden="true" ControlToValidate="txtMedio" runat="server" ErrorMessage="" ValidationGroup="A" SetFocusOnError="True" Text="Ingresá un medio de pago."></asp:RequiredFieldValidator>

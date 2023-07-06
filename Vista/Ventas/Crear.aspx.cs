@@ -22,9 +22,21 @@ namespace Vista.Ventas {
                 txtHora.Text = hora;
                 txtMedio.Focus();
                 adLabel.Text = em.Nombre + " " + em.Apellido + " es el gestor.";
-
+                CargarDDL();
             }
         }
+
+        protected void CargarDDL()
+        {   
+            ddlMedioPago.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
+            ddlMedioPago.Items.Add(new ListItem("Tarjeta de Credito", "Credit_Card"));
+            ddlMedioPago.Items.Add(new ListItem("Tarjeta de Debito", "Debit_Card"));
+            ddlMedioPago.Items.Add(new ListItem("BitCoin", "BTC"));
+            ddlMedioPago.Items.Add(new ListItem("Ethereum", "ETH"));
+            ddlMedioPago.Items.Add(new ListItem("Mercado Pago", "Mercado_Pago"));
+            ddlMedioPago.Items.Add(new ListItem("Efectivo", "Efectivo"));
+        }
+
 
         protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
             SesionNegocio.Autenticar((data) => {
@@ -33,9 +45,14 @@ namespace Vista.Ventas {
                 DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
                 var auth = Session[Utils.AUTH] as SessionData;
                 var emp = auth.User;
+                if (ddlMedioPago.SelectedIndex == 0)
+                {
+                    Utils.ShowSnackbar("Seleccione un Metodo de pago valido. ", this);
+                    return;
+                }
                 Venta obj = new Venta() {
                     EmpleadoGestor = emp,
-                    TipoPago = txtMedio.Text,
+                    TipoPago = ddlMedioPago.SelectedValue,
                     Fecha = fn.ToString("yyyy-MM-dd HH:mm"),
                     Total = 0
                 };
