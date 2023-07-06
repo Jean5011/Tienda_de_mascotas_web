@@ -33,8 +33,8 @@
                         <asp:LinkButton ID="lnkUpdate" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
                             CommandName="Update">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label mcardbl-act">Editar</span>
-                            <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                            <span class="mdc-button__label mcardbl-act">Guardar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
                         </asp:LinkButton>
                         <asp:LinkButton ID="lnkCancel" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
                             CommandName="Cancel">
@@ -50,11 +50,17 @@
                             <span class="mdc-button__label mcardbl-act">Editar</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
                         </asp:LinkButton>
-                        <asp:LinkButton ID="lnkDelete" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
+                        <asp:LinkButton ID="lnkDelete" runat="server" Visible="<%# Convert.ToBoolean(Eval(Animal.Columns.Estado)) %>" OnClientClick="return confirm('¿Seguro de eliminar este registro?');" CssClass="mdc-button mdc-card__action mdc-card__action--button"
                             CommandName="Delete">
                             <div class="mdc-button__ripple"></div>
-                            <span class="mdc-button__label mcardbl-act">Eliminar</span>
-                            <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                            <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">highlight_off</i>
+                        </asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton1" runat="server" Visible="<%# !Convert.ToBoolean(Eval(Animal.Columns.Estado)) %>" OnClientClick="return confirm('¿Seguro de habilitar este registro?');" CssClass="mdc-button mdc-card__action mdc-card__action--button"
+                            CommandName="Habilitar" CommandArgument="<%# Eval(Animal.Columns.Codigo) %>" OnCommand="SwitchStatus_Command" >
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Habilitar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">check_circle_outline</i>
                         </asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>

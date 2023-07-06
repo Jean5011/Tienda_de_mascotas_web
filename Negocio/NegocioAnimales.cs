@@ -117,6 +117,24 @@ namespace Negocio {
             return Response.PermisosInsuficientes;
         }
 
+        public static Response HabilitarAnimal(SessionData auth, Animal animal) {
+            Response respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(res => {
+                    var operacion = DaoAnimales.HabilitarAnimal(animal);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = operacion.ErrorFound
+                            ? "Hubo un error al intentar habilitar el registro. "
+                            : "El registro se habilitó correctamente. "
+                    };
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
 
         // Queda a revisión
         public Response GettAnimales() {

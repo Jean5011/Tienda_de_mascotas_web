@@ -19,7 +19,8 @@ namespace Datos {
             get {
                 return $"[{Animal.Columns.Codigo}], " +
                         $"[{Animal.Columns.Nombre}], " +
-                        $"[{Animal.Columns.Raza}]";
+                        $"[{Animal.Columns.Raza}], " +
+                        $"[{Animal.Columns.Estado}] ";
             }
         }
 
@@ -34,24 +35,24 @@ namespace Datos {
         }
 
         /// <summary>
-        /// Obtener tabla de animales activos.
+        /// Obtener tabla de animales.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeAnimales() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table}  where {Animal.Columns.Estado}=1"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table}"
                     );
         }
 
         /// <summary>
-        /// Obtener lista de animales activos. (Redundancia)
+        /// Obtener lista de animales activos.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerLista() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT ({Animal.Columns.Nombre}+    +{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo} FROM {Animal.Table} where {Animal.Columns.Estado}=1"
+                        query: $"SELECT ({Animal.Columns.Nombre}+    +{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo}, [{Animal.Columns.Estado}]  FROM {Animal.Table} WHERE [{Animal.Columns.Estado}] = 1"
                     );
         }
 
@@ -100,6 +101,16 @@ namespace Datos {
                         storedProcedureName: Procedures.Eliminar,
                         parameters: new Dictionary<string, object> {
                             { "@PK_CodAnimales_An", An.Codigo }
+                        }
+                    );
+        }
+
+        public static Response HabilitarAnimal(Animal An) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.RunTransaction(
+                        query: $"UPDATE [{Animal.Table}] SET [{Animal.Columns.Estado}] = 1 WHERE [{Animal.Columns.Codigo}] = @COD",
+                        parameters: new Dictionary<string, object> {
+                            { "@COD", An.Codigo }
                         }
                     );
         }
