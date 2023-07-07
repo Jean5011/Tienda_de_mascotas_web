@@ -11,10 +11,11 @@ namespace Vista.Proveedores
 {
     public partial class Administrar : System.Web.UI.Page
     {
-        protected void CargarTabla()
+        protected void CargarTabla(string id = null)
         {
             Response res;
             string cuit = txtBuscar.Text;
+            if (id != null) cuit = id;
             if (!string.IsNullOrEmpty(cuit)){
                 Response resObtProveedorByCUIT = ProveedorNegocio.ObtenerProveedorByCUIT(cuit);
                 res = (resObtProveedorByCUIT);
