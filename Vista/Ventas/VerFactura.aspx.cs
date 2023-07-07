@@ -156,17 +156,19 @@ namespace Vista.Ventas {
                 SesionNegocio.Autenticar(rs => {
                     Venta obj = Session[VK] as Venta;
                     int idVenta = obj.Id;
-
+                    
                     string codigoProducto = e.CommandArgument.ToString();
-                    Producto prod = new Producto();
-                    prod.Codigo = codigoProducto;
+                    Producto prod = new Producto()
+                    {
+                        Codigo = codigoProducto
+                    };
 
                     var res = DetalleVentaNegocio.ObtenerDetalleVenta(idVenta);
                     if (!res.ErrorFound)
                     {
-                        DataSet dataSet = res.ObjectReturned as DataSet;
-                        var resultado = DetalleVentaNegocio.obtenerRegistro(dataSet, prod, obj); // el error está en esta función.
-                        if(resultado != null)
+                        DataSet dsDetalleVenta = res.ObjectReturned as DataSet;
+                        var resultado = DetalleVentaNegocio.obtenerRegistro(dsDetalleVenta, prod, obj); // el error está en esta función.
+                        if (resultado != null)
                         {
                             DetalleVenta dv = resultado;
                             switch (e.CommandName)
@@ -174,11 +176,11 @@ namespace Vista.Ventas {
                                 case "Restar":
                                     if (!DetalleVentaNegocio.disminuirCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
                                     else { Utils.ShowSnackbar("No es posible disminuir la cantidad vendida. ", this.Page); }
-                                    break;
+                                break;
                                 case "Sumar":
                                     if (!DetalleVentaNegocio.aumentarCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
                                     else { Utils.ShowSnackbar("No es posible aumentar la cantidad vendida. ", this.Page); }
-                                    break;
+                                break;
                             }
                         }
                         else { Utils.ShowSnackbar("No es posible obtener el registro del detalle de la venta. ", this.Page); }

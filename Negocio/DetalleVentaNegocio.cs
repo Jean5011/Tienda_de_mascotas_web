@@ -45,31 +45,24 @@ namespace Negocio
             return DaoDetalleVentas.disminuirCantidadVendida(dv);
         }
 
-        public static DetalleVenta obtenerRegistro(DataSet dataSet, Producto prod, Venta obj)
+        public static DetalleVenta obtenerRegistro(DataSet dsDetalleVenta, Producto prod, Venta obj)
         {
             DetalleVenta dv = new DetalleVenta()
             {
                 Id = obj,
-                Producto = prod,
-                Proveedor = prod.Proveedor,
+                Producto = prod
             };
-            foreach (DataRow fila in dataSet.Tables["DetalleDeVenta"].Rows) // acá está el error.
+            foreach (DataRow fila in dsDetalleVenta.Tables[0].Rows)
             {
+                // var CUIT = fila[DetalleVenta.Columns.CUITProv].ToString(); // esto devuelve el cuit correcto.
+                // dv.Proveedor.CUIT = CUIT; // me dice que Entidades.DetalleVenta.Proveedor.get devolvió null. 
+                // El error es: System.NullReferenceException: 'Referencia a objeto no establecida como instancia de un objeto.'
+
+                dv.Proveedor.CUIT = fila[DetalleVenta.Columns.CUITProv].ToString(); // lo mismo pasa con esto.
                 dv.Cantidad = Convert.ToInt32(fila[DetalleVenta.Columns.Cantidad_Dv]);
                 dv.PrecioUnitario = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioUnitario_Dv]);
                 dv.PrecioTotal = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioTotal_Dv]);
                 dv.Estado = true;
-                /*
-                DetalleVenta dv = new DetalleVenta()
-                {
-                    Id = fila[DetalleVenta.Columns.CodVenta_Dv] as Venta, 
-                    Producto = fila[DetalleVenta.Columns.CodProducto_Dv] as Producto,
-                    Proveedor = fila[DetalleVenta.Columns.CUITProv] as Proveedor,
-                    Cantidad = Convert.ToInt32(fila[DetalleVenta.Columns.Cantidad_Dv]),
-                    PrecioUnitario = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioUnitario_Dv]),
-                    PrecioTotal = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioTotal_Dv]),
-                    Estado = true
-                }; */
                 return dv;
             }
             return null;
