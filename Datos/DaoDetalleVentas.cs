@@ -108,12 +108,12 @@ namespace Datos {
         /// <param name="codigo">Código de la venta @Deprecated</param>
         /// <param name="dv">Objeto DetalleVenta con los datos establecidos.</param>
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
-        public static Response aumentarCantidadVendida(string codigo, DetalleVenta dv) {
+        public static Response aumentarCantidadVendida(DetalleVenta dv) {
             Connection conexion = new Connection(Connection.Database.Pets);
             return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
                     parameters: new Dictionary<string, object> {
-                        { "@CodigoVenta", codigo }, // TODO: Reemplazar codigo por dv.CodigoVenta o algo así.
+                        { "@CodigoVenta", dv.Id }, 
                         { "@CodigoProducto", dv.Producto.Codigo }, 
                         { "@CUITProveedor", dv.Proveedor.CUIT }
                     }
@@ -126,13 +126,13 @@ namespace Datos {
         /// <param name="codigo">Código de la venta @Deprecated</param>
         /// <param name="dv">Objeto DetalleVenta con los datos establecidos</param>
         /// <returns>Objeto Response con el resultado de la transacción.</returns>
-        public static Response disminuirCantidadVendida(string codigo, DetalleVenta dv) {
+        public static Response disminuirCantidadVendida(DetalleVenta dv) {
             Connection conexion = new Connection(Connection.Database.Pets);
             return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.DisminuirCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", codigo }, // TODO: Reemplazar codigo por dv.CodigoVenta o algo así.
+                        { "@CodigoVenta", dv.Id }, 
                         { "@CodigoProducto", dv.Producto.Codigo }, 
                         { "@CUITProveedor", dv.Proveedor.CUIT } 
                     }

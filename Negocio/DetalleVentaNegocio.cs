@@ -35,14 +35,44 @@ namespace Negocio
             return DaoDetalleVentas.DarDeBajaRegistro(Cod);
         }
 
-        public static Response aumentarCantidadVendida(string codigo, DetalleVenta dv)
+        public static Response aumentarCantidadVendida(DetalleVenta dv)
         {
-            return DaoDetalleVentas.aumentarCantidadVendida(codigo, dv);
+            return DaoDetalleVentas.aumentarCantidadVendida(dv);
         }
 
-        public static Response disminuirCantidadVendida(string codigo, DetalleVenta dv)
+        public static Response disminuirCantidadVendida(DetalleVenta dv)
         {
-            return DaoDetalleVentas.disminuirCantidadVendida(codigo, dv);
+            return DaoDetalleVentas.disminuirCantidadVendida(dv);
+        }
+
+        public static DetalleVenta obtenerRegistro(DataSet dataSet, Producto prod, Venta obj)
+        {
+            DetalleVenta dv = new DetalleVenta()
+            {
+                Id = obj,
+                Producto = prod,
+                Proveedor = prod.Proveedor,
+            };
+            foreach (DataRow fila in dataSet.Tables["DetalleDeVenta"].Rows) // acá está el error.
+            {
+                dv.Cantidad = Convert.ToInt32(fila[DetalleVenta.Columns.Cantidad_Dv]);
+                dv.PrecioUnitario = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioUnitario_Dv]);
+                dv.PrecioTotal = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioTotal_Dv]);
+                dv.Estado = true;
+                /*
+                DetalleVenta dv = new DetalleVenta()
+                {
+                    Id = fila[DetalleVenta.Columns.CodVenta_Dv] as Venta, 
+                    Producto = fila[DetalleVenta.Columns.CodProducto_Dv] as Producto,
+                    Proveedor = fila[DetalleVenta.Columns.CUITProv] as Proveedor,
+                    Cantidad = Convert.ToInt32(fila[DetalleVenta.Columns.Cantidad_Dv]),
+                    PrecioUnitario = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioUnitario_Dv]),
+                    PrecioTotal = Convert.ToDouble(fila[DetalleVenta.Columns.PrecioTotal_Dv]),
+                    Estado = true
+                }; */
+                return dv;
+            }
+            return null;
         }
     }
 }

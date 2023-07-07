@@ -82,11 +82,11 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Cantidad">
                         <ItemTemplate>
-                            &nbsp;<asp:Button ID="btnRestar" runat="server" Text="-" CommandName="Restar" CommandArgument="<%#Eval(DetalleVenta.Columns.CodVenta_Dv)%>" OnCommand="modificarCantidadVendida_Command"/>
+                            &nbsp;<asp:Button ID="btnRestar" runat="server" Text="-" CommandName="Restar" CommandArgument="<%#Eval(DetalleVenta.Columns.CodProducto_Dv)%>" OnCommand="modificarCantidadVendida_Command"/>
 &nbsp;<asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Cantidad" runat="server"
                                 Text='<%# Eval(DetalleVenta.Columns.Cantidad_Dv) %>'>
                             </asp:Label>
-                            &nbsp;<asp:Button ID="btnSumar" runat="server" Text="+" CommandName="Sumar" CommandArgument="<%#Eval(DetalleVenta.Columns.CodVenta_Dv)%>" OnCommand="modificarCantidadVendida_Command"/>
+                            &nbsp;<asp:Button ID="btnSumar" runat="server" Text="+" CommandName="Sumar" CommandArgument="<%#Eval(DetalleVenta.Columns.CodProducto_Dv)%>" OnCommand="modificarCantidadVendida_Command"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Precio Unitario">

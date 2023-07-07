@@ -151,33 +151,44 @@ namespace Vista.Ventas {
 
         protected void modificarCantidadVendida_Command(object sender, CommandEventArgs e)
         {
-            string codigo = e.CommandArgument.ToString();
-            // DetalleVenta dv = (DetalleVenta)e.CommandArgument;
-
-            var res = DetalleVentaNegocio.ObtenerDetalleVenta(Convert.ToInt32(codigo)); // revisar esto.
-            if (!res.ErrorFound)
+            if (TieneDerechosNecesarios())
             {
-                // DataSet data = res.ObjectReturned as DataSet;
-                // DataRow dr = res.ObjectReturned as DataRow;
-                var dt = res.ObjectReturned as DataSet;
-                var dv = new DetalleVenta {
-                    
-                };
+                SesionNegocio.Autenticar(rs => {
+                    Venta obj = Session[VK] as Venta;
+                    int idVenta = obj.Id;
 
-                switch (e.CommandName)
-                {
-                    case "Restar": // terminar esto.
-                        DetalleVentaNegocio.disminuirCantidadVendida(codigo, dv);
-                        break;
-                    case "Sumar":
-                        DetalleVentaNegocio.aumentarCantidadVendida(codigo, dv);
-                        break;
-                }
-            }
-            else
-            {
-                Utils.ShowSnackbar("No es posible obtener el detalle de la venta. ", this.Page, GetType());
-            }
+                    string codigoProducto = e.CommandArgument.ToString();
+                    Producto prod = new Producto();
+                    prod.Codigo = codigoProducto;
+
+                    var res = DetalleVentaNegocio.ObtenerDetalleVenta(idVenta);
+                    if (!res.ErrorFound)
+                    {
+                        DataSet dataSet = res.ObjectReturned as DataSet;
+                        var resultado = DetalleVentaNegocio.obtenerRegistro(dataSet, prod, obj); // el error está en esta función.
+                        if(resultado != null)
+                        {
+                            DetalleVenta dv = resultado;
+                            switch (e.CommandName)
+                            {
+                                case "Restar":
+                                    if (!DetalleVentaNegocio.disminuirCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
+                                    else { Utils.ShowSnackbar("No es posible disminuir la cantidad vendida. ", this.Page); }
+                                    break;
+                                case "Sumar":
+                                    if (!DetalleVentaNegocio.aumentarCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
+                                    else { Utils.ShowSnackbar("No es posible aumentar la cantidad vendida. ", this.Page); }
+                                    break;
+                            }
+                        }
+                        else { Utils.ShowSnackbar("No es posible obtener el registro del detalle de la venta. ", this.Page); }
+                    }
+                    else { Utils.ShowSnackbar("No es posible obtener el detalle de la venta. ", this.Page); }
+                }, err => { 
+                    Utils.ShowSnackbar("Tu token caducó, volvé a iniciar sesión. ", this.Page); 
+                });
+            } 
+            else { Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page); }
         }
     }
 }
