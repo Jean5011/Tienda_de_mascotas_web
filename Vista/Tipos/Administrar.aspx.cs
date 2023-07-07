@@ -24,11 +24,6 @@ namespace Vista.Tipos {
             if (txtBuscar.Text == "") BT_Todo_Click();
             else BT_Filtrar_Click();
         }
-        protected bool EsAdmin() {
-            var auth = Session[Utils.AUTH] as SessionData;
-            var UsuarioActual = auth.User;
-            return UsuarioActual.Rol == Empleado.Roles.ADMIN;
-        }
         protected void btnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
         }
@@ -46,45 +41,15 @@ namespace Vista.Tipos {
         }
 
         protected void Habilitar(string codigo) {
-            if(EsAdmin()) {
-                SesionNegocio.Autenticar(success => {
-                    /* Habilitar */
-                    NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
-                    Response resultado = NT.AltaTipoDeProducto(codigo);
-                    Utils.ShowSnackbar(
-                            message: !resultado.ErrorFound 
-                                ? "Se habilitó con éxito el registro. "
-                                : "Hubo un problema al intentar habilitar el registro. ",
-                            control: this, 
-                            type: GetType()
-                        );
-                }, err => {
-                    Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this, GetType());
-                });
-            } else {
-                Utils.ShowSnackbar("Carecés de privilegios suficientes para realizar esta acción. ", this, GetType());
-            }
+            var auth = Session[Utils.AUTH] as SessionData;
+            var res = NegocioTipoDeProducto.Habilitar(auth, new TipoProducto { Codigo = codigo });
+            Utils.ShowSnackbar(res.Message, this);
         }
         protected void Deshabilitar(string codigo) {
-            if (EsAdmin()) {
-                SesionNegocio.Autenticar(success => {
-                    /* Deshabilitar */
-                    NegocioTipoDeProducto NT = new NegocioTipoDeProducto();
-                    Response resultado = NT.EliminarTipoDeProducto(codigo); // FIXME: Cambiar por función de BAJA.
-                    Utils.ShowSnackbar(
-                            message: !resultado.ErrorFound
-                                ? "Se deshabilitó con éxito el registro. "
-                                : "Hubo un problema al intentar habilitar el registro. ",
-                            control: this,
-                            type: GetType()
-                        );
-                }, err => {
-                    Utils.ShowSnackbar("El token caducó. Volvé a iniciar sesión. ", this, GetType());
-                });
-            }
-            else {
-                Utils.ShowSnackbar("Carecés de privilegios suficientes para realizar esta acción. ", this, GetType());
-            }
+            var auth = Session[Utils.AUTH] as SessionData;
+            var res = NegocioTipoDeProducto.Deshabilitar(auth, new TipoProducto { Codigo = codigo });
+            Utils.ShowSnackbar(res.Message, this);
+
         }
 
         protected void H_command(object sender, CommandEventArgs e) {
@@ -104,19 +69,8 @@ namespace Vista.Tipos {
         }
 
         protected void GvDatos_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e) {
-            if (EsAdmin()) {
-                SesionNegocio.Autenticar(res => {             
-                    string cod = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
-                    NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                    nt.EliminarTipoDeProducto(cod);
-                    CargarDatos();
-                }, err => {
-                    Utils.ShowSnackbar("Caducó tu token. Volvé a iniciar sesión. ", this.Page, GetType());
-                });
-            }
-            else {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción", this.Page, GetType());
-            }
+            string cod = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_CodTipoDeProducto")).Text;
+            Deshabilitar(cod);
         }
 
         protected void GvDatos_RowEditing(object sender, GridViewEditEventArgs e) {
@@ -130,23 +84,15 @@ namespace Vista.Tipos {
         }
 
         protected void GvDatos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            if (EsAdmin()) {
-                SesionNegocio.Autenticar(res => {
-                    TipoProducto Tp = new TipoProducto();
-                    string Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text;
-                    string CodAnimal = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue;
-                    string tipoDeProducto = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue;
-                    string Descripcion = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text;
-                    NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                    nt.ActualizarTipoDeProducto(Codigo, CodAnimal,tipoDeProducto, Descripcion);
-                }, err => {
-                    Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión", this.Page, GetType());
-                });
-            }
-            else {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción", this.Page, GetType());
-            }
-
+            TipoProducto tp = new TipoProducto {
+                Codigo = ((Label)GvDatos.Rows[e.RowIndex].FindControl("LV_EditCod")).Text,
+                CodAnimal = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditAnimal")).SelectedValue,
+                tipoDeProducto = ((DropDownList)GvDatos.Rows[e.RowIndex].FindControl("DD_EditTdp")).SelectedValue,
+                Descripcion = ((TextBox)GvDatos.Rows[e.RowIndex].FindControl("TB_EditDesc")).Text
+            };
+            var auth = Session[Utils.AUTH] as SessionData;
+            var res = NegocioTipoDeProducto.ActualizarTipoDeProducto(auth, tp);
+            Utils.ShowSnackbar(res.Message, this);
             GvDatos.EditIndex = -1;
             CargarDatos();
         }

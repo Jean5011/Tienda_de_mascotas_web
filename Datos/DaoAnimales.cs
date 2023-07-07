@@ -23,6 +23,24 @@ namespace Datos {
                         $"[{Animal.Columns.Estado}] ";
             }
         }
+        /// <summary>
+        /// Campos que se usarán para buscar.
+        /// </summary>
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Animal.Columns.Codigo,
+            Animal.Columns.Nombre,
+            Animal.Columns.Raza
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
 
         /// <summary>
         /// Listado de procedimientos que se utilizan en esta clase.
@@ -33,6 +51,17 @@ namespace Datos {
             public static string Actializar = "SP_ActualizarAnimales";
             public static string Alta = "SP_AltaAnimal";
         }
+
+        public static Response Buscar(string key) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"SELECT {ALL_COLUMNS} FROM [{Animal.Table}] WHERE {GenerateSearchQuery("@key")}",
+                    parameters: new Dictionary<string, object> {
+                        { "@key", key }
+                    }
+                );
+        }
+
 
         /// <summary>
         /// Obtener tabla de animales.
@@ -52,7 +81,7 @@ namespace Datos {
         public static Response ObtenerLista() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT ({Animal.Columns.Nombre}+    +{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo}, [{Animal.Columns.Estado}]  FROM {Animal.Table} WHERE [{Animal.Columns.Estado}] = 1"
+                        query: $"SELECT CONCAT({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo}, [{Animal.Columns.Estado}]  FROM {Animal.Table} WHERE [{Animal.Columns.Estado}] = 1"
                     );
         }
 

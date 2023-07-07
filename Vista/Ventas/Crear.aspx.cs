@@ -39,35 +39,27 @@ namespace Vista.Ventas {
 
 
         protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
-            SesionNegocio.Autenticar((data) => {
-                // Enviar los datos y recibir el ID y el AFFECTEDROWS
-                string ff = $"{txtFecha.Text} {txtHora.Text}";
-                DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                var auth = Session[Utils.AUTH] as SessionData;
-                var emp = auth.User;
-                if (ddlMedioPago.SelectedIndex == 0)
-                {
-                    Utils.ShowSnackbar("Seleccione un Metodo de pago valido. ", this);
-                    return;
-                }
-                Venta obj = new Venta() {
-                    EmpleadoGestor = emp,
-                    TipoPago = ddlMedioPago.SelectedValue,
-                    Fecha = fn.ToString("yyyy-MM-dd HH:mm"),
-                    Total = 0
-                };
-                var res = VentaNegocio.IniciarVenta(obj);
-                if(!res.ErrorFound) {
-                    var vp = res.ObjectReturned as Venta.Preliminar;
-                    Utils.MostrarMensaje("Código de venta asignado: #" + vp.Id, this.Page, GetType());
-                    Response.Redirect($"/Ventas/VerFactura.aspx?ID={vp.Id}");
-                    /// Redirigir a Administrar Venta #x
-                } else {
-                    Utils.MostrarMensaje("Error: " + res.Details, this.Page, GetType());
-                }
-            }, (err) => {
-                Utils.MostrarMensaje("El token caducó. Volvé a iniciar sesión para continuar. ", this.Page, GetType());
-            });        
+
+            string ff = $"{txtFecha.Text} {txtHora.Text}";
+            DateTime fn = DateTime.ParseExact(ff, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+            var auth = Session[Utils.AUTH] as SessionData;
+            var emp = auth.User;
+            if (ddlMedioPago.SelectedIndex == 0) {
+                Utils.ShowSnackbar("Seleccione un Metodo de pago valido. ", this);
+                return;
+            }
+            var obj = new Venta() {
+                EmpleadoGestor = emp,
+                TipoPago = ddlMedioPago.SelectedValue,
+                Fecha = fn.ToString("yyyy-MM-dd HH:mm"),
+                Total = 0
+            };
+            var res = VentaNegocio.IniciarVenta(obj);
+            Utils.ShowSnackbar(res.Message, this);
+            if(!res.ErrorFound) {
+                var vnt = res.ObjectReturned as Venta.Preliminar;
+                Response.Redirect($"/Ventas/VerFactura.aspx?ID={vnt.Id}");
+            }
         }
 
     }

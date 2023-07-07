@@ -157,12 +157,29 @@ namespace Negocio {
         }
 
         public static Response IniciarVenta(Venta obj) {
-            var res = VentaDatos.IniciarVenta(obj);
-            if (!res.ErrorFound) {
-                var n = ExtractPreliminarFromDataSet(res.ObjectReturned as DataSet);
-                return n;
-            }
-            else return res;
+            var res = Response.ErrorDesconocido;
+            SesionNegocio.Autenticar((data) => {
+                var op = VentaDatos.IniciarVenta(obj);
+                if (!op.ErrorFound) {
+                    var vp = ExtractPreliminarFromDataSet(op.ObjectReturned as DataSet);
+                    if(!vp.ErrorFound) {
+                        var venta = vp.ObjectReturned as Venta.Preliminar;
+                        res = new Response {
+                            Message = "Código de venta asignado: #" + venta.Id,
+                            ErrorFound = false,
+                            ObjectReturned = venta
+                        };
+                    } else {
+                        res = vp;
+                    }
+                }
+                else {
+                    res = op;
+                }
+            }, (err) => {
+                res = Response.TokenCaducado;
+            });
+            return res;
         }
 
         public static Response VentasPorEmp(string dni) {
