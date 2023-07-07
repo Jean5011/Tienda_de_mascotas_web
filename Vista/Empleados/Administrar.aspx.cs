@@ -10,9 +10,15 @@ namespace Vista.Empleados {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                if (Request.QueryString["nombre"] != null)
+                {
+                    string userId = Request.QueryString["nombre"];
+                    CargarDatos(userId);
+
+                }
             }
         }
-
+      
         protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
         }
@@ -115,9 +121,10 @@ namespace Vista.Empleados {
         }
 
 
-        public void CargarDatos() {
+        public void CargarDatos(string dni=null) {
             bool soloActivos = !chkEstado.Checked;
             string searchquery = txtBuscar.Text;
+            if (dni != null) searchquery = dni;
             bool hayParaBuscar = !string.IsNullOrEmpty(searchquery);
             Response data = hayParaBuscar
                             ? EmpleadoNegocio.FiltrarEmpleadosPorNombreCompleto(searchquery, soloActivos)
