@@ -30,6 +30,10 @@ namespace Negocio {
             return DaoAnimales.BuscarAnimalPorCod(codigo);
         }
 
+        public static Response Buscar(string busqueda) {
+            return DaoAnimales.Buscar(busqueda);
+        }
+
         /// <summary>
         /// Lista todos los registros, o filtra por código si corresponde.
         /// </summary>
@@ -38,7 +42,7 @@ namespace Negocio {
         public static Response BuscarAnimales(string codigo = null) {
             return string.IsNullOrEmpty(codigo)
                 ? ListarTodo()
-                : BuscarPorCodigo(codigo);
+                : Buscar(codigo);
         }
 
 

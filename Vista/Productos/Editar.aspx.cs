@@ -25,11 +25,9 @@ namespace Vista.Productos {
 
             }
         }
-        protected void CargarDDL()
-        {
+        protected void CargarDDL() {
             Response codigos = NegocioTipoDeProducto.ObtenerIDS();
-            if (!codigos.ErrorFound)
-            {
+            if (!codigos.ErrorFound) {
                 var ds = codigos.ObjectReturned as DataSet;
                 ddlTipoProducto.DataSource = ds;
                 ddlTipoProducto.DataTextField = "Descripcion_TP";
@@ -42,17 +40,14 @@ namespace Vista.Productos {
             Response.Redirect("/Productos/");
         }
         protected void BtnGuardar_Click(object sender, EventArgs e) {
-            if (Request.QueryString["ID"] != null)
-            {
+            if (Request.QueryString["ID"] != null) {
                 string cod = Request.QueryString["ID"];
                 var res = ProductoNegocio.ObtenerPorCodigo(cod);
-                if (ddlTipoProducto.SelectedIndex == 0)
-                {
+                if (ddlTipoProducto.SelectedIndex == 0) {
                     Utils.ShowSnackbar("Seleccione un valor válido para Tipo de Producto. ", this);
                     return;
                 }
-                if (!res.ErrorFound)
-                {
+                if (!res.ErrorFound) {
                     ActualizaProducto((Producto)res.ObjectReturned);
                 }
 
@@ -87,13 +82,13 @@ namespace Vista.Productos {
                 Marca = txtMarca.Text,
                 Stock = int.Parse(txtStock.Text),
                 Precio = double.Parse(txtPrecioUnitario.Text),
-                Proveedor = new Proveedor() {CUIT= txtCUITProveedor.Text },
+                Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
                 Estado = productoViejo.Estado
             };
             var res = ProductoNegocio.ActualizarProducto(auth, producto);
             Utils.ShowSnackbar(res.Message, this);
         }
-        
+
 
     }
 }

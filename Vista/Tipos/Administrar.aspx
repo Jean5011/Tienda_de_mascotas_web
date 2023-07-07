@@ -24,7 +24,7 @@
                         </asp:LinkButton>
                         <asp:Panel runat="server" Visible='<%# Convert.ToBoolean(Eval(TipoProducto.Columns.Estado)) %>'>
                             <!--Estado = true -->
-                            <asp:LinkButton runat="server" OnCommand="H_command" CommandName="Deshabilitar" CommandArgument="<%# Eval(TipoProducto.Columns.Codigo) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <asp:LinkButton runat="server" OnClientClick="return confirm('¿Estás seguro de deshabilitar este elemento?');" OnCommand="H_command" CommandName="Deshabilitar" CommandArgument="<%# Eval(TipoProducto.Columns.Codigo) %>" class="mdc-button mdc-card__action mdc-card__action--button">
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">highlight_off</i>
@@ -32,7 +32,7 @@
                         </asp:Panel>
                         <asp:Panel runat="server" Visible='<%# !Convert.ToBoolean(Eval(TipoProducto.Columns.Estado)) %>'>
                             <!--Estado = false -->
-                            <asp:LinkButton runat="server" OnCommand="H_command" CommandName="Habilitar" CommandArgument="<%# Eval(TipoProducto.Columns.Codigo) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <asp:LinkButton  OnClientClick="return confirm('¿Estás seguro de habilitar este elemento?');" runat="server" OnCommand="H_command" CommandName="Habilitar" CommandArgument="<%# Eval(TipoProducto.Columns.Codigo) %>" class="mdc-button mdc-card__action mdc-card__action--button">
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label mcardbl-act">Habilitar</span>
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">check_circle_outline</i>

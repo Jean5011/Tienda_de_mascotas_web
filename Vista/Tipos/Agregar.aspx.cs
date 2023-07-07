@@ -33,21 +33,15 @@ namespace Vista.Tipos {
         }
 
         protected void BT_Guardar_Click(object sender, EventArgs e) {
-            SesionNegocio.Autenticar(res => {
-                NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-                bool RES = nt.IgresarTipoDeProducto(TB_cod.Text, DD_Tpd.SelectedValue, DD_Animal.SelectedValue, TB_Descripcion.Text);
-                if (RES)
-                {
-                    Lv_Verificacion.Text = "Se cargo excelentemente ";
-                }
-                else
-                {
-                    Lv_Verificacion.Text = "Error en la carga / archivo ya existente";
-                }
-
-            }, err => {
-                Utils.ShowSnackbar("El token caducó, volvé a iniciar sesión. ", this, GetType());
-            });
+            var auth = Session[Utils.AUTH] as SessionData;
+            var tp = new TipoProducto {
+                Codigo = TB_cod.Text,
+                tipoDeProducto = DD_Tpd.SelectedValue,
+                CodAnimal = DD_Animal.SelectedValue,
+                Descripcion = TB_Descripcion.Text
+            };
+            var res = NegocioTipoDeProducto.Agregar(auth, tp);
+            Utils.ShowSnackbar(res.Message, this);
         }
     }
 }

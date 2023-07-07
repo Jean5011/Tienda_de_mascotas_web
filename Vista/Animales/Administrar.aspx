@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Animales</h2>
     <div class="searchbox">
-        <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscá por código, nombre o raza." runat="server"></asp:TextBox>
         <asp:Button ID="BtnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
 

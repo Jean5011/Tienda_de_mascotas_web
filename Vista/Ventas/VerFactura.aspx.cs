@@ -78,6 +78,7 @@ namespace Vista.Ventas {
                 var respuesta = VentaNegocio.AgregarProducto(auth, obj, prod, cantidad);
                 Utils.ShowSnackbar(respuesta.Message, this);
                 if(!respuesta.ErrorFound) {
+                    CargarCabecera(obj);
                     CargarDetalles(obj);
                 }
             }
