@@ -131,7 +131,7 @@ namespace Datos {
         public static Response Habilitar(Producto Pr) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.RunTransaction(
-                    query: $"UPDATE [{Producto.Table}] SET [{Producto.Columns.Estado}] = 0 WHERE [{Producto.Columns.Codigo_Prod}] = @codigo",
+                    query: $"UPDATE [{Producto.Table}] SET [{Producto.Columns.Estado}] = 1 WHERE [{Producto.Columns.Codigo_Prod}] = @codigo",
                     parameters: new Dictionary<string, object> {
                         { "@codigo", Pr.Codigo }
                     }
