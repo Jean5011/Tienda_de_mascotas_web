@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Datos;
 using Entidades;
 
@@ -63,6 +59,11 @@ namespace Negocio {
             }
             else return res;
         }
+
+        public static Response Buscar(string key) {
+            return VentaDatos.Buscar(key);
+        }
+
 
         public static Response AgregarProducto(SessionData auth, Venta venta, Producto producto, int cantidad) {
             var respuesta = Response.ErrorDesconocido;

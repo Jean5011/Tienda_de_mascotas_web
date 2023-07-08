@@ -25,6 +25,16 @@ namespace Negocio {
             return dt;
         }
 
+        public static Response BuscarPorCodigo(string cod) {
+            return DaoTiposDeProductos.BuscarTipoProductoPorCod(cod);
+        }
+
+        public static Response Buscar(string query) {
+            return DaoTiposDeProductos.Buscar(query);
+        }
+
+
+
         public bool IgresarTipoDeProducto(string cod, string tipoDeProducto, string CodAnimal, string Descripcion) {
             TipoProducto A = new TipoProducto();
             A.Codigo = cod;

@@ -17,10 +17,9 @@ namespace Vista.Tipos {
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 CargarDatos();
-                if (Request.QueryString["ID"] != null)
-                {
+                if (Request.QueryString["ID"] != null) {
                     string id = Request.QueryString["ID"];
-                    BT_Filtrar_Click( id);
+                    BuscarUnico(id);
 
                 }
             }
@@ -35,13 +34,33 @@ namespace Vista.Tipos {
         }
 
         protected void BT_Filtrar_Click(string id = null) {
-            NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            string tipo = txtBuscar.Text;
-            if (id != null) tipo = id;
-            GvDatos.DataSource = nt.ObtenerPorCod(tipo);
-            GvDatos.DataBind();
+            Buscar();
         }
 
+        protected void BuscarUnico(string cod) {
+            if (string.IsNullOrEmpty(cod)) return;
+            var res = NegocioTipoDeProducto.BuscarPorCodigo(cod);
+            if (!res.ErrorFound) {
+                var dt = res.ObjectReturned as DataSet;
+                GvDatos.DataSource = dt;
+                GvDatos.DataBind();
+                return;
+            }
+            Utils.ShowSnackbar(res.Message, this);
+        }
+
+        protected void Buscar() {
+            string busqueda = txtBuscar.Text;
+            if(string.IsNullOrEmpty(busqueda)) return;
+            var res = NegocioTipoDeProducto.Buscar(busqueda);
+            if(!res.ErrorFound) {
+                var dt = res.ObjectReturned as DataSet;
+                GvDatos.DataSource = dt;
+                GvDatos.DataBind();
+                return;
+            }
+            Utils.ShowSnackbar(res.Message, this);
+        }
         protected void BT_Todo_Click() {
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
             GvDatos.DataSource = nt.GetTipoDeProducto();
@@ -62,7 +81,7 @@ namespace Vista.Tipos {
 
         protected void H_command(object sender, CommandEventArgs e) {
             string codigo = e.CommandArgument.ToString();
-            switch(e.CommandName) {
+            switch (e.CommandName) {
                 case "Habilitar":
                     Habilitar(codigo);
                     break;

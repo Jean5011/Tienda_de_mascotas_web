@@ -20,6 +20,32 @@ namespace Datos {
                                    $"[{TipoProducto.Columns.Descripcion}], " +
                                    $"[{TipoProducto.Columns.Estado}] ";
             } }
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            TipoProducto.Columns.Codigo,
+            TipoProducto.Columns.CodAnimal,
+            TipoProducto.Columns.TipoDeProducto,
+            TipoProducto.Columns.Descripcion
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
+        public static Response Buscar(string query) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE {GenerateSearchQuery("@query")}",
+                    parameters: new Dictionary<string, object> {
+                        { "@query", query }
+                    }
+                );
+        }
 
         /// <summary>
         /// Lista de procedimientos utilizados en esta clase.

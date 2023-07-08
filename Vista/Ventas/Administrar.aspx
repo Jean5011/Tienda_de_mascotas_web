@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Ventas</h2>
     <div class="searchbox">
-        <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código de compra" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscá por código, empleado, medio de pago..." runat="server"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
     <div class="mdc-data-table">
