@@ -11,8 +11,9 @@ using Negocio;
 namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
 
-        public void CargarDatos() {
+        public void CargarDatos(string id = null) {
             string tbuscar = txtBuscar.Text;
+            if (id != null) tbuscar = id;
             var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.GetVentaPorID(Convert.ToInt32(tbuscar));
             if (res.ErrorFound) {
                 Utils.MostrarMensaje("Error cargando ventas. ", this.Page, GetType());
@@ -29,6 +30,13 @@ namespace Vista.Ventas {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                CargarDatos();
+                if (Request.QueryString["ID"] != null)
+                {
+                    string id = Request.QueryString["ID"];
+                    CargarDatos(id);
+
+                }
             }
         }
 
