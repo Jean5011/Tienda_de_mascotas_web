@@ -17,6 +17,12 @@ namespace Vista.Tipos {
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
                 CargarDatos();
+                if (Request.QueryString["ID"] != null)
+                {
+                    string id = Request.QueryString["ID"];
+                    BT_Filtrar_Click( id);
+
+                }
             }
         }
 
@@ -28,9 +34,11 @@ namespace Vista.Tipos {
             CargarDatos();
         }
 
-        protected void BT_Filtrar_Click() {
+        protected void BT_Filtrar_Click(string id = null) {
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
-            GvDatos.DataSource = nt.ObtenerPorCod(txtBuscar.Text);
+            string tipo = txtBuscar.Text;
+            if (id != null) tipo = id;
+            GvDatos.DataSource = nt.ObtenerPorCod(tipo);
             GvDatos.DataBind();
         }
 

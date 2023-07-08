@@ -17,6 +17,12 @@ namespace Vista.Animales {
                 // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                if (Request.QueryString["ID"] != null)
+                {
+                    string id = Request.QueryString["ID"];
+                    CargarDatos(id:id);
+
+                }
             }
         }
         protected void SwitchStatus_Command(object sender, CommandEventArgs e) {
@@ -95,8 +101,9 @@ namespace Vista.Animales {
         /// Carga los datos del GridView.
         /// </summary>
         /// <param name="reiniciarEditIndex">Indica si se debe establecer el EditIndex en -1.</param>
-        protected void CargarDatos(bool reiniciarEditIndex = true) {
+        protected void CargarDatos(bool reiniciarEditIndex = true,string id=null) {
             string textoABuscar = txtBuscar.Text;
+            if (id != null) textoABuscar = id;
             var response = NegocioAnimales.BuscarAnimales(textoABuscar);
             if (!response.ErrorFound) {
                 DataSet dt = response.ObjectReturned as DataSet;
