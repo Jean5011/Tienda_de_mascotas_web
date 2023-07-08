@@ -128,7 +128,7 @@ namespace Negocio
         {
             foreach (DataRow fila in dsProducto.Tables[0].Rows) // recorro el DataSet dsProducto.
             {
-                proveedor.CUIT = fila[Producto.Columns.CUITProv].ToString(); // guardo el CUIT en la propiedad CUIT del proveedor. Se guarda correctamente.
+                proveedor.CUIT = fila[Producto.Columns.CUITProv].ToString(); // guardo el CUIT en la propiedad CUIT del proveedor.
             }
             return proveedor;
         }
@@ -170,7 +170,7 @@ namespace Negocio
             return null; // si ocurrió un error al buscar la info del detalle de venta, la función devuelve null.
         }
 
-        public static DetalleVenta obtenerRegistro(DataSet dsDetalleVenta, Producto producto, Venta venta) // optimizar esta función (dividir por funciones).
+        public static DetalleVenta obtenerRegistro(DataSet dsDetalleVenta, Producto producto, Venta venta) 
         {
             Proveedor proveedor = new Proveedor(); // DECLARO una nueva instancia de Proveedor.
 
