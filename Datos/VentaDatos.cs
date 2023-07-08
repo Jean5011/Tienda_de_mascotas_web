@@ -39,6 +39,7 @@ namespace Datos {
             }
         }
 
+        public static string ALL_COLUMNS_FOR_PRESENTATION { get { return $"{ALL_COLUMNS_BUT_TOTAL_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}]"; } }
 
         /// <summary>
         /// Crear un registro Venta.
@@ -66,7 +67,7 @@ namespace Datos {
         public static Response GetVentaByID(int id) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.Id}] = @id",
+                        query: $"SELECT {ALL_COLUMNS_FOR_PRESENTATION} FROM [{Venta.Table}]  INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE [{Venta.Columns.Id}] = @id",
                         parameters: new Dictionary<string, object> {
                             { "@id", id }
                         }
@@ -95,7 +96,7 @@ namespace Datos {
         public static Response GetVentas() {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS_BUT_TOTAL_FORMATTED}, [{Empleado.Columns.Nombre}], [{Empleado.Columns.Apellido}] FROM [{Venta.Table}] INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] ORDER BY [{Venta.Columns.Id}] DESC"
+                        query: $"SELECT {ALL_COLUMNS_FOR_PRESENTATION} FROM [{Venta.Table}] INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] ORDER BY [{Venta.Columns.Id}] DESC"
                     );
         }
 
