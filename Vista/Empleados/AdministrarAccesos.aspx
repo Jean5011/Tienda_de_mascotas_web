@@ -14,7 +14,7 @@
                     <ItemTemplate>
                         <asp:Panel runat="server" Visible='<%# Convert.ToBoolean(Eval(Sesion.Columns.Estado)) %>'>
                             <!--Estado = true -->
-                            <asp:LinkButton ID="lnkDisable" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
+                            <asp:LinkButton ID="lnkDisable" OnClientClick="return confirm('¿Estás seguro de revocar esta sesión?');" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
                                 CommandName="DISABLE" OnCommand="SwitchStatusCommand" CommandArgument='<%# Eval(Sesion.Columns.Codigo) %>'>
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label mcardbl-act">Revocar</span>
@@ -23,7 +23,7 @@
                         </asp:Panel>
                         <asp:Panel runat="server" Visible='<%# !Convert.ToBoolean(Eval(Sesion.Columns.Estado)) %>'>
                             <!--Estado = false -->
-                            <asp:LinkButton ID="lnkEnable" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
+                            <asp:LinkButton ID="lnkEnable" OnClientClick="return confirm('¿Estás seguro de autorizar esta sesión?');" runat="server" CssClass="mdc-button mdc-card__action mdc-card__action--button"
                                 CommandName="ENABLE" OnCommand="SwitchStatusCommand" CommandArgument='<%# Eval(Sesion.Columns.Codigo) %>'>
                                 <div class="mdc-button__ripple"></div>
                                 <span class="mdc-button__label mcardbl-act">Autorizar</span>

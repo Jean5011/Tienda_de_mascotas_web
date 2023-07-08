@@ -175,23 +175,37 @@ namespace Negocio
             return Response.PermisosInsuficientes;
         }
 
-        public static Response EliminarProducto(SessionData auth, Producto producto)
-        {
+        public static Response EliminarProducto(SessionData auth, Producto producto) {
             var respuesta = Response.ErrorDesconocido;
-            if (auth.User.Rol == Empleado.Roles.ADMIN)
-            {
-                SesionNegocio.Autenticar(ok =>
-                {
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
                     var operacion = DaoProductos.EliminarProducto(producto);
-                    respuesta = new Response
-                    {
+                    respuesta = new Response {
                         ErrorFound = operacion.ErrorFound,
                         Message = !operacion.ErrorFound
                             ? "El registro se eliminó correctamente. "
                             : "Hubo un problema al intentar eliminar el registro. "
                     };
-                }, err =>
-                {
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
+
+        public static Response HabilitarProducto(SessionData auth, Producto producto) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = DaoProductos.Habilitar(producto);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro se habilitó correctamente. "
+                            : "Hubo un problema al intentar habilitar el registro. "
+                    };
+                }, err => {
                     respuesta = Response.TokenCaducado;
                 });
                 return respuesta;

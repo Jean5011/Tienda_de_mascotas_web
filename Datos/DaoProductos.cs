@@ -45,7 +45,7 @@ namespace Datos {
         public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = 1"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table}"
                     );
         }
 
@@ -127,6 +127,17 @@ namespace Datos {
                         }
                     );
         }
+
+        public static Response Habilitar(Producto Pr) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.RunTransaction(
+                    query: $"UPDATE [{Producto.Table}] SET [{Producto.Columns.Estado}] = 0 WHERE [{Producto.Columns.Codigo_Prod}] = @codigo",
+                    parameters: new Dictionary<string, object> {
+                        { "@codigo", Pr.Codigo }
+                    }
+                );
+        }
+
 
         /// <summary>
         /// Verifica si un registro con un ID dado existe en la tabla.

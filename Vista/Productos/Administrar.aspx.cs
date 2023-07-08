@@ -95,6 +95,22 @@ namespace Vista.Productos {
             }
         }
 
+
+        protected void Lb_Command(object sender, CommandEventArgs e) {
+            var producto = new Producto {
+                Codigo = e.CommandArgument.ToString()
+            };
+            var auth = Session[Utils.AUTH] as SessionData;
+            var respuesta = Entidades.Response.ErrorDesconocido;
+            if(e.CommandName == "Habilitar") {
+                respuesta = ProductoNegocio.HabilitarProducto(auth, producto);
+            } if(e.CommandName == "Deshabilitar") {
+                respuesta = ProductoNegocio.EliminarProducto(auth, producto);
+            }
+            Utils.ShowSnackbar(respuesta.Message, this);
+            CargarDatos();
+        }
+
         /// <summary>
         /// Manda a actualizar un producto e informa el resultado obtenido.
         /// </summary>
