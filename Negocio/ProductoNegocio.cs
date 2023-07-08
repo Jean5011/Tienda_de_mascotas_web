@@ -58,12 +58,15 @@ namespace Negocio
             return DaoProductos.BuscarProductoPorCod(codigo);
         }
 
+        public static Response Buscar(string q) {
+            return DaoProductos.Buscar(q);
+        }
 
         public static Response BuscarProductos(string codigo = null)
         {
             return string.IsNullOrEmpty(codigo)
                 ? ListarTodo()
-                : BuscarPorCodigo(codigo);
+                : Buscar(codigo);
         }
         public static Response ObtenerPorCodigo(string cod)
         {

@@ -14,7 +14,7 @@ namespace Vista.Productos {
                 if (Request.QueryString["CODIGO"] != null)
                 {
                     string userId = Request.QueryString["CODIGO"];
-                    CargarDatos(userId);
+                    CargarDatos(userId, true);
 
                 }
             }
@@ -82,13 +82,13 @@ namespace Vista.Productos {
         /// <summary>
         /// Carga los datos en la tabla.
         /// </summary>
-        public void CargarDatos(string cod=null) {
+        public void CargarDatos(string cod=null, bool u = false) {
+            Response response;
             string codigo = txtBuscar.Text;
-            if (cod!=null)
-            {
+            if (cod!=null) {
                  codigo = cod;
             }
-            var response = ProductoNegocio.BuscarProductos(codigo);
+            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
                 gvDatos.DataBind();

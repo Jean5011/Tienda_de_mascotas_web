@@ -29,6 +29,25 @@ namespace Datos {
             }
         }
 
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Producto.Columns.Codigo_Prod,
+            Producto.Columns.CUITProv,
+            Producto.Columns.CodTipoProducto,
+            Producto.Columns.Nombre,
+            Producto.Columns.Marca,
+            Producto.Columns.Descripcion
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
         /// <summary>
         /// Lista de procedimientos que se utilizan en esta clase.
         /// </summary>
@@ -46,6 +65,15 @@ namespace Datos {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table}"
+                    );
+        }
+        public static Response Buscar(string q) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE {GenerateSearchQuery("@q")}",
+                        parameters: new Dictionary<string, object> {
+                            { "@q", q }
+                        }
                     );
         }
 
