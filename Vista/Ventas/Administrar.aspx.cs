@@ -11,9 +11,10 @@ using Negocio;
 namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
 
-        public void CargarDatos() {
+        public void CargarDatos(Response data = null) {
             string tbuscar = txtBuscar.Text;
-            var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.GetVentaPorID(Convert.ToInt32(tbuscar));
+            var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.Buscar(tbuscar);
+            if (data != null) res = data;
             if (res.ErrorFound) {
                 Utils.MostrarMensaje("Error cargando ventas. ", this.Page, GetType());
 

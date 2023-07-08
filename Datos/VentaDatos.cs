@@ -29,6 +29,25 @@ namespace Datos {
                 return $"[{Venta.Columns.Id}], [{Venta.Columns.DNI}], [{Venta.Columns.TipoPago}], [{Venta.Columns.Fecha}], [{Venta.Columns.Total}]";
             }
         }
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Venta.Columns.DNI,
+            Venta.Columns.Id,
+            Venta.Columns.TipoPago,
+            Venta.Columns.Fecha,
+            Empleado.Columns.Apellido,
+            Empleado.Columns.Nombre
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
 
         /// <summary>
         /// Todas las columnas de la tabla Ventas, con total formateado a pesos argentinos.
@@ -58,6 +77,17 @@ namespace Datos {
                         }
                     );
         }
+
+        public static Response Buscar(string key) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"SELECT {ALL_COLUMNS_FOR_PRESENTATION} FROM [{Venta.Table}]  INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE {GenerateSearchQuery("@query")}",
+                    parameters: new Dictionary<string, object> {
+                        { "@query", key }
+                    }
+                );
+        }
+
 
         /// <summary>
         /// Obtener un registro por su ID.
