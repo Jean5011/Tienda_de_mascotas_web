@@ -113,7 +113,7 @@ namespace Datos {
             return conexion.ExecuteStoredProcedure(
                     storedProcedureName: Procedures.AumentarCantidadVendida,
                     parameters: new Dictionary<string, object> {
-                        { "@CodigoVenta", dv.Id }, 
+                        { "@CodigoVenta", dv.Id.Id }, 
                         { "@CodigoProducto", dv.Producto.Codigo }, 
                         { "@CUITProveedor", dv.Proveedor.CUIT }
                     }
@@ -132,7 +132,7 @@ namespace Datos {
                     storedProcedureName: Procedures.DisminuirCantidadVendida,
                     parameters: new Dictionary<string, object>
                     {
-                        { "@CodigoVenta", dv.Id }, 
+                        { "@CodigoVenta", dv.Id.Id }, 
                         { "@CodigoProducto", dv.Producto.Codigo }, 
                         { "@CUITProveedor", dv.Proveedor.CUIT } 
                     }

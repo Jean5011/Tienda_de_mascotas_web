@@ -164,27 +164,26 @@ namespace Vista.Ventas {
                         Codigo = codigoProducto
                     };
 
-                    var res = DetalleVentaNegocio.ObtenerDetalleVenta(idVenta);
-                    if (!res.ErrorFound)
+                    var resultado = DetalleVentaNegocio.ObtenerDetalleVenta(idVenta);
+                    if (!resultado.ErrorFound)
                     {
-                        DataSet dsDetalleVenta = res.ObjectReturned as DataSet;
-                        var resultado = DetalleVentaNegocio.obtenerRegistro(dsDetalleVenta, prod, obj); // el error está en esta función.
-                        if (resultado != null)
+                        DataSet dsDetalleVenta = resultado.ObjectReturned as DataSet;
+                        DetalleVenta dv = DetalleVentaNegocio.obtenerRegistro(dsDetalleVenta, prod, obj); 
+                        if (dv != null)
                         {
-                            DetalleVenta dv = resultado;
                             switch (e.CommandName)
                             {
                                 case "Restar":
-                                    if (!DetalleVentaNegocio.disminuirCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
+                                    if (!DetalleVentaNegocio.disminuirCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); } 
                                     else { Utils.ShowSnackbar("No es posible disminuir la cantidad vendida. ", this.Page); }
                                 break;
                                 case "Sumar":
-                                    if (!DetalleVentaNegocio.aumentarCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); }
+                                    if (!DetalleVentaNegocio.aumentarCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); } 
                                     else { Utils.ShowSnackbar("No es posible aumentar la cantidad vendida. ", this.Page); }
                                 break;
                             }
                         }
-                        else { Utils.ShowSnackbar("No es posible obtener el registro del detalle de la venta. ", this.Page); }
+                        else { Utils.ShowSnackbar("Ocurrió un error al intentar obtener el registro del detalle de la venta. ", this.Page); }
                     }
                     else { Utils.ShowSnackbar("No es posible obtener el detalle de la venta. ", this.Page); }
                 }, err => { 
