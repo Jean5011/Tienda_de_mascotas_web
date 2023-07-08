@@ -66,6 +66,28 @@ namespace Datos {
             public static string CrearEmpleado = "CrearEmpleado";
         }
 
+
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Empleado.Columns.Nombre,
+            Empleado.Columns.Apellido,
+            Empleado.Columns.Sueldo,
+            Empleado.Columns.Direccion,
+            Empleado.Columns.Provincia,
+            Empleado.Columns.Nacionalidad,
+            Empleado.Columns.Rol,
+            Empleado.Columns.Nacionalidad
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
         /// <summary>
         /// Obtener tabla con todos los empleados. Usa campos formateados.
         /// </summary>
@@ -87,9 +109,9 @@ namespace Datos {
         public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool soloActivos = true) {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @nombre + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") }",
+                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @q + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") } AND {GenerateSearchQuery("@q")}",
                         parameters: new Dictionary<string, object>() {
-                            { "@nombre", nombre }
+                            { "@q", nombre }
                         }
                     );
         }
