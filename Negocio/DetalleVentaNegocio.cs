@@ -25,14 +25,93 @@ namespace Negocio
             return DaoDetalleVentas.AgregarRegistro(v);
         }
 
-        public static Response EliminarDetalle(int cv, string cp) {
-            return DaoDetalleVentas.EliminarDetalle(cv, cp);
+        public static Response EliminarDetalle(SessionData auth, DetalleVenta detalle) {
+            var res = Response.ErrorDesconocido;
+            if(auth.User.Rol == Empleado.Roles.ADMIN || detalle.Id.EmpleadoGestor.DNI == auth.User.DNI) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = DaoDetalleVentas.Eliminar(detalle);
+                    res = new Response { 
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El producto se eliminó correctamente. "
+                            : "Hubo un error al intentar eliminar el producto. "
+                    };
+                }, err => { res = Response.TokenCaducado; });
+                return res;
+            } 
+            return Response.PermisosInsuficientes;
         }
 
-        /// @Deprecated
-        public static Response DarDeBaja(int Cod) 
-        {
-            return DaoDetalleVentas.DarDeBajaRegistro(Cod);
+        public static Response ModificarCantidad(SessionData auth, DetalleVenta detalle, string command) {
+            var res = Response.ErrorDesconocido;
+            if(auth.User.Rol == Empleado.Roles.ADMIN || detalle.Id.EmpleadoGestor.DNI == auth.User.DNI) {
+                SesionNegocio.Autenticar(ok => {
+
+                    var getdv = ObtenerDetalleVenta(detalle.Id.Id);
+                    if (!getdv.ErrorFound) {
+                        DataSet dsDetalleVenta = getdv.ObjectReturned as DataSet;
+                        DetalleVenta dv = obtenerRegistro(dsDetalleVenta, detalle.Producto, detalle.Id);
+                        if (dv != null) {
+                            Response operacion;
+                            int stock = 0;
+                            var popc = ProductoNegocio.ObtenerPorCodigo(detalle.Producto.Codigo);
+                            if(!popc.ErrorFound) {
+                                Producto producto = popc.ObjectReturned as Producto;
+                                stock = producto.Stock;
+                            } else {
+                                res = new Response { ErrorFound = true, Message = "Error obteniendo los datos del producto. " };
+                                return;
+                            }
+                            switch (command) {
+                                case "Restar":
+                                    if(dv.Cantidad == 1) {
+                                        res = new Response {
+                                            ErrorFound = true,
+                                            Message = "La cantidad no puede ser menor a 1. "
+                                        };
+                                    } else {
+                                        operacion = disminuirCantidadVendida(dv);
+                                        res = new Response {
+                                            ErrorFound = operacion.ErrorFound,
+                                            Message = !operacion.ErrorFound
+                                                ? "Operación realizada correctamente. "
+                                                : "Hubo un error al intentar disminuir la cantidad vendida. "
+                                        };
+                                    }
+                                    break;
+                                case "Sumar":
+                                    if(stock < 1) {
+                                        res = new Response {
+                                            ErrorFound = true,
+                                            Message = "No hay suficiente stock"
+                                        };
+                                    } else {
+                                        operacion = aumentarCantidadVendida(dv);
+                                        res = new Response {
+                                            ErrorFound = operacion.ErrorFound,
+                                            Message = !operacion.ErrorFound
+                                                ? "Operación realizada correctamente. "
+                                                : "Hubo un error al intentar aumentar la cantidad vendida. "
+                                        };
+                                    }
+                                    break;
+                                default:
+                                    res = new Response {
+                                        ErrorFound = true,
+                                        Message = "Comando no admitido. "
+                                    };
+                                    break;
+                            }
+                        }
+                    }
+                    else res = new Response {
+                        ErrorFound = true,
+                        Message = "Error al intentar obtener datos del detalle de venta. "
+                    };
+
+                }, err => { res = Response.TokenCaducado; });
+                return res;
+            } return Response.PermisosInsuficientes;
         }
 
         public static Response aumentarCantidadVendida(DetalleVenta dv)

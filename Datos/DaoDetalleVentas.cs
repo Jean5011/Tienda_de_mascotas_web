@@ -101,6 +101,16 @@ namespace Datos {
                         }
                     );
         }
+        public static Response Eliminar(DetalleVenta detalle) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.RunTransaction(
+                    query: $"DELETE FROM [{DetalleVenta.Table}] WHERE [{DetalleVenta.Columns.CodProducto_Dv}] = @producto AND [{DetalleVenta.Columns.CodVenta_Dv}] = @venta",
+                    parameters: new Dictionary<string, object> {
+                        { "@producto", detalle.Producto.Codigo },
+                        { "@venta", detalle.Id.Id }
+                    }
+                );
+        }
 
         /// <summary>
         /// Aumenta la cantidad vendida de un producto en una venta.

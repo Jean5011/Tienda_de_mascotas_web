@@ -11,16 +11,26 @@ using Negocio;
 namespace Vista.Ventas {
     public partial class VerFactura : System.Web.UI.Page {
         public const string VK = "VK";
-        public void CargarCabecera(Venta obj) {
-            lblEmpleadoGestor.Text = obj.EmpleadoGestor.DNI;
-            lblFechaRegistro.Text = obj.Fecha;
-            lblMedioPago.Text = obj.TipoPago;
-            lblTotalCalculado.Text = $"${obj.Total}";
+        public void CargarCabecera() {
+            string IDFactura = Request.QueryString["ID"];
+            if(!string.IsNullOrEmpty(IDFactura)) {
+                int idFactura = Convert.ToInt32(IDFactura);
+                var res = VentaNegocio.BuscarVentaPorID(idFactura);
+                if (!res.ErrorFound && res.ObjectReturned != null) {
+                    Venta obj = res.ObjectReturned as Venta;
+                    Session[VK] = obj;
+                    lblEmpleadoGestor.Text = obj.EmpleadoGestor.DNI;
+                    lblFechaRegistro.Text = obj.Fecha;
+                    lblMedioPago.Text = obj.TipoPago;
+                    lblTotalCalculado.Text = $"${obj.Total}";
+                }
+            }
+                
         }
         public void CargarDetalles(Venta obj) {
             int id = obj.Id;
             var res = DetalleVentaNegocio.ObtenerDetalleVenta(id);
-            if(!res.ErrorFound) {
+            if (!res.ErrorFound) {
                 DataSet data = res.ObjectReturned as DataSet;
                 gvDetalles.DataSource = data;
                 gvDetalles.DataBind();
@@ -31,33 +41,29 @@ namespace Vista.Ventas {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
 
                 string IDFactura = Request.QueryString["ID"];
-                if(string.IsNullOrEmpty(IDFactura)) {
+                if (string.IsNullOrEmpty(IDFactura)) {
                     Utils.ShowSnackbar("No hay código de factura", this.Page, GetType());
                     BtnBorrar.Visible = false;
                     BtnBorrar.Enabled = false;
-                } else {
+                }
+                else {
                     int idFactura = Convert.ToInt32(IDFactura);
                     var res = VentaNegocio.BuscarVentaPorID(idFactura);
-                    if(!res.ErrorFound && res.ObjectReturned != null) {
+                    if (!res.ErrorFound && res.ObjectReturned != null) {
                         Venta obj = res.ObjectReturned as Venta;
                         Session[VK] = obj;
-                        CargarCabecera(obj);
+                        CargarCabecera();
                         CargarDetalles(obj);
-                    } else {
+                    }
+                    else {
                         BtnBorrar.Visible = false;
                         BtnBorrar.Enabled = false;
-                        Utils.ShowSnackbar("Error 32. " + res.Details + ". " + res.Message, this.Page, GetType());
+                        Utils.ShowSnackbar("Error." + res.Details + ". " + res.Message, this.Page, GetType());
                     }
                 }
             }
         }
 
-        protected bool TieneDerechosNecesarios() {
-            var auth = Session[Utils.AUTH] as SessionData;
-            if (Session[VK] == null) return false;
-            return auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == (Session[VK] as Venta).EmpleadoGestor.DNI;
-
-        }
 
         public void BtnBorrar_Click(object sender, EventArgs e) {
             Borrar();
@@ -74,11 +80,11 @@ namespace Vista.Ventas {
             Venta obj = Session[VK] as Venta;
             var prod = new Producto { Codigo = txtIDProducto.Text };
             int cantidad = Convert.ToInt32(txtCantidad.Text);
-            if(Session[VK] != null) {
+            if (Session[VK] != null) {
                 var respuesta = VentaNegocio.AgregarProducto(auth, obj, prod, cantidad);
                 Utils.ShowSnackbar(respuesta.Message, this);
-                if(!respuesta.ErrorFound) {
-                    CargarCabecera(obj);
+                if (!respuesta.ErrorFound) {
+                    CargarCabecera();
                     CargarDetalles(obj);
                 }
             }
@@ -88,25 +94,17 @@ namespace Vista.Ventas {
         }
 
         protected void GVDETALLESBTNELIMINAR_Command(object sender, CommandEventArgs e) {
-            if(TieneDerechosNecesarios()) {
-                SesionNegocio.Autenticar(rs => {
-                    Venta obj = Session[VK] as Venta;
-                    int idVenta = obj.Id;
-                    if (e.CommandName == "ELIMINAR") {
-                        string idProducto = e.CommandArgument.ToString();
-                        var res = DetalleVentaNegocio.EliminarDetalle(idVenta, idProducto);
-                        if (!res.ErrorFound) {
-                            Utils.ShowSnackbar("Se eliminó el producto en cuestión de la compra. ", this.Page, GetType());
-                            CargarDetalles(obj);
-                            CargarCabecera(obj);
-                        }
-                        else Utils.ShowSnackbar("No se borró. ", this.Page, GetType());
-                    }
-                }, err => {
-                    Utils.ShowSnackbar("Tu token caducó, volvé a iniciar sesión. ", this.Page, GetType());
-                });
-            } else {
-                Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page, GetType());
+            var auth = Session[Utils.AUTH] as SessionData;
+            Venta obj = Session[VK] as Venta;
+            var det = new DetalleVenta {
+                Id = obj,
+                Producto = new Producto { Codigo = e.CommandArgument.ToString() }
+            };
+            if (e.CommandName == "ELIMINAR") {
+                var respuesta = DetalleVentaNegocio.EliminarDetalle(auth, det);
+                Utils.ShowSnackbar(respuesta.Message, this.Page, GetType());
+                CargarDetalles(obj);
+                CargarCabecera();
             }
         }
 
@@ -150,47 +148,18 @@ namespace Vista.Ventas {
             }
         }
 
-        protected void modificarCantidadVendida_Command(object sender, CommandEventArgs e)
-        {
-            if (TieneDerechosNecesarios())
-            {
-                SesionNegocio.Autenticar(rs => {
-                    Venta obj = Session[VK] as Venta;
-                    int idVenta = obj.Id;
-                    
-                    string codigoProducto = e.CommandArgument.ToString();
-                    Producto prod = new Producto()
-                    {
-                        Codigo = codigoProducto
-                    };
-
-                    var resultado = DetalleVentaNegocio.ObtenerDetalleVenta(idVenta);
-                    if (!resultado.ErrorFound)
-                    {
-                        DataSet dsDetalleVenta = resultado.ObjectReturned as DataSet;
-                        DetalleVenta dv = DetalleVentaNegocio.obtenerRegistro(dsDetalleVenta, prod, obj); 
-                        if (dv != null)
-                        {
-                            switch (e.CommandName)
-                            {
-                                case "Restar":
-                                    if (!DetalleVentaNegocio.disminuirCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); } 
-                                    else { Utils.ShowSnackbar("No es posible disminuir la cantidad vendida. ", this.Page); }
-                                break;
-                                case "Sumar":
-                                    if (!DetalleVentaNegocio.aumentarCantidadVendida(dv).ErrorFound) { CargarDetalles(obj); } 
-                                    else { Utils.ShowSnackbar("No es posible aumentar la cantidad vendida. ", this.Page); }
-                                break;
-                            }
-                        }
-                        else { Utils.ShowSnackbar("Ocurrió un error al intentar obtener el registro del detalle de la venta. ", this.Page); }
-                    }
-                    else { Utils.ShowSnackbar("No es posible obtener el detalle de la venta. ", this.Page); }
-                }, err => { 
-                    Utils.ShowSnackbar("Tu token caducó, volvé a iniciar sesión. ", this.Page); 
-                });
-            } 
-            else { Utils.ShowSnackbar("No tenés permiso para realizar esta acción. ", this.Page); }
+        protected void modificarCantidadVendida_Command(object sender, CommandEventArgs e) {
+            var auth = Session[Utils.AUTH] as SessionData;
+            DetalleVenta detalle = new DetalleVenta { 
+                Id = Session[VK] as Venta,
+                Producto = new Producto() {
+                    Codigo = e.CommandArgument.ToString()
+                }
+            };
+            var respuesta = DetalleVentaNegocio.ModificarCantidad(auth, detalle, e.CommandName);
+            Utils.ShowSnackbar(respuesta.Message, this);
+            CargarCabecera();
+            CargarDatos();
         }
     }
 }
