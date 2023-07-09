@@ -23,6 +23,7 @@ namespace Vista.Ventas {
                     lblFechaRegistro.Text = obj.Fecha;
                     lblMedioPago.Text = obj.TipoPago;
                     lblTotalCalculado.Text = $"${obj.Total}";
+                    lblNroVenta.Text = $"#{obj.Id}";
                 }
             }
                 

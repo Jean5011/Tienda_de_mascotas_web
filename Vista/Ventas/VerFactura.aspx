@@ -18,6 +18,13 @@
             <li class="mdc-list-item" tabindex="0">
                 <span class="mdc-list-item__ripple"></span>
                 <span class="mdc-list-item__text">
+                    <asp:Label runat="server" ID="lblNroVenta" class="mdc-list-item__primary-text"></asp:Label>
+                    <span class="mdc-list-item__secondary-text">Número de Venta</span>
+                </span>
+            </li>
+            <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">
                     <asp:Label runat="server" ID="lblEmpleadoGestor" class="mdc-list-item__primary-text"></asp:Label>
                     <span class="mdc-list-item__secondary-text">Empleado gestor</span>
                 </span>
