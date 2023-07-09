@@ -101,21 +101,10 @@ namespace Datos {
         }
 
         /// <summary>
-        /// Obtener tabla con todos los empleados cuyos nombres completos tengan coincidencias con una cadena dada.
+        /// Obtener tabla con todos los empleados, aplicando filtros de ser necesario.
         /// </summary>
-        /// <param name="nombre">Nombre a buscar</param>
-        /// <param name="soloActivos">Indica si debe filtrar empleados habilitados.</param>
+        /// <param name="data">Parámetros. Texto a buscar, valores de los DDL, etc.</param>
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
-        public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool soloActivos = true) {
-            Connection connection = new Connection(Connection.Database.Pets);
-            return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @q + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") } AND {GenerateSearchQuery("@q")}",
-                        parameters: new Dictionary<string, object>() {
-                            { "@q", nombre }
-                        }
-                    );
-        }
-
         public static Response CargarRegistros(Empleado.Busqueda data) {
             string select = $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] ";
             string where = " WHERE ";

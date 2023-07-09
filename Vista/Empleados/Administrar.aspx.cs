@@ -10,12 +10,6 @@ namespace Vista.Empleados {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
-                if (Request.QueryString["nombre"] != null)
-                {
-                    string userId = Request.QueryString["nombre"];
-                    CargarDatos(userId);
-
-                }
             }
         }
       
@@ -121,11 +115,11 @@ namespace Vista.Empleados {
         }
 
 
-        public void CargarDatos(string dni=null) {
+        public void CargarDatos() {
 
             var filtros = new Empleado.Busqueda {
                 Texto = txtBuscar.Text,
-                MostrarInactivos = chkEstado.Checked,
+                MostrarInactivos = ddlEstado.SelectedValue == "T",
                 Rol = ddlRol.SelectedValue,
                 Sexo = ddlSexo.SelectedValue
             };
@@ -156,5 +150,16 @@ namespace Vista.Empleados {
             }
         }
 
+        protected void ddlRol_SelectedIndexChanged(object sender, EventArgs e) {
+            CargarDatos();
+        }
+
+        protected void ddlSexo_SelectedIndexChanged(object sender, EventArgs e) {
+            CargarDatos();
+        }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e) {
+            CargarDatos();
+        }
     }
 }
