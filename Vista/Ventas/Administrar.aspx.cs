@@ -11,19 +11,12 @@ using Negocio;
 namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
 
-<<<<<<< HEAD
-        public void CargarDatos(string id = null) {
-            string tbuscar = txtBuscar.Text;
-            if (id != null) tbuscar = id;
-            var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.GetVentaPorID(Convert.ToInt32(tbuscar));
-=======
         public void CargarDatos(Response data = null) {
             string tbuscar = txtBuscar.Text;
             var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.Buscar(tbuscar);
             if (data != null) res = data;
->>>>>>> 3694b75063562c1c5ed1990cf58c9840d1c4d87b
             if (res.ErrorFound) {
-                Utils.MostrarMensaje("Error cargando ventas. ", this.Page, GetType());
+                Utils.ShowSnackbar("Error cargando ventas. ", this);
 
             }
             else {
@@ -38,12 +31,6 @@ namespace Vista.Ventas {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
                 CargarDatos();
-                if (Request.QueryString["ID"] != null)
-                {
-                    string id = Request.QueryString["ID"];
-                    CargarDatos(id);
-
-                }
             }
         }
 

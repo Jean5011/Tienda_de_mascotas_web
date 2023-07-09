@@ -18,7 +18,7 @@ namespace Vista.Empleados {
                 txtDNI.Focus();
                 string msg = Request.QueryString["msg"];
                 if(!string.IsNullOrEmpty(msg)) {
-                    Utils.MostrarMensaje(msg, this.Page, GetType());
+                    Utils.ShowSnackbar(msg, this);
                 }
                 if(auth.User != null) {
                     lblResultado.Text = ($"Si cambiás de cuenta, se cerrará tu sesión actual.");

@@ -57,6 +57,18 @@ namespace Datos {
             public static string Crear = "SP_Productos_Crear";
             public static string ActualizarProducto = "SP_Productos_Actualizar";
             public static string EliminarProducto = "SP_Productos_Eliminar";
+            public static string Reporte_ProductosMasVendidos = "Reporte_ProductosMasVendidos";
+        }
+
+        public static Response ProductosMasVendidos(string fechaInicio, string fechaFin) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchStoredProcedure(
+                    storedProcedureName: Procedures.Reporte_ProductosMasVendidos,
+                    parameters: new Dictionary<string, object> {
+                        { "@FECHAINICIO", fechaInicio },
+                        { "@FECHAFIN", fechaFin }
+                    }
+                );
         }
 
         /// <summary>

@@ -16,18 +16,17 @@
                     <span class="mdc-floating-label" id="ddlrol-d">Rol</span>
                     <span class="mdc-line-ripple"></span>
                     <span class="mdc-text-field__ripple"></span>
-                    </span>
-                        <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlRol" runat="server" OnSelectedIndexChanged="ddlRol_SelectedIndexChanged">
+                        <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlRol" runat="server" OnSelectedIndexChanged="DdlRol_SelectedIndexChanged">
                             <asp:ListItem Text="Todos los roles" Selected="true" Value="ALL"></asp:ListItem>
                             <asp:ListItem Text="Administradores" Value="ADMIN"></asp:ListItem>
                             <asp:ListItem Text="No Administradores" Value="NORMAL"></asp:ListItem>
                         </asp:DropDownList>
                 </label>
                 <label class="mdc-text-field mdc-text-field--filled">
-                    <span class="mdc-floating-label" id="ddlrol-d">Sexo</span>
+                    <span class="mdc-floating-label" id="ddlsexo-d">Sexo</span>
                     <span class="mdc-line-ripple"></span>
                     <span class="mdc-text-field__ripple"></span>
-                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlSexo" runat="server" OnSelectedIndexChanged="ddlSexo_SelectedIndexChanged">
+                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlSexo" runat="server" OnSelectedIndexChanged="DdlSexo_SelectedIndexChanged">
                         <asp:ListItem Text="Todos" Selected="True" Value="ALL"></asp:ListItem>
                         <asp:ListItem Text="Hombres" Value="M"></asp:ListItem>
                         <asp:ListItem Text="Mujeres" Value="F"></asp:ListItem>
@@ -35,10 +34,10 @@
                 </label>
 
                 <label class="mdc-text-field mdc-text-field--filled">
-                    <span class="mdc-floating-label" id="ddlrol-d">Estado</span>
+                    <span class="mdc-floating-label" id="ddlest-d">Estado</span>
                     <span class="mdc-line-ripple"></span>
                     <span class="mdc-text-field__ripple"></span>
-                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlEstado" runat="server" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
+                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlEstado" runat="server" OnSelectedIndexChanged="DdlEstado_SelectedIndexChanged">
                         <asp:ListItem Text="Todos" Value="T"></asp:ListItem>
                         <asp:ListItem Text="Habilitados" Selected="True" Value="A"></asp:ListItem>
                     </asp:DropDownList>

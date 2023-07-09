@@ -9,6 +9,7 @@ using Datos;
 using System.Data;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Globalization;
 
 namespace Negocio
 {
@@ -71,6 +72,11 @@ namespace Negocio
         public static Response ObtenerCodigoPlusCUIT()
         {
             return DaoProductos.ObtenerCodigoYCuit();
+        }
+        public static Response Reporte_ProductosMasVendidos(string fechaInicio, string fechaFin) {
+            DateTime fi = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime fn = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return DaoProductos.ProductosMasVendidos(fi.ToString("yyyy-MM-dd"), fn.ToString("yyyy-MM-dd"));
         }
 
         public static Response BuscarPorCodigo(string codigo)

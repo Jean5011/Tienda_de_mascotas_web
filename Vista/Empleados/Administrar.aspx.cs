@@ -146,19 +146,19 @@ namespace Vista.Empleados {
                 }
             }
             else {
-                Utils.MostrarMensaje($"Error. {data.Details} . {data.Message} .", this.Page, GetType());
+                Utils.ShowSnackbar($"Error. {data.Details} . {data.Message} .", this);
             }
         }
 
-        protected void ddlRol_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlRol_SelectedIndexChanged(object sender, EventArgs e) {
             CargarDatos();
         }
 
-        protected void ddlSexo_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlSexo_SelectedIndexChanged(object sender, EventArgs e) {
             CargarDatos();
         }
 
-        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e) {
+        protected void DdlEstado_SelectedIndexChanged(object sender, EventArgs e) {
             CargarDatos();
         }
     }
