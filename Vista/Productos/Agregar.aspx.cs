@@ -21,6 +21,7 @@ namespace Vista.Productos {
         }
         protected void BtnGuardar_Click(object sender, EventArgs e) {
             Insertar();
+            // Limpiar/vaciar/reestablecer los campos.
         }
 
         /// <summary>
