@@ -88,13 +88,13 @@ namespace Negocio {
             t.CodAnimal = A;
             return DaoTiposDeProductos.EliminarTipoProducto(t);
         }
-        public Response GetTipoDeProductoBaja() {
+        /*public Response GetTipoDeProductoBaja() {
             return DaoTiposDeProductos.ObtenerListaDeTipoProductoBajas();
         }
-
+        
         public Response ObtenerPorCodBaja(String cod) {
             return DaoTiposDeProductos.BuscarTipoProductoPorCodBajas(cod);
-        }
+        }*/
 
         public static Response Habilitar(SessionData auth, TipoProducto cat) {
             var res = Response.ErrorDesconocido;

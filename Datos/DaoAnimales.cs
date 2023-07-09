@@ -74,16 +74,6 @@ namespace Datos {
                     );
         }
 
-        /// <summary>
-        /// Obtener lista de animales activos.
-        /// </summary>
-        /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ObtenerLista() {
-            Connection connection = new Connection(Connection.Database.Pets);
-            return connection.FetchData(
-                        query: $"SELECT CONCAT({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo}, [{Animal.Columns.Estado}]  FROM {Animal.Table} WHERE [{Animal.Columns.Estado}] = 1"
-                    );
-        }
 
         /// <summary>
         /// Buscar animal activo cuyo ID coincida con uno dado.
@@ -160,49 +150,5 @@ namespace Datos {
                         }
                     );
         }
-
-        /// <summary>
-        /// Obtener lista de animales inactivos.
-        /// </summary>
-        /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ObtenerListaBaja() {
-            Connection connection = new Connection(Connection.Database.Pets);
-            return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where {Animal.Columns.Estado}=0"
-                    );
-        }
-
-        /// <summary>
-        /// Buscar animal inactivo cuyo ID coincida con uno dado.
-        /// </summary>
-        /// <param name="ID">ID a buscar.</param>
-        /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response BuscarAnimalPorCodBaja(string ID) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Animal.Table} WHERE [{Animal.Columns.Codigo}] = @ID and {Animal.Columns.Estado}=0 ";
-            Connection connection = new Connection(Connection.Database.Pets);
-            Trace.Write("BuscarAnimalPorCod", $"Consulta: {consulta}");
-            return connection.FetchData(
-                        query: consulta,
-                        parameters: new Dictionary<string, object> {
-                            { "@ID", ID }
-                        }
-                    );
-        }
-
-        /// <summary>
-        /// Da de alta un registro animal en la base de datos a partir de su código.
-        /// </summary>
-        /// <param name="An">Objeto Animal con el código establecido.</param>
-        /// <returns>Objeto Response con el resultado de la transacción.</returns>
-        public static Response AltaAnimal(Animal An) {
-            Connection con = new Connection(Connection.Database.Pets);
-            return con.ExecuteStoredProcedure(
-                        storedProcedureName: Procedures.Alta,
-                        parameters: new Dictionary<string, object> {
-                            { "@PK_CodAnimales_An", An.Codigo }
-                        }
-                    );
-        }
-
     }
 }

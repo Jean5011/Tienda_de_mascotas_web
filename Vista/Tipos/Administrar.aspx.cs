@@ -61,7 +61,7 @@ namespace Vista.Tipos {
             }
             Utils.ShowSnackbar(res.Message, this);
         }
-        protected void BT_Todo_Click() {
+      protected void BT_Todo_Click() {
             NegocioTipoDeProducto nt = new NegocioTipoDeProducto();
             GvDatos.DataSource = nt.GetTipoDeProducto();
             GvDatos.DataBind();

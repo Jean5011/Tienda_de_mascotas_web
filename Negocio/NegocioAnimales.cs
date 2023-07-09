@@ -141,20 +141,8 @@ namespace Negocio {
         }
 
         // Queda a revisión
-        public Response GettAnimales() {
+       /* public Response GettAnimales() {
             return DaoAnimales.ObtenerLista();
-        }
-
-        public Response GetAnimalesBaja() {
-            return DaoAnimales.ObtenerListaBaja();
-        }
-
-        public Response ObtenerPorCodBaja(Animal cod) {
-            return DaoAnimales.BuscarAnimalPorCodBaja(cod.Codigo);
-        }
-
-        public Response AltaAnimal(Animal A) {
-            return DaoAnimales.AltaAnimal(A);
-        }
+        }*/
     }
 }
