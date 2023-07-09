@@ -122,13 +122,15 @@ namespace Vista.Empleados {
 
 
         public void CargarDatos(string dni=null) {
-            bool soloActivos = !chkEstado.Checked;
-            string searchquery = txtBuscar.Text;
-            if (dni != null) searchquery = dni;
-            bool hayParaBuscar = !string.IsNullOrEmpty(searchquery);
-            Response data = hayParaBuscar
-                            ? EmpleadoNegocio.FiltrarEmpleadosPorNombreCompleto(searchquery, soloActivos)
-                            : EmpleadoNegocio.ObtenerEmpleados(soloActivos);
+
+            var filtros = new Empleado.Busqueda {
+                Texto = txtBuscar.Text,
+                MostrarInactivos = chkEstado.Checked,
+                Rol = ddlRol.SelectedValue,
+                Sexo = ddlSexo.SelectedValue
+            };
+
+            Response data = EmpleadoNegocio.CargarDatos(filtros);
             if (!data.ErrorFound) {
                 var dt = data.ObjectReturned as DataSet;
                 var auth = (Session[Utils.AUTH] as SessionData);

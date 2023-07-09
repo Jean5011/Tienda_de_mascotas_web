@@ -116,6 +116,51 @@ namespace Datos {
                     );
         }
 
+        public static Response CargarRegistros(Empleado.Busqueda data) {
+            string select = $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] ";
+            string where = " WHERE ";
+            string condicionBusqueda = "";
+            int condiciones = 0;
+            Dictionary<string, object> parametros = new Dictionary<string, object>();
+
+            if(!string.IsNullOrEmpty(data.Texto) && !string.IsNullOrWhiteSpace(data.Texto)) {
+                condicionBusqueda = "(" + GenerateSearchQuery("@q") + ")";
+                parametros.Add("@q", data.Texto);
+                condiciones++;
+            }
+
+            string condicionRol = "";
+            if(!string.IsNullOrEmpty(data.Rol) && !string.IsNullOrWhiteSpace(data.Rol) && data.Rol != "ALL") {
+                if (condiciones > 0) condicionRol = " AND ";
+                condicionRol += $" [{Empleado.Columns.Rol}] = @rol ";
+                parametros.Add("@rol", data.Rol);
+                condiciones++;
+            }
+
+            string condicionSexo = "";
+            if(!string.IsNullOrWhiteSpace(data.Sexo) && !string.IsNullOrEmpty(data.Sexo) && data.Sexo != "ALL") {
+                if (condiciones > 0) condicionSexo = " AND ";
+                condicionSexo += $" [{Empleado.Columns.Sexo}] = @sexo ";
+                parametros.Add("@sexo", data.Sexo);
+                condiciones++;
+            }
+
+            string condicionEstado = "";
+            if(!data.MostrarInactivos) {
+                if (condiciones > 0) condicionEstado = " AND ";
+                condicionEstado += $" [{Empleado.Columns.Estado}] = 1 ";
+                condiciones++;
+            }
+
+            string consulta = select + (condiciones == 0 ? "" : where + condicionBusqueda + condicionRol + condicionSexo + condicionEstado);
+            Trace.WriteLine(consulta);
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: consulta,
+                    parameters: parametros
+                );
+        }
+
         /// <summary>
         /// Obtener tabla con un sólo empleado cuyo DNI coincida con uno dado.
         /// </summary>
