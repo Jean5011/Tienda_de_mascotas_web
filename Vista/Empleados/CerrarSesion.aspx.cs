@@ -29,7 +29,7 @@ namespace Vista.Empleados {
             }
             else
             {
-                Utils.MostrarMensaje("Ocurrió un error al intentar cerrar la sesión. Por favor, pruebe cerrar sesión nuevamente.", this.Page, GetType());
+                Utils.ShowSnackbar("Ocurrió un error al intentar cerrar la sesión. Por favor, pruebe cerrar sesión nuevamente.", this);
             }
         }
     }

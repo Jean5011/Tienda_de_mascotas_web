@@ -12,9 +12,9 @@ namespace Negocio
 {
     public class ProveedorNegocio
     {
-        public static Response ObtenerListaDeProveedores()
+        public static Response ObtenerListaDeProveedores(bool estado = true)
         {
-            return ProveedorDatos.ObtenerListaDeProveedores();
+            return ProveedorDatos.ObtenerListaDeProveedores(estado);
         }
         public static Response ObtenerProveedorByCUIT(string CUIT)
         {

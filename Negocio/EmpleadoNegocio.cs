@@ -78,27 +78,6 @@ namespace Negocio {
         }
 
 
-
-        /// <summary>
-        /// Verifica una clave [DEPRECATED]
-        /// </summary>
-        /// <param name="password">Contraseña ingresada.</param>
-        /// <param name="savedHash">Hash rescatado de la base de datos.</param>
-        /// <param name="savedSalt">Salt rescatado de la base de datos.</param>
-        /// <returns>True si las claves concuerdan. False en otro caso.</returns>
-        public static bool VerificarClave(string password, byte[] savedHash, byte[] savedSalt) {
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] combinedBytes = new byte[passwordBytes.Length + savedSalt.Length];
-
-            Array.Copy(passwordBytes, 0, combinedBytes, 0, passwordBytes.Length);
-            Array.Copy(savedSalt, 0, combinedBytes, passwordBytes.Length, savedSalt.Length);
-
-            using (var sha256 = SHA256.Create()) {
-                byte[] inputHash = sha256.ComputeHash(combinedBytes);
-                return savedHash.SequenceEqual(inputHash);
-            }
-        }
-
         /// <summary>
         /// Verifica una clave usando un Hash en formato string.
         /// </summary>
@@ -321,14 +300,6 @@ namespace Negocio {
                 return empleado_data;
         }
 
-
-        public static Response ObtenerEmpleados(bool chkSoloActivosChecked) {
-            return EmpleadoDatos.ObtenerListaDeEmpleados(chkSoloActivosChecked);
-        }
-
-        public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool chkSoloActivosChecked) {
-            return EmpleadoDatos.FiltrarEmpleadosPorNombreCompleto(nombre, chkSoloActivosChecked);
-        }
 
         public static Response CargarDatos(Empleado.Busqueda data) {
             return EmpleadoDatos.CargarRegistros(data);

@@ -8,18 +8,43 @@
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por nombre, apellido" runat="server"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
-    <asp:DropDownList ID="ddlRol" runat="server">
-        <asp:ListItem Text="Todos los roles" Selected="true" Value="ALL"></asp:ListItem>
-        <asp:ListItem Text="Administrador" Value="ADMIN"></asp:ListItem>
-        <asp:ListItem Text="No Administradores" Value="NORMAL"></asp:ListItem>
-    </asp:DropDownList>
-    <asp:DropDownList ID="ddlSexo" runat="server">
-        <asp:ListItem Text="Todos" Selected="True" Value="ALL"></asp:ListItem>
-        <asp:ListItem Text="Hombres" Value="M"></asp:ListItem>
-        <asp:ListItem Text="Mujeres" Value="F"></asp:ListItem>
-    </asp:DropDownList>
-    <asp:CheckBox ID="chkEstado" Text="Mostrar empleados inactivos" Checked="false" runat="server" />
-    
+    <br />
+    <div class="mdc-card " style="padding: 10px;">
+        <div class="row _p">
+            <div class="_side" style="flex-direction: row; gap: 12px; justify-content: space-between">
+                <label class="mdc-text-field mdc-text-field--filled">
+                    <span class="mdc-floating-label" id="ddlrol-d">Rol</span>
+                    <span class="mdc-line-ripple"></span>
+                    <span class="mdc-text-field__ripple"></span>
+                        <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlRol" runat="server" OnSelectedIndexChanged="DdlRol_SelectedIndexChanged">
+                            <asp:ListItem Text="Todos los roles" Selected="true" Value="ALL"></asp:ListItem>
+                            <asp:ListItem Text="Administradores" Value="ADMIN"></asp:ListItem>
+                            <asp:ListItem Text="No Administradores" Value="NORMAL"></asp:ListItem>
+                        </asp:DropDownList>
+                </label>
+                <label class="mdc-text-field mdc-text-field--filled">
+                    <span class="mdc-floating-label" id="ddlsexo-d">Sexo</span>
+                    <span class="mdc-line-ripple"></span>
+                    <span class="mdc-text-field__ripple"></span>
+                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlSexo" runat="server" OnSelectedIndexChanged="DdlSexo_SelectedIndexChanged">
+                        <asp:ListItem Text="Todos" Selected="True" Value="ALL"></asp:ListItem>
+                        <asp:ListItem Text="Hombres" Value="M"></asp:ListItem>
+                        <asp:ListItem Text="Mujeres" Value="F"></asp:ListItem>
+                    </asp:DropDownList>
+                </label>
+
+                <label class="mdc-text-field mdc-text-field--filled">
+                    <span class="mdc-floating-label" id="ddlest-d">Estado</span>
+                    <span class="mdc-line-ripple"></span>
+                    <span class="mdc-text-field__ripple"></span>
+                    <asp:DropDownList CssClass="mdc-text-field__input" AutoPostBack="True" ID="ddlEstado" runat="server" OnSelectedIndexChanged="DdlEstado_SelectedIndexChanged">
+                        <asp:ListItem Text="Todos" Value="T"></asp:ListItem>
+                        <asp:ListItem Text="Habilitados" Selected="True" Value="A"></asp:ListItem>
+                    </asp:DropDownList>
+                </label>
+            </div>
+        </div>
+    </div>
     <br />
     <div class="mdc-data-table">
         <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvAdmin_PageIndexChanging"
@@ -69,6 +94,11 @@
                         <asp:Label CssClass="mdc-typography--body2" ID="gvAdminItemTemplate__Dirección" runat="server"
                             Text='<%# Eval(Empleado.Columns.Direccion) + ", " + Eval(Empleado.Columns.Localidad) + ", " + Eval(Empleado.Columns.Provincia) + ", " + Eval(Empleado.Columns.Nacionalidad) %>'>
                         </asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Habilitado">
+                    <ItemTemplate>
+                        <asp:CheckBox runat="server" Text="" Checked="<%# Convert.ToBoolean(Eval(Empleado.Columns.Estado)) %>" Enabled="False" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -213,9 +243,13 @@
         </asp:GridView>
 
     </div>
+    <br />
+    <br />
+    <br />
+    <br />
     <a href="/Empleados/CrearCuenta.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
-      <div class="mdc-fab__ripple"></div>
-      <span class="mdc-fab__icon material-icons">person_add</span>
+        <div class="mdc-fab__ripple"></div>
+        <span class="mdc-fab__icon material-icons">person_add</span>
     </a>
 
 </asp:Content>

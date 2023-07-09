@@ -86,6 +86,8 @@
     <Content Include="Proveedores\Administrar.aspx" />
     <Content Include="Proveedores\Agregar.aspx" />
     <Content Include="Proveedores\Editar.aspx" />
+    <Content Include="Reportes\MayoresVentas.aspx" />
+    <Content Include="Reportes\ProductoMasVendido.aspx" />
     <Content Include="Tipos\Administrar.aspx" />
     <Content Include="Tipos\Agregar.aspx" />
     <Content Include="Ventas\Administrar.aspx" />
@@ -222,6 +224,20 @@
     </Compile>
     <Compile Include="Proveedores\Editar.aspx.designer.cs">
       <DependentUpon>Editar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MayoresVentas.aspx.cs">
+      <DependentUpon>MayoresVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\MayoresVentas.aspx.designer.cs">
+      <DependentUpon>MayoresVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ProductoMasVendido.aspx.cs">
+      <DependentUpon>ProductoMasVendido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\ProductoMasVendido.aspx.designer.cs">
+      <DependentUpon>ProductoMasVendido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Root.Master.cs">
       <DependentUpon>Root.Master</DependentUpon>

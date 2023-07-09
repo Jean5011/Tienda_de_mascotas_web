@@ -42,10 +42,11 @@ namespace Datos {
         /// Obtener lista de proveedores activos.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ObtenerListaDeProveedores() {
+        public static Response ObtenerListaDeProveedores(bool est=true) {
             Connection connection = new Connection(Connection.Database.Pets);
+            int estado = est ? 1 : 0;
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table}"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Proveedor.Table} where {Proveedor.Columns.Estado}={estado}"
                     );
         }
 

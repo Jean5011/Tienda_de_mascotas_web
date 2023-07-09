@@ -22,7 +22,8 @@ namespace Vista.Proveedores
             }
             else
             {
-                Response resObtListDeProv = ProveedorNegocio.ObtenerListaDeProveedores();
+                bool estado = CheckBox1.Checked ? false : true;
+                Response resObtListDeProv = ProveedorNegocio.ObtenerListaDeProveedores(estado);
                 res = (resObtListDeProv);
             }
 

@@ -7,39 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Productos
-{
+namespace Vista.Reportes {
 
 
-    public partial class Editar
-    {
+    public partial class ProductoMasVendido {
 
         /// <summary>
-        /// txtBuscar control.
+        /// txtFechaInicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaInicio;
 
         /// <summary>
-        /// btnBuscar control.
+        /// txtFechaFin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaFin;
 
         /// <summary>
-        /// CheckBox1 control.
+        /// btnCargar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
+        protected global::System.Web.UI.WebControls.LinkButton btnCargar;
 
         /// <summary>
         /// gvDatos control.
@@ -49,14 +47,5 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDatos;
-
-        /// <summary>
-        /// lbl_mensaje_error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_mensaje_error;
     }
 }

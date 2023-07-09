@@ -57,16 +57,29 @@ namespace Datos {
             public static string Crear = "SP_Productos_Crear";
             public static string ActualizarProducto = "SP_Productos_Actualizar";
             public static string EliminarProducto = "SP_Productos_Eliminar";
+            public static string Reporte_ProductosMasVendidos = "Reporte_ProductosMasVendidos";
+        }
+
+        public static Response ProductosMasVendidos(string fechaInicio, string fechaFin) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchStoredProcedure(
+                    storedProcedureName: Procedures.Reporte_ProductosMasVendidos,
+                    parameters: new Dictionary<string, object> {
+                        { "@FECHAINICIO", fechaInicio },
+                        { "@FECHAFIN", fechaFin }
+                    }
+                );
         }
 
         /// <summary>
         /// Obtener tabla de todos los productos.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ObtenerListaDeProductos() {
+        public static Response ObtenerListaDeProductos(bool est = true) {
             Connection connection = new Connection(Connection.Database.Pets);
+            int estado = est ? 1 : 0;
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}]"
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado}"
                     );
         }
         public static Response Buscar(string q) {

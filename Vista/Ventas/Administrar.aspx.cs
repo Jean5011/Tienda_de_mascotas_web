@@ -16,7 +16,7 @@ namespace Vista.Ventas {
             var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.Buscar(tbuscar);
             if (data != null) res = data;
             if (res.ErrorFound) {
-                Utils.MostrarMensaje("Error cargando ventas. ", this.Page, GetType());
+                Utils.ShowSnackbar("Error cargando ventas. ", this);
 
             }
             else {
@@ -29,6 +29,7 @@ namespace Vista.Ventas {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
+                CargarDatos();
                 CargarDatos();
             }
         }

@@ -46,12 +46,12 @@ namespace Vista.Proveedores {
                         }
                         else {
 
-                            Utils.MostrarMensaje($"No se encontro el CUIT ", this.Page, GetType());
+                            Utils.ShowSnackbar($"No se encontro el CUIT ", this);
                         }
                     }
                     else {
                         Response.Redirect("Administrar.aspx");
-                        Utils.MostrarMensaje($"error ", this.Page, GetType());
+                        Utils.ShowSnackbar($"error ", this);
                     }
                 }
             }

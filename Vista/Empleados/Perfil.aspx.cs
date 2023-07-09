@@ -170,11 +170,11 @@ namespace Vista.Empleados {
                 SesionNegocio.Autenticar((res) => {
                     Response.Redirect("/Empleados/Deshabilitar.aspx?DNI=" + UsuarioPerfil.DNI);
                 }, (err) => {
-                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                    Utils.ShowSnackbar("Error. La sesión fue cerrada.", this);
                 });
             }
             else {
-                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+                Utils.ShowSnackbar("No estás autorizado a realizar esta acción. ", this);
             }
         }
 
@@ -190,11 +190,11 @@ namespace Vista.Empleados {
                 SesionNegocio.Autenticar((res) => {
                     Response.Redirect("/Empleados/EditarEmpleado.aspx?DNI=" + UsuarioPerfil.DNI);
                 }, (err) => {
-                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                    Utils.ShowSnackbar("Error. La sesión fue cerrada.", this);
                 });
             }
             else {
-                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+                Utils.ShowSnackbar("No estás autorizado a realizar esta acción. ", this);
             }
         }
 
@@ -210,11 +210,11 @@ namespace Vista.Empleados {
                 SesionNegocio.Autenticar((res) => {
                     Response.Redirect("/Empleados/CambiarClave.aspx?DNI=" + UsuarioPerfil.DNI);
                 }, (err) => {
-                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                    Utils.ShowSnackbar("Error. La sesión fue cerrada.", this);
                 });
             }
             else {
-                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+                Utils.ShowSnackbar("No estás autorizado a realizar esta acción. ", this);
             }
         }
 
@@ -229,11 +229,11 @@ namespace Vista.Empleados {
                 SesionNegocio.Autenticar((res) => {
                     Response.Redirect("/Empleados/AdministrarAccesos.aspx?DNI=" + UsuarioPerfil.DNI);
                 }, (err) => {
-                    Utils.MostrarMensaje("Error. La sesión fue cerrada.", this.Page, GetType());
+                    Utils.ShowSnackbar("Error. La sesión fue cerrada.", this);
                 });
             }
             else {
-                Utils.MostrarMensaje("No estás autorizado a realizar esta acción. ", this.Page, GetType());
+                Utils.ShowSnackbar("No estás autorizado a realizar esta acción. ", this);
             }
         }
         /// <summary>
