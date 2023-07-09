@@ -133,5 +133,17 @@ namespace Negocio {
         public static Response ObtenerIDS() {
             return DaoTiposDeProductos.ObtenerListaDeIDS();
         }
+
+        //Solo devuelve aquellas categorias las cuales se encuentran activas
+        public static Response ObtenerListaActivos()
+        {
+            return DaoTiposDeProductos.ObtenerListaDeTipoProductoActivos();
+        }
+        //Devuelve todas las categorias sin importar su estado
+        public static Response ObtenerLista()
+        {
+            return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
+        }
+
     }
 }

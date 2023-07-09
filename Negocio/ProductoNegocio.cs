@@ -87,20 +87,36 @@ namespace Negocio
 
         public static Response BuscarPorCodigo(string codigo)
         {
-            return DaoProductos.BuscarProductoPorCod(codigo);
+                return DaoProductos.BuscarProductoPorCod(codigo);
+   
         }
 
- 
         public static Response Buscar(string q) {
             return DaoProductos.Buscar(q);
         }
 
-        public static Response BuscarProductos(string codigo = null, bool estado= true)
+        
+        public static Response BuscarProductosXStock(int tipoStock,bool estado=true)
         {
-            return string.IsNullOrEmpty(codigo)
-                ? ListarTodo(estado)
-                : Buscar(codigo);
+            switch(tipoStock)
+            {
+                case 1:
+                    return DaoProductos.ObtenerListaDeProductosPorSinStock(1,estado);
+                case 2:
+                    return DaoProductos.ObtenerListaDeProductosPorStockEntreAYB(1,10,estado);
+                case 3:
+                    return DaoProductos.ObtenerListaDeProductosPorStockMayorA(10,estado);
+                default:
+                    return DaoProductos.ObtenerListaDeProductos(estado);
+            }
         }
+        public static Response BuscarProductos(string codigo = null)
+        {           
+                return string.IsNullOrEmpty(codigo)
+                    ? ListarTodo()
+                    : Buscar(codigo);
+        }
+
         public static Response ObtenerPorCodigo(string cod)
         {
             var res1 = DaoProductos.BuscarProductoPorCod(cod);
@@ -111,7 +127,7 @@ namespace Negocio
             }
             return res1;
         }
-        //copy hecha por mi para testear
+        
         public static Response ObtenerPorCodigoYCuit(string cod, string cuit)
         {
             var res1 = DaoProductos.BuscarProductoPorCodYCuit(cod, cuit);

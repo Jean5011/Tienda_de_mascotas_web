@@ -7,6 +7,10 @@
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código" runat="server"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="btnBuscar_Click" runat="server" Text="search" />
     </div>
+     <div>
+        Mostrar categorias inactivas
+        <asp:CheckBox ID="ChkFiltro" runat="server" AutoPostBack="true"  />
+    </div>
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated" 

@@ -83,56 +83,7 @@ namespace Vista.Ventas {
                 }
                 ddlProducto.Items.Insert(0, new ListItem("", "0"));
             }
-                /* Response codigos = ProductoNegocio.ObtenerCodigoPlusCUIT();
-                 if (!codigos.ErrorFound)
-                 {
-                     var ds = codigos.ObjectReturned as DataSet;
-                     ddlProducto.DataSource = ds;
-                     ddlProducto.DataTextField = Producto.Columns.Nombre;
-                     ddlProducto.DataValueField = "CODyCUIT";
-                     ddlProducto.DataBind();
-                     ddlProducto.Items.Insert(0, new ListItem("<Seleccione un producto>", "0"));
-                 }*/
-                /* Response codigos = ProductoNegocio.ListarSinRepetir();
-                 if (!codigos.ErrorFound)
-                 {
-                     var ds = codigos.ObjectReturned as DataSet;
-                     ddlProducto.DataSource = ds;
-                     ddlProducto.DataTextField = "Nombre_Prod";
-                     ddlProducto.DataValueField = "CodProducto_Prod";
-                     ddlProducto.DataBind();
-                     ddlProducto.Items.Insert(0, new ListItem("<Seleccione un producto>", "0"));
-                 }*/
-                /* Response codigos = ProductoNegocio.ObtenerCodigoPlusCUIT();
-                 if (!codigos.ErrorFound)
-                 {
-                     DataSet ds = codigos.ObjectReturned as DataSet;
-
-                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                     {
-                         DataTable dt = ds.Tables[0];
-
-                         //ddlProducto.Items.Clear();
-
-                         foreach (DataRow row in dt.Rows)
-                         {
-                             string NombreProducto= row["Nombre_Prod"].ToString();
-                             string CODyCUIT = row["CODyCUIT"].ToString();
-
-                             //string[] partes = CODyCUIT.Split('.');
-                             //if (partes.Length == 2)
-                             //{
-                             // string codigo = partes[0];
-                             // string cuit = partes[1];
-
-                             //ddlProducto.Items.Add(new ListItem(NombreProducto, CODyCUIT));
-                             //}
-
-                             ddlProducto.Items.Add(new ListItem(NombreProducto, CODyCUIT));
-                         }
-                     }
-                 }*/
-            }
+        }
 
         protected void ddlProductos_SelectedIndexChanged(object sender, EventArgs e)
         {   //enviamos al negocio producto el codigo del producto seleccionado ya que este devolvera los cuits de los proveedores que tenga disponible

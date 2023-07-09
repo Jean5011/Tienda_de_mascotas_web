@@ -11,14 +11,36 @@ namespace Vista.Productos {
                 // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                CargarDDL();
                 if (Request.QueryString["CODIGO"] != null)
                 {
                     string userId = Request.QueryString["CODIGO"];
+                   
                     CargarDatos(userId, true);
+                    
+                    
 
                 }
             }
         }
+
+
+        protected void CargarDDL()
+        {
+            ddlFiltro.Items.Add(new ListItem("Sin Stock", "2"));
+            ddlFiltro.Items.Add(new ListItem("Bajo Stock", "3"));
+            ddlFiltro.Items.Add(new ListItem("Alto Stock", "4"));
+            ddlFiltro.Items.Insert(0, new ListItem("Todos", "1"));
+
+
+        }
+
+        protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // int fil = Convert.ToInt32(ddlFiltro.SelectedValue);
+          //  CargarDatos(fil);
+        }
+
 
         protected void GrdProductos_RowEditing(object sender, GridViewEditEventArgs e) {
             gvDatos.EditIndex = e.NewEditIndex;
@@ -28,15 +50,18 @@ namespace Vista.Productos {
             gvDatos.EditIndex = -1;
             CargarDatos();
         }
-        protected void GrdProductos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            Actualizar(e);
-        }
+       
         protected void GrdProductos_RowDeleting(object sender, GridViewDeleteEventArgs e) {
             Eliminar(e);            
         }
         protected void GrdProductos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            gvDatos.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            // gvDatos.PageIndex = e.NewPageIndex;
+            // CargarDatos();
+            if (e.NewPageIndex >= 0 && e.NewPageIndex < gvDatos.PageCount)
+            {
+                gvDatos.PageIndex = e.NewPageIndex;
+                CargarDatos();
+            }
         } 
         protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
@@ -88,15 +113,27 @@ namespace Vista.Productos {
             if (cod!=null) {
                  codigo = cod;
             }
-            bool estado = CheckBox1.Checked ? false : true;
-            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo,estado);
+            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
                 gvDatos.DataBind();
             }
         }
-
-
+        protected void filtrar_btn_Click(object sender, EventArgs e)
+        {
+            Response response;
+            txtBuscar.Text = "";
+            bool estado = CheckBox1.Checked ? false : true;
+            //se selecciona el stock
+            int tipoStock = int.Parse(ddlFiltro.SelectedIndex.ToString());
+            response = ProductoNegocio.BuscarProductosXStock(tipoStock,estado);
+            if (!response.ErrorFound)
+            {
+                gvDatos.DataSource = (DataSet)response.ObjectReturned;
+                gvDatos.DataBind();
+            }
+        }
+     
         protected void Lb_Command(object sender, CommandEventArgs e) {
             var producto = new Producto {
                 Codigo = e.CommandArgument.ToString()
@@ -158,7 +195,7 @@ namespace Vista.Productos {
             CargarDatos();
         }
 
-
+       
     }
 
 
