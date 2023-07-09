@@ -88,7 +88,8 @@ namespace Vista.Productos {
             if (cod!=null) {
                  codigo = cod;
             }
-            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo);
+            bool estado = CheckBox1.Checked ? false : true;
+            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo,estado);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
                 gvDatos.DataBind();

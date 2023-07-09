@@ -9,10 +9,15 @@
         <asp:TextBox ID="txtBuscar" placeholder="Buscá por número de CUIT" CssClass="search" runat="server" ValidationGroup="GrupoBuscar"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" runat="server" Text="search"
             OnClick="filtrarProveedor_Click" ValidationGroup="GrupoBuscar" />
+
     </div>
     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="no es un cuit"
         ValidationExpression="^[0-9]{10,}$" ValidationGroup="GrupoBuscar" ControlToValidate="txtBuscar">CUIT
                 incorrecto</asp:RegularExpressionValidator>
+    <div>
+        Mostrar proveedores inactivos
+        <asp:CheckBox ID="CheckBox1" runat="server" />
+    </div>
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
@@ -129,7 +134,7 @@
                             AutoPostBack="true" runat="server"
                             OnSelectedIndexChanged="DdlFilasPorPaginaPagerTemplate_SelectedIndexChanged">
 
-                            <asp:ListItem  Selected="True">5</asp:ListItem>
+                            <asp:ListItem Selected="True">5</asp:ListItem>
                             <asp:ListItem>10</asp:ListItem>
                             <asp:ListItem>15</asp:ListItem>
 
@@ -176,7 +181,7 @@
 
     </div>
     <a href="/Proveedores/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
-      <div class="mdc-fab__ripple"></div>
-      <span class="mdc-fab__icon material-icons">add_business</span>
+        <div class="mdc-fab__ripple"></div>
+        <span class="mdc-fab__icon material-icons">add_business</span>
     </a>
 </asp:Content>
