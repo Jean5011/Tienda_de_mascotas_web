@@ -201,16 +201,25 @@ namespace Vista.Ventas {
         protected void GVDETALLESBTNELIMINAR_Command(object sender, CommandEventArgs e) {
             var auth = Session[Utils.AUTH] as SessionData;
             Venta obj = Session[VK] as Venta;
-            var det = new DetalleVenta {
-                Id = obj,
-                Producto = new Producto { Codigo = e.CommandArgument.ToString() }
-            };
-            if (e.CommandName == "ELIMINAR") {
-                var respuesta = DetalleVentaNegocio.EliminarDetalle(auth, det);
-                Utils.ShowSnackbar(respuesta.Message, this.Page, GetType());
-                CargarDetalles(obj);
-                CargarCabecera();
+            var resultado = ProductoNegocio.BuscarPorCodigo(e.CommandArgument.ToString()); //agregado.
+            if (!resultado.ErrorFound) //agregado.
+            {
+                Producto producto = resultado.ObjectReturned as Producto; //agregado.
+                var det = new DetalleVenta
+                {
+                    Id = obj,
+                    Producto = producto, //agregado.
+                    Proveedor = producto.Proveedor //agregado.
+                };
+                if (e.CommandName == "ELIMINAR")
+                {
+                    var respuesta = DetalleVentaNegocio.EliminarDetalle(auth, det);
+                    Utils.ShowSnackbar(respuesta.Message, this.Page, GetType());
+                    CargarDetalles(obj);
+                    CargarCabecera();
+                }
             }
+            else { Utils.ShowSnackbar("No es posible obtener el registro del producto a eliminar. ", this.Page); } //agregado. 
         }
 
 
