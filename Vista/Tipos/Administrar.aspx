@@ -14,6 +14,20 @@
             OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
             <Columns>
                 <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:LinkButton CommandName="update" runat="server"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Guardar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+                        </asp:LinkButton>
+                        <asp:LinkButton CommandName="cancel" runat="server"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Cancelar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">cancel</i>
+                        </asp:LinkButton>
+                    </EditItemTemplate>
                     <ItemTemplate>
                         <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
                         <asp:LinkButton CommandName="edit" runat="server"
