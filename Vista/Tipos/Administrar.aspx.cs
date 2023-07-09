@@ -25,9 +25,60 @@ namespace Vista.Tipos {
             }
         }
 
+        /* protected void ChkFiltro_CheckedChanged(object sender, EventArgs e)
+         {//queria que cuando se active o desactive el chk aparezcas en la pagina 1 pero da error // OnCheckedChanged="ChkFiltro_CheckedChanged"
+             if (ChkFiltro.Checked)
+             {
+                 GvDatos.PageIndex=0;
+             }
+             else
+             {
+                 GvDatos.PageIndex = 0;
+             }
+         }*/
+
+
         protected void CargarDatos() {
-            if (txtBuscar.Text == "") BT_Todo_Click();
-            else BT_Filtrar_Click();
+            if (string.IsNullOrEmpty(txtBuscar.Text))
+            {
+                if (ChkFiltro.Checked)
+                {
+                    Response res = NegocioTipoDeProducto.ObtenerLista();
+                    if (!res.ErrorFound)
+                    {
+                        var ds = res.ObjectReturned as DataSet;
+                        
+                        GvDatos.DataSource = ds;
+                        GvDatos.DataBind();
+                       
+                    }
+                }
+                else
+                {
+                    Response res = NegocioTipoDeProducto.ObtenerListaActivos();
+                    if (!res.ErrorFound)
+                    {
+                        var ds = res.ObjectReturned as DataSet;
+                        
+                        GvDatos.DataSource = ds;
+                        GvDatos.DataBind();
+                    }
+                }
+            }
+            else
+            {
+                BT_Filtrar_Click();
+            }
+
+            /* if (txtBuscar.Text == "")//codigo de jean
+             {
+                 BT_Todo_Click(); 
+
+             }
+             else
+             {
+                 BT_Filtrar_Click();
+             }*/
         }
         protected void btnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();
@@ -125,8 +176,13 @@ namespace Vista.Tipos {
         }
 
         protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            GvDatos.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            //  GvDatos.PageIndex = e.NewPageIndex;
+            //  CargarDatos();
+            if (e.NewPageIndex >= 0 && e.NewPageIndex < GvDatos.PageCount)
+            {
+                GvDatos.PageIndex = e.NewPageIndex;
+                CargarDatos();
+            }
         }
 
         protected void GvDatos_RowCreated(object sender, GridViewRowEventArgs e) {
