@@ -29,6 +29,27 @@ namespace Datos {
             }
         }
 
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Producto.Columns.Codigo_Prod,
+            Producto.Columns.CUITProv,
+            Producto.Columns.CodTipoProducto,
+            Producto.Columns.Nombre,
+            Producto.Columns.Marca,
+            Producto.Columns.Descripcion,
+            Proveedor.Columns.RazonSocial,
+            TipoProducto.Columns.TipoDeProducto
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
         /// <summary>
         /// Lista de procedimientos que se utilizan en esta clase.
         /// </summary>
@@ -39,13 +60,74 @@ namespace Datos {
         }
 
         /// <summary>
-        /// Obtener tabla de productos activos.
+        /// Obtener tabla de todos los productos.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = 1"
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}]"
+                    );
+        }
+        public static Response Buscar(string q) {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}]  FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE {GenerateSearchQuery("@q")}",
+                        parameters: new Dictionary<string, object> {
+                            { "@q", q }
+                        }
+                    );
+        }
+
+        /// <summary>
+        /// Obtener tabla de todos los productos activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerListaDeProductosActivos()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1'"
+                    );
+        }
+
+        /// <summary>
+        /// Obtener tabla de todos los productos activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerListaActivosSinRepetir()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT DISTINCT {Producto.Columns.Codigo_Prod} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1' and {Producto.Columns.Stock}>0"
+                    );
+        }
+        public static Response ObtenerNombre(string ID)
+        {
+
+            string consulta = $"SELECT {Producto.Columns.Nombre} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1' and {Producto.Columns.Stock}>0 and {Producto.Columns.Codigo_Prod}= @ID";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@ID", ID }
+                        }
+                    );
+           
+        }
+
+
+
+
+        /// <summary>
+        /// Obtiene los Codigos y Cuits concatenados de cada producto activo.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerCodigoYCuit()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT [{Producto.Columns.Codigo_Prod}],[{Producto.Columns.Nombre}],[{Proveedor.Columns.RazonSocial}], STRING_AGG(CONCAT({Producto.Columns.Codigo_Prod},'.',{Producto.Columns.CUITProv}), ',') AS CODyCUIT FROM {Producto.Table} inner join {Proveedor.Table} on [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] WHERE [{Producto.Columns.Estado}] = '1' AND [{Producto.Columns.Stock}] > 0 GROUP BY [{Producto.Columns.Codigo_Prod}],[{Producto.Columns.Nombre}],[{Proveedor.Columns.RazonSocial}]"
                     );
         }
 
@@ -55,7 +137,7 @@ namespace Datos {
         /// <param name="ID">ID a buscar</param>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response BuscarProductoPorCod(string ID) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
+            string consulta = $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}]  FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Codigo_Prod}] = @ID ";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: consulta,
@@ -127,6 +209,17 @@ namespace Datos {
                         }
                     );
         }
+
+        public static Response Habilitar(Producto Pr) {
+            Connection con = new Connection(Connection.Database.Pets);
+            return con.RunTransaction(
+                    query: $"UPDATE [{Producto.Table}] SET [{Producto.Columns.Estado}] = 1 WHERE [{Producto.Columns.Codigo_Prod}] = @codigo",
+                    parameters: new Dictionary<string, object> {
+                        { "@codigo", Pr.Codigo }
+                    }
+                );
+        }
+
 
         /// <summary>
         /// Verifica si un registro con un ID dado existe en la tabla.

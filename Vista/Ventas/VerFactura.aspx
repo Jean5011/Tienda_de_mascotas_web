@@ -45,9 +45,13 @@
     </div>
     <div class="col">
         <h2 id="h2Factura" runat="server"></h2>
+        <asp:DropDownList id="ddlProducto" CssClass="ddl" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProductos_SelectedIndexChanged" ></asp:DropDownList>
+        <asp:DropDownList id="ddlProveedor" CssClass="ddl" runat="server" ></asp:DropDownList>
         <asp:TextBox ID="txtIDProducto" placeholder="ID Producto" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtCantidad" placeholder="Cantidad" type="number" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtCantidad" placeholder="Cantidad" type="number" runat="server"></asp:TextBox>    
         <asp:Button ID="btnAgregar" OnClick="BtnAgregar_Click" runat="server" Text="Agregar Producto" />
+        <asp:RegularExpressionValidator ID="CantValidator" runat="server" ControlToValidate="txtCantidad"
+             ErrorMessage="Ingrese un número mayor a 0" ValidationExpression="^[1-9]\d*$"></asp:RegularExpressionValidator> 
         <br />
         <br />
         <h2>Productos</h2>
@@ -67,17 +71,16 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Producto">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Producto" runat="server"
-                                Text='<%# Eval(Producto.Columns.Nombre) + " (#" + Eval(DetalleVenta.Columns.CodProducto_Dv) + ")" %>'>
-                                
-                            </asp:Label>
+                            <a class="mdc-typography--body2" ID="gvDetallesItemTemplate__Producto" href="/Productos/?CODIGO=<%# Eval(DetalleVenta.Columns.CodProducto_Dv) %>">
+                                <%# Eval(Producto.Columns.Nombre) %>
+                            </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Proveedor">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Proveedor" runat="server"
-                                Text='<%# Eval(Proveedor.Columns.RazonSocial) + " (" +Eval(DetalleVenta.Columns.CUITProv) + ")" %>'>
-                            </asp:Label>
+                            <a class="mdc-typography--body2" ID="gvDetallesItemTemplate__Proveedor" href="/Proveedores/?ID=<%# Eval(DetalleVenta.Columns.CUITProv) %>">
+                                <%# Eval(Proveedor.Columns.RazonSocial) %>
+                            </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Cantidad">

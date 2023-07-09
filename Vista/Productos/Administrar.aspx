@@ -22,6 +22,16 @@
                             <span class="mdc-button__label mcardbl-act">Editar</span>
                             <i class="material-icons mdc-button__icon" aria-hidden="true">open_in_new</i>
                         </a>
+                        <asp:LinkButton runat="server" Visible="<%# Convert.ToBoolean(Eval(Producto.Columns.Estado)) %>" OnClientClick="return confirm('¿Estás seguro de deshabilitar este registro?');" OnCommand="Lb_Command" CommandName="Deshabilitar" CommandArgument="<%# Eval(Producto.Columns.Codigo_Prod) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Deshabilitar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                        </asp:LinkButton>
+                        <asp:LinkButton runat="server" Visible="<%# !Convert.ToBoolean(Eval(Producto.Columns.Estado)) %>" OnClientClick="return confirm('¿Estás seguro de habilitar este registro?');" OnCommand="Lb_Command" CommandName="Habilitar" CommandArgument="<%# Eval(Producto.Columns.Codigo_Prod) %>" class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Habilitar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">unarchive</i>
+                        </asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="ID">
@@ -33,17 +43,17 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Proveedor">
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__Proveedor" runat="server"
-                            Text='<%# Eval(Producto.Columns.CUITProv) %>'>
-                        </asp:Label>
+                        <a ID="gvDatosItemTemplate__Proveedor" class="mdc-typography--body2" href="/Proveedores/?ID=<%# Eval(Producto.Columns.CUITProv) %>">
+                            <%# Eval(Proveedor.Columns.RazonSocial) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Categoría">
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__TP" runat="server"
-                            Text='<%# Eval(Producto.Columns.CodTipoProducto) %>'>
-                        </asp:Label>
+                        <a ID="gvDatosItemTemplate__TP" class="mdc-typography--body2" href="/Tipos/?ID=<%# Eval(Producto.Columns.CodTipoProducto) %>">
+                            <%# Eval(TipoProducto.Columns.TipoDeProducto) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Nombre">
@@ -142,4 +152,8 @@
     <br />
     <br />
     <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
+    <a href="/Productos/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">add</span>
+    </a>
 </asp:Content>

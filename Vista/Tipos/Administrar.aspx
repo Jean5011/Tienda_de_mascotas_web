@@ -58,9 +58,9 @@
                         </asp:DropDownList>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="LV_CodAnimales"
-                            runat="server" Text='<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
-                        </asp:Label>
+                        <a class="mdc-typography--body2" ID="LV_CodAnimales" href='/Animales/?ID=<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
+                            <%# Eval(Animal.Columns.Nombre) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Categoría">
@@ -149,4 +149,8 @@
 
     </div>
     <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
+    <a href="/Tipos/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">add</span>
+    </a>
 </asp:Content>

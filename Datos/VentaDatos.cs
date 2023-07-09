@@ -97,7 +97,7 @@ namespace Datos {
         public static Response GetVentaByID(int id) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.FetchData(
-                        query: $"SELECT {ALL_COLUMNS_FOR_PRESENTATION} FROM [{Venta.Table}]  INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}] WHERE [{Venta.Columns.Id}] = @id",
+                        query: $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] WHERE [{Venta.Columns.Id}] = @id",
                         parameters: new Dictionary<string, object> {
                             { "@id", id }
                         }

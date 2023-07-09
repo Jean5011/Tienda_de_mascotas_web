@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="page">
-        <h2>Editar detalles</h2>
+        <h2>Crear cuenta</h2>
         <br>
         <br>
         <label class="mdc-text-field mdc-text-field--outlined">

@@ -29,6 +29,14 @@ namespace Entidades {
             public const string ADMIN = "ADMIN";     // Puede ver perfiles de otros empleados, cambiar sueldo, eliminar cosas.
             public const string NORMAL = "NORMAL";   // Puede ver su propio perfil, sin editar, registrar ventas y modificar sus propias ventas. 
         }
+        public class Busqueda {
+            public string Texto { get; set; }
+            public string Rol { get; set; }
+            public string Sexo { get; set; }
+            public bool MostrarInactivos { get; set; }
+            public Busqueda() { }
+        }
+
         public string DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }

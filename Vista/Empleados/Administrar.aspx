@@ -8,7 +8,18 @@
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por nombre, apellido" runat="server"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
+    <asp:DropDownList ID="ddlRol" runat="server">
+        <asp:ListItem Text="Todos los roles" Selected="true" Value="ALL"></asp:ListItem>
+        <asp:ListItem Text="Administrador" Value="ADMIN"></asp:ListItem>
+        <asp:ListItem Text="No Administradores" Value="NORMAL"></asp:ListItem>
+    </asp:DropDownList>
+    <asp:DropDownList ID="ddlSexo" runat="server">
+        <asp:ListItem Text="Todos" Selected="True" Value="ALL"></asp:ListItem>
+        <asp:ListItem Text="Hombres" Value="M"></asp:ListItem>
+        <asp:ListItem Text="Mujeres" Value="F"></asp:ListItem>
+    </asp:DropDownList>
     <asp:CheckBox ID="chkEstado" Text="Mostrar empleados inactivos" Checked="false" runat="server" />
+    
     <br />
     <div class="mdc-data-table">
         <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvAdmin_PageIndexChanging"
@@ -202,5 +213,9 @@
         </asp:GridView>
 
     </div>
+    <a href="/Empleados/CrearCuenta.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">person_add</span>
+    </a>
 
 </asp:Content>

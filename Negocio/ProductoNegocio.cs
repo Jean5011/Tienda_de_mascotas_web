@@ -53,17 +53,41 @@ namespace Negocio
             return DaoProductos.ObtenerListaDeProductos();
         }
 
+        public static Response ListarActivos()
+        {
+            return DaoProductos.ObtenerListaDeProductosActivos();
+        }
+
+        public static Response ListarSinRepetir()
+        {
+            return DaoProductos.ObtenerListaActivosSinRepetir();
+        }
+
+        public static Response ObtenerNombre(string cod)
+        {
+            return DaoProductos.ObtenerNombre(cod);
+        }
+
+        public static Response ObtenerCodigoPlusCUIT()
+        {
+            return DaoProductos.ObtenerCodigoYCuit();
+        }
+
         public static Response BuscarPorCodigo(string codigo)
         {
             return DaoProductos.BuscarProductoPorCod(codigo);
         }
 
+ 
+        public static Response Buscar(string q) {
+            return DaoProductos.Buscar(q);
+        }
 
         public static Response BuscarProductos(string codigo = null)
         {
             return string.IsNullOrEmpty(codigo)
                 ? ListarTodo()
-                : BuscarPorCodigo(codigo);
+                : Buscar(codigo);
         }
         public static Response ObtenerPorCodigo(string cod)
         {
@@ -175,23 +199,37 @@ namespace Negocio
             return Response.PermisosInsuficientes;
         }
 
-        public static Response EliminarProducto(SessionData auth, Producto producto)
-        {
+        public static Response EliminarProducto(SessionData auth, Producto producto) {
             var respuesta = Response.ErrorDesconocido;
-            if (auth.User.Rol == Empleado.Roles.ADMIN)
-            {
-                SesionNegocio.Autenticar(ok =>
-                {
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
                     var operacion = DaoProductos.EliminarProducto(producto);
-                    respuesta = new Response
-                    {
+                    respuesta = new Response {
                         ErrorFound = operacion.ErrorFound,
                         Message = !operacion.ErrorFound
                             ? "El registro se eliminó correctamente. "
                             : "Hubo un problema al intentar eliminar el registro. "
                     };
-                }, err =>
-                {
+                }, err => {
+                    respuesta = Response.TokenCaducado;
+                });
+                return respuesta;
+            }
+            return Response.PermisosInsuficientes;
+        }
+
+        public static Response HabilitarProducto(SessionData auth, Producto producto) {
+            var respuesta = Response.ErrorDesconocido;
+            if (auth.User.Rol == Empleado.Roles.ADMIN) {
+                SesionNegocio.Autenticar(ok => {
+                    var operacion = DaoProductos.Habilitar(producto);
+                    respuesta = new Response {
+                        ErrorFound = operacion.ErrorFound,
+                        Message = !operacion.ErrorFound
+                            ? "El registro se habilitó correctamente. "
+                            : "Hubo un problema al intentar habilitar el registro. "
+                    };
+                }, err => {
                     respuesta = Response.TokenCaducado;
                 });
                 return respuesta;

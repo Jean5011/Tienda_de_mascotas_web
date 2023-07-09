@@ -330,6 +330,9 @@ namespace Negocio {
             return EmpleadoDatos.FiltrarEmpleadosPorNombreCompleto(nombre, chkSoloActivosChecked);
         }
 
+        public static Response CargarDatos(Empleado.Busqueda data) {
+            return EmpleadoDatos.CargarRegistros(data);
+        }
 
 
     }

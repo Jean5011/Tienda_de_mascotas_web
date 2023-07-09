@@ -154,4 +154,8 @@
         </asp:GridView>
 
     </div>
+    <a href="/Animales/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">add</span>
+    </a>
 </asp:Content>

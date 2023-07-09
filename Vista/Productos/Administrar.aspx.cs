@@ -14,7 +14,7 @@ namespace Vista.Productos {
                 if (Request.QueryString["CODIGO"] != null)
                 {
                     string userId = Request.QueryString["CODIGO"];
-                    CargarDatos(userId);
+                    CargarDatos(userId, true);
 
                 }
             }
@@ -82,17 +82,33 @@ namespace Vista.Productos {
         /// <summary>
         /// Carga los datos en la tabla.
         /// </summary>
-        public void CargarDatos(string cod=null) {
+        public void CargarDatos(string cod=null, bool u = false) {
+            Response response;
             string codigo = txtBuscar.Text;
-            if (cod!=null)
-            {
+            if (cod!=null) {
                  codigo = cod;
             }
-            var response = ProductoNegocio.BuscarProductos(codigo);
+            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
                 gvDatos.DataBind();
             }
+        }
+
+
+        protected void Lb_Command(object sender, CommandEventArgs e) {
+            var producto = new Producto {
+                Codigo = e.CommandArgument.ToString()
+            };
+            var auth = Session[Utils.AUTH] as SessionData;
+            var respuesta = Entidades.Response.ErrorDesconocido;
+            if(e.CommandName == "Habilitar") {
+                respuesta = ProductoNegocio.HabilitarProducto(auth, producto);
+            } if(e.CommandName == "Deshabilitar") {
+                respuesta = ProductoNegocio.EliminarProducto(auth, producto);
+            }
+            Utils.ShowSnackbar(respuesta.Message, this);
+            CargarDatos();
         }
 
         /// <summary>

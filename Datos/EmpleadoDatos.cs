@@ -66,6 +66,28 @@ namespace Datos {
             public static string CrearEmpleado = "CrearEmpleado";
         }
 
+
+        private static string[] SEARCHABLE_COLUMNS = new string[] {
+            Empleado.Columns.Nombre,
+            Empleado.Columns.Apellido,
+            Empleado.Columns.Sueldo,
+            Empleado.Columns.Direccion,
+            Empleado.Columns.Provincia,
+            Empleado.Columns.Nacionalidad,
+            Empleado.Columns.Rol,
+            Empleado.Columns.Nacionalidad
+        };
+
+        public static string GenerateSearchQuery(string key) {
+            string resultat = "";
+            for (int i = 0; i < SEARCHABLE_COLUMNS.Length; i++) {
+                string column = SEARCHABLE_COLUMNS[i];
+                resultat += i > 0 ? " OR " : "";
+                resultat += $" [{column}] LIKE '%' + {key} + '%' ";
+            }
+            return resultat;
+        }
+
         /// <summary>
         /// Obtener tabla con todos los empleados. Usa campos formateados.
         /// </summary>
@@ -87,11 +109,56 @@ namespace Datos {
         public static Response FiltrarEmpleadosPorNombreCompleto(string nombre, bool soloActivos = true) {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @nombre + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") }",
+                        query: $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] WHERE CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) LIKE '%' + @q + '%' { (soloActivos ? $" AND [{Empleado.Columns.Estado}] = '1'" : "") } AND {GenerateSearchQuery("@q")}",
                         parameters: new Dictionary<string, object>() {
-                            { "@nombre", nombre }
+                            { "@q", nombre }
                         }
                     );
+        }
+
+        public static Response CargarRegistros(Empleado.Busqueda data) {
+            string select = $"SELECT {ALL_COLUMNS_BUT_FORMATTED} FROM [{Empleado.Table}] ";
+            string where = " WHERE ";
+            string condicionBusqueda = "";
+            int condiciones = 0;
+            Dictionary<string, object> parametros = new Dictionary<string, object>();
+
+            if(!string.IsNullOrEmpty(data.Texto) && !string.IsNullOrWhiteSpace(data.Texto)) {
+                condicionBusqueda = "(" + GenerateSearchQuery("@q") + ")";
+                parametros.Add("@q", data.Texto);
+                condiciones++;
+            }
+
+            string condicionRol = "";
+            if(!string.IsNullOrEmpty(data.Rol) && !string.IsNullOrWhiteSpace(data.Rol) && data.Rol != "ALL") {
+                if (condiciones > 0) condicionRol = " AND ";
+                condicionRol += $" [{Empleado.Columns.Rol}] = @rol ";
+                parametros.Add("@rol", data.Rol);
+                condiciones++;
+            }
+
+            string condicionSexo = "";
+            if(!string.IsNullOrWhiteSpace(data.Sexo) && !string.IsNullOrEmpty(data.Sexo) && data.Sexo != "ALL") {
+                if (condiciones > 0) condicionSexo = " AND ";
+                condicionSexo += $" [{Empleado.Columns.Sexo}] = @sexo ";
+                parametros.Add("@sexo", data.Sexo);
+                condiciones++;
+            }
+
+            string condicionEstado = "";
+            if(!data.MostrarInactivos) {
+                if (condiciones > 0) condicionEstado = " AND ";
+                condicionEstado += $" [{Empleado.Columns.Estado}] = 1 ";
+                condiciones++;
+            }
+
+            string consulta = select + (condiciones == 0 ? "" : where + condicionBusqueda + condicionRol + condicionSexo + condicionEstado);
+            Trace.WriteLine(consulta);
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: consulta,
+                    parameters: parametros
+                );
         }
 
         /// <summary>
