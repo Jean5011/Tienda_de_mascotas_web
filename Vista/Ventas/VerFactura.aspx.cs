@@ -80,7 +80,7 @@ namespace Vista.Ventas {
                  
                     ddlProducto.Items.Add(new ListItem(nombre, codigo));
                 }
-                ddlProducto.Items.Insert(0, new ListItem("<Seleccione un producto>", "0"));
+                ddlProducto.Items.Insert(0, new ListItem("", "0"));
             }
                 /* Response codigos = ProductoNegocio.ObtenerCodigoPlusCUIT();
                  if (!codigos.ErrorFound)

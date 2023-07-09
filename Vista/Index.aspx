@@ -50,6 +50,11 @@
                                     <span class="mdc-button__label mcardbl-act">Registrar nueva venta</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Reportes/MayoresVentas.aspx">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label mcardbl-act">Ventas con mayor recaudación</span>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">article</i>
+                                </a>
                                 <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Ventas/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver todas las ventas</span>

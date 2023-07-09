@@ -32,10 +32,6 @@ namespace Vista {
             ShowSnackbar(message, control, type);
 
         }
-        public static void MostrarMensaje(string mensaje, Control control, Type type) {
-            string script = "MostrarMensaje('" + mensaje + "');";
-            ScriptManager.RegisterStartupScript(control, type, "MostrarMensaje", script, true);
-        }
         public static void EsperarSegundos(double cantSeg)
         {
             // Creo la cadena para convertir en TimeSpan:

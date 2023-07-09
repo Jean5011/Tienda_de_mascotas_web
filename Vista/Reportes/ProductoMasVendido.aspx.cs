@@ -27,7 +27,9 @@ namespace Vista.Reportes {
             if(!res.ErrorFound) {
                 gvDatos.DataSource = res.ObjectReturned as DataSet;
                 gvDatos.DataBind();
+                return;
             }
+            Utils.ShowSnackbar(res.Message, this);
         }
     }
 }

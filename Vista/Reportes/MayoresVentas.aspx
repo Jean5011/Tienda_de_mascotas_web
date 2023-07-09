@@ -31,7 +31,7 @@
                         <asp:TextBox CausesValidation="True" ID="txtFechaFin" ValidationGroup="A" type="date" runat="server" CssClass="mdc-text-field__input" placeholder="Fecha Fin"></asp:TextBox>
                     </label>
                     <div class="mdc-text-field-helper-line">
-                        <asp:RequiredFieldValidator CssClass="mdc-text-field-helper-text" ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFechaFin" ErrorMessage="Ingrese una fecha válida." Display="Dynamic" />
+                        <asp:RequiredFieldValidator CssClass="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFechaFin" ErrorMessage="Ingrese una fecha válida." Display="Dynamic" />
                         <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtFechaFin"
                             ErrorMessage="Ingrese una fecha válida" ValidationExpression="^\d{4}-\d{2}-\d{2}$"></asp:RegularExpressionValidator>
                     </div>
