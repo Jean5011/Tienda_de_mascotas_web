@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using Datos;
 using Entidades;
 
@@ -181,6 +182,18 @@ namespace Negocio {
                 res = Response.TokenCaducado;
             });
             return res;
+        }
+
+        public static Response Reporte_VentasOrdenadasPorTotales(string fechaInicio, string fechaFin) {
+            //DateTime fi = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            if (!DateTime.TryParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fi)
+                || !DateTime.TryParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fn)) {
+                return new Response {
+                    ErrorFound = true,
+                    Message = "La fecha ingresada es incorrecta. "
+                };
+            }
+            return VentaDatos.Reporte_VentasOrdenadasPorTotales(fi.ToString("yyyy-MM-dd"), fn.ToString("yyyy-MM-dd"));
         }
 
         public static Response VentasPorEmp(string dni) {

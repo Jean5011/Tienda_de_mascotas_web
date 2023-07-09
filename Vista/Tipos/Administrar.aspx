@@ -9,11 +9,25 @@
     </div>
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
-            OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
-            PageSize="5" AutoGenerateSelectButton="False" OnRowEditing="GvDatos_RowEditing"
-            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
+            OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated" 
+            PageSize="5" AutoGenerateSelectButton="False" OnRowEditing="GvDatos_RowEditing" 
+            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging" OnRowCancelingEdit="GvDatos_RowCancelingEdit" OnRowUpdating="GvDatos_RowUpdating">
             <Columns>
                 <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:LinkButton CommandName="update" runat="server"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Guardar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+                        </asp:LinkButton>
+                        <asp:LinkButton CommandName="cancel" runat="server"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label mcardbl-act">Cancelar</span>
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">cancel</i>
+                        </asp:LinkButton>
+                    </EditItemTemplate>
                     <ItemTemplate>
                         <div style="display: flex; flex-direction: row; justify-content: center; align-items: center">
                         <asp:LinkButton CommandName="edit" runat="server"
