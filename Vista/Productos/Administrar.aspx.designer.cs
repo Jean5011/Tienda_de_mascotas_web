@@ -7,10 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Productos {
+namespace Vista.Productos
+{
 
 
-    public partial class Editar {
+    public partial class Editar
+    {
 
         /// <summary>
         /// txtBuscar control.
@@ -29,6 +31,15 @@ namespace Vista.Productos {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscar;
+
+        /// <summary>
+        /// CheckBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
 
         /// <summary>
         /// gvDatos control.

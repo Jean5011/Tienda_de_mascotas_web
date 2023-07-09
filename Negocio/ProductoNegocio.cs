@@ -48,9 +48,9 @@ namespace Negocio
             }
 
         }
-        public static Response ListarTodo()
+        public static Response ListarTodo(bool estado = true)
         {
-            return DaoProductos.ObtenerListaDeProductos();
+            return DaoProductos.ObtenerListaDeProductos(estado);
         }
 
         public static Response ListarActivos()
@@ -83,10 +83,10 @@ namespace Negocio
             return DaoProductos.Buscar(q);
         }
 
-        public static Response BuscarProductos(string codigo = null)
+        public static Response BuscarProductos(string codigo = null, bool estado= true)
         {
             return string.IsNullOrEmpty(codigo)
-                ? ListarTodo()
+                ? ListarTodo(estado)
                 : Buscar(codigo);
         }
         public static Response ObtenerPorCodigo(string cod)
@@ -250,21 +250,6 @@ namespace Negocio
         {
             return DaoProductos.VerificarExistenciaProductoYProveedor(ID, CUIT);
         }
-        /*
-        public Response ActualizarPrecio(Producto P)
-        {
-            return DaoProductos.ActualizarPrecio(P);
-        }
-
-        public Response ActualizarStock(Producto P)
-        {
-            return DaoProductos.ActualizarStock(P);
-        }
-
-         public  Response ActualizarEstado(Producto P)
-        {
-            return DaoProductos.ActualizarEstadoProducto(P);
-        }
-        */
+       
     }
 }

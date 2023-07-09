@@ -9,6 +9,10 @@
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
     <br />
+    <div>
+        Mostrar productos inactivos
+        <asp:CheckBox ID="CheckBox1" runat="server" />
+    </div>
     <div class="mdc-data-table">
         <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
