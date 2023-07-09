@@ -71,17 +71,16 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Producto">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Producto" runat="server"
-                                Text='<%# Eval(Producto.Columns.Nombre) + " (#" + Eval(DetalleVenta.Columns.CodProducto_Dv) + ")" %>'>
-                                
-                            </asp:Label>
+                            <a class="mdc-typography--body2" ID="gvDetallesItemTemplate__Producto" href="/Productos/?CODIGO=<%# Eval(DetalleVenta.Columns.CodProducto_Dv) %>">
+                                <%# Eval(Producto.Columns.Nombre) %>
+                            </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Proveedor">
                         <ItemTemplate>
-                            <asp:Label CssClass="mdc-typography--body2" ID="gvDetallesItemTemplate__Proveedor" runat="server"
-                                Text='<%# Eval(Proveedor.Columns.RazonSocial) + " (" +Eval(DetalleVenta.Columns.CUITProv) + ")" %>'>
-                            </asp:Label>
+                            <a class="mdc-typography--body2" ID="gvDetallesItemTemplate__Proveedor" href="/Proveedores/?ID=<%# Eval(DetalleVenta.Columns.CUITProv) %>">
+                                <%# Eval(Proveedor.Columns.RazonSocial) %>
+                            </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Cantidad">

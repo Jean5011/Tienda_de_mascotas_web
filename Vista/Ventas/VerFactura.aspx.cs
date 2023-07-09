@@ -160,7 +160,7 @@ namespace Vista.Ventas {
                     }
 
                 }
-            }
+           // }
         }
 
         public void BtnBorrar_Click(object sender, EventArgs e) {
