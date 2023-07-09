@@ -50,9 +50,7 @@ namespace Vista.Productos {
             gvDatos.EditIndex = -1;
             CargarDatos();
         }
-        protected void GrdProductos_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-            Actualizar(e);
-        }
+       
         protected void GrdProductos_RowDeleting(object sender, GridViewDeleteEventArgs e) {
             Eliminar(e);            
         }
@@ -110,15 +108,27 @@ namespace Vista.Productos {
             if (cod!=null) {
                  codigo = cod;
             }
-            bool estado = CheckBox1.Checked ? false : true;
-            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo,estado);
+            response = u ? ProductoNegocio.BuscarPorCodigo(codigo) : ProductoNegocio.BuscarProductos(codigo);
             if (!response.ErrorFound) {
                 gvDatos.DataSource = (DataSet)response.ObjectReturned;
                 gvDatos.DataBind();
             }
         }
-
-
+        protected void filtrar_btn_Click(object sender, EventArgs e)
+        {
+            Response response;
+            txtBuscar.Text = "";
+            bool estado = CheckBox1.Checked ? false : true;
+            //se selecciona el stock
+            int tipoStock = int.Parse(ddlFiltro.SelectedIndex.ToString());
+            response = ProductoNegocio.BuscarProductosXStock(tipoStock,estado);
+            if (!response.ErrorFound)
+            {
+                gvDatos.DataSource = (DataSet)response.ObjectReturned;
+                gvDatos.DataBind();
+            }
+        }
+     
         protected void Lb_Command(object sender, CommandEventArgs e) {
             var producto = new Producto {
                 Codigo = e.CommandArgument.ToString()
@@ -180,7 +190,7 @@ namespace Vista.Productos {
             CargarDatos();
         }
 
-
+       
     }
 
 

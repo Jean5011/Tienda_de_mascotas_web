@@ -3,18 +3,29 @@
 <%@ Import Namespace="Entidades" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style>
+        .buscadores {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+            gap:10px;
+        }
+    </style>
     <h2>Productos</h2>
     <div class="searchbox">
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscar por código" runat="server"></asp:TextBox>
         <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
-    <br />
-    <div>
-        Mostrar productos inactivos
+    <div class="buscadores">
+        <div>
+            Mostrar productos inactivos
         <asp:CheckBox ID="CheckBox1" runat="server" />
-    </div>
-    <div>
-        <asp:DropDownList ID="ddlFiltro" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+        </div>
+        <div>
+            <asp:DropDownList ID="ddlFiltro" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+        </div>
+        <asp:Button ID="filtrar_btn" runat="server" Text="Filtrar" OnClick="filtrar_btn_Click" />
     </div>
     <div class="mdc-data-table">
         <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False"
@@ -50,7 +61,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Proveedor">
                     <ItemTemplate>
-                        <a ID="gvDatosItemTemplate__Proveedor" class="mdc-typography--body2" href="/Proveedores/?ID=<%# Eval(Producto.Columns.CUITProv) %>">
+                        <a id="gvDatosItemTemplate__Proveedor" class="mdc-typography--body2" href="/Proveedores/?ID=<%# Eval(Producto.Columns.CUITProv) %>">
                             <%# Eval(Proveedor.Columns.RazonSocial) %>
                         </a>
                     </ItemTemplate>
@@ -58,7 +69,7 @@
 
                 <asp:TemplateField HeaderText="Categoría">
                     <ItemTemplate>
-                        <a ID="gvDatosItemTemplate__TP" class="mdc-typography--body2" href="/Tipos/?ID=<%# Eval(Producto.Columns.CodTipoProducto) %>">
+                        <a id="gvDatosItemTemplate__TP" class="mdc-typography--body2" href="/Tipos/?ID=<%# Eval(Producto.Columns.CodTipoProducto) %>">
                             <%# Eval(TipoProducto.Columns.TipoDeProducto) %>
                         </a>
                     </ItemTemplate>
@@ -160,7 +171,7 @@
     <br />
     <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
     <a href="/Productos/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
-      <div class="mdc-fab__ripple"></div>
-      <span class="mdc-fab__icon material-icons">add</span>
+        <div class="mdc-fab__ripple"></div>
+        <span class="mdc-fab__icon material-icons">add</span>
     </a>
 </asp:Content>

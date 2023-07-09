@@ -185,33 +185,30 @@ namespace Datos {
 
 
         //SIN STOCK
-        public static Response ObtenerListaDeProductosSinStock(bool est = true)
+        public static Response ObtenerListaDeProductosPorSinStock(int stockIntervaloA ,bool est = true)
         {
             Connection connection = new Connection(Connection.Database.Pets);
             int estado = est ? 1 : 0;
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]= 0"
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]< {stockIntervaloA}"
                     );
         }
-        //BAJO STOCK
-        public static Response ObtenerListaDeProductosBajoStock(bool est = true)
+        public static Response ObtenerListaDeProductosPorStockEntreAYB(int stockIntervaloA,int stockIntervaloB, bool est = true)
         {
             Connection connection = new Connection(Connection.Database.Pets);
             int estado = est ? 1 : 0;
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]<=5"
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]> {stockIntervaloA} and [{Producto.Columns.Stock}]< {stockIntervaloB}"
                     );
         }
-        //ALTO STOCK
-        public static Response ObtenerListaDeProductosAltoStock(bool est = true)
+        public static Response ObtenerListaDeProductosPorStockMayorA(int stockIntervaloA, bool est = true)
         {
             Connection connection = new Connection(Connection.Database.Pets);
             int estado = est ? 1 : 0;
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]>5"
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]> {stockIntervaloA} "
                     );
         }
-
         /// <summary>
         /// Agregar un registro a la tabla Productos.
         /// </summary>

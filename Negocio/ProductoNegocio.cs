@@ -95,25 +95,25 @@ namespace Negocio
             return DaoProductos.Buscar(q);
         }
 
-        /*
-        public static Response ListarTodoFiltro(int stock ,bool estado = true)
+        
+        public static Response BuscarProductosXStock(int tipoStock,bool estado=true)
         {
-            switch(stock)
+            switch(tipoStock)
             {
+                case 1:
+                    return DaoProductos.ObtenerListaDeProductosPorSinStock(1,estado);
                 case 2:
-                    return DaoProductos.ObtenerListaDeProductosSinStock(estado);
+                    return DaoProductos.ObtenerListaDeProductosPorStockEntreAYB(1,10,estado);
                 case 3:
-                    return DaoProductos.ObtenerListaDeProductosBajoStock(estado);
-                case 4:
-                    return DaoProductos.ObtenerListaDeProductosAltoStock(estado);
+                    return DaoProductos.ObtenerListaDeProductosPorStockMayorA(10,estado);
                 default:
                     return DaoProductos.ObtenerListaDeProductos(estado);
             }
-        }*/
-        public static Response BuscarProductos(string codigo = null, bool estado= true)
+        }
+        public static Response BuscarProductos(string codigo = null)
         {           
                 return string.IsNullOrEmpty(codigo)
-                    ? ListarTodo(estado)
+                    ? ListarTodo()
                     : Buscar(codigo);
         }
 
