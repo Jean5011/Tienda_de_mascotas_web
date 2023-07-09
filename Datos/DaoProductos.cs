@@ -91,6 +91,33 @@ namespace Datos {
                     );
         }
 
+        /// <summary>
+        /// Obtener tabla de todos los productos activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerListaActivosSinRepetir()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT DISTINCT {Producto.Columns.Codigo_Prod} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1' and {Producto.Columns.Stock}>0"
+                    );
+        }
+        public static Response ObtenerNombre(string ID)
+        {
+
+            string consulta = $"SELECT {Producto.Columns.Nombre} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1' and {Producto.Columns.Stock}>0 and {Producto.Columns.Codigo_Prod}= @ID";
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: consulta,
+                        parameters: new Dictionary<string, object> {
+                            { "@ID", ID }
+                        }
+                    );
+           
+        }
+
+
+
 
         /// <summary>
         /// Obtiene los Codigos y Cuits concatenados de cada producto activo.
@@ -100,7 +127,7 @@ namespace Datos {
         {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT [{Producto.Columns.Nombre}] , CONCAT([{Producto.Columns.Codigo_Prod},'.', {Producto.Columns.CUITProv}]) as [CODyCUIT] FROM {Producto.Table} INNER JOIN {Proveedor.Table} ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] WHERE [{Producto.Columns.Estado}] = '1'"
+                        query: $"SELECT [{Producto.Columns.Codigo_Prod}],[{Producto.Columns.Nombre}],[{Proveedor.Columns.RazonSocial}], STRING_AGG(CONCAT({Producto.Columns.Codigo_Prod},'.',{Producto.Columns.CUITProv}), ',') AS CODyCUIT FROM {Producto.Table} inner join {Proveedor.Table} on [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] WHERE [{Producto.Columns.Estado}] = '1' AND [{Producto.Columns.Stock}] > 0 GROUP BY [{Producto.Columns.Codigo_Prod}],[{Producto.Columns.Nombre}],[{Proveedor.Columns.RazonSocial}]"
                     );
         }
 

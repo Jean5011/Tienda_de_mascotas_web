@@ -58,6 +58,16 @@ namespace Negocio
             return DaoProductos.ObtenerListaDeProductosActivos();
         }
 
+        public static Response ListarSinRepetir()
+        {
+            return DaoProductos.ObtenerListaActivosSinRepetir();
+        }
+
+        public static Response ObtenerNombre(string cod)
+        {
+            return DaoProductos.ObtenerNombre(cod);
+        }
+
         public static Response ObtenerCodigoPlusCUIT()
         {
             return DaoProductos.ObtenerCodigoYCuit();
@@ -68,6 +78,7 @@ namespace Negocio
             return DaoProductos.BuscarProductoPorCod(codigo);
         }
 
+ 
         public static Response Buscar(string q) {
             return DaoProductos.Buscar(q);
         }
