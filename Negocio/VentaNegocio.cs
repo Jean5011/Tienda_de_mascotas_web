@@ -70,7 +70,7 @@ namespace Negocio {
             bool tieneDerechoDeEdicion = auth.User.Rol == Empleado.Roles.ADMIN || auth.User.DNI == venta.EmpleadoGestor.DNI;
             if (tieneDerechoDeEdicion) {
                 SesionNegocio.Autenticar(op => {
-                    var res = ProductoNegocio.ObtenerPorCodigo(producto.Codigo);
+                    var res = ProductoNegocio.ObtenerPorCodigoYCuit(producto.Codigo,producto.Proveedor.CUIT);
                     if (!res.ErrorFound) {
                         // Producto exists
                         Producto p = res.ObjectReturned as Producto;

@@ -59,14 +59,14 @@ namespace Negocio
             return DaoProductos.ObtenerListaDeProductosActivos();
         }
 
-        public static Response ListarSinRepetir()
+        public static Response ListarActivosSinRepetir()
         {
             return DaoProductos.ObtenerListaActivosSinRepetir();
         }
 
         public static Response ObtenerNombre(string cod)
         {
-            return DaoProductos.ObtenerNombre(cod);
+            return DaoProductos.ObtenerNombre(cod);      
         }
 
         public static Response ObtenerCodigoPlusCUIT()
@@ -98,6 +98,17 @@ namespace Negocio
         public static Response ObtenerPorCodigo(string cod)
         {
             var res1 = DaoProductos.BuscarProductoPorCod(cod);
+            if (!res1.ErrorFound)
+            {
+                var res2 = ProductoNegocio.ExtractDataFromDataSet(res1.ObjectReturned as DataSet);
+                return res2;
+            }
+            return res1;
+        }
+        //copy hecha por mi para testear
+        public static Response ObtenerPorCodigoYCuit(string cod, string cuit)
+        {
+            var res1 = DaoProductos.BuscarProductoPorCodYCuit(cod, cuit);
             if (!res1.ErrorFound)
             {
                 var res2 = ProductoNegocio.ExtractDataFromDataSet(res1.ObjectReturned as DataSet);

@@ -47,7 +47,7 @@
         <h2 id="h2Factura" runat="server"></h2>
         <asp:DropDownList id="ddlProducto" CssClass="ddl" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProductos_SelectedIndexChanged" ></asp:DropDownList>
         <asp:DropDownList id="ddlProveedor" CssClass="ddl" runat="server" ></asp:DropDownList>
-        <asp:TextBox ID="txtIDProducto" placeholder="ID Producto" runat="server"></asp:TextBox>
+        
         <asp:TextBox ID="txtCantidad" placeholder="Cantidad" type="number" runat="server"></asp:TextBox>    
         <asp:Button ID="btnAgregar" OnClick="BtnAgregar_Click" runat="server" Text="Agregar Producto" />
         <asp:RegularExpressionValidator ID="CantValidator" runat="server" ControlToValidate="txtCantidad"

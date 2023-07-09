@@ -68,9 +68,7 @@ namespace Vista.Ventas {
 
         protected void CargarDDL()
         {
-
-
-            Response codigos = ProductoNegocio.ListarSinRepetir();
+            Response codigos = ProductoNegocio.ListarActivosSinRepetir();
             if (!codigos.ErrorFound)
             {
                 DataSet ds = codigos.ObjectReturned as DataSet;
@@ -78,16 +76,9 @@ namespace Vista.Ventas {
                 foreach (DataRow row in dt.Rows)
                 {
                     string codigo = row["CodProducto_Prod"].ToString();
-
-                    Response respon = ProductoNegocio.ObtenerNombre(row["CodProducto_Prod"].ToString());
-                    if (!respon.ErrorFound)
-                    {
-                        string nombre = respon.ObjectReturned as string;
-                        
-
-                        ddlProducto.Items.Add(new ListItem(nombre, codigo));
-                    }
-
+                    string nombre = row["Nombre_Prod"].ToString();
+                 
+                    ddlProducto.Items.Add(new ListItem(nombre, codigo));
                 }
                 ddlProducto.Items.Insert(0, new ListItem("<Seleccione un producto>", "0"));
             }
@@ -144,24 +135,14 @@ namespace Vista.Ventas {
 
         protected void ddlProductos_SelectedIndexChanged(object sender, EventArgs e)
         {   //enviamos al negocio producto el codigo del producto seleccionado ya que este devolvera los cuits de los proveedores que tenga disponible
-            string CODyCUIT = ddlProducto.SelectedValue.ToString();
-            string[] partes = CODyCUIT.Split('.');
-            ddlProveedor.Items.Clear();
-            if (partes.Length == 2)
-            {
-                string codigo = partes[0];
-                //string cuit = partes[1];*/
-
-                Response codigos = ProductoNegocio.BuscarPorCodigo(codigo);
+                Response codigos = ProductoNegocio.BuscarPorCodigo(ddlProducto.SelectedValue);
                 if (!codigos.ErrorFound)
                 {
+                    ddlProveedor.Items.Clear();
                     var cuits = codigos.ObjectReturned as DataSet;
                     if (cuits.Tables.Count > 0)
                     {   //asigno los cuits al datatable
                         DataTable dt = cuits.Tables[0];
-                       
-
-
                         foreach (DataRow row in dt.Rows)
                         {   //por cada fila se carga el DDL
                             string CUIT = row["CUITProveedor_Prod"].ToString();
@@ -183,7 +164,7 @@ namespace Vista.Ventas {
                     }
 
                 }
-           }
+         
         }
 
         public void BtnBorrar_Click(object sender, EventArgs e) {
@@ -199,7 +180,9 @@ namespace Vista.Ventas {
         protected void BtnAgregar_Click(object sender, EventArgs e) {
             var auth = Session[Utils.AUTH] as SessionData;
             Venta obj = Session[VK] as Venta;
-            var prod = new Producto { Codigo = txtIDProducto.Text };
+            var prod = new Producto { Codigo = ddlProducto.SelectedValue,
+                                      Proveedor = new Proveedor { CUIT=ddlProveedor.SelectedValue}
+                                    };
             int cantidad = Convert.ToInt32(txtCantidad.Text);
             if (Session[VK] != null) {
                 var respuesta = VentaNegocio.AgregarProducto(auth, obj, prod, cantidad);
