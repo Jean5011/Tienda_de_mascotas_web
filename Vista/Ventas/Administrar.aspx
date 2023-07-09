@@ -122,5 +122,9 @@
         </asp:GridView>
 
     </div>
-
+    
+    <a href="/Ventas/Crear.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">add_shopping_cart</span>
+    </a>
 </asp:Content>

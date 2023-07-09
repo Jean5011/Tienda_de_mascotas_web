@@ -24,7 +24,8 @@ namespace Datos {
             TipoProducto.Columns.Codigo,
             TipoProducto.Columns.CodAnimal,
             TipoProducto.Columns.TipoDeProducto,
-            TipoProducto.Columns.Descripcion
+            TipoProducto.Columns.Descripcion,
+            Animal.Columns.Nombre
         };
 
         public static string GenerateSearchQuery(string key) {
@@ -64,7 +65,7 @@ namespace Datos {
         public static Response ObtenerListaDeTipoProducto() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}]"
+                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] "
                     );
         }
 
@@ -74,7 +75,7 @@ namespace Datos {
         /// <param name="ID">Código a buscar.</param>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response BuscarTipoProductoPorCod(string ID) {
-            string consulta = $"SELECT {ALL_COLUMNS} FROM [{TipoProducto.Table}] WHERE [{TipoProducto.Columns.Codigo}] = @ID";
+            string consulta = $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] WHERE [{TipoProducto.Columns.Codigo}] = @ID";
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: consulta,
@@ -142,7 +143,7 @@ namespace Datos {
         public static Response ObtenerListaDeTipoProductoBajas() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {TipoProducto.Table} where {TipoProducto.Columns.Estado} =0"
+                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM {TipoProducto.Table} INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}]  where {TipoProducto.Columns.Estado} =0"
                     );
         }
 
