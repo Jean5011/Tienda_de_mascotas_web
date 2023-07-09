@@ -152,19 +152,6 @@ body {
     padding-top: 12px;
 }
 
-.col.perfil {
-    background-color: white;
-    width: auto;
-    height: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-    .col.perfil h2 {
-        width: 100%;
-        text-align: center;
-    }
 
 .min-col-hor {
     display: flex;
@@ -553,3 +540,52 @@ input[type="number"]::-webkit-outer-spin-button {
     bottom: 24px;
     right: 24px;
 }
+
+.col.perfil {
+    background-color: white;
+    height: calc(100% - 93px);
+    position: fixed;
+    top: 93px;
+    left: 0px;
+    width: 300px;
+    border-right: 1px solid rgba(0,0,0,0.10);
+}
+
+    .col.perfil h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .col.perfil ul {
+        box-shadow: none;
+    }
+
+.col-no-perfil {
+    position: absolute;
+    top: 80px;
+    left: 320px;
+    width: auto;
+    max-width: calc(100% - 300px);
+}
+
+
+.banner-agregar-producto {
+    padding: 12px;
+    position: fixed;
+    top: 93px;
+    left: 300px;
+    width: calc(100% - 300px);
+    z-index: 300;
+    border-radius: 0;
+}
+
+.preu_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+}
+    .preu_container .mdc-typography--body2 {
+        text-align: center;
+    }

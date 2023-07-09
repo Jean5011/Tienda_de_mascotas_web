@@ -74,9 +74,15 @@ namespace Negocio
             return DaoProductos.ObtenerCodigoYCuit();
         }
         public static Response Reporte_ProductosMasVendidos(string fechaInicio, string fechaFin) {
-            DateTime fi = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime fn = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            return DaoProductos.ProductosMasVendidos(fi.ToString("yyyy-MM-dd"), fn.ToString("yyyy-MM-dd"));
+             if(DateTime.TryParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fi)
+                && DateTime.TryParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fn)) {
+
+                return DaoProductos.ProductosMasVendidos(fi.ToString("yyyy-MM-dd"), fn.ToString("yyyy-MM-dd"));
+            }
+            return new Response {
+                Message = "La fecha ingresada es inválida. ",
+                ErrorFound = true
+            };
         }
 
         public static Response BuscarPorCodigo(string codigo)

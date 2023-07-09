@@ -23,6 +23,7 @@ namespace Vista.Ventas {
                     lblFechaRegistro.Text = obj.Fecha;
                     lblMedioPago.Text = obj.TipoPago;
                     lblTotalCalculado.Text = $"${obj.Total}";
+                    lblNroVenta.Text = $"#{obj.Id}";
                 }
             }
                 
@@ -80,7 +81,7 @@ namespace Vista.Ventas {
                  
                     ddlProducto.Items.Add(new ListItem(nombre, codigo));
                 }
-                ddlProducto.Items.Insert(0, new ListItem("<Seleccione un producto>", "0"));
+                ddlProducto.Items.Insert(0, new ListItem("", "0"));
             }
                 /* Response codigos = ProductoNegocio.ObtenerCodigoPlusCUIT();
                  if (!codigos.ErrorFound)
