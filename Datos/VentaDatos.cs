@@ -19,6 +19,7 @@ namespace Datos {
             public const string CantidadDeProductosPorAgotarse = "Widget_ContarProductosConBajoStock";
             public const string CantidadDeProductosAgotados = "Widget_ContarProductosSinStock";
             public const string EliminarVenta = "EliminarVenta";
+            public const string Reporte_VentasOrdenadasPorTotales = "Reporte_VentasOrdenadasPorTotales";
         }
 
         /// <summary>
@@ -47,7 +48,6 @@ namespace Datos {
             }
             return resultat;
         }
-
 
         /// <summary>
         /// Todas las columnas de la tabla Ventas, con total formateado a pesos argentinos.
@@ -130,17 +130,30 @@ namespace Datos {
                     );
         }
 
+        public static Response Reporte_VentasOrdenadasPorTotales(string fechaInicio, string fechaFin) {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchStoredProcedure(
+                    storedProcedureName: Procedures.Reporte_VentasOrdenadasPorTotales,
+                    parameters: new Dictionary<string, object> {
+                        { "@FECHAINICIO", fechaInicio },
+                        { "@FECHAFIN", fechaFin }
+                    }
+                );
+        }
+
+
+
         /// <summary>
         /// Uso para Widgets en la página de Inicio.
         /// </summary>
         public static class Widgets {
-            public static Connection con = new Connection(Connection.Database.Pets); // TODO: Revisar "public"
 
             /// <summary>
             /// Total recaudado en ventas de las últimas 24 horas.
             /// </summary>
             /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response TotalDeVentasUltimoDia() {
+                Connection con = new Connection(Connection.Database.Pets);
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimoDia
                         );
@@ -151,6 +164,7 @@ namespace Datos {
             /// </summary>
             /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response TotalDeVentasUltimaSemana() {
+                Connection con = new Connection(Connection.Database.Pets);
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.TotalVentasUltimaSemana
                         );
@@ -161,6 +175,7 @@ namespace Datos {
             /// </summary>
             /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response ProductoMasVendidoUltimaSemana() {
+                Connection con = new Connection(Connection.Database.Pets);
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.ProductoMasVendidoUltimaSemana
                         );
@@ -171,6 +186,7 @@ namespace Datos {
             /// </summary>
             /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response CantidadDeProductosPorAgotarse() {
+                Connection con = new Connection(Connection.Database.Pets);
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosPorAgotarse
                         );
@@ -181,6 +197,7 @@ namespace Datos {
             /// </summary>
             /// <returns>Objeto Response con el resultado de la operación.</returns>
             public static Response CantidadDeProductosAgotados() {
+                Connection con = new Connection(Connection.Database.Pets);
                 return con.FetchStoredProcedure(
                             storedProcedureName: Procedures.CantidadDeProductosAgotados
                         );
