@@ -108,6 +108,12 @@ namespace Datos {
                         }
                     );
         }
+        public static Response ObtenerLista() {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT CONCAT({Animal.Columns.Nombre}+' '+{Animal.Columns.Raza}) as 'Ani', {Animal.Columns.Codigo}, [{Animal.Columns.Estado}]  FROM {Animal.Table} WHERE [{Animal.Columns.Estado}] = 1"
+                    );
+        }
 
         /// <summary>
         /// Elimina un animal de la base de datos. 

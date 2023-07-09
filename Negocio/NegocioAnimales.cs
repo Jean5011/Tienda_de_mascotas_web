@@ -141,8 +141,8 @@ namespace Negocio {
         }
 
         // Queda a revisión
-       /* public Response GettAnimales() {
+       public Response GettAnimales() {
             return DaoAnimales.ObtenerLista();
-        }*/
+        }
     }
 }
