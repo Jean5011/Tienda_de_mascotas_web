@@ -68,7 +68,6 @@
   <ItemGroup>
     <Content Include="Animales\Agregar.aspx" />
     <Content Include="Animales\Administrar.aspx" />
-    <Content Include="Animales\AltaAnimal.aspx" />
     <Content Include="Empleados\Administrar.aspx" />
     <Content Include="Empleados\AdministrarAccesos.aspx" />
     <Content Include="Empleados\CambiarClave.aspx" />
@@ -109,13 +108,6 @@
     </Compile>
     <Compile Include="Animales\Administrar.aspx.designer.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Animales\AltaAnimal.aspx.cs">
-      <DependentUpon>AltaAnimal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Animales\AltaAnimal.aspx.designer.cs">
-      <DependentUpon>AltaAnimal.aspx</DependentUpon>
     </Compile>
     <Compile Include="AuthorizationVista.cs" />
     <Compile Include="Empleados\Administrar.aspx.cs">
