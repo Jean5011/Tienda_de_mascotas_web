@@ -102,7 +102,7 @@
         <br />
         <br />
         <h2>Productos</h2>
-        <div class="auto-style1">
+        <div class="mdc-data-table">
             <asp:GridView ID="gvDetalles" runat="server" AutoGenerateColumns="False">
                 <Columns>
                     <asp:TemplateField>
@@ -230,24 +230,5 @@
     <br />
     <br />
     <br />
-</asp:Content>
-<asp:Content ID="Content2" runat="server" contentplaceholderid="head">
-    <style type="text/css">
-        .auto-style1 {
-            background-color: #fff;
-            background-color: var(--mdc-theme-surface, #fff);
-            border-radius: 4px;
-            border-radius: var(--mdc-shape-medium, 4px);
-            border-width: 1px;
-            border-style: solid;
-            -webkit-overflow-scrolling: touch;
-            display: inline-flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            position: relative;
-            left: 7px;
-            top: 1px;
-        }
-    </style>
 </asp:Content>
 
