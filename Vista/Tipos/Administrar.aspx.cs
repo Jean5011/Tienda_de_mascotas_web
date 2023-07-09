@@ -161,5 +161,7 @@ namespace Vista.Tipos {
         protected void GvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
 
         }
+
+
     }
 }

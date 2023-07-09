@@ -9,9 +9,9 @@
     </div>
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"
-            OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"
-            PageSize="5" AutoGenerateSelectButton="False" OnRowEditing="GvDatos_RowEditing"
-            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
+            OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated" 
+            PageSize="5" AutoGenerateSelectButton="False" OnRowEditing="GvDatos_RowEditing" 
+            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging" OnRowCancelingEdit="GvDatos_RowCancelingEdit" OnRowUpdating="GvDatos_RowUpdating">
             <Columns>
                 <asp:TemplateField>
                     <EditItemTemplate>
