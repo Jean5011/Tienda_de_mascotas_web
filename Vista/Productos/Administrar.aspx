@@ -43,17 +43,17 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Proveedor">
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__Proveedor" runat="server"
-                            Text='<%# Eval(Producto.Columns.CUITProv) %>'>
-                        </asp:Label>
+                        <a ID="gvDatosItemTemplate__Proveedor" class="mdc-typography--body2" href="/Proveedores/?ID=<%# Eval(Producto.Columns.CUITProv) %>">
+                            <%# Eval(Proveedor.Columns.RazonSocial) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Categoría">
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="gvDatosItemTemplate__TP" runat="server"
-                            Text='<%# Eval(Producto.Columns.CodTipoProducto) %>'>
-                        </asp:Label>
+                        <a ID="gvDatosItemTemplate__TP" class="mdc-typography--body2" href="/Tipos/?ID=<%# Eval(Producto.Columns.CodTipoProducto) %>">
+                            <%# Eval(TipoProducto.Columns.TipoDeProducto) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Nombre">

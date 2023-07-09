@@ -58,9 +58,9 @@
                         </asp:DropDownList>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label CssClass="mdc-typography--body2" ID="LV_CodAnimales"
-                            runat="server" Text='<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
-                        </asp:Label>
+                        <a class="mdc-typography--body2" ID="LV_CodAnimales" href='/Animales/?ID=<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
+                            <%# Eval(Animal.Columns.Nombre) %>
+                        </a>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Categoría">
