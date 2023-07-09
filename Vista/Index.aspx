@@ -116,6 +116,11 @@
                                     <span class="mdc-button__label mcardbl-act">Añadir</span>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                                 </a>
+                                <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Reportes/ProductoMasVendido.aspx">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label mcardbl-act">Productos más vendidos</span>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">article</i>
+                                </a>
                                 <a class="mdc-button mdc-card__action mdc-card__action--button" href="/Productos/">
                                     <div class="mdc-button__ripple"></div>
                                     <span class="mdc-button__label mcardbl-act">Ver el catálogo</span>

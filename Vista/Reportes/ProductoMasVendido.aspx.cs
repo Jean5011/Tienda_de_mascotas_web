@@ -17,6 +17,7 @@ namespace Vista.Reportes {
                 DateTime fechaInicio = fechaActual.AddDays(-7);
                 txtFechaInicio.Text = fechaInicio.ToString("yyyy-MM-dd");
                 txtFechaFin.Text = fechaActual.ToString("yyyy-MM-dd");
+                Cargar(null, null);
             }
         }
         public void Cargar(object sender, EventArgs e) {

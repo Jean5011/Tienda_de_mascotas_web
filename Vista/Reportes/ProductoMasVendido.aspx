@@ -9,14 +9,14 @@
         <div class="row _p">
             <div class="_side" style="flex-direction: row; gap: 12px; justify-content: space-between">
                 <label class="mdc-text-field mdc-text-field--filled">
-                    <span class="mdc-floating-label" id="ddlrol-d">Fecha Inicio</span>
+                    <span class="mdc-floating-label" id="ddlrol-d">Desde</span>
                     <span class="mdc-line-ripple"></span>
                     <span class="mdc-text-field__ripple"></span>
                      
     <asp:TextBox ID="txtFechaInicio" CssClass="mdc-text-field__input" type="date" runat="server" placeholder="Fecha Inicio" ></asp:TextBox>
                 </label>
                 <label class="mdc-text-field mdc-text-field--filled">
-                    <span class="mdc-floating-label" id="ddlsexo-d">Fecha Fin</span>
+                    <span class="mdc-floating-label" id="ddlsexo-d">Hasta</span>
                     <span class="mdc-line-ripple"></span>
                     <span class="mdc-text-field__ripple"></span>
                     
