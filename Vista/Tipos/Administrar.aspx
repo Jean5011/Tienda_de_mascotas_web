@@ -149,4 +149,8 @@
 
     </div>
     <asp:Label ID="lbl_mensaje_error" runat="server"></asp:Label>
+    <a href="/Tipos/Agregar.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">add</span>
+    </a>
 </asp:Content>

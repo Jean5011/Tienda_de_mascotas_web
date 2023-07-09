@@ -202,5 +202,9 @@
         </asp:GridView>
 
     </div>
+    <a href="/Empleados/CrearCuenta.aspx" class="mdc-fab" id="fab" aria-label="Agregar">
+      <div class="mdc-fab__ripple"></div>
+      <span class="mdc-fab__icon material-icons">person_add</span>
+    </a>
 
 </asp:Content>
