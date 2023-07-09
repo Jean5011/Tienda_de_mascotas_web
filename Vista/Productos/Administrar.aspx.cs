@@ -11,14 +11,36 @@ namespace Vista.Productos {
                 // Página accesible para empleados y administradores.
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
+                CargarDDL();
                 if (Request.QueryString["CODIGO"] != null)
                 {
                     string userId = Request.QueryString["CODIGO"];
+                   
                     CargarDatos(userId, true);
+                    
+                    
 
                 }
             }
         }
+
+
+        protected void CargarDDL()
+        {
+            ddlFiltro.Items.Add(new ListItem("Sin Stock", "2"));
+            ddlFiltro.Items.Add(new ListItem("Bajo Stock", "3"));
+            ddlFiltro.Items.Add(new ListItem("Alto Stock", "4"));
+            ddlFiltro.Items.Insert(0, new ListItem("Todos", "1"));
+
+
+        }
+
+        protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // int fil = Convert.ToInt32(ddlFiltro.SelectedValue);
+          //  CargarDatos(fil);
+        }
+
 
         protected void GrdProductos_RowEditing(object sender, GridViewEditEventArgs e) {
             gvDatos.EditIndex = e.NewEditIndex;

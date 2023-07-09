@@ -92,6 +92,9 @@ namespace Datos {
                     );
         }
 
+
+    
+
         /// <summary>
         /// Obtener tabla de todos los productos activos.
         /// </summary>
@@ -147,7 +150,7 @@ namespace Datos {
         /// <summary>
         /// Obtener un producto por su ID y su Proveedor.
         /// </summary>
-        /// <param name="ID">ID a buscar</param>
+        
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response BuscarProductoPorCodYCuit(string ID, string cuit) {
             string consulta = $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}]  FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Codigo_Prod}] = @ID and {Producto.Columns.CUITProv} = @CUIT";
@@ -176,6 +179,36 @@ namespace Datos {
                         parameters: new Dictionary<string, object> {
                             { "@ID", ID }                           
                         }
+                    );
+        }
+
+
+
+        //SIN STOCK
+        public static Response ObtenerListaDeProductosSinStock(bool est = true)
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            int estado = est ? 1 : 0;
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]= 0"
+                    );
+        }
+        //BAJO STOCK
+        public static Response ObtenerListaDeProductosBajoStock(bool est = true)
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            int estado = est ? 1 : 0;
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]<=5"
+                    );
+        }
+        //ALTO STOCK
+        public static Response ObtenerListaDeProductosAltoStock(bool est = true)
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            int estado = est ? 1 : 0;
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS}, [{Proveedor.Columns.RazonSocial}], [{TipoProducto.Columns.TipoDeProducto}] FROM {Producto.Table} INNER JOIN [{Proveedor.Table}] ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] INNER JOIN [{TipoProducto.Table}] on [{Producto.Columns.CodTipoProducto}] = [{TipoProducto.Columns.Codigo}] WHERE [{Producto.Columns.Estado}]={estado} and [{Producto.Columns.Stock}]>5"
                     );
         }
 

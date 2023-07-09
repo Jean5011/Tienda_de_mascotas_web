@@ -13,6 +13,9 @@
         Mostrar productos inactivos
         <asp:CheckBox ID="CheckBox1" runat="server" />
     </div>
+    <div>
+        <asp:DropDownList ID="ddlFiltro" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+    </div>
     <div class="mdc-data-table">
         <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False"
             OnPageIndexChanging="GvDatos_PageIndexChanging" AllowPaging="True" OnRowCreated="GvDatos_RowCreated"

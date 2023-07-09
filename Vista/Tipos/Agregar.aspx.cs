@@ -23,13 +23,13 @@ namespace Vista.Tipos {
 
         protected void CargarDDL() {
 
-            NegocioAnimales nt = new NegocioAnimales();
+           /* NegocioAnimales nt = new NegocioAnimales();
             Response resultado = nt.GettAnimales();
             DataSet dt = resultado.ObjectReturned as DataSet;
             DD_Animal.DataSource = dt;
             DD_Animal.DataTextField = "Ani";/// NombreDeRaza_An";
             DD_Animal.DataValueField = Animal.Columns.Codigo;
-            DD_Animal.DataBind();
+            DD_Animal.DataBind();*/
         }
 
         protected void BT_Guardar_Click(object sender, EventArgs e) {
