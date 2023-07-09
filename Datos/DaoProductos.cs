@@ -39,13 +39,38 @@ namespace Datos {
         }
 
         /// <summary>
-        /// Obtener tabla de productos activos.
+        /// Obtener tabla de todos los productos.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
         public static Response ObtenerListaDeProductos() {
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
                         query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table}"
+                    );
+        }
+
+        /// <summary>
+        /// Obtener tabla de todos los productos activos.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerListaDeProductosActivos()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT {ALL_COLUMNS} FROM {Producto.Table} WHERE [{Producto.Columns.Estado}] = '1'"
+                    );
+        }
+
+
+        /// <summary>
+        /// Obtiene los Codigos y Cuits concatenados de cada producto activo.
+        /// </summary>
+        /// <returns>Objeto Response con el resultado de la operación.</returns>
+        public static Response ObtenerCodigoYCuit()
+        {
+            Connection connection = new Connection(Connection.Database.Pets);
+            return connection.FetchData(
+                        query: $"SELECT [{Producto.Columns.Nombre}] , CONCAT([{Producto.Columns.Codigo_Prod},'.', {Producto.Columns.CUITProv}]) as [CODyCUIT] FROM {Producto.Table} INNER JOIN {Proveedor.Table} ON [{Proveedor.Columns.CUIT}] = [{Producto.Columns.CUITProv}] WHERE [{Producto.Columns.Estado}] = '1'"
                     );
         }
 
