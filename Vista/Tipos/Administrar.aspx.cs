@@ -144,6 +144,7 @@ namespace Vista.Tipos {
             {
                 GvDatos.PageIndex = e.NewPageIndex;
                 CargarDatos();
+                
             }
         }
 
