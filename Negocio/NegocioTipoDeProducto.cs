@@ -140,9 +140,9 @@ namespace Negocio {
             return DaoTiposDeProductos.ObtenerListaDeTipoProductoActivos();
         }
         //Devuelve todas las categorias sin importar su estado
-        public static Response ObtenerLista()
+        public static Response ObtenerLista(bool estado=true)
         {
-            return DaoTiposDeProductos.ObtenerListaDeTipoProducto();
+            return DaoTiposDeProductos.ObtenerListaDeTipoProducto(estado);
         }
 
     }
