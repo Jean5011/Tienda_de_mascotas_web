@@ -25,18 +25,6 @@ namespace Vista.Tipos {
             }
         }
 
-        /* protected void ChkFiltro_CheckedChanged(object sender, EventArgs e)
-         {//queria que cuando se active o desactive el chk aparezcas en la pagina 1 pero da error // OnCheckedChanged="ChkFiltro_CheckedChanged"
-             if (ChkFiltro.Checked)
-             {
-                 GvDatos.PageIndex=0;
-             }
-             else
-             {
-                 GvDatos.PageIndex = 0;
-             }
-         }*/
-
         protected void CargarResponse(Response res)
         {
 
@@ -152,8 +140,6 @@ namespace Vista.Tipos {
         }
 
         protected void GvDatos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            //  GvDatos.PageIndex = e.NewPageIndex;
-            //  CargarDatos();
             if (e.NewPageIndex >= 0 && e.NewPageIndex < GvDatos.PageCount)
             {
                 GvDatos.PageIndex = e.NewPageIndex;

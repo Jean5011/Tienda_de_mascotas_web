@@ -141,8 +141,10 @@ namespace Negocio {
         }
 
         // Queda a revisión
-       public Response GettAnimales() {
-            return DaoAnimales.ObtenerLista();
+       public DataSet GettAnimales() {
+            Response resultado =  DaoAnimales.ObtenerLista();
+            DataSet dt = resultado.ObjectReturned as DataSet;
+            return dt;
         }
     }
 }
