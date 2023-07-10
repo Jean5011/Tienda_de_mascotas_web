@@ -12,10 +12,11 @@ namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
 
         public void CargarDatos(Response data = null) {
+            Empleado emp = new Empleado { DNI = ddlEmpleados.SelectedValue };
             var filtros = new Venta.Busqueda
             {
                 Texto = txtBuscar.Text,
-                EmpleadoGestor = ddlEmpleados.SelectedValue, // me da error. 
+                EmpleadoGestor = emp,
                 TipoPago = ddlTipoDePago.SelectedValue
             };
 
