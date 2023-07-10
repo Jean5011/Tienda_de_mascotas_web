@@ -51,7 +51,7 @@ namespace Vista.Productos {
             var auth = Session[Utils.AUTH] as SessionData;
             var producto = new Producto() {
                 Codigo = txtCodigo.Text,
-                Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                Proveedor = new Proveedor() { CUIT = ddlProveedor.SelectedValue },
                 Categoria = new TipoProducto() { Codigo = ddlTipoProducto.SelectedValue },
                 Nombre = txtNombre.Text,
                 Marca = txtMarca.Text,

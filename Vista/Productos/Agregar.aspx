@@ -58,6 +58,7 @@
                 </span>
                 <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtCodigo"></asp:TextBox>
             </label>
+
             <asp:RequiredFieldValidator ID="txtCodigo_Validator" runat="server"
                 ControlToValidate="txtCodigo" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtCodigo_RegexValidator" runat="server"
@@ -66,9 +67,18 @@
         </div>
         <div class="group">
             <!--Tipo de producto-->
-            <asp:DropDownList id="ddlTipoProducto" CssClass="ddl" runat="server" CausesValidation="True" ValidationGroup="ValidationGroup"  >
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="lbcuit">CUIT del Proveedor</span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                
+            <asp:DropDownList id="ddlTipoProducto" CssClass="mdc-text-field__input" runat="server" CausesValidation="True" ValidationGroup="ValidationGroup"  >
                 <asp:ListItem>Seleccionar Tipo</asp:ListItem>
-            </asp:DropDownList>
+            </asp:DropDownList> </label>
            <asp:RequiredFieldValidator  ID="txtTipoProducto_Validator" runat="server"
                 ControlToValidate="ddlTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="validadorDdl_error" InitialValue="Seleccionar Tipo" />
             <!--CUIT-->
@@ -80,13 +90,11 @@
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
-                <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtCUITProveedor"></asp:TextBox>
+                <asp:DropDownList CssClass="mdc-text-field__input" ID="ddlProveedor" runat="server" DataSourceID="SqlDataSource1" DataTextField="RazonSocial_Prov" DataValueField="CUIT_Prov" ></asp:DropDownList>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:PetsConnectionString %>' SelectCommand="SELECT [CUIT_Prov], [RazonSocial_Prov] FROM [Proveedores] WHERE  [Estado_Prov] = 1"></asp:SqlDataSource>
             </label>
             <asp:RequiredFieldValidator ID="txtCUITProveedor_Validator" runat="server"
-                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
-            <asp:RegularExpressionValidator ID="txtCUITProveedor_RegexValidator" runat="server"
-                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>
+                ControlToValidate="ddlProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
         </div>
 
         <div class="group">
@@ -160,7 +168,7 @@
         </div>
         <br />
         <div class="botones">
-            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button mdc-button--raised" Text="Volver" OnClick="BtnVolverAtras_Click" />
+            <asp:Button runat="server" ID="btnVolverAtras" CssClass="mdc-button" Text="Volver" OnClick="BtnVolverAtras_Click" />
             <asp:Button runat="server" ID="btnGuardar" CssClass="mdc-button mdc-button--raised" Text="Guardar" OnClick="BtnGuardar_Click" ValidationGroup="ValidationGroup" />
         </div>
     </div>

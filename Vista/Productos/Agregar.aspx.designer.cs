@@ -7,12 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Productos
-{
+namespace Vista.Productos {
 
 
-    public partial class Agregar
-    {
+    public partial class Agregar {
 
         /// <summary>
         /// txtNombre control.
@@ -87,13 +85,22 @@ namespace Vista.Productos
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtTipoProducto_Validator;
 
         /// <summary>
-        /// txtCUITProveedor control.
+        /// ddlProveedor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCUITProveedor;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
+
+        /// <summary>
+        /// SqlDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
         /// txtCUITProveedor_Validator control.
@@ -103,15 +110,6 @@ namespace Vista.Productos
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator txtCUITProveedor_Validator;
-
-        /// <summary>
-        /// txtCUITProveedor_RegexValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator txtCUITProveedor_RegexValidator;
 
         /// <summary>
         /// txtDescripcion control.
