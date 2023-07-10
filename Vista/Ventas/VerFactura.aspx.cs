@@ -135,11 +135,17 @@ namespace Vista.Ventas {
             var prod = new Producto { Codigo = ddlProducto.SelectedValue,
                                       Proveedor = new Proveedor { CUIT=ddlProveedor.SelectedValue}
                                     };
-            int cantidad = Convert.ToInt32(txtCantidad.Text);
+            if(!int.TryParse(txtCantidad.Text, out int cantidad)) {
+                Utils.ShowSnackbar("Ingrese un valor válido para cantidad", this);
+                return;
+            }
             if (Session[VK] != null) {
                 var respuesta = VentaNegocio.AgregarProducto(auth, obj, prod, cantidad);
                 Utils.ShowSnackbar(respuesta.Message, this);
                 if (!respuesta.ErrorFound) {
+                    ddlProducto.SelectedIndex = 0;
+                    ddlProveedor.SelectedIndex = -1;
+                    txtCantidad.Text = "";
                     CargarCabecera();
                     CargarDetalles(obj);
                 }
