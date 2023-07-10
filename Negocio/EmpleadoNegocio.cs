@@ -300,7 +300,9 @@ namespace Negocio {
                 return empleado_data;
         }
 
-
+        public static Response CargarDuo() {
+            return EmpleadoDatos.CargarDuo();
+        }
         public static Response CargarDatos(Empleado.Busqueda data) {
             return EmpleadoDatos.CargarRegistros(data);
         }

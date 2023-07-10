@@ -181,6 +181,13 @@ namespace Datos {
                     );
         }
 
+        public static Response CargarDuo() {
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: $"SELECT [{Empleado.Columns.DNI}], CONCAT([{Empleado.Columns.Nombre}], ' ', [{Empleado.Columns.Apellido}]) as [{Empleado.Columns.Nombre}] FROM [{Empleado.Table}] WHERE [{Empleado.Columns.Estado}] = 1"
+                );
+        }
+
         /// <summary>
         /// Obtener tabla con todos los empleados cuyos apellidos tengan coincidencias con una cadena dada.
         /// </summary>

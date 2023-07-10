@@ -97,7 +97,7 @@ namespace Datos {
         /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
         public static Response CargarRegistros(Venta.Busqueda data)
         {
-            string select = $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] ";
+            string select = $"SELECT {ALL_COLUMNS_FOR_PRESENTATION} FROM [{Venta.Table}] INNER JOIN [{Empleado.Table}] ON [{Venta.Columns.DNI}] = [{Empleado.Columns.DNI}]";
             string where = " WHERE ";
             string condicionBusqueda = "";
             int condiciones = 0;

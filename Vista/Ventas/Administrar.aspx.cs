@@ -34,27 +34,18 @@ namespace Vista.Ventas {
         }
         protected void cargarDDLEmpleados()
         {
-            ddlEmpleados.Items.Insert(0, new ListItem("<Selecciona un Empleado>", "0"));
-            ddlEmpleados.Items.Add(new ListItem("Javier Torales", "28298976"));
-            ddlEmpleados.Items.Add(new ListItem("José Eduardo Martínez", "35001000"));
-            ddlEmpleados.Items.Add(new ListItem("Héctor Armando Da Silva", "35001001"));
-            ddlEmpleados.Items.Add(new ListItem("Libia Mónaco", "35001002"));
-            ddlEmpleados.Items.Add(new ListItem("María Diet", "35001003"));
-            ddlEmpleados.Items.Add(new ListItem("Rodrigo Viera", "35001004"));
-            ddlEmpleados.Items.Add(new ListItem("Mary O'Connor", "35001005"));
-            ddlEmpleados.Items.Add(new ListItem("Atima Pireira", "35001006"));
-            ddlEmpleados.Items.Add(new ListItem("Andrew Jackson", "35001007"));
-            ddlEmpleados.Items.Add(new ListItem("Alejandro Oliveira", "35001008"));
-            ddlEmpleados.Items.Add(new ListItem("Ty Roderick", "35001009"));
-            ddlEmpleados.Items.Add(new ListItem("Inés Escudero", "35001010"));
-            ddlEmpleados.Items.Add(new ListItem("Carlos González", "35001016"));
-            ddlEmpleados.Items.Add(new ListItem("Alex Marte", "35007001"));
-            ddlEmpleados.Items.Add(new ListItem("Derrick Dime", "45009001"));
-            ddlEmpleados.Items.Add(new ListItem("Carlos Herrera", "75801800"));
+            Response emp = EmpleadoNegocio.CargarDuo();
+            if(!emp.ErrorFound) {
+                ddlEmpleados.DataSource = emp.ObjectReturned as DataSet;
+                ddlEmpleados.DataTextField = Empleado.Columns.Nombre;
+                ddlEmpleados.DataValueField = Empleado.Columns.DNI;
+                ddlEmpleados.DataBind();
+                ddlEmpleados.Items.Insert(0, new ListItem("Todos los empleados", "ALL"));
+            }
         }
         protected void cargarDLLTipoDePago()
         {
-            ddlTipoDePago.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
+            ddlTipoDePago.Items.Insert(0, new ListItem("Todos los medios de pago", "ALL"));
             ddlTipoDePago.Items.Add(new ListItem("Tarjeta de Credito", "Credit_Card"));
             ddlTipoDePago.Items.Add(new ListItem("Tarjeta de Debito", "Debit_Card"));
             ddlTipoDePago.Items.Add(new ListItem("BitCoin", "BTC"));
