@@ -55,8 +55,13 @@ namespace Vista.Productos {
             Eliminar(e);            
         }
         protected void GrdProductos_PageIndexChanging(object sender, GridViewPageEventArgs e) {
-            gvDatos.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            // gvDatos.PageIndex = e.NewPageIndex;
+            // CargarDatos();
+            if (e.NewPageIndex >= 0 && e.NewPageIndex < gvDatos.PageCount)
+            {
+                gvDatos.PageIndex = e.NewPageIndex;
+                CargarDatos();
+            }
         } 
         protected void BtnBuscar_Click(object sender, EventArgs e) {
             CargarDatos();

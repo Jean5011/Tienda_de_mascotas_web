@@ -104,10 +104,14 @@ namespace Datos {
         public static Response Eliminar(DetalleVenta detalle) {
             Connection con = new Connection(Connection.Database.Pets);
             return con.RunTransaction(
-                    query: $"DELETE FROM [{DetalleVenta.Table}] WHERE [{DetalleVenta.Columns.CodProducto_Dv}] = @producto AND [{DetalleVenta.Columns.CodVenta_Dv}] = @venta",
+                    query: $"DELETE FROM [{DetalleVenta.Table}] WHERE [{DetalleVenta.Columns.CodProducto_Dv}] = @producto AND [{DetalleVenta.Columns.CodVenta_Dv}] = @venta AND [{DetalleVenta.Columns.CUITProv}] = @CUITprov"+
+                    $" UPDATE [{Producto.Table}] SET [{Producto.Columns.Stock}] = [{Producto.Columns.Stock}] + @cantidad"+
+                    $" WHERE [{Producto.Columns.Codigo_Prod}] = @producto AND [{Producto.Columns.CUITProv}] = @CUITprov",
                     parameters: new Dictionary<string, object> {
                         { "@producto", detalle.Producto.Codigo },
-                        { "@venta", detalle.Id.Id }
+                        { "@venta", detalle.Id.Id },
+                        { "@CUITprov", detalle.Proveedor.CUIT },
+                        { "@cantidad", detalle.Cantidad }
                     }
                 );
         }
