@@ -17,8 +17,8 @@ namespace Negocio {
         /// Lista todos los registros.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ListarTodo() {
-            return DaoAnimales.ObtenerListaDeAnimales();
+        public static Response ListarTodo(bool estado = true) {
+            return DaoAnimales.ObtenerListaDeAnimales(estado);
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Negocio {
         /// </summary>
         /// <param name="codigo">Código a buscar. Si está vacío no filtra.</param>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response BuscarAnimales(string codigo = null) {
+        public static Response BuscarAnimales(string codigo = null,bool estado = true) {
             return string.IsNullOrEmpty(codigo)
-                ? ListarTodo()
+                ? ListarTodo(estado)
                 : Buscar(codigo);
         }
 

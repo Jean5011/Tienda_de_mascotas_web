@@ -103,15 +103,18 @@ namespace Vista.Animales {
         /// <param name="reiniciarEditIndex">Indica si se debe establecer el EditIndex en -1.</param>
         protected void CargarDatos(bool reiniciarEditIndex = true,string id=null) {
             string textoABuscar = txtBuscar.Text;
+            bool estado = CheckBox1.Checked ? false : true;
             if (id != null) textoABuscar = id;
-            var response = NegocioAnimales.BuscarAnimales(textoABuscar);
+            var response = NegocioAnimales.BuscarAnimales(textoABuscar,estado);
             if (!response.ErrorFound) {
                 DataSet dt = response.ObjectReturned as DataSet;
                 if (reiniciarEditIndex) GvDatos.EditIndex = -1;
                 GvDatos.DataSource = dt;
                 GvDatos.DataBind();
+                txtBuscar.Text = "";
                 return;
             }
+           
             Utils.ShowSnackbar("Error cargando los registros. ", this);
         }
 
