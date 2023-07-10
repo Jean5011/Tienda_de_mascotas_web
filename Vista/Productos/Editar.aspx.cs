@@ -69,7 +69,6 @@ namespace Vista.Productos {
             if (!res.ErrorFound) {
                 Producto producto = res.ObjectReturned as Producto;
                 txtNombre.Text = producto.Nombre;
-                txtCUITProveedor.Text = producto.Proveedor.CUIT;
                 txtDescripcion.Text = producto.Descripcion;
                 txtMarca.Text = producto.Marca;
                 txtStock.Text = (producto.Stock).ToString();
@@ -96,8 +95,7 @@ namespace Vista.Productos {
                 Marca = txtMarca.Text,
                 Stock = int.Parse(txtStock.Text),
                 Precio = double.Parse(txtPrecioUnitario.Text),
-                //Proveedor = new Proveedor() { CUIT = ddlProveedores.SelectedValue },
-                Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
+                Proveedor = new Proveedor() { CUIT = productoViejo.Proveedor.CUIT },
                 Estado = productoViejo.Estado
             };
             var res = ProductoNegocio.ActualizarProducto(auth, producto);

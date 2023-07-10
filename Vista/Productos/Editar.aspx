@@ -71,22 +71,6 @@
            <asp:RequiredFieldValidator  ID="txtTipoProducto_Validator" runat="server"
                 ControlToValidate="ddlTipoProducto" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="validadorDdl_error" InitialValue="Seleccionar Tipo" />
             <!--CUIT-->
-          <!--  <asp:DropDownList id="ddlProveedores" CssClass="ddl" runat="server"></asp:DropDownList> -->
-            <label class="mdc-text-field mdc-text-field--outlined">
-                <span class="mdc-notched-outline">
-                    <span class="mdc-notched-outline__leading"></span>
-                    <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="lbcuit">CUIT del Proveedor</span>
-                    </span>
-                    <span class="mdc-notched-outline__trailing"></span>
-                </span> 
-               <asp:TextBox runat="server" CssClass="mdc-text-field__input" ID="txtCUITProveedor"></asp:TextBox>
-            </label>
-            <asp:RequiredFieldValidator ID="txtCUITProveedor_Validator" runat="server"
-                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
-            <asp:RegularExpressionValidator ID="txtCUITProveedor_RegexValidator" runat="server"
-                ControlToValidate="txtCUITProveedor" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[0-9]{10,}$"></asp:RegularExpressionValidator>
         </div>
 
         <div class="group">
