@@ -67,10 +67,11 @@ namespace Datos {
         /// Obtener tabla de animales.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación.</returns>
-        public static Response ObtenerListaDeAnimales() {
+        public static Response ObtenerListaDeAnimales(bool estado = true) {
+            int est = estado ? 1 : 0;
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table}"
+                        query: $"SELECT {ALL_COLUMNS} FROM {Animal.Table} where [{Animal.Columns.Estado}]={est}"
                     );
         }
 
