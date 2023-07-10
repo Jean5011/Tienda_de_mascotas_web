@@ -23,7 +23,7 @@
         <asp:CheckBox ID="CheckBox1" runat="server" />
         </div>
         <div>
-            <asp:DropDownList ID="ddlFiltro" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+            <asp:DropDownList ID="ddlFiltro" runat="server" OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged" Height="19px"></asp:DropDownList>
         </div>
         <asp:Button ID="filtrar_btn" runat="server" Text="Filtrar" OnClick="filtrar_btn_Click" />
     </div>
