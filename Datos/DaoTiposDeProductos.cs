@@ -66,7 +66,7 @@ namespace Datos {
             int est = estado ? 1 : 0;
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] where [{TipoProducto.Columns.Estado}]={est}"
+                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}], [{Animal.Columns.Raza}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] where [{TipoProducto.Columns.Estado}]={est}"
                     );
         }
 

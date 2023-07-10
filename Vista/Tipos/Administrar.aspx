@@ -71,13 +71,14 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Animal">
                     <EditItemTemplate>
-                        <asp:DropDownList ID="DD_EditAnimal" runat="server">
+                        <asp:DropDownList runat="server" ID="DD_EditAnimal" DataSourceID="SqlDataSource1" DataTextField="nombre_An" DataValueField="PK_CodAnimales_An">
                             <asp:ListItem></asp:ListItem>
                         </asp:DropDownList>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:PetsConnectionString %>' SelectCommand="SELECT [PK_CodAnimales_An], CONCAT([nombre_An], ' ', [NombreDeRaza_An]) AS [nombre_An] FROM [Animales] WHERE [Estado_An] = 1"></asp:SqlDataSource>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <a class="mdc-typography--body2" ID="LV_CodAnimales" href='/Animales/?ID=<%# Eval(TipoProducto.Columns.CodAnimal) %>'>
-                            <%# Eval(Animal.Columns.Nombre) %>
+                            <%# Eval(Animal.Columns.Nombre) %> (<%# Eval(Animal.Columns.Raza) %>)
                         </a>
                     </ItemTemplate>
                 </asp:TemplateField>

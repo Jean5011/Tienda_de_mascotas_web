@@ -16,11 +16,6 @@ namespace Vista.Tipos {
 
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
-                NegocioAnimales nt = new NegocioAnimales();
-                DD_Animal.DataSource = nt.GettAnimales();
-                DD_Animal.DataTextField = "Ani";/// NombreDeRaza_An";
-                DD_Animal.DataValueField = Animal.Columns.Codigo;
-                DD_Animal.DataBind();
             }
         }
 

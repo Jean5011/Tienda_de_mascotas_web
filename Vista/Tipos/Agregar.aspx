@@ -26,8 +26,9 @@
                 </span>
                 <span class="mdc-notched-outline__trailing"></span>
             </span>
-            <asp:DropDownList ID="DD_Animal" CssClass="mdc-text-field__input" runat="server">
-            </asp:DropDownList>
+            <asp:DropDownList ID="DD_Animal" CssClass="mdc-text-field__input" runat="server" DataSourceID="SqlDataSource1" DataTextField="nombre_An" DataValueField="PK_CodAnimales_An">
+            </asp:DropDownList><asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:PetsConnectionString %>' SelectCommand="SELECT [PK_CodAnimales_An], CONCAT([nombre_An], ' ', [NombreDeRaza_An]) AS [nombre_An] FROM [Animales] WHERE [Estado_An] = 1"></asp:SqlDataSource>
+                    
         </label>
         <br />
         <br />
