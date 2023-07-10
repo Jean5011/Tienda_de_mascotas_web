@@ -26,7 +26,6 @@ namespace Vista.Empleados {
             txtClave.Text = "tomato";
             txtConfirmarClave.Text = "tomato";
             chkAdmin.Checked = true;
-            chkEstado.Checked = true;
         }
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
@@ -37,8 +36,14 @@ namespace Vista.Empleados {
         }
 
         protected void BtnGuardarCambios_Click(object sender, EventArgs e) {
-            DateTime fn = DateTime.ParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime fi = DateTime.ParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime fn;
+            DateTime fi;
+            if(!DateTime.TryParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fn)) {
+                Utils.ShowSnackbar("La fecha ingresada es incorrecta. ", this);
+            }
+            if(!DateTime.TryParseExact(txtFechaContrato.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fi)) {
+                Utils.ShowSnackbar("La fecha ingresada es incorrecta. ", this);
+            }
             Empleado obj = new Empleado() {
                 DNI = txtDNI.Text,
                 Nombre = txtNombre.Text,
@@ -51,7 +56,7 @@ namespace Vista.Empleados {
                 Provincia = txtProvincia.Text,
                 Localidad = txtLocalidad.Text,
                 Nacionalidad = txtNacionalidad.Text,
-                Estado = chkEstado.Checked,
+                Estado = true,
                 Rol = chkAdmin.Checked ? Empleado.Roles.ADMIN : Empleado.Roles.NORMAL
             };
             string claveIngresada = txtClave.Text;

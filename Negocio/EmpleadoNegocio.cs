@@ -49,6 +49,16 @@ namespace Negocio {
             }
         }
 
+        public static class CreationResult {
+            public static Response Ok = new Response {
+                ErrorFound = false,
+                Message = "La cuenta se creó correctamente. "
+            };
+            public static Response YaExiste = new Response {
+                ErrorFound = true,
+                Message = "Error. Ya hay una cuenta registrada con ese DNI."
+            };
+        }
         public static Response CrearEmpleado(SessionData auth, Empleado obj, string clave) {
             // Generamos el hash y el salt.
             byte[] newSalt = GenerarSalt();
@@ -56,11 +66,8 @@ namespace Negocio {
             obj.Hash = Convert.ToBase64String(newHash);
             obj.Salt = Convert.ToBase64String(newSalt);
             var existeEmpleado = BuscarEmpleadoPorDNI(obj.DNI);
-            if(!existeEmpleado.ErrorFound && existeEmpleado.Message != SesionNegocio.ErrorCode.NO_ROWS) {
-                return new Response() {
-                    ErrorFound = true,
-                    Message = ErrorCode.ALREADY_EXISTS
-                };
+            if(!existeEmpleado.ErrorFound && existeEmpleado != ExtractResult.NoEncontrado) {
+                return CreationResult.YaExiste;
             }
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
@@ -73,6 +80,7 @@ namespace Negocio {
                             : "Hubo un error al intentar crear el registro. "
                     };
                 }, err => { respuesta = Response.TokenCaducado;  });
+                return respuesta;
             }
             return Response.PermisosInsuficientes;
         }
@@ -115,6 +123,7 @@ namespace Negocio {
                 }, err => {
                     respuesta = Response.TokenCaducado;
                 });
+                return respuesta;
             } 
             return Response.PermisosInsuficientes;
         }
@@ -153,13 +162,23 @@ namespace Negocio {
             return Response.PermisosInsuficientes;
         }
 
-
+        public static class ExtractResult {
+            public static Response OK = new Response {
+                ErrorFound = false,
+                Message = "Los datos se procesaron correctamente. "
+            };
+            public static Response NoEncontrado = new Response {
+                ErrorFound = false,
+                Message = "Los datos ingresados son incorrectos. "
+            };
+        }
         /// <summary>
         /// Extrae los datos de un DataSet y los convierte en un objeto tipo Empleado.
         /// </summary>
         /// <param name="resultDataSet">El DataSet en cuestión.</param>
         /// <returns>Response con el resultado de la operación.</returns>
         public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
+            var res = Response.ErrorDesconocido;
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Empleado obj = new Empleado() {
@@ -179,21 +198,24 @@ namespace Negocio {
                     Salt = primerRegistro[Empleado.Columns.Salt].ToString(),
                     Rol = primerRegistro[Empleado.Columns.Rol].ToString()
                 };
-                return new Response() {
-                    ErrorFound = false,
-                    ObjectReturned = obj
-                };
+                res = ExtractResult.OK;
+                res.ObjectReturned = obj;
             }
             else {
-                return new Response() {
-                    ErrorFound = true,
-                    Message = SesionNegocio.ErrorCode.NO_ROWS,
-                    ObjectReturned = null
-                };
+                res = ExtractResult.NoEncontrado;
+                res.ObjectReturned = null;
             }
 
-        }
+            return res;
 
+        }
+        public static class ComprobarClaveResult {
+            public static Response OK = new Response {
+                ErrorFound = false,
+                Message = "Las claves coinciden. "
+            };
+            public static Response DatosIncorrectos = ExtractResult.NoEncontrado;
+        }
         /// <summary>
         /// Comprueba la veracidad de una clave ingresada al descargar la clave de la base de datos y compararlas.
         /// </summary>
@@ -213,15 +235,21 @@ namespace Negocio {
                     Empleado obj = extracted_data.ObjectReturned as Empleado;
                     byte[] _salt = Convert.FromBase64String(obj.Salt);
                     bool resultado = VerificarClaveString(clave, obj.Hash, _salt);
-
-                    return new Response() {
-                        ErrorFound = !resultado,
-                        Message = resultado ? "SUCCESS" : "INCORRECT_DATA"
-                    };
+                    return resultado ? ComprobarClaveResult.OK : ComprobarClaveResult.DatosIncorrectos;
                 }
             }
         }
 
+        public static class LoginResult {
+            public static Response ErrorCookies = new Response {
+                ErrorFound = true,
+                Message = "No se pudo guardar la sesión. ¿Tenés las cookies habilitadas?"
+            };
+            public static Response ErrorEmpleadoNoEncontradoPostOperacion = new Response {
+                ErrorFound = false,
+                Message = "Iniciaste sesión pero no pudimos recolectar tus datos. "
+            };
+        }
         /// <summary>
         /// Inicia sesión a un usuario en específico y le genera un token, a partir de las credenciales ingresadas.
         /// </summary>
@@ -233,17 +261,11 @@ namespace Negocio {
             bool clavesCorrectas = !(resultadoClaves.ErrorFound);
             if(clavesCorrectas) {
                 Response res = SesionNegocio.AbrirSesion(DNI);
-                if (res.ErrorFound) return new Response {
-                    ErrorFound = true,
-                    Message = "No se pudo guardar la sesión. ¿Tenés las cookies habilitadas?"
-                };
+                if (res.ErrorFound) return LoginResult.ErrorCookies;
                 else {
                     var buscar_empleado = SesionNegocio.ObtenerDatosEmpleadoActual();
                     if(buscar_empleado.ErrorFound) {
-                        return new Response {
-                            ErrorFound = false,
-                            Message = "Iniciaste sesión pero no pudimos recolectar tus datos. "
-                        };
+                        return LoginResult.ErrorEmpleadoNoEncontradoPostOperacion;
                     }
                     var empleado = buscar_empleado.ObjectReturned as Empleado;
                     bool esMasculino = (empleado.Sexo == "M");
@@ -254,11 +276,8 @@ namespace Negocio {
                 }
 
             }
-            if(resultadoClaves.Message == "INCORRECT_DATA" || resultadoClaves.Message == "NO_ROWS") {
-                return new Response {
-                    ErrorFound = true,
-                    Message = "Los datos ingresados son incorrectos. "
-                };
+            if(resultadoClaves.ErrorFound) {
+                return resultadoClaves;
             }
             return new Response {
                 ErrorFound = true,
@@ -267,17 +286,22 @@ namespace Negocio {
             
         }
 
+        public static class ModifyResult {
+            public static Response Ok = new Response {
+                ErrorFound = false,
+                Message = "El registro se modificó correctamente. "
+            };
+            public static Response Error = new Response {
+                ErrorFound = true,
+                Message = "Hubo un error al intentar modificar el registro. "
+            };
+        }
         public static Response ModificarEmpleado(SessionData auth, Empleado obj) {
             var respuesta = Response.ErrorDesconocido;
             if(auth.User.Rol == Empleado.Roles.ADMIN) {
                 SesionNegocio.Autenticar(ok => {
                     var operacion = EmpleadoDatos.Modificar(obj, obj.DNI);
-                    respuesta = new Response {
-                        ErrorFound = operacion.ErrorFound,
-                        Message = !operacion.ErrorFound
-                            ? "El registro se modificó correctamente. "
-                            : "Hubo un error al intentar modificar el registro. "
-                    };
+                    respuesta = operacion.ErrorFound ? ModifyResult.Error : ModifyResult.Ok;
                 }, err => {
                     respuesta = Response.TokenCaducado;
                 });
@@ -294,8 +318,7 @@ namespace Negocio {
                 Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(dni);
                 if (!empleado_data.ErrorFound) {
                     DataSet dt = empleado_data.ObjectReturned as DataSet;
-                    Response emp = ExtractDataFromDataSet(dt);
-                    return emp;
+                    return ExtractDataFromDataSet(dt);
                 }
                 return empleado_data;
         }

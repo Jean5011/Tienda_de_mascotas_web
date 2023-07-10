@@ -183,11 +183,6 @@
             <asp:CompareValidator ID="CompareValidator1" CssClass="mdc-text-field-helper-text" runat="server" ErrorMessage="Las claves no coinciden" ControlToCompare="txtClave" ControlToValidate="txtConfirmarClave"></asp:CompareValidator>
         </div>
         <br />
-        <br>
-        <asp:CheckBox ValidationGroup="A" ID="chkEstado" runat="server" Text="Habilitado" />
-        <br>
-        <br>
-        <hr />
         <br />
         <asp:CheckBox ValidationGroup="A" ID="chkAdmin" runat="server" Text="Conceder permisos de administrador" />
         <br />

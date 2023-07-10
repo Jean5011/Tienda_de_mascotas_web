@@ -52,7 +52,7 @@
             <br>
         </div>
     </div>
-    <div class="col principal">
+    <div class="col col-no-perfil">
         <h2>Ventas que registró</h2>
         <div class="mdc-data-table">
 

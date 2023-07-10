@@ -154,12 +154,23 @@ namespace Negocio {
             }
         }
 
+        public static class ExtractResult {
+            public static Response Ok = new Response {
+                ErrorFound = false
+            };
+            public static Response NoRows = new Response {
+                ErrorFound = true,
+                Message = "No se encontró el registro solicitado. ",
+                ObjectReturned = null
+            };
+        }
         /// <summary>
         /// Toma un DataSet y establece un objeto Sesion a partir del primer registro encontrado.
         /// </summary>
         /// <param name="resultDataSet">El DataSet en cuestión.</param>
         /// <returns>Un Response con el resultado de la operación.</returns>
         public static Response ExtractDataFromDataSet(DataSet resultDataSet) {
+            var res = Response.ErrorDesconocido;
             if (resultDataSet.Tables.Count > 0 && resultDataSet.Tables[0].Rows.Count > 0) {
                 DataRow primerRegistro = resultDataSet.Tables[0].Rows[0];
                 Sesion obj = new Sesion() {
@@ -169,18 +180,13 @@ namespace Negocio {
                     Token = primerRegistro[Sesion.Columns.Token].ToString(),
                     Estado = Convert.ToBoolean(primerRegistro[Sesion.Columns.Estado].ToString())
                 };
-                return new Response() {
-                    ErrorFound = false,
-                    ObjectReturned = obj
-                };
+                res = ExtractResult.Ok;
+                res.ObjectReturned = obj;
             }
             else {
-                return new Response() {
-                    ErrorFound = true,
-                    Message = ErrorCode.NO_ROWS,
-                    ObjectReturned = null
-                };
+                res = ExtractResult.NoRows;
             }
+            return res;
 
         }
 
@@ -316,30 +322,39 @@ namespace Negocio {
 
         }
 
+        public static class AuthenticationResult {
+            public static Response NoSessionFound = new Response {
+                ErrorFound = true,
+                Message = "No hay sesión guardada en este navegador."
+            };
+            public static Response ExpiredToken = new Response {
+                ErrorFound = true,
+                Message = "Tu sesión expiró. Volvé a iniciar sesión. "
+            };
+            public static Response Unauthorized = new Response {
+                ErrorFound = true,
+                Message = "La sesión fue revocada. Volvé a iniciar sesión. "
+            };
+            public static Response Ok = new Response { 
+                ErrorFound = false,
+                Message = "Autenticado con éxito. "
+            };
+        }
         public static bool Autenticar(Action<Response> onSuccess, Action<Response> onError) {
             string token = GetCookieValue(AUTH_COOKIE);
             if (token == null) {
-                onError(new Response() {
-                    ErrorFound = true,
-                    Message = ErrorCode.NO_SESSION_FOUND
-                });
+                onError(AuthenticationResult.NoSessionFound);
                 return false;
             } 
             else {
                 Token tk = new Token();
                 bool dec = tk.Decodificar(token);
                 if (!dec) {
-                    onError(new Response() {
-                        ErrorFound = true,
-                        Message = ErrorCode.EXPIRED_TOKEN
-                    });
+                    onError(AuthenticationResult.ExpiredToken);
                     return false;
                 }
                 bool verificacionFinal = VerificarAutorizacionToken(token, tk.DNI);
-                onSuccess(new Response() {
-                    ErrorFound = !verificacionFinal,
-                    Message = verificacionFinal ? "OK" : ErrorCode.UNAUTHORIZED
-                });
+                onSuccess(verificacionFinal ? AuthenticationResult.Ok : AuthenticationResult.Unauthorized);
                 return verificacionFinal;
             }
         }
@@ -353,10 +368,7 @@ namespace Negocio {
             if (token != null) {
                 Token tk = new Token();
                 bool rtk = tk.Decodificar(token);
-                if (!rtk) return new Response() {
-                    ErrorFound = true,
-                    Message = ErrorCode.EXPIRED_TOKEN
-                };
+                if (!rtk) return AuthenticationResult.ExpiredToken;
                 Response empleado_data = EmpleadoDatos.BuscarEmpleadoPorDNI(tk.DNI);
                 if (!empleado_data.ErrorFound) {
                     DataSet dt = empleado_data.ObjectReturned as DataSet;
@@ -365,10 +377,7 @@ namespace Negocio {
                 }
                 return empleado_data;
             }
-            else return new Response() {
-                ErrorFound = true,
-                Message = ErrorCode.NO_SESSION_FOUND
-            };
+            else return AuthenticationResult.NoSessionFound;
         }
 
         public static Response ObtenerSesionesAbiertasDeEmpleado(string DNI) {

@@ -55,8 +55,8 @@ namespace Negocio {
 
             if (res_b.ErrorFound) {
 
-                bool noSessionFound = res_b.Message == SesionNegocio.ErrorCode.NO_SESSION_FOUND;
-                bool tokenExpired = res_b.Message == SesionNegocio.ErrorCode.EXPIRED_TOKEN;
+                bool noSessionFound = res_b == SesionNegocio.AuthenticationResult.NoSessionFound;
+                bool tokenExpired = res_b == SesionNegocio.AuthenticationResult.ExpiredToken;
 
                 int status = SessionData.StatusCode.UNSPECIFIED_ERROR;
 
