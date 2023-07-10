@@ -35,6 +35,16 @@ namespace Vista.Productos {
                 ddlTipoProducto.DataBind();
                 ddlTipoProducto.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
             }
+           /* Response cuits = ProveedorNegocio.ObtenerListaDeProveedores();
+            if(!cuits.ErrorFound)
+            {
+                var ds = cuits.ObjectReturned as DataSet;
+                ddlProveedores.DataSource = ds;
+                ddlProveedores.DataTextField = "RazonSocial_Prov";
+                ddlProveedores.DataValueField = "CUIT_Prov";
+                ddlProveedores.DataBind();
+               
+            }*/
         }
         protected void BtnVolverAtras_Click(object sender, EventArgs e) {
             Response.Redirect("/Productos/");
@@ -64,6 +74,10 @@ namespace Vista.Productos {
                 txtMarca.Text = producto.Marca;
                 txtStock.Text = (producto.Stock).ToString();
                 txtPrecioUnitario.Text = (producto.Precio).ToString();
+                int indice = ddlTipoProducto.Items.IndexOf(ddlTipoProducto.Items.FindByValue(producto.Categoria.Codigo));
+                ddlTipoProducto.SelectedIndex = indice;
+               // indice = ddlProveedores.Items.IndexOf(ddlProveedores.Items.FindByValue(producto.Proveedor.CUIT));
+               // ddlProveedores.SelectedIndex = indice;
             }
 
         }
@@ -82,6 +96,7 @@ namespace Vista.Productos {
                 Marca = txtMarca.Text,
                 Stock = int.Parse(txtStock.Text),
                 Precio = double.Parse(txtPrecioUnitario.Text),
+                //Proveedor = new Proveedor() { CUIT = ddlProveedores.SelectedValue },
                 Proveedor = new Proveedor() { CUIT = txtCUITProveedor.Text },
                 Estado = productoViejo.Estado
             };

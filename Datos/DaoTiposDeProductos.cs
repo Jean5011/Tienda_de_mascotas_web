@@ -62,10 +62,11 @@ namespace Datos {
         /// Obtener lista de categorías activas y no activas.
         /// </summary>
         /// <returns>Objeto Response con el resultado de la operación. </returns>
-        public static Response ObtenerListaDeTipoProducto() {
+        public static Response ObtenerListaDeTipoProducto(bool estado = true) {
+            int est = estado ? 1 : 0;
             Connection connection = new Connection(Connection.Database.Pets);
             return connection.FetchData(
-                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] "
+                        query: $"SELECT {ALL_COLUMNS}, [{Animal.Columns.Nombre}] FROM [{TipoProducto.Table}] INNER JOIN [{Animal.Table}] ON [{TipoProducto.Columns.CodAnimal}] = [{Animal.Columns.Codigo}] where [{TipoProducto.Columns.Estado}]={est}"
                     );
         }
 

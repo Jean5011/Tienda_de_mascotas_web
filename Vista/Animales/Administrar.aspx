@@ -7,6 +7,10 @@
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscá por código, nombre o raza." runat="server"></asp:TextBox>
         <asp:Button ID="BtnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
     </div>
+    <div>
+        Mostrar animales inactivos
+        <asp:CheckBox ID="CheckBox1" runat="server" />
+    </div>
 
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos"

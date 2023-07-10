@@ -16,20 +16,17 @@ namespace Vista.Tipos {
 
                 var auth = Session[Utils.AUTH] as SessionData;
                 var UsuarioActual = auth.User;
-
-                CargarDDL();
+                NegocioAnimales nt = new NegocioAnimales();
+                DD_Animal.DataSource = nt.GettAnimales();
+                DD_Animal.DataTextField = "Ani";/// NombreDeRaza_An";
+                DD_Animal.DataValueField = Animal.Columns.Codigo;
+                DD_Animal.DataBind();
             }
         }
 
         protected void CargarDDL() {
 
-           /* NegocioAnimales nt = new NegocioAnimales();
-            Response resultado = nt.GettAnimales();
-            DataSet dt = resultado.ObjectReturned as DataSet;
-            DD_Animal.DataSource = dt;
-            DD_Animal.DataTextField = "Ani";/// NombreDeRaza_An";
-            DD_Animal.DataValueField = Animal.Columns.Codigo;
-            DD_Animal.DataBind();*/
+            
         }
 
         protected void BT_Guardar_Click(object sender, EventArgs e) {

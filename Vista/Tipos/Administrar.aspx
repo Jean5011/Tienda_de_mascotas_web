@@ -9,7 +9,7 @@
     </div>
      <div>
         Mostrar categorias inactivas
-        <asp:CheckBox ID="ChkFiltro" runat="server" AutoPostBack="true"  />
+        <asp:CheckBox ID="ChkFiltro" runat="server"  />
     </div>
     <div class="mdc-data-table">
         <asp:GridView ID="GvDatos" runat="server" AutoGenerateColumns="False"

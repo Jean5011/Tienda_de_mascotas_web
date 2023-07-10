@@ -7,10 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Vista.Animales {
+namespace Vista.Animales
+{
 
 
-    public partial class Administrar {
+    public partial class Administrar
+    {
 
         /// <summary>
         /// txtBuscar control.
@@ -29,6 +31,15 @@ namespace Vista.Animales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnBuscar;
+
+        /// <summary>
+        /// CheckBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
 
         /// <summary>
         /// GvDatos control.
