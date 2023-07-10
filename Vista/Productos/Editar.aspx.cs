@@ -64,6 +64,8 @@ namespace Vista.Productos {
                 txtMarca.Text = producto.Marca;
                 txtStock.Text = (producto.Stock).ToString();
                 txtPrecioUnitario.Text = (producto.Precio).ToString();
+                int indice = ddlTipoProducto.Items.IndexOf(ddlTipoProducto.Items.FindByValue(producto.Categoria.Codigo));
+                ddlTipoProducto.SelectedIndex = indice;
             }
 
         }

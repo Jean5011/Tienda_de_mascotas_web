@@ -46,7 +46,7 @@
                 ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroup" CssClass="error" />
             <asp:RegularExpressionValidator ID="txtNombre_RegexValidator" runat="server"
                 ControlToValidate="txtNombre" ErrorMessage="*" ValidationGroup="ValidationGroup"
-                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9]{1,50}$"></asp:RegularExpressionValidator>
+                ValidationExpression="^[A-Za-zñÑáéíóúÁÉÍÓÚ\s.0-9-]{1,50}$"></asp:RegularExpressionValidator>
             <!--Codigo-->
             <label class="mdc-text-field mdc-text-field--outlined">
                 <span class="mdc-notched-outline">
