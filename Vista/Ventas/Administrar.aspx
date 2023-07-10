@@ -6,12 +6,17 @@
     <h2>Ventas</h2>
     <div class="searchbox">
         <asp:TextBox ID="txtBuscar" CssClass="search" placeholder="Buscá por código, empleado, medio de pago..." runat="server"></asp:TextBox>
-        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" />
+        <asp:Button ID="btnBuscar" CssClass="material-icons mdc-icon-button btn-search" OnClick="BtnBuscar_Click" runat="server" Text="search" style="left: 1px; top: 0px" />
+&nbsp;</div>
+    <div>
+        &nbsp;<asp:DropDownList ID="ddlEmpleados" runat="server" Width="190px">
+        </asp:DropDownList>
+        <asp:DropDownList ID="ddlTipoDePago" runat="server" CssClass="auto-style1" Width="135px">
+        </asp:DropDownList>
     </div>
     <div class="mdc-data-table">
         <asp:GridView ID="gvDatos" runat="server" AutoGenerateColumns="False" OnPageIndexChanging="GvDatos_PageIndexChanging"
-            AllowPaging="True" OnRowCreated="GvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False"
-            OnSelectedIndexChanging="GvDatos_SelectedIndexChanging">
+            AllowPaging="True" OnRowCreated="GvDatos_RowCreated" PageSize="15" AutoGenerateSelectButton="False">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -128,3 +133,11 @@
       <span class="mdc-fab__icon material-icons">add_shopping_cart</span>
     </a>
 </asp:Content>
+<asp:Content ID="Content2" runat="server" contentplaceholderid="head">
+    <style type="text/css">
+        .auto-style1 {
+            margin-left: 27px;
+        }
+        </style>
+</asp:Content>
+

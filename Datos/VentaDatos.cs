@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,6 +90,55 @@ namespace Datos {
                 );
         }
 
+        /// <summary>
+        /// Obtener tabla con todas las ventas, aplicando filtros de ser necesario.
+        /// </summary>
+        /// <param name="data">Parámetros. Texto a buscar, ya sea el ID de la venta, DNI o nombre del empleado gestor, o tipo de pago.</param>
+        /// <returns>Objeto Response con el resultado de la operación y datos obtenidos.</returns>
+        public static Response CargarRegistros(Venta.Busqueda data)
+        {
+            string select = $"SELECT {ALL_COLUMNS} FROM [{Venta.Table}] ";
+            string where = " WHERE ";
+            string condicionBusqueda = "";
+            int condiciones = 0;
+            Dictionary<string, object> parametros = new Dictionary<string, object>();
+
+            // Para buscar por texto general.
+            if (!string.IsNullOrEmpty(data.Texto) && !string.IsNullOrWhiteSpace(data.Texto))
+            {
+                condicionBusqueda = "(" + GenerateSearchQuery("@q") + ")";
+                parametros.Add("@q", data.Texto);
+                condiciones++;
+            }
+
+            // Para buscar por DNI del empleado gestor (usando la propiedad de un objeto de clase Empleado):
+            string condicionDNIEmp = "";
+            if (!string.IsNullOrWhiteSpace(data.EmpleadoGestor.DNI) && !string.IsNullOrEmpty(data.EmpleadoGestor.DNI) && data.EmpleadoGestor.DNI != "ALL")
+            {
+                if (condiciones > 0) condicionDNIEmp = " AND ";
+                condicionDNIEmp += $" [{Venta.Columns.DNI}] = @DNI ";
+                parametros.Add("@DNI", data.EmpleadoGestor.DNI);
+                condiciones++;
+            }
+
+            // Para buscar por tipo de pago:
+            string condicionTipoPago = "";
+            if(!string.IsNullOrWhiteSpace(data.TipoPago) && !string.IsNullOrEmpty(data.TipoPago) && data.TipoPago != "ALL")
+            {
+                if (condiciones > 0) condicionTipoPago = " AND ";
+                condicionTipoPago += $" [{Venta.Columns.TipoPago}] = @TipoPago ";
+                parametros.Add("@TipoPago", data.TipoPago);
+                condiciones++;
+            }
+
+            string consulta = select + (condiciones == 0 ? "" : where + condicionBusqueda + condicionDNIEmp + condicionTipoPago);
+            Trace.WriteLine(consulta); // para encontrar fallos.
+            var con = new Connection(Connection.Database.Pets);
+            return con.FetchData(
+                    query: consulta,
+                    parameters: parametros
+                );
+        }
 
         /// <summary>
         /// Obtener un registro por su ID.

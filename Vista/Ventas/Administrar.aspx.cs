@@ -12,25 +12,62 @@ namespace Vista.Ventas {
     public partial class Administrar : System.Web.UI.Page {
 
         public void CargarDatos(Response data = null) {
-            string tbuscar = txtBuscar.Text;
-            var res = tbuscar == "" ? VentaNegocio.GetVentas() : VentaNegocio.Buscar(tbuscar);
-            if (data != null) res = data;
-            if (res.ErrorFound) {
-                Utils.ShowSnackbar("Error cargando ventas. ", this);
+            var filtros = new Venta.Busqueda
+            {
+                Texto = txtBuscar.Text,
+                EmpleadoGestor = ddlEmpleados.SelectedValue, // me da error. 
+                TipoPago = ddlTipoDePago.SelectedValue
+            };
 
-            }
-            else {
-                DataSet dt = res.ObjectReturned as DataSet;
-                gvDatos.DataSource = dt;
+            data = VentaNegocio.cargarRegistros(filtros);
+            if (!data.ErrorFound)
+            {
+                DataSet ds = data.ObjectReturned as DataSet;
+                gvDatos.DataSource = ds;
                 gvDatos.DataBind();
             }
+            else
+            {
+                Utils.ShowSnackbar("Error cargando ventas. ", this.Page);
+            }
+        }
+        protected void cargarDDLEmpleados()
+        {
+            ddlEmpleados.Items.Insert(0, new ListItem("<Selecciona un Empleado>", "0"));
+            ddlEmpleados.Items.Add(new ListItem("Javier Torales", "28298976"));
+            ddlEmpleados.Items.Add(new ListItem("José Eduardo Martínez", "35001000"));
+            ddlEmpleados.Items.Add(new ListItem("Héctor Armando Da Silva", "35001001"));
+            ddlEmpleados.Items.Add(new ListItem("Libia Mónaco", "35001002"));
+            ddlEmpleados.Items.Add(new ListItem("María Diet", "35001003"));
+            ddlEmpleados.Items.Add(new ListItem("Rodrigo Viera", "35001004"));
+            ddlEmpleados.Items.Add(new ListItem("Mary O'Connor", "35001005"));
+            ddlEmpleados.Items.Add(new ListItem("Atima Pireira", "35001006"));
+            ddlEmpleados.Items.Add(new ListItem("Andrew Jackson", "35001007"));
+            ddlEmpleados.Items.Add(new ListItem("Alejandro Oliveira", "35001008"));
+            ddlEmpleados.Items.Add(new ListItem("Ty Roderick", "35001009"));
+            ddlEmpleados.Items.Add(new ListItem("Inés Escudero", "35001010"));
+            ddlEmpleados.Items.Add(new ListItem("Carlos González", "35001016"));
+            ddlEmpleados.Items.Add(new ListItem("Alex Marte", "35007001"));
+            ddlEmpleados.Items.Add(new ListItem("Derrick Dime", "45009001"));
+            ddlEmpleados.Items.Add(new ListItem("Carlos Herrera", "75801800"));
+        }
+        protected void cargarDLLTipoDePago()
+        {
+            ddlTipoDePago.Items.Insert(0, new ListItem("<Selecciona Tipo>", "0"));
+            ddlTipoDePago.Items.Add(new ListItem("Tarjeta de Credito", "Credit_Card"));
+            ddlTipoDePago.Items.Add(new ListItem("Tarjeta de Debito", "Debit_Card"));
+            ddlTipoDePago.Items.Add(new ListItem("BitCoin", "BTC"));
+            ddlTipoDePago.Items.Add(new ListItem("Ethereum", "ETH"));
+            ddlTipoDePago.Items.Add(new ListItem("Mercado Pago", "Mercado_Pago"));
+            ddlTipoDePago.Items.Add(new ListItem("Efectivo", "Efectivo"));
         }
 
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
                 Session[Utils.AUTH] = AuthorizationVista.ValidateSession(this, Authorization.ONLY_EMPLOYEES_STRICT);
                 CargarDatos();
-                CargarDatos();
+                cargarDDLEmpleados();
+                cargarDLLTipoDePago();
             }
         }
 
@@ -74,13 +111,5 @@ namespace Vista.Ventas {
                 CargarDatos();
             }
         }
-
-        protected void GvDatos_SelectedIndexChanging(object sender, GridViewSelectEventArgs e) {
-
-        }
-
-
-
-
     }
 }

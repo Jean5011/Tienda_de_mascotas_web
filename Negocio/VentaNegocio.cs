@@ -260,5 +260,10 @@ namespace Negocio {
             }
 
         }
+
+        public static Response cargarRegistros(Venta.Busqueda data)
+        {
+            return VentaDatos.CargarRegistros(data);
+        }
     }
 }

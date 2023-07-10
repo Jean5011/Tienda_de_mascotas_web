@@ -17,6 +17,14 @@ namespace Entidades {
             public const string Fecha = "Fecha_Vt";
             public const string Total = "PrecioTotal_Vt";
         }
+        public class Busqueda
+        {
+            public string Texto { get; set; }
+            public Empleado EmpleadoGestor { get; set; }
+            public string TipoPago { get; set; }
+            public Busqueda() { }
+        }
+
         public const string Table = "Ventas";
         public int Id { get; set; }
         public Empleado EmpleadoGestor { get; set; }
